@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/data/mongo
+		http://www.springframework.org/schema/data/mongo/spring-mongo-2.0.xsd"
+       default-lazy-init="true">
+
+    <!-- MongoDB 配置 -->
+    <!--	<mongo:mongo replica-set="${mongo.replicaset}">-->
+    <!--		<mongo:options connections-per-host="${mongo.connectionsPerHost}"-->
+    <!--			threads-allowed-to-block-for-connection-multiplier="${mongo.threadsAllowedToBlockForConnectionMultiplier}"-->
+    <!--			connect-timeout="${mongo.connectTimeout}" max-wait-time="${mongo.maxWaitTime}"-->
+    <!--			auto-connect-retry="${mongo.autoConnectRetry}" socket-keep-alive="${mongo.socketKeepAlive}"-->
+    <!--			socket-timeout="${mongo.socketTimeout}" slave-ok="${mongo.slaveOk}"-->
+    <!--			write-number="1" write-timeout="0" write-fsync="true" />-->
+    <!--	</mongo:mongo>-->
+    <!--	<mongo:db-factory dbname="${mongo.database}"-->
+    <!--		mongo-ref="mongo" -->
+    <!--		username="${mongo.user}" password="${mongo.password}"-->
+    <!--		/>-->
+    <!--	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">-->
+    <!--		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />-->
+    <!--	</bean>-->
+
+    <mongo:mongo-client id="mongo" replica-set="${mongo.replicaset}"
+                        credentials="${mongo.user}:${mongo.password}@${mongo.database}">
+        <mongo:client-options connections-per-host="${mongo.connectionsPerHost}"
+                              threads-allowed-to-block-for-connection-multiplier="${mongo.threadsAllowedToBlockForConnectionMultiplier}"
+                              connect-timeout="${mongo.connectTimeout}"
+                              max-wait-time="${mongo.maxWaitTime}"
+                              socket-keep-alive="${mongo.socketKeepAlive}"
+                              socket-timeout="${mongo.socketTimeout}"/>
+    </mongo:mongo-client>
+
+    <mongo:db-factory dbname="${mongo.database}" mongo-ref="mongo"/>
+
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg ref="mongo"/>
+        <constructor-arg name="databaseName" value="${mongo.database}"/>
+    </bean>
+
+</beans>

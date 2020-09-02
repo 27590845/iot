@@ -1,0 +1,102 @@
+package com.xidian.iot.database.pojo;
+
+import java.util.Date;
+
+/**
+ * 节点表，一个场景下有多个节点。逻辑上可看作一个数据单元；物理上可看作数据采集设备，比如采集卡
+ *
+ * @author mrl
+ * @date   2020/09/01
+ */
+public class Node {
+    /**
+     * 节点ID
+     */
+    private Integer nodeId;
+
+    /**
+     * 场景ID，一个节点对应一个场景，一个场景可包含多个节点
+     */
+    private Integer sceneId;
+
+    /**
+     * 网关SN
+     */
+    private String sceneSn;
+
+    /**
+     * 节点名称
+     */
+    private String nodeName;
+
+    /**
+     * 描述
+     */
+    private String nodeDesc;
+
+    /**
+     * 节点物理节点号
+     */
+    private String nodeSn;
+
+    /**
+     * 创建时间
+     */
+    private Date createTime;
+
+    public Integer getNodeId() {
+        return nodeId;
+    }
+
+    public void setNodeId(Integer nodeId) {
+        this.nodeId = nodeId;
+    }
+
+    public Integer getSceneId() {
+        return sceneId;
+    }
+
+    public void setSceneId(Integer sceneId) {
+        this.sceneId = sceneId;
+    }
+
+    public String getSceneSn() {
+        return sceneSn;
+    }
+
+    public void setSceneSn(String sceneSn) {
+        this.sceneSn = sceneSn == null ? null : sceneSn.trim();
+    }
+
+    public String getNodeName() {
+        return nodeName;
+    }
+
+    public void setNodeName(String nodeName) {
+        this.nodeName = nodeName == null ? null : nodeName.trim();
+    }
+
+    public String getNodeDesc() {
+        return nodeDesc;
+    }
+
+    public void setNodeDesc(String nodeDesc) {
+        this.nodeDesc = nodeDesc == null ? null : nodeDesc.trim();
+    }
+
+    public String getNodeSn() {
+        return nodeSn;
+    }
+
+    public void setNodeSn(String nodeSn) {
+        this.nodeSn = nodeSn == null ? null : nodeSn.trim();
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+}

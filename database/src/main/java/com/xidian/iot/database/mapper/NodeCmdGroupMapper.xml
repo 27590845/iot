@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xidian.iot.database.mapper.NodeCmdGroupMapper">
+  <resultMap id="BaseResultMap" type="com.xidian.iot.database.pojo.NodeCmdGroup">
+    <id column="ncg_id" jdbcType="INTEGER" property="ncgId" />
+    <result column="node_id" jdbcType="INTEGER" property="nodeId" />
+    <result column="ncg_name" jdbcType="VARCHAR" property="ncgName" />
+    <result column="ncg_key" jdbcType="VARCHAR" property="ncgKey" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ncg_id, node_id, ncg_name, ncg_key
+  </sql>
+  <select id="selectByExample" parameterType="com.xidian.iot.database.pojo.NodeCmdGroupExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from node_cmd_group
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from node_cmd_group
+    where ncg_id = #{ncgId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from node_cmd_group
+    where ncg_id = #{ncgId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xidian.iot.database.pojo.NodeCmdGroupExample">
+    delete from node_cmd_group
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xidian.iot.database.pojo.NodeCmdGroup">
+    <selectKey keyProperty="ncgId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into node_cmd_group (node_id, ncg_name, ncg_key
+      )
+    values (#{nodeId,jdbcType=INTEGER}, #{ncgName,jdbcType=VARCHAR}, #{ncgKey,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xidian.iot.database.pojo.NodeCmdGroup">
+    <selectKey keyProperty="ncgId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into node_cmd_group
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="nodeId != null">
+        node_id,
+      </if>
+      <if test="ncgName != null">
+        ncg_name,
+      </if>
+      <if test="ncgKey != null">
+        ncg_key,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="nodeId != null">
+        #{nodeId,jdbcType=INTEGER},
+      </if>
+      <if test="ncgName != null">
+        #{ncgName,jdbcType=VARCHAR},
+      </if>
+      <if test="ncgKey != null">
+        #{ncgKey,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xidian.iot.database.pojo.NodeCmdGroupExample" resultType="java.lang.Long">
+    select count(*) from node_cmd_group
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update node_cmd_group
+    <set>
+      <if test="record.ncgId != null">
+        ncg_id = #{record.ncgId,jdbcType=INTEGER},
+      </if>
+      <if test="record.nodeId != null">
+        node_id = #{record.nodeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.ncgName != null">
+        ncg_name = #{record.ncgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ncgKey != null">
+        ncg_key = #{record.ncgKey,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update node_cmd_group
+    set ncg_id = #{record.ncgId,jdbcType=INTEGER},
+      node_id = #{record.nodeId,jdbcType=INTEGER},
+      ncg_name = #{record.ncgName,jdbcType=VARCHAR},
+      ncg_key = #{record.ncgKey,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xidian.iot.database.pojo.NodeCmdGroup">
+    update node_cmd_group
+    <set>
+      <if test="nodeId != null">
+        node_id = #{nodeId,jdbcType=INTEGER},
+      </if>
+      <if test="ncgName != null">
+        ncg_name = #{ncgName,jdbcType=VARCHAR},
+      </if>
+      <if test="ncgKey != null">
+        ncg_key = #{ncgKey,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ncg_id = #{ncgId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xidian.iot.database.pojo.NodeCmdGroup">
+    update node_cmd_group
+    set node_id = #{nodeId,jdbcType=INTEGER},
+      ncg_name = #{ncgName,jdbcType=VARCHAR},
+      ncg_key = #{ncgKey,jdbcType=VARCHAR}
+    where ncg_id = #{ncgId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!--mysql 连接数据库jar 这里选择自己本地位置-->
+    <!--<classPathEntry location="E:\MavenRep\mysql\mysql-connector-java\5.1.39\mysql-connector-java-5.1.39.jar" />-->
+    <context id="testTables" targetRuntime="MyBatis3" defaultModelType="flat">
+
+<!--        &lt;!&ndash; 生成一对一配置 &ndash;&gt;-->
+<!--        <plugin type="cc.bandaotixi.plugins.OneToOnePlugin"></plugin>-->
+<!--        &lt;!&ndash; 生成一对多配置 &ndash;&gt;-->
+<!--        <plugin type="cc.bandaotixi.plugins.OneToManyPlugin"></plugin>-->
+<!--        &lt;!&ndash; 批量插入与更新 &ndash;&gt;-->
+<!--        <plugin type="cc.bandaotixi.plugins.BatchInsertPlugin"></plugin>-->
+<!--        <plugin type="cc.bandaotixi.plugins.BatchUpdatePlugin"></plugin>-->
+
+        <commentGenerator type="com.xidian.iot.database.generator.MySQLCommentGenerator">
+            <property name="author" value="mrl"/>
+            <property name="dateFormat" value="yyyy/MM/dd"/>
+        </commentGenerator>
+
+        <!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://114.115.240.14:3306/iotdata"
+                        userId="root"
+                        password="xidian@123">
+            <!-- 添加表注释 -->
+            <property name="useInformationSchema" value="true"/>
+            <property name="nullCatalogMeansCurrent" value="true"/>
+        </jdbcConnection>
+        <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL 和
+           NUMERIC 类型解析为java.math.BigDecimal -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- targetProject:生成PO类的位置 -->
+        <javaModelGenerator targetPackage="com.xidian.iot.database.pojo"
+                            targetProject="/Users/liuyinggang/IdeaProjects/xidianiot/database/src/main/java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="true"/>
+            <!-- 从数据库返回的值被清理前后的空格 -->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!-- targetProject:mapper映射文件生成的位置
+           如果maven工程只是单独的一个工程，targetProject="src/main/java"
+           若果maven工程是分模块的工程，targetProject="所属模块的名称"，例如：
+           targetProject="ecps-manager-mapper"，下同-->
+        <sqlMapGenerator targetPackage="com.xidian.iot.database.mapper"
+                         targetProject="/Users/liuyinggang/IdeaProjects/xidianiot/database/src/main/java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!-- targetPackage：mapper接口生成的位置 -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.xidian.iot.database.mapper"
+                             targetProject="/Users/liuyinggang/IdeaProjects/xidianiot/database/src/main/java">
+            <!--targetProject="src/main/java">-->
+
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+        
+        <!-- 指定数据库表 -->
+        <table tableName="scene" domainObjectName="Scene" enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <generatedKey column="scene_id" sqlStatement="Mysql" identity="true"/>
+        </table>
+        <table tableName="node" domainObjectName="Node" enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <generatedKey column="node_id" sqlStatement="Mysql" identity="true"/>
+        </table>
+        <table tableName="node_attr" domainObjectName="NodeAttr" enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <generatedKey column="na_id" sqlStatement="Mysql" identity="true"/>
+        </table>
+        <table tableName="node_attr_std" domainObjectName="NodeAttrStd" enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <generatedKey column="nas_id" sqlStatement="Mysql" identity="true"/>
+        </table>
+        <table tableName="node_cmd" domainObjectName="NodeCmd" enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <generatedKey column="nc_id" sqlStatement="Mysql" identity="true"/>
+        </table>
+        <table tableName="node_cmd_group" domainObjectName="NodeCmdGroup" enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <generatedKey column="ncg_id" sqlStatement="Mysql" identity="true"/>
+        </table>
+        <table tableName="node_cmd_std" domainObjectName="NodeCmdStd" enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <generatedKey column="ncs_id" sqlStatement="Mysql" identity="true"/>
+        </table>
+        <table tableName="node_cmd_group_std" domainObjectName="NodeCmdGroupStd" enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <generatedKey column="ncgs_id" sqlStatement="Mysql" identity="true"/>
+        </table>
+        <table tableName="node_cond" domainObjectName="NodeCond" enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <generatedKey column="nc_id" sqlStatement="Mysql" identity="true"/>
+        </table>
+        <table tableName="node_trig" domainObjectName="NodeTrig" enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <generatedKey column="nt_id" sqlStatement="Mysql" identity="true"/>
+        </table>
+        <table tableName="node_act_cmd" domainObjectName="NodeActCmd" enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <generatedKey column="nac_id" sqlStatement="Mysql" identity="true"/>
+        </table>
+        <table tableName="node_act_alert" domainObjectName="NodeActAlert" enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <generatedKey column="naa_id" sqlStatement="Mysql" identity="true"/>
+        </table>
+        <table tableName="node_cmd_prot" domainObjectName="NodeCmdProt" enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <generatedKey column="ncp_id" sqlStatement="Mysql" identity="true"/>
+        </table>
+
+    </context>
+</generatorConfiguration>

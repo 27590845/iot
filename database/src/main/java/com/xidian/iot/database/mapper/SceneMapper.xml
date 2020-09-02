@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xidian.iot.database.mapper.SceneMapper">
+  <resultMap id="BaseResultMap" type="com.xidian.iot.database.pojo.Scene">
+    <id column="scene_id" jdbcType="INTEGER" property="sceneId" />
+    <result column="scene_sn" jdbcType="CHAR" property="sceneSn" />
+    <result column="scene_name" jdbcType="VARCHAR" property="sceneName" />
+    <result column="scene_loc" jdbcType="VARCHAR" property="sceneLoc" />
+    <result column="scene_lng" jdbcType="DOUBLE" property="sceneLng" />
+    <result column="scene_lat" jdbcType="DOUBLE" property="sceneLat" />
+    <result column="scene_el" jdbcType="DOUBLE" property="sceneEl" />
+    <result column="scene_desc" jdbcType="VARCHAR" property="sceneDesc" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    scene_id, scene_sn, scene_name, scene_loc, scene_lng, scene_lat, scene_el, scene_desc, 
+    create_time
+  </sql>
+  <select id="selectByExample" parameterType="com.xidian.iot.database.pojo.SceneExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from scene
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from scene
+    where scene_id = #{sceneId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from scene
+    where scene_id = #{sceneId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xidian.iot.database.pojo.SceneExample">
+    delete from scene
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xidian.iot.database.pojo.Scene">
+    <selectKey keyProperty="sceneId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into scene (scene_sn, scene_name, scene_loc, 
+      scene_lng, scene_lat, scene_el, 
+      scene_desc, create_time)
+    values (#{sceneSn,jdbcType=CHAR}, #{sceneName,jdbcType=VARCHAR}, #{sceneLoc,jdbcType=VARCHAR}, 
+      #{sceneLng,jdbcType=DOUBLE}, #{sceneLat,jdbcType=DOUBLE}, #{sceneEl,jdbcType=DOUBLE}, 
+      #{sceneDesc,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xidian.iot.database.pojo.Scene">
+    <selectKey keyProperty="sceneId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into scene
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sceneSn != null">
+        scene_sn,
+      </if>
+      <if test="sceneName != null">
+        scene_name,
+      </if>
+      <if test="sceneLoc != null">
+        scene_loc,
+      </if>
+      <if test="sceneLng != null">
+        scene_lng,
+      </if>
+      <if test="sceneLat != null">
+        scene_lat,
+      </if>
+      <if test="sceneEl != null">
+        scene_el,
+      </if>
+      <if test="sceneDesc != null">
+        scene_desc,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sceneSn != null">
+        #{sceneSn,jdbcType=CHAR},
+      </if>
+      <if test="sceneName != null">
+        #{sceneName,jdbcType=VARCHAR},
+      </if>
+      <if test="sceneLoc != null">
+        #{sceneLoc,jdbcType=VARCHAR},
+      </if>
+      <if test="sceneLng != null">
+        #{sceneLng,jdbcType=DOUBLE},
+      </if>
+      <if test="sceneLat != null">
+        #{sceneLat,jdbcType=DOUBLE},
+      </if>
+      <if test="sceneEl != null">
+        #{sceneEl,jdbcType=DOUBLE},
+      </if>
+      <if test="sceneDesc != null">
+        #{sceneDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xidian.iot.database.pojo.SceneExample" resultType="java.lang.Long">
+    select count(*) from scene
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update scene
+    <set>
+      <if test="record.sceneId != null">
+        scene_id = #{record.sceneId,jdbcType=INTEGER},
+      </if>
+      <if test="record.sceneSn != null">
+        scene_sn = #{record.sceneSn,jdbcType=CHAR},
+      </if>
+      <if test="record.sceneName != null">
+        scene_name = #{record.sceneName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sceneLoc != null">
+        scene_loc = #{record.sceneLoc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sceneLng != null">
+        scene_lng = #{record.sceneLng,jdbcType=DOUBLE},
+      </if>
+      <if test="record.sceneLat != null">
+        scene_lat = #{record.sceneLat,jdbcType=DOUBLE},
+      </if>
+      <if test="record.sceneEl != null">
+        scene_el = #{record.sceneEl,jdbcType=DOUBLE},
+      </if>
+      <if test="record.sceneDesc != null">
+        scene_desc = #{record.sceneDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update scene
+    set scene_id = #{record.sceneId,jdbcType=INTEGER},
+      scene_sn = #{record.sceneSn,jdbcType=CHAR},
+      scene_name = #{record.sceneName,jdbcType=VARCHAR},
+      scene_loc = #{record.sceneLoc,jdbcType=VARCHAR},
+      scene_lng = #{record.sceneLng,jdbcType=DOUBLE},
+      scene_lat = #{record.sceneLat,jdbcType=DOUBLE},
+      scene_el = #{record.sceneEl,jdbcType=DOUBLE},
+      scene_desc = #{record.sceneDesc,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xidian.iot.database.pojo.Scene">
+    update scene
+    <set>
+      <if test="sceneSn != null">
+        scene_sn = #{sceneSn,jdbcType=CHAR},
+      </if>
+      <if test="sceneName != null">
+        scene_name = #{sceneName,jdbcType=VARCHAR},
+      </if>
+      <if test="sceneLoc != null">
+        scene_loc = #{sceneLoc,jdbcType=VARCHAR},
+      </if>
+      <if test="sceneLng != null">
+        scene_lng = #{sceneLng,jdbcType=DOUBLE},
+      </if>
+      <if test="sceneLat != null">
+        scene_lat = #{sceneLat,jdbcType=DOUBLE},
+      </if>
+      <if test="sceneEl != null">
+        scene_el = #{sceneEl,jdbcType=DOUBLE},
+      </if>
+      <if test="sceneDesc != null">
+        scene_desc = #{sceneDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where scene_id = #{sceneId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xidian.iot.database.pojo.Scene">
+    update scene
+    set scene_sn = #{sceneSn,jdbcType=CHAR},
+      scene_name = #{sceneName,jdbcType=VARCHAR},
+      scene_loc = #{sceneLoc,jdbcType=VARCHAR},
+      scene_lng = #{sceneLng,jdbcType=DOUBLE},
+      scene_lat = #{sceneLat,jdbcType=DOUBLE},
+      scene_el = #{sceneEl,jdbcType=DOUBLE},
+      scene_desc = #{sceneDesc,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where scene_id = #{sceneId,jdbcType=INTEGER}
+  </update>
+</mapper>
