@@ -12,23 +12,22 @@
             <array>
                 <value>classpath:conf/activemq-def.properties</value>
                 <value>classpath:conf/redis-def.properties</value>
-                <value>classpath:conf/jdbc-conf.properties</value>
+                <value>classpath:conf/jdbc-def.properties</value>
                 <value>classpath:conf/mongo.properties</value>
                 <value>classpath:conf/application.properties</value>
             </array>
         </property>
     </bean>
 
-    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate"/>
-    <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>
+<!--    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate"/>-->
+<!--    <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>-->
 <!--    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
 <!--        <property name="defaultEncoding" value="utf-8"></property>-->
 <!--        <property name="maxUploadSize" value="10485760000"></property>-->
 <!--        <property name="maxInMemorySize" value="40960"></property>-->
 <!--    </bean>-->
-    <import resource="application-mybatis.xml"/>
+    <import resource="application-mybatis-def.xml"/>
     <import resource="application-mongo.xml"/>
-<!--    <bean id="getProps" class="com.xidian.stone.jinlu.util.GetProps"/>-->
     <import resource="application-redis-def.xml"/>
     <import resource="application-activemq-def.xml"/>
 </beans>
