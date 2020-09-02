@@ -1,0 +1,38 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <description>Spring消息队列配置</description>
+
+    <context:property-placeholder location="classpath:conf/activemq-def.properties" ignore-unresolvable="true"/>
+
+    <bean id="jmsFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL">
+            <value>${activemq.brokerURL}</value>
+        </property>
+<!--        <property name="userName">-->
+<!--            <value>${activemq.userName}</value>-->
+<!--        </property>-->
+<!--        <property name="password">-->
+<!--            <value>${activemq.password}</value>-->
+<!--        </property>-->
+        <property name="useAsyncSend">
+            <value>${activemq.useAsyncSend}</value>
+        </property>
+    </bean>
+
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="jmsFactory"/>
+        <property name="pubSubDomain" value="true"/>
+    </bean>
+
+    <bean id="jmsSender" class="com.xidian.iot.common.mq.JmsSender">
+        <property name="jmsTemplate" ref="jmsTemplate"/>
+    </bean>
+
+    <bean id="jmsSubscriber" class="com.xidian.iot.common.mq.JmsSubscriber">
+        <property name="jmsTemplate" ref="jmsTemplate"/>
+    </bean>
+
+</beans>

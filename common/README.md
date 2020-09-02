@@ -2,3 +2,4 @@
 
 common模块对应原平台commons-master模块
 common/common-mq包含了使用jms、activemq所需的依赖以及部分封装好的工具
+common/common-cache包含了使用redis所需的依赖以及部分封装好的实体类缓存工具

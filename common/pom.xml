@@ -6,6 +6,7 @@
     <modules>
         <module>common-util</module>
         <module>common-mq</module>
+        <module>common-cache</module>
     </modules>
 
     <parent>

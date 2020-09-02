@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -27,15 +28,15 @@ import java.util.List;
 @Component
 public class SceneResource {
 
-    @Autowired
+    @Resource
     private SceneService sceneService;
 
     @ApiOperation(value = "list", notes = "")
-    @Path("list/{sceneSn}/{page}/{limit}")
+    @Path("list/{page}/{limit}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public Response getScene(@PathParam("sceneSn")String sceneSn, @PathParam("page")int page, @PathParam("limit") int limit){
-        List<Scene> scenes = sceneService.getScene(sceneSn, page, limit);
+    public Response getScene(@PathParam("page")int page, @PathParam("limit") int limit){
+        List<Scene> scenes = sceneService.getScene(page, limit);
         return Response.ok(scenes).build();
     }
 }

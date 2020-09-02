@@ -38,6 +38,11 @@
       <artifactId>database</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
+    <dependency>
+      <groupId>com.xidian.iot</groupId>
+      <artifactId>common-cache</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
 
     <!-- util start -->
     <dependency>
@@ -67,11 +72,6 @@
       <groupId>org.mongodb</groupId>
       <artifactId>mongo-java-driver</artifactId>
       <version>${mongo.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>redis.clients</groupId>
-      <artifactId>jedis</artifactId>
-      <version>${redis.version}</version>
     </dependency>
     <!-- database end -->
 
@@ -134,11 +134,6 @@
     <!-- springframework start -->
     <dependency>
       <groupId>org.springframework</groupId>
-      <artifactId>spring-core</artifactId>
-      <version>${springframework.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
       <artifactId>spring-web</artifactId>
       <version>${springframework.version}</version>
     </dependency>
@@ -151,11 +146,7 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
       <version>${springframework.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.data</groupId>
-      <artifactId>spring-data-redis</artifactId>
-      <version>${spring.data.redis.version}</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework.session</groupId>
@@ -166,11 +157,6 @@
       <groupId>org.springframework.data</groupId>
       <artifactId>spring-data-mongodb</artifactId>
       <version>${spring.data.mongo.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-jms</artifactId>
-      <version>${spring.jms.version}</version>
     </dependency>
     <!-- springframework end -->
 

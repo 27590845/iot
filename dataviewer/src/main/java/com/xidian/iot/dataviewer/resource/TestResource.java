@@ -31,7 +31,7 @@ public class TestResource {
 //    @Produces("text/plain;charset=utf-8")
     public Response addActivity(@ApiParam(name = "param", value = "测试参数", required = false) String param) {
         logger.warn(String.format("request param is %s", param));
-        return Response.ok("欢迎使用 datacenter").build();
+        return Response.ok("欢迎使用 dataviewer").build();
     }
 
     @Path("/{param}")

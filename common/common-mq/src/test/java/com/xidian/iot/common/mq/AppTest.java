@@ -21,7 +21,7 @@ import java.util.concurrent.CountDownLatch;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 //@WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:spring/activemq-test.xml"})
+@ContextConfiguration(locations = {"classpath:spring/application-activemq-def.xml"})
 public class AppTest 
 {
     static final Logger logger = LoggerFactory.getLogger(AppTest.class);

@@ -13,5 +13,4 @@
     <import resource="application-mybatis.xml"/>
     <import resource="application-mongo.xml"/>
 <!--    <bean id="getProps" class="com.xidian.stone.jinlu.util.GetProps"/>-->
-<!--    <import resource="application-redis.xml"/>-->
 </beans>

@@ -1,4 +1,4 @@
-package com.xidian;
+package com.xidian.iot.database;
 
 import static org.junit.Assert.assertTrue;
 

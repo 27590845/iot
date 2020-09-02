@@ -6,7 +6,18 @@
 
     <context:component-scan base-package="com.xidian.iot.datacenter"/>
     <context:annotation-config/>
-    <context:property-placeholder location="classpath:/conf/*.properties"/>
+<!--    <context:property-placeholder location="classpath:/conf/*.properties"/>-->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations"> <!-- PropertyPlaceholderConfigurer类中有个locations属性，接收的是一个数组，即我们可以在下面配好多个properties文件 -->
+            <array>
+                <value>classpath:conf/activemq-def.properties</value>
+                <value>classpath:conf/redis-def.properties</value>
+                <value>classpath:conf/jdbc-conf.properties</value>
+                <value>classpath:conf/mongo.properties</value>
+                <value>classpath:conf/application.properties</value>
+            </array>
+        </property>
+    </bean>
 
     <bean id="restTemplate" class="org.springframework.web.client.RestTemplate"/>
     <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>
@@ -18,5 +29,6 @@
     <import resource="application-mybatis.xml"/>
     <import resource="application-mongo.xml"/>
 <!--    <bean id="getProps" class="com.xidian.stone.jinlu.util.GetProps"/>-->
-<!--    <import resource="application-redis.xml"/>-->
+    <import resource="application-redis-def.xml"/>
+    <import resource="application-activemq-def.xml"/>
 </beans>
