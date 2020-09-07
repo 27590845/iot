@@ -38,7 +38,7 @@
     <common.pools.version>2.8.1</common.pools.version>
     <apache.httpcomponents.version>4.5.10</apache.httpcomponents.version>
     <apache.commons.version>3.9</apache.commons.version>
-    <javax.servlet.version>4.0.0</javax.servlet.version>
+    <javax.servlet.version>4.0.1</javax.servlet.version>
     <glassfish.jersey.version>2.27</glassfish.jersey.version>
     <springframework.version>4.3.18.RELEASE</springframework.version>
     <spring.jms.version>4.3.18.RELEASE</spring.jms.version>

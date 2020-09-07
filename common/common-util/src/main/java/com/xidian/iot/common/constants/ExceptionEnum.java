@@ -1,6 +1,7 @@
 package com.xidian.iot.common.constants;
 
-import com.xidian.iot.dataapi.exception.ExceptionInfo;
+
+import com.xidian.iot.common.exception.ExceptionInfo;
 
 /**
  * 异常响应结果枚举

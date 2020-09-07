@@ -13,7 +13,7 @@
                 <value>classpath:conf/activemq-def.properties</value>
                 <value>classpath:conf/redis-def.properties</value>
                 <value>classpath:conf/jdbc-def.properties</value>
-                <value>classpath:conf/mongo.properties</value>
+                <value>classpath:conf/mongo-def.properties</value>
                 <value>classpath:conf/application.properties</value>
             </array>
         </property>
@@ -27,7 +27,7 @@
 <!--        <property name="maxInMemorySize" value="40960"></property>-->
 <!--    </bean>-->
     <import resource="application-mybatis-def.xml"/>
-    <import resource="application-mongo.xml"/>
+    <import resource="application-mongo-def.xml"/>
     <import resource="application-redis-def.xml"/>
     <import resource="application-activemq-def.xml"/>
 </beans>

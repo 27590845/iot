@@ -23,6 +23,7 @@
       <scope>test</scope>
     </dependency>
 
+    <!-- local start -->
     <dependency>
       <groupId>com.xidian.iot</groupId>
       <artifactId>common-util</artifactId>
@@ -35,7 +36,7 @@
     </dependency>
     <dependency>
       <groupId>com.xidian.iot</groupId>
-      <artifactId>database</artifactId>
+      <artifactId>databiz</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
     <dependency>
@@ -43,6 +44,7 @@
       <artifactId>common-cache</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
+    <!-- local end -->
 
     <!-- util start -->
     <dependency>
@@ -51,14 +53,6 @@
       <version>${alibaba.fastjson.version}</version>
     </dependency>
     <!-- util end -->
-
-    <!-- database start -->
-    <dependency>
-      <groupId>org.mongodb</groupId>
-      <artifactId>mongo-java-driver</artifactId>
-      <version>${mongo.version}</version>
-    </dependency>
-    <!-- database end -->
 
     <!-- web component start -->
     <dependency>
@@ -132,11 +126,6 @@
       <groupId>org.springframework.session</groupId>
       <artifactId>spring-session-data-redis</artifactId>
       <version>${spring.session.data.redis.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.data</groupId>
-      <artifactId>spring-data-mongodb</artifactId>
-      <version>${spring.data.mongo.version}</version>
     </dependency>
     <!-- springframework end -->
 

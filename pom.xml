@@ -1,44 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.xidian</groupId>
-  <artifactId>xidianiot</artifactId>
-  <packaging>pom</packaging>
-  <version>1.0-SNAPSHOT</version>
-  <description>西电微物联轻量级物联网平台V1.0</description>
+    <groupId>com.xidian</groupId>
+    <artifactId>xidianiot</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <description>西电微物联轻量级物联网平台V1.0</description>
 
-  <modules>
-    <module>parent</module>
-    <module>datacenter</module>
-    <module>common</module>
-    <module>database</module>
-    <module>dataapi</module>
-<!--    <module>common/common-util</module>-->
-<!--    <module>common/common-mq</module>-->
-  </modules>
+    <modules>
+        <module>parent</module>
+        <module>datacenter</module>
+        <module>common</module>
+        <module>database</module>
+        <module>dataapi</module>
+        <module>databiz</module>
+        <!--    <module>common/common-util</module>-->
+        <!--    <module>common/common-mq</module>-->
+    </modules>
 
-  <developers>
-    <developer>
-      <id>mrl</id>
-      <name>mrl</name>
-      <email>320367660@qq.com</email>
-    </developer>
-    <developer>
-      <id>Hansey</id>
-      <name>Hansey</name>
-      <email>820248130@qq.com</email>
-    </developer>
-    <developer>
-      <id>lvyalong</id>
-      <name>lvyalong</name>
-      <email>1120618049@qq.com</email>
-    </developer>
-  </developers>
+    <developers>
+        <developer>
+            <id>mrl</id>
+            <name>mrl</name>
+            <email>320367660@qq.com</email>
+        </developer>
+        <developer>
+            <id>Hansey</id>
+            <name>Hansey</name>
+            <email>820248130@qq.com</email>
+        </developer>
+        <developer>
+            <id>lvyalong</id>
+            <name>lvyalong</name>
+            <email>1120618049@qq.com</email>
+        </developer>
+    </developers>
 
-  <name>xidianiot</name>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
+    <name>xidianiot</name>
+    <!-- FIXME change it to the project's website -->
+    <url>http://www.example.com</url>
 </project>
