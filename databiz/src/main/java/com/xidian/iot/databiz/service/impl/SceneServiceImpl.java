@@ -1,10 +1,10 @@
-package com.xidian.iot.dataapi.service.impl;
+package com.xidian.iot.databiz.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.xidian.iot.database.mapper.SceneMapper;
 import com.xidian.iot.database.pojo.Scene;
 import com.xidian.iot.database.pojo.SceneExample;
-import com.xidian.iot.dataapi.service.SceneService;
+import com.xidian.iot.databiz.service.SceneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @author mrl
  * @Title: SceneService
- * @Package com.xidian.iot.dataapi.service
+ * @Package com.xidian.iot.databiz.service
  * @Description: scene service
  * @date 2020/9/1 5:31 下午
  */

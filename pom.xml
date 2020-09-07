@@ -37,6 +37,16 @@
             <name>lvyalong</name>
             <email>1120618049@qq.com</email>
         </developer>
+        <developer>
+            <id>biance</id>
+            <name>biance</name>
+            <email>???</email>
+        </developer>
+        <developer>
+            <id>wangminrui</id>
+            <name>wangminrui</name>
+            <email>???</email>
+        </developer>
     </developers>
 
     <name>xidianiot</name>

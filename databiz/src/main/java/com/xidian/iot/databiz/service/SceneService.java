@@ -1,4 +1,4 @@
-package com.xidian.iot.dataapi.service;
+package com.xidian.iot.databiz.service;
 
 import com.xidian.iot.database.pojo.Scene;
 

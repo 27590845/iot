@@ -1,7 +1,7 @@
 package com.xidian.iot.dataapi.controller;
 
 import com.xidian.iot.dataapi.controller.res.HttpResult;
-import com.xidian.iot.dataapi.service.SceneService;
+import com.xidian.iot.databiz.service.SceneService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

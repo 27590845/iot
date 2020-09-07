@@ -27,16 +27,6 @@
     <!-- local start -->
     <dependency>
       <groupId>com.xidian.iot</groupId>
-      <artifactId>common-util</artifactId>
-      <version>1.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>com.xidian.iot</groupId>
-      <artifactId>common-mq</artifactId>
-      <version>1.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>com.xidian.iot</groupId>
       <artifactId>databiz</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
@@ -55,19 +45,10 @@
     </dependency>
     <!-- util end -->
 
-    <!-- web component start -->
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
-      <version>${javax.servlet.version}</version>
-      <scope>provided</scope>
-    </dependency>
-    <!-- web component end -->
-
     <!-- springframework start -->
     <dependency>
       <groupId>org.springframework</groupId>
-      <artifactId>spring-webmvc</artifactId>
+      <artifactId>spring-web</artifactId>
       <version>${springframework.version}</version>
     </dependency>
     <dependency>
@@ -82,6 +63,25 @@
       <version>${spring.session.data.redis.version}</version>
     </dependency>
     <!-- springframework end -->
+
+    <!-- web component start -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>${javax.servlet.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context-support</artifactId>
+      <version>${springframework.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+      <version>${springframework.version}</version>
+    </dependency>
+    <!-- web component end -->
 
     <!--swagger start-->
     <dependency>

@@ -1,4 +1,4 @@
-package com.xidian.iot.dataapi.service.impl;
+package com.xidian.iot.databiz.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
