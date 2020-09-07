@@ -1,4 +1,4 @@
-package com.xidian.iot.dataapi.exception;
+package com.xidian.iot.common.exception;
 
 abstract class AbstractException extends RuntimeException implements ExceptionInfo {
     private static final long serialVersionUID = 3289598099629324399L;

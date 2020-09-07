@@ -1,7 +1,7 @@
 package com.xidian.iot.dataapi.exception.handler;
 
 import com.xidian.iot.dataapi.controller.res.HttpResult;
-import com.xidian.iot.dataapi.exception.BusinessException;
+import com.xidian.iot.common.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.util.CollectionUtils;

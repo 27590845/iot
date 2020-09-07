@@ -1,4 +1,4 @@
-package com.xidian.iot.dataapi.constants;
+package com.xidian.iot.common.constants;
 
 import com.xidian.iot.dataapi.exception.ExceptionInfo;
 

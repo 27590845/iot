@@ -1,4 +1,4 @@
-package com.xidian.iot.dataapi.exception;
+package com.xidian.iot.common.exception;
 
 /**
  * @description:业务异常

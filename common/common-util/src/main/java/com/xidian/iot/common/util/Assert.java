@@ -1,6 +1,8 @@
-package com.xidian.iot.dataapi.exception;
+package com.xidian.iot.common.util;
 
-import cn.smallbun.screw.core.util.CollectionUtils;
+import com.xidian.iot.common.exception.BusinessException;
+import com.xidian.iot.common.exception.ExceptionInfo;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collection;

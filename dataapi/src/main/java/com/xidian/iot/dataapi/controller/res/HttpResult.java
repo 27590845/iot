@@ -1,8 +1,8 @@
 package com.xidian.iot.dataapi.controller.res;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.xidian.iot.dataapi.exception.BusinessException;
-import com.xidian.iot.dataapi.exception.ExceptionInfo;
+import com.xidian.iot.common.exception.BusinessException;
+import com.xidian.iot.common.exception.ExceptionInfo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 

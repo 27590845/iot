@@ -50,6 +50,8 @@
     <lombok.version>1.18.12</lombok.version>
     <screw.version>1.0.3</screw.version>
     <HikariCP.version>3.4.5</HikariCP.version>
+    <validation-api.version>2.0.1.Final</validation-api.version>
+    <commons-collections4.version>4.1</commons-collections4.version>
   </properties>
 
   <build>
