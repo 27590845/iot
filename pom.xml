@@ -15,7 +15,7 @@
     <module>datacenter</module>
     <module>common</module>
     <module>database</module>
-    <module>dataviewer</module>
+    <module>dataapi</module>
 <!--    <module>common/common-util</module>-->
 <!--    <module>common/common-mq</module>-->
   </modules>
