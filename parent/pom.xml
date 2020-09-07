@@ -15,7 +15,7 @@
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
     <junit.version>4.12</junit.version>
-    <swagger.version>2.0.2</swagger.version>
+    <swagger.version>2.7.0</swagger.version>
     <swagger.jersey.version>1.5.23</swagger.jersey.version>
     <springfox.swagger.version>2.7.0</springfox.swagger.version>
     <slf4j.version>1.7.30</slf4j.version>
@@ -46,6 +46,10 @@
     <mybatis.spring.version>1.3.1</mybatis.spring.version>
     <spring.data.redis.version>1.8.23.RELEASE</spring.data.redis.version>
     <spring.session.data.redis.version>1.3.5.RELEASE</spring.session.data.redis.version>
+    <aop.version>1.8.9</aop.version>
+    <lombok.version>1.18.12</lombok.version>
+    <screw.version>1.0.3</screw.version>
+    <HikariCP.version>3.4.5</HikariCP.version>
   </properties>
 
   <build>

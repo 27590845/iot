@@ -34,6 +34,7 @@ public class TestResource {
         return Response.ok("欢迎使用 datacenter").build();
     }
 
+
     @Path("/{param}")
     @GET
     @ApiOperation(value = "测试接口函数2", notes = "用于测试的接口函数：2")
