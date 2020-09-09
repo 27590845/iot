@@ -114,52 +114,52 @@ public class NodeCmdStdExample {
             return (Criteria) this;
         }
 
-        public Criteria andNcsIdEqualTo(Integer value) {
+        public Criteria andNcsIdEqualTo(Long value) {
             addCriterion("ncs_id =", value, "ncsId");
             return (Criteria) this;
         }
 
-        public Criteria andNcsIdNotEqualTo(Integer value) {
+        public Criteria andNcsIdNotEqualTo(Long value) {
             addCriterion("ncs_id <>", value, "ncsId");
             return (Criteria) this;
         }
 
-        public Criteria andNcsIdGreaterThan(Integer value) {
+        public Criteria andNcsIdGreaterThan(Long value) {
             addCriterion("ncs_id >", value, "ncsId");
             return (Criteria) this;
         }
 
-        public Criteria andNcsIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andNcsIdGreaterThanOrEqualTo(Long value) {
             addCriterion("ncs_id >=", value, "ncsId");
             return (Criteria) this;
         }
 
-        public Criteria andNcsIdLessThan(Integer value) {
+        public Criteria andNcsIdLessThan(Long value) {
             addCriterion("ncs_id <", value, "ncsId");
             return (Criteria) this;
         }
 
-        public Criteria andNcsIdLessThanOrEqualTo(Integer value) {
+        public Criteria andNcsIdLessThanOrEqualTo(Long value) {
             addCriterion("ncs_id <=", value, "ncsId");
             return (Criteria) this;
         }
 
-        public Criteria andNcsIdIn(List<Integer> values) {
+        public Criteria andNcsIdIn(List<Long> values) {
             addCriterion("ncs_id in", values, "ncsId");
             return (Criteria) this;
         }
 
-        public Criteria andNcsIdNotIn(List<Integer> values) {
+        public Criteria andNcsIdNotIn(List<Long> values) {
             addCriterion("ncs_id not in", values, "ncsId");
             return (Criteria) this;
         }
 
-        public Criteria andNcsIdBetween(Integer value1, Integer value2) {
+        public Criteria andNcsIdBetween(Long value1, Long value2) {
             addCriterion("ncs_id between", value1, value2, "ncsId");
             return (Criteria) this;
         }
 
-        public Criteria andNcsIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andNcsIdNotBetween(Long value1, Long value2) {
             addCriterion("ncs_id not between", value1, value2, "ncsId");
             return (Criteria) this;
         }

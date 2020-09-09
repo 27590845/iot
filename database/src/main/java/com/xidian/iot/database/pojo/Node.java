@@ -6,18 +6,18 @@ import java.util.Date;
  * 节点表，一个场景下有多个节点。逻辑上可看作一个数据单元；物理上可看作数据采集设备，比如采集卡
  *
  * @author mrl
- * @date   2020/09/01
+ * @date   2020/09/09
  */
 public class Node {
     /**
      * 节点ID
      */
-    private Integer nodeId;
+    private Long nodeId;
 
     /**
      * 场景ID，一个节点对应一个场景，一个场景可包含多个节点
      */
-    private Integer sceneId;
+    private Long sceneId;
 
     /**
      * 网关SN
@@ -44,19 +44,19 @@ public class Node {
      */
     private Date createTime;
 
-    public Integer getNodeId() {
+    public Long getNodeId() {
         return nodeId;
     }
 
-    public void setNodeId(Integer nodeId) {
+    public void setNodeId(Long nodeId) {
         this.nodeId = nodeId;
     }
 
-    public Integer getSceneId() {
+    public Long getSceneId() {
         return sceneId;
     }
 
-    public void setSceneId(Integer sceneId) {
+    public void setSceneId(Long sceneId) {
         this.sceneId = sceneId;
     }
 

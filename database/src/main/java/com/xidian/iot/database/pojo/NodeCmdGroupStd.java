@@ -4,13 +4,13 @@ package com.xidian.iot.database.pojo;
  * 节点命令组名称模版，node_cmd_group_std.ncgs_name对应node_cmd_group.ncg_name，供添加命令组选择“命令组名称“
  *
  * @author mrl
- * @date   2020/09/01
+ * @date   2020/09/09
  */
 public class NodeCmdGroupStd {
     /**
      * 命令组模版ID
      */
-    private Integer ncgsId;
+    private Long ncgsId;
 
     /**
      * 命令组名称
@@ -22,11 +22,11 @@ public class NodeCmdGroupStd {
      */
     private String ncgsKey;
 
-    public Integer getNcgsId() {
+    public Long getNcgsId() {
         return ncgsId;
     }
 
-    public void setNcgsId(Integer ncgsId) {
+    public void setNcgsId(Long ncgsId) {
         this.ncgsId = ncgsId;
     }
 

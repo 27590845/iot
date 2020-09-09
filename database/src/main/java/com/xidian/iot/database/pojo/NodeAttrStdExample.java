@@ -114,52 +114,52 @@ public class NodeAttrStdExample {
             return (Criteria) this;
         }
 
-        public Criteria andNasIdEqualTo(Integer value) {
+        public Criteria andNasIdEqualTo(Long value) {
             addCriterion("nas_id =", value, "nasId");
             return (Criteria) this;
         }
 
-        public Criteria andNasIdNotEqualTo(Integer value) {
+        public Criteria andNasIdNotEqualTo(Long value) {
             addCriterion("nas_id <>", value, "nasId");
             return (Criteria) this;
         }
 
-        public Criteria andNasIdGreaterThan(Integer value) {
+        public Criteria andNasIdGreaterThan(Long value) {
             addCriterion("nas_id >", value, "nasId");
             return (Criteria) this;
         }
 
-        public Criteria andNasIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andNasIdGreaterThanOrEqualTo(Long value) {
             addCriterion("nas_id >=", value, "nasId");
             return (Criteria) this;
         }
 
-        public Criteria andNasIdLessThan(Integer value) {
+        public Criteria andNasIdLessThan(Long value) {
             addCriterion("nas_id <", value, "nasId");
             return (Criteria) this;
         }
 
-        public Criteria andNasIdLessThanOrEqualTo(Integer value) {
+        public Criteria andNasIdLessThanOrEqualTo(Long value) {
             addCriterion("nas_id <=", value, "nasId");
             return (Criteria) this;
         }
 
-        public Criteria andNasIdIn(List<Integer> values) {
+        public Criteria andNasIdIn(List<Long> values) {
             addCriterion("nas_id in", values, "nasId");
             return (Criteria) this;
         }
 
-        public Criteria andNasIdNotIn(List<Integer> values) {
+        public Criteria andNasIdNotIn(List<Long> values) {
             addCriterion("nas_id not in", values, "nasId");
             return (Criteria) this;
         }
 
-        public Criteria andNasIdBetween(Integer value1, Integer value2) {
+        public Criteria andNasIdBetween(Long value1, Long value2) {
             addCriterion("nas_id between", value1, value2, "nasId");
             return (Criteria) this;
         }
 
-        public Criteria andNasIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andNasIdNotBetween(Long value1, Long value2) {
             addCriterion("nas_id not between", value1, value2, "nasId");
             return (Criteria) this;
         }

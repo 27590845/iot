@@ -10,7 +10,7 @@ public interface NodeActCmdMapper {
 
     int deleteByExample(NodeActCmdExample example);
 
-    int deleteByPrimaryKey(Integer nacId);
+    int deleteByPrimaryKey(Long nacId);
 
     int insert(NodeActCmd record);
 
@@ -18,7 +18,7 @@ public interface NodeActCmdMapper {
 
     List<NodeActCmd> selectByExample(NodeActCmdExample example);
 
-    NodeActCmd selectByPrimaryKey(Integer nacId);
+    NodeActCmd selectByPrimaryKey(Long nacId);
 
     int updateByExampleSelective(@Param("record") NodeActCmd record, @Param("example") NodeActCmdExample example);
 

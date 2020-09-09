@@ -4,13 +4,13 @@ package com.xidian.iot.database.pojo;
  * 节点属性模版，记录了一类节点属性的元数据，比如记录了某节点属性的计数单位
  *
  * @author mrl
- * @date   2020/09/01
+ * @date   2020/09/09
  */
 public class NodeAttrStd {
     /**
      * 节点属性模版ID
      */
-    private Integer nasId;
+    private Long nasId;
 
     /**
      * 主属性的归一化表示
@@ -32,11 +32,11 @@ public class NodeAttrStd {
      */
     private String nasSym;
 
-    public Integer getNasId() {
+    public Long getNasId() {
         return nasId;
     }
 
-    public void setNasId(Integer nasId) {
+    public void setNasId(Long nasId) {
         this.nasId = nasId;
     }
 

@@ -10,7 +10,7 @@ public interface NodeActAlertMapper {
 
     int deleteByExample(NodeActAlertExample example);
 
-    int deleteByPrimaryKey(Integer naaId);
+    int deleteByPrimaryKey(Long naaId);
 
     int insert(NodeActAlert record);
 
@@ -18,7 +18,7 @@ public interface NodeActAlertMapper {
 
     List<NodeActAlert> selectByExample(NodeActAlertExample example);
 
-    NodeActAlert selectByPrimaryKey(Integer naaId);
+    NodeActAlert selectByPrimaryKey(Long naaId);
 
     int updateByExampleSelective(@Param("record") NodeActAlert record, @Param("example") NodeActAlertExample example);
 

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xidian.iot.database.mapper.SceneMapper">
   <resultMap id="BaseResultMap" type="com.xidian.iot.database.pojo.Scene">
-    <id column="scene_id" jdbcType="INTEGER" property="sceneId" />
+    <id column="scene_id" jdbcType="BIGINT" property="sceneId" />
     <result column="scene_sn" jdbcType="CHAR" property="sceneSn" />
     <result column="scene_name" jdbcType="VARCHAR" property="sceneName" />
     <result column="scene_loc" jdbcType="VARCHAR" property="sceneLoc" />
@@ -89,15 +89,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from scene
-    where scene_id = #{sceneId,jdbcType=INTEGER}
+    where scene_id = #{sceneId,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from scene
-    where scene_id = #{sceneId,jdbcType=INTEGER}
+    where scene_id = #{sceneId,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.xidian.iot.database.pojo.SceneExample">
     delete from scene
@@ -106,7 +106,7 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xidian.iot.database.pojo.Scene">
-    <selectKey keyProperty="sceneId" order="AFTER" resultType="java.lang.Integer">
+    <selectKey keyProperty="sceneId" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into scene (scene_sn, scene_name, scene_loc, 
@@ -117,7 +117,7 @@
       #{sceneDesc,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.iot.database.pojo.Scene">
-    <selectKey keyProperty="sceneId" order="AFTER" resultType="java.lang.Integer">
+    <selectKey keyProperty="sceneId" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into scene
@@ -184,7 +184,7 @@
     update scene
     <set>
       <if test="record.sceneId != null">
-        scene_id = #{record.sceneId,jdbcType=INTEGER},
+        scene_id = #{record.sceneId,jdbcType=BIGINT},
       </if>
       <if test="record.sceneSn != null">
         scene_sn = #{record.sceneSn,jdbcType=CHAR},
@@ -217,7 +217,7 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update scene
-    set scene_id = #{record.sceneId,jdbcType=INTEGER},
+    set scene_id = #{record.sceneId,jdbcType=BIGINT},
       scene_sn = #{record.sceneSn,jdbcType=CHAR},
       scene_name = #{record.sceneName,jdbcType=VARCHAR},
       scene_loc = #{record.sceneLoc,jdbcType=VARCHAR},
@@ -258,7 +258,7 @@
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where scene_id = #{sceneId,jdbcType=INTEGER}
+    where scene_id = #{sceneId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xidian.iot.database.pojo.Scene">
     update scene
@@ -270,6 +270,6 @@
       scene_el = #{sceneEl,jdbcType=DOUBLE},
       scene_desc = #{sceneDesc,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP}
-    where scene_id = #{sceneId,jdbcType=INTEGER}
+    where scene_id = #{sceneId,jdbcType=BIGINT}
   </update>
 </mapper>

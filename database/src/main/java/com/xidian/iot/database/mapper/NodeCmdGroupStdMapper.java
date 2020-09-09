@@ -10,7 +10,7 @@ public interface NodeCmdGroupStdMapper {
 
     int deleteByExample(NodeCmdGroupStdExample example);
 
-    int deleteByPrimaryKey(Integer ncgsId);
+    int deleteByPrimaryKey(Long ncgsId);
 
     int insert(NodeCmdGroupStd record);
 
@@ -18,7 +18,7 @@ public interface NodeCmdGroupStdMapper {
 
     List<NodeCmdGroupStd> selectByExample(NodeCmdGroupStdExample example);
 
-    NodeCmdGroupStd selectByPrimaryKey(Integer ncgsId);
+    NodeCmdGroupStd selectByPrimaryKey(Long ncgsId);
 
     int updateByExampleSelective(@Param("record") NodeCmdGroupStd record, @Param("example") NodeCmdGroupStdExample example);
 

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xidian.iot.database.mapper.NodeCmdGroupStdMapper">
   <resultMap id="BaseResultMap" type="com.xidian.iot.database.pojo.NodeCmdGroupStd">
-    <id column="ncgs_id" jdbcType="INTEGER" property="ncgsId" />
+    <id column="ncgs_id" jdbcType="BIGINT" property="ncgsId" />
     <result column="ncgs_name" jdbcType="VARCHAR" property="ncgsName" />
     <result column="ncgs_key" jdbcType="VARCHAR" property="ncgsKey" />
   </resultMap>
@@ -82,15 +82,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from node_cmd_group_std
-    where ncgs_id = #{ncgsId,jdbcType=INTEGER}
+    where ncgs_id = #{ncgsId,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from node_cmd_group_std
-    where ncgs_id = #{ncgsId,jdbcType=INTEGER}
+    where ncgs_id = #{ncgsId,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.xidian.iot.database.pojo.NodeCmdGroupStdExample">
     delete from node_cmd_group_std
@@ -99,14 +99,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xidian.iot.database.pojo.NodeCmdGroupStd">
-    <selectKey keyProperty="ncgsId" order="AFTER" resultType="java.lang.Integer">
+    <selectKey keyProperty="ncgsId" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into node_cmd_group_std (ncgs_name, ncgs_key)
     values (#{ncgsName,jdbcType=VARCHAR}, #{ncgsKey,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.iot.database.pojo.NodeCmdGroupStd">
-    <selectKey keyProperty="ncgsId" order="AFTER" resultType="java.lang.Integer">
+    <selectKey keyProperty="ncgsId" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into node_cmd_group_std
@@ -137,7 +137,7 @@
     update node_cmd_group_std
     <set>
       <if test="record.ncgsId != null">
-        ncgs_id = #{record.ncgsId,jdbcType=INTEGER},
+        ncgs_id = #{record.ncgsId,jdbcType=BIGINT},
       </if>
       <if test="record.ncgsName != null">
         ncgs_name = #{record.ncgsName,jdbcType=VARCHAR},
@@ -152,7 +152,7 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update node_cmd_group_std
-    set ncgs_id = #{record.ncgsId,jdbcType=INTEGER},
+    set ncgs_id = #{record.ncgsId,jdbcType=BIGINT},
       ncgs_name = #{record.ncgsName,jdbcType=VARCHAR},
       ncgs_key = #{record.ncgsKey,jdbcType=VARCHAR}
     <if test="_parameter != null">
@@ -169,12 +169,12 @@
         ncgs_key = #{ncgsKey,jdbcType=VARCHAR},
       </if>
     </set>
-    where ncgs_id = #{ncgsId,jdbcType=INTEGER}
+    where ncgs_id = #{ncgsId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xidian.iot.database.pojo.NodeCmdGroupStd">
     update node_cmd_group_std
     set ncgs_name = #{ncgsName,jdbcType=VARCHAR},
       ncgs_key = #{ncgsKey,jdbcType=VARCHAR}
-    where ncgs_id = #{ncgsId,jdbcType=INTEGER}
+    where ncgs_id = #{ncgsId,jdbcType=BIGINT}
   </update>
 </mapper>

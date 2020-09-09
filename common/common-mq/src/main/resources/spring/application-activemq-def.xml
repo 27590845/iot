@@ -27,12 +27,31 @@
         <property name="pubSubDomain" value="true"/>
     </bean>
 
-    <bean id="jmsSender" class="com.xidian.iot.common.mq.JmsSender">
+    <bean id="mqSender" class="com.xidian.iot.common.mq.activemq.ActivemqSender">
         <property name="jmsTemplate" ref="jmsTemplate"/>
     </bean>
 
-    <bean id="jmsSubscriber" class="com.xidian.iot.common.mq.JmsSubscriber">
+    <bean id="mqSubscriber" class="com.xidian.iot.common.mq.activemq.ActivemqSubscriber">
         <property name="jmsTemplate" ref="jmsTemplate"/>
+    </bean>
+
+
+
+
+
+    <!-- 主题监听Topic-->
+    <bean id="dataTopic" class="org.apache.activemq.command.ActiveMQTopic">
+        <constructor-arg>
+            <value>.com.zonesion.wsn.sensor.*.*</value>
+        </constructor-arg>
+    </bean>
+    <!-- 监听类-->
+    <bean id="receive" class="com.xidian.iot.common.mq.activemq.listener.TestConsumerListener"/>
+    <!-- 主题监听容器 （Topic） -->
+    <bean id="dataListener" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="jmsFactory" />
+        <property name="destination" ref="dataTopic" />
+        <property name="messageListener" ref="receive" />
     </bean>
 
 </beans>

@@ -6,13 +6,13 @@ import java.util.Date;
  * 场景表，场景是数据上传与命令下发的最基本单位。逻辑上可看作管理着多个数据单元的交互窗口；物理上可看作通信终端，比如dtu
  *
  * @author mrl
- * @date   2020/09/01
+ * @date   2020/09/09
  */
 public class Scene {
     /**
      * 场景ID
      */
-    private Integer sceneId;
+    private Long sceneId;
 
     /**
      * 场景网关号
@@ -54,11 +54,11 @@ public class Scene {
      */
     private Date createTime;
 
-    public Integer getSceneId() {
+    public Long getSceneId() {
         return sceneId;
     }
 
-    public void setSceneId(Integer sceneId) {
+    public void setSceneId(Long sceneId) {
         this.sceneId = sceneId;
     }
 

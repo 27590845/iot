@@ -7,6 +7,7 @@ import com.xidian.iot.database.pojo.Scene;
 import com.xidian.iot.database.pojo.SceneExample;
 import com.xidian.iot.databiz.service.SceneService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,9 +37,10 @@ public class SceneServiceImpl implements SceneService {
         return sceneMapper.selectByExample(sceneExample);
     }
 
+    @Cacheable(value="scene")
     @Override
     public Scene getSceneById(Integer sceneId) {
-        return null;
+        return sceneMapper.selectByPrimaryKey(sceneId);
     }
 
     @Override

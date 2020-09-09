@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xidian.iot.database.mapper.NodeCmdProtMapper">
   <resultMap id="BaseResultMap" type="com.xidian.iot.database.pojo.NodeCmdProt">
-    <id column="ncp_id" jdbcType="INTEGER" property="ncpId" />
-    <result column="node_id" jdbcType="INTEGER" property="nodeId" />
+    <id column="ncp_id" jdbcType="BIGINT" property="ncpId" />
+    <result column="node_id" jdbcType="BIGINT" property="nodeId" />
     <result column="ncp_type" jdbcType="VARCHAR" property="ncpType" />
     <result column="ncp_down" jdbcType="VARCHAR" property="ncpDown" />
     <result column="ncp_up" jdbcType="VARCHAR" property="ncpUp" />
@@ -84,15 +84,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from node_cmd_prot
-    where ncp_id = #{ncpId,jdbcType=INTEGER}
+    where ncp_id = #{ncpId,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from node_cmd_prot
-    where ncp_id = #{ncpId,jdbcType=INTEGER}
+    where ncp_id = #{ncpId,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.xidian.iot.database.pojo.NodeCmdProtExample">
     delete from node_cmd_prot
@@ -101,16 +101,16 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xidian.iot.database.pojo.NodeCmdProt">
-    <selectKey keyProperty="ncpId" order="AFTER" resultType="java.lang.Integer">
+    <selectKey keyProperty="ncpId" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into node_cmd_prot (node_id, ncp_type, ncp_down, 
       ncp_up)
-    values (#{nodeId,jdbcType=INTEGER}, #{ncpType,jdbcType=VARCHAR}, #{ncpDown,jdbcType=VARCHAR}, 
+    values (#{nodeId,jdbcType=BIGINT}, #{ncpType,jdbcType=VARCHAR}, #{ncpDown,jdbcType=VARCHAR}, 
       #{ncpUp,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.iot.database.pojo.NodeCmdProt">
-    <selectKey keyProperty="ncpId" order="AFTER" resultType="java.lang.Integer">
+    <selectKey keyProperty="ncpId" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into node_cmd_prot
@@ -130,7 +130,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="nodeId != null">
-        #{nodeId,jdbcType=INTEGER},
+        #{nodeId,jdbcType=BIGINT},
       </if>
       <if test="ncpType != null">
         #{ncpType,jdbcType=VARCHAR},
@@ -153,10 +153,10 @@
     update node_cmd_prot
     <set>
       <if test="record.ncpId != null">
-        ncp_id = #{record.ncpId,jdbcType=INTEGER},
+        ncp_id = #{record.ncpId,jdbcType=BIGINT},
       </if>
       <if test="record.nodeId != null">
-        node_id = #{record.nodeId,jdbcType=INTEGER},
+        node_id = #{record.nodeId,jdbcType=BIGINT},
       </if>
       <if test="record.ncpType != null">
         ncp_type = #{record.ncpType,jdbcType=VARCHAR},
@@ -174,8 +174,8 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update node_cmd_prot
-    set ncp_id = #{record.ncpId,jdbcType=INTEGER},
-      node_id = #{record.nodeId,jdbcType=INTEGER},
+    set ncp_id = #{record.ncpId,jdbcType=BIGINT},
+      node_id = #{record.nodeId,jdbcType=BIGINT},
       ncp_type = #{record.ncpType,jdbcType=VARCHAR},
       ncp_down = #{record.ncpDown,jdbcType=VARCHAR},
       ncp_up = #{record.ncpUp,jdbcType=VARCHAR}
@@ -187,7 +187,7 @@
     update node_cmd_prot
     <set>
       <if test="nodeId != null">
-        node_id = #{nodeId,jdbcType=INTEGER},
+        node_id = #{nodeId,jdbcType=BIGINT},
       </if>
       <if test="ncpType != null">
         ncp_type = #{ncpType,jdbcType=VARCHAR},
@@ -199,14 +199,14 @@
         ncp_up = #{ncpUp,jdbcType=VARCHAR},
       </if>
     </set>
-    where ncp_id = #{ncpId,jdbcType=INTEGER}
+    where ncp_id = #{ncpId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xidian.iot.database.pojo.NodeCmdProt">
     update node_cmd_prot
-    set node_id = #{nodeId,jdbcType=INTEGER},
+    set node_id = #{nodeId,jdbcType=BIGINT},
       ncp_type = #{ncpType,jdbcType=VARCHAR},
       ncp_down = #{ncpDown,jdbcType=VARCHAR},
       ncp_up = #{ncpUp,jdbcType=VARCHAR}
-    where ncp_id = #{ncpId,jdbcType=INTEGER}
+    where ncp_id = #{ncpId,jdbcType=BIGINT}
   </update>
 </mapper>
