@@ -1,5 +1,6 @@
 package com.xidian.iot.databiz.service.impl;
 
+import com.baidu.fsg.uid.UidGenerator;
 import com.github.pagehelper.PageHelper;
 import com.xidian.iot.database.mapper.SceneMapper;
 import com.xidian.iot.database.pojo.Scene;
@@ -22,6 +23,8 @@ public class SceneServiceImpl implements SceneService {
 
     @Autowired
     private SceneMapper sceneMapper;
+    @Autowired
+    private UidGenerator uidGenerator;
 
     @Override
     public List<Scene> getScene(String sceneSn, int page, int limit){
@@ -36,5 +39,11 @@ public class SceneServiceImpl implements SceneService {
     @Override
     public Scene getSceneById(Integer sceneId) {
         return null;
+    }
+
+    @Override
+    public void testId() {
+        long uid = uidGenerator.getUID();
+        System.out.println(uidGenerator.parseUID(uid));
     }
 }

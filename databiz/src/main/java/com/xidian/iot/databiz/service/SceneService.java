@@ -15,4 +15,6 @@ public interface SceneService {
     * 根据场景ID获取场景
     * */
     Scene getSceneById(Integer sceneId);
+
+    public void testId();
 }

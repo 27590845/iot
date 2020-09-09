@@ -22,9 +22,15 @@ public class SceneController {
     @Autowired
     private SceneService sceneService;
 
-    @ApiOperation(value = "获取指定资产信息接口")
+    @ApiOperation(value = "获取指定场景接口")
     @GetMapping("/{sceneId}")
-    public HttpResult getAsset(@ApiParam(name = "sceneId",value = "场景id") @PathVariable("assetId") Integer sceneId){
+    public HttpResult getScene(@ApiParam(name = "sceneId",value = "场景id") @PathVariable("assetId") Integer sceneId){
+        return HttpResult.responseOK(sceneService.getSceneById(sceneId));
+    }
+
+    @ApiOperation(value = "添加场景")
+    @GetMapping(path = "ddd",value = "ddd")
+    public HttpResult addAsset(@ApiParam(name = "sceneId",value = "场景id") @PathVariable("assetId") Integer sceneId){
         return HttpResult.responseOK(sceneService.getSceneById(sceneId));
     }
 

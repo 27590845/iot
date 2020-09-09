@@ -7,6 +7,9 @@
 
     <context:property-placeholder location="classpath:conf/jdbc-def.properties" ignore-unresolvable="true" />
 
+    <!-- Spring annotation扫描 -->
+    <context:component-scan base-package="com.baidu.fsg.uid" />
+
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
         <property name="driverClassName" value="${jdbc.driverClassName}"/>
         <property name="url" value="${jdbc.url}"/>
@@ -48,6 +51,7 @@
         <property name="dataSource" ref="dataSource"/>
         <!-- 指定sqlMapConfig总配置文件，订制的environment在spring容器中不在生效 -->
         <property name="configLocation" value="classpath:/mybatis/mybatis-config-def.xml"/>
+        <property name="mapperLocations" value="classpath:/META-INF/mybatis/mapper/WORKER_NODE.xml" />
         <!-- 注意其他配置 -->
         <property name="plugins">
             <array>
@@ -66,7 +70,7 @@
     <!-- mapper扫描器 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <!-- 扫描包路径，如果需要扫描多个包，中间使用半角逗号隔开 -->
-        <property name="basePackage" value="com.xidian.iot.database.mapper,com.xidian.iot.database.mapper.custom"/>
+        <property name="basePackage" value="com.xidian.iot.database.mapper,com.xidian.iot.database.mapper.custom,com.baidu.fsg.uid.worker.dao"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
     <!-- 配置事务管理器 -->
@@ -74,6 +78,13 @@
           class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
+    <!-- 事务相关配置 -->
+    <tx:annotation-driven transaction-manager="transactionManager" order="1" />
+    <bean id="batchSqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory" />
+        <constructor-arg index="1" value="BATCH" />
+    </bean>
 
-    <tx:annotation-driven/>
+
+    <import resource="cached-uid-spring.xml"/>
 </beans>
