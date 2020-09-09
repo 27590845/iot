@@ -1,39 +1,83 @@
 package com.xidian.iot.common.mq.kafka;
 
-import org.apache.kafka.clients.consumer.Consumer;
-import org.apache.kafka.clients.consumer.ConsumerRebalanceListener;
+import com.xidian.iot.common.mq.MqMessageListener;
+import com.xidian.iot.common.mq.MqSubscriber;
+import com.xidian.iot.common.mq.kafka.factory.MessageListenerContainerFactory;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.common.TopicPartition;
-import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.listener.KafkaMessageListenerContainer;
+import org.springframework.kafka.listener.MessageListener;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author mrl
  * @Title: KafkaSubscriber
  * @Package
- * @Description: 动态订阅 未完成
+ * @Description: 动态订阅 每开启一个container就会启动一个线程，另外kafka可以实现多个主题通过一个container监听，因此建议将相关的主题交由一个container监听
  * @date 2020/9/9 12:31 上午
  */
-@Deprecated
-public class KafkaSubscriber {
+@Slf4j
+public class KafkaSubscriber implements MqSubscriber {
 
-    DefaultKafkaConsumerFactory factory;
+//    @Setter
+//    private ConsumerFactory strConsumerFactory;
+//    @Setter
+//    private ConsumerFactory byteConsumerFactory;
+//    @Setter
+//    private ConsumerFactory objConsumerFactory;
+    @Setter
+    private MessageListenerContainerFactory containerFactory;
 
-    public void subscribe(String ... topicNames){
-        Consumer<String, String> consumer = factory.createConsumer();
-        consumer.subscribe(Arrays.asList(topicNames));
-        while (true) {
-            ConsumerRecords<String, String> records = consumer.poll(100);
-            for (ConsumerRecord<String, String> record : records)
+//    @Override
+//    public String subscribe(MqMessageListener listener, String ... topicNames){
+//        Consumer<String, String> consumer = strConsumerFactory.createConsumer();
+//        consumer.subscribe(Arrays.asList(topicNames));
+//        consumer.commitAsync();
+//        while (true) {
+//            ConsumerRecords<String, String> records = consumer.poll(5000);
+//            for (ConsumerRecord<String, String> record : records)
+//                listener.onMessage(record.topic(), record);
+//        }
+//    }
 
-                // print the offset,key and value for the consumer records.
-                System.out.printf("offset = %d, key = %s, value = %s\n",
-                        record.offset(), record.key(), record.value());
+    /**
+     * 该map用来保存订阅者及其对应的 activemq connection
+     */
+    private static final ConcurrentHashMap<String, KafkaMessageListenerContainer> containers = new ConcurrentHashMap<>();
+
+    @Override
+    public String subscribe(final MqMessageListener listener, String... topics) {
+        KafkaMessageListenerContainer container = containerFactory.getKafkaMessageListenerContainer(MessageListenerContainerFactory.STR_FACTORY, new MessageListener() {
+            @Override
+            public void onMessage(Object data) {
+                ConsumerRecord record  = null;
+                if(data != null && data instanceof ConsumerRecord)
+                    record = (ConsumerRecord) data;
+                String topic = record.topic();
+                String key = (String) record.key();
+                String value = (String) record.value();
+                long offset = record.offset();
+                int partition = record.partition();
+                listener.onMessage(topic, value);
+            }
+        }, topics);
+        //将container的hashcode作为consumerId
+        String consumerId = String.valueOf(container.hashCode());
+        containers.put(consumerId, container);
+        container.start();
+        return consumerId;
+    }
+
+    @Override
+    public boolean unSubscribe(String consumerId) {
+        if(StringUtils.isEmpty(consumerId)) return false;
+        KafkaMessageListenerContainer container = containers.get(consumerId);
+        if(container != null){
+            container.stop();
         }
-
+        return true;
     }
 }

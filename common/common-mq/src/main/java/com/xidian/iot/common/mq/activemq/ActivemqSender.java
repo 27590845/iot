@@ -4,14 +4,11 @@ import com.xidian.iot.common.mq.MqSender;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.activemq.command.ActiveMQTopic;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 
 import javax.jms.*;
 import java.io.Serializable;
-import java.util.HashMap;
 
 /**
  * @author mrl
@@ -36,7 +33,6 @@ public class ActivemqSender implements MqSender {
             }
         });
         log.info("成功发送了一条JMS消息--ActivemqSender  topic:"+topicName);
-
     }
 
     public void sendSeriObjByte(String topicName, final String jsonStr) {

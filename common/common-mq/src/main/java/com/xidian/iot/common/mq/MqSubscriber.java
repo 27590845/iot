@@ -1,7 +1,6 @@
 package com.xidian.iot.common.mq;
 
 import javax.jms.JMSException;
-import javax.jms.MessageListener;
 
 /**
  * @author mrl
@@ -14,15 +13,15 @@ public interface MqSubscriber {
 
     /**
      * 动态生成一个消费者
-     * @param topic
+     * @param topics
      * @param listener
      */
-    String subscribe(String topic, MessageListener listener) throws JMSException;
+    String subscribe(MqMessageListener listener, String ... topics) throws Exception;
 
     /**
-     * 根据subscribe生成的clientId，关闭一个消费者连接
-     * @param clientId
+     * 根据subscribe生成的consumerId，关闭一个消费者连接
+     * @param consumerId
      * @return
      */
-    boolean unSubscribe(String clientId) throws JMSException;
+    boolean unSubscribe(String consumerId) throws Exception;
 }

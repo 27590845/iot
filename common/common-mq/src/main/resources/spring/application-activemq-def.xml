@@ -22,8 +22,14 @@
         </property>
     </bean>
 
-    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+    <bean id="jmsPoolFactory" class="org.apache.activemq.pool.PooledConnectionFactory">
         <property name="connectionFactory" ref="jmsFactory"/>
+        <property name="maxConnections" value="${activemq.pool.maxConnections.max}"/>
+        <property name="maximumActiveSessionPerConnection" value="${activemq.pool.maximumActiveSessionPerConnection}"/>
+    </bean>
+
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="jmsPoolFactory"/>
         <property name="pubSubDomain" value="true"/>
     </bean>
 
@@ -39,19 +45,19 @@
 
 
 
-    <!-- 主题监听Topic-->
-    <bean id="dataTopic" class="org.apache.activemq.command.ActiveMQTopic">
-        <constructor-arg>
-            <value>.com.zonesion.wsn.sensor.*.*</value>
-        </constructor-arg>
-    </bean>
-    <!-- 监听类-->
-    <bean id="receive" class="com.xidian.iot.common.mq.activemq.listener.TestConsumerListener"/>
-    <!-- 主题监听容器 （Topic） -->
-    <bean id="dataListener" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
-        <property name="connectionFactory" ref="jmsFactory" />
-        <property name="destination" ref="dataTopic" />
-        <property name="messageListener" ref="receive" />
-    </bean>
+<!--    &lt;!&ndash; 主题监听Topic&ndash;&gt;-->
+<!--    <bean id="dataTopic" class="org.apache.activemq.command.ActiveMQTopic">-->
+<!--        <constructor-arg>-->
+<!--            <value>hello_topic</value>-->
+<!--        </constructor-arg>-->
+<!--    </bean>-->
+<!--    &lt;!&ndash; 监听类&ndash;&gt;-->
+<!--    <bean id="receive" class="com.xidian.iot.common.mq.activemq.listener.TestConsumerListener"/>-->
+<!--    &lt;!&ndash; 主题监听容器 （Topic） &ndash;&gt;-->
+<!--    <bean id="dataListener" class="org.springframework.jms.listener.DefaultMessageListenerContainer">-->
+<!--        <property name="connectionFactory" ref="jmsFactory" />-->
+<!--        <property name="destination" ref="dataTopic" />-->
+<!--        <property name="messageListener" ref="receive" />-->
+<!--    </bean>-->
 
 </beans>
