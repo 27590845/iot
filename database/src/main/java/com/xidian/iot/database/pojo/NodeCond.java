@@ -4,33 +4,33 @@ package com.xidian.iot.database.pojo;
  * 节点触发器条件，一个节点可配置多个条件，一个条件对应一个触发器；一次“添加关联”操作可添加多个条件以及生成一个触发器(这些条件可能对应到不同节点，甚至不同场景下的不同节点)
  *
  * @author mrl
- * @date   2020/09/01
+ * @date   2020/09/09
  */
 public class NodeCond {
     /**
      * 节点触发器触发条件ID
      */
-    private Integer ncId;
+    private Long ncId;
 
     /**
      * 节点属性ID，一个条件对应一个节点属性，一个节点属性有多个条件，条件的作用(判断)对象是节点属性
      */
-    private Integer naId;
+    private Long naId;
 
     /**
      * 场景ID
      */
-    private Integer sceneId;
+    private Long sceneId;
 
     /**
      * 节点ID
      */
-    private Integer nodeId;
+    private Long nodeId;
 
     /**
      * 节点触发器ID，一个条件对应一个节点触发器，一个节点触发器有多个条件
      */
-    private Integer ntId;
+    private Long ntId;
 
     /**
      * 操作符1>2>=3<4<=5==6新值7冻结8复活
@@ -57,43 +57,43 @@ public class NodeCond {
      */
     private Integer ncFitTime;
 
-    public Integer getNcId() {
+    public Long getNcId() {
         return ncId;
     }
 
-    public void setNcId(Integer ncId) {
+    public void setNcId(Long ncId) {
         this.ncId = ncId;
     }
 
-    public Integer getNaId() {
+    public Long getNaId() {
         return naId;
     }
 
-    public void setNaId(Integer naId) {
+    public void setNaId(Long naId) {
         this.naId = naId;
     }
 
-    public Integer getSceneId() {
+    public Long getSceneId() {
         return sceneId;
     }
 
-    public void setSceneId(Integer sceneId) {
+    public void setSceneId(Long sceneId) {
         this.sceneId = sceneId;
     }
 
-    public Integer getNodeId() {
+    public Long getNodeId() {
         return nodeId;
     }
 
-    public void setNodeId(Integer nodeId) {
+    public void setNodeId(Long nodeId) {
         this.nodeId = nodeId;
     }
 
-    public Integer getNtId() {
+    public Long getNtId() {
         return ntId;
     }
 
-    public void setNtId(Integer ntId) {
+    public void setNtId(Long ntId) {
         this.ntId = ntId;
     }
 

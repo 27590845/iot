@@ -114,52 +114,52 @@ public class NodeActAlertExample {
             return (Criteria) this;
         }
 
-        public Criteria andNaaIdEqualTo(Integer value) {
+        public Criteria andNaaIdEqualTo(Long value) {
             addCriterion("naa_id =", value, "naaId");
             return (Criteria) this;
         }
 
-        public Criteria andNaaIdNotEqualTo(Integer value) {
+        public Criteria andNaaIdNotEqualTo(Long value) {
             addCriterion("naa_id <>", value, "naaId");
             return (Criteria) this;
         }
 
-        public Criteria andNaaIdGreaterThan(Integer value) {
+        public Criteria andNaaIdGreaterThan(Long value) {
             addCriterion("naa_id >", value, "naaId");
             return (Criteria) this;
         }
 
-        public Criteria andNaaIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andNaaIdGreaterThanOrEqualTo(Long value) {
             addCriterion("naa_id >=", value, "naaId");
             return (Criteria) this;
         }
 
-        public Criteria andNaaIdLessThan(Integer value) {
+        public Criteria andNaaIdLessThan(Long value) {
             addCriterion("naa_id <", value, "naaId");
             return (Criteria) this;
         }
 
-        public Criteria andNaaIdLessThanOrEqualTo(Integer value) {
+        public Criteria andNaaIdLessThanOrEqualTo(Long value) {
             addCriterion("naa_id <=", value, "naaId");
             return (Criteria) this;
         }
 
-        public Criteria andNaaIdIn(List<Integer> values) {
+        public Criteria andNaaIdIn(List<Long> values) {
             addCriterion("naa_id in", values, "naaId");
             return (Criteria) this;
         }
 
-        public Criteria andNaaIdNotIn(List<Integer> values) {
+        public Criteria andNaaIdNotIn(List<Long> values) {
             addCriterion("naa_id not in", values, "naaId");
             return (Criteria) this;
         }
 
-        public Criteria andNaaIdBetween(Integer value1, Integer value2) {
+        public Criteria andNaaIdBetween(Long value1, Long value2) {
             addCriterion("naa_id between", value1, value2, "naaId");
             return (Criteria) this;
         }
 
-        public Criteria andNaaIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andNaaIdNotBetween(Long value1, Long value2) {
             addCriterion("naa_id not between", value1, value2, "naaId");
             return (Criteria) this;
         }
@@ -174,52 +174,52 @@ public class NodeActAlertExample {
             return (Criteria) this;
         }
 
-        public Criteria andNtIdEqualTo(Integer value) {
+        public Criteria andNtIdEqualTo(Long value) {
             addCriterion("nt_id =", value, "ntId");
             return (Criteria) this;
         }
 
-        public Criteria andNtIdNotEqualTo(Integer value) {
+        public Criteria andNtIdNotEqualTo(Long value) {
             addCriterion("nt_id <>", value, "ntId");
             return (Criteria) this;
         }
 
-        public Criteria andNtIdGreaterThan(Integer value) {
+        public Criteria andNtIdGreaterThan(Long value) {
             addCriterion("nt_id >", value, "ntId");
             return (Criteria) this;
         }
 
-        public Criteria andNtIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andNtIdGreaterThanOrEqualTo(Long value) {
             addCriterion("nt_id >=", value, "ntId");
             return (Criteria) this;
         }
 
-        public Criteria andNtIdLessThan(Integer value) {
+        public Criteria andNtIdLessThan(Long value) {
             addCriterion("nt_id <", value, "ntId");
             return (Criteria) this;
         }
 
-        public Criteria andNtIdLessThanOrEqualTo(Integer value) {
+        public Criteria andNtIdLessThanOrEqualTo(Long value) {
             addCriterion("nt_id <=", value, "ntId");
             return (Criteria) this;
         }
 
-        public Criteria andNtIdIn(List<Integer> values) {
+        public Criteria andNtIdIn(List<Long> values) {
             addCriterion("nt_id in", values, "ntId");
             return (Criteria) this;
         }
 
-        public Criteria andNtIdNotIn(List<Integer> values) {
+        public Criteria andNtIdNotIn(List<Long> values) {
             addCriterion("nt_id not in", values, "ntId");
             return (Criteria) this;
         }
 
-        public Criteria andNtIdBetween(Integer value1, Integer value2) {
+        public Criteria andNtIdBetween(Long value1, Long value2) {
             addCriterion("nt_id between", value1, value2, "ntId");
             return (Criteria) this;
         }
 
-        public Criteria andNtIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andNtIdNotBetween(Long value1, Long value2) {
             addCriterion("nt_id not between", value1, value2, "ntId");
             return (Criteria) this;
         }

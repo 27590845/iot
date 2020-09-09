@@ -1,6 +1,7 @@
 package com.xidian.iot.common.util;
 
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,7 +88,7 @@ public class JsonUtil {
      * @return 当转换成功，则返回JSON字符串
      * @throws Exception 解析发生错误
      */
-    public static String toJson(Object obj) throws Exception {
+    public static String toJson(Object obj) throws JsonProcessingException {
         if (obj == null) {
             log.error("Prameter 'obj' is null.");
             return com.xidian.iot.common.util.StringUtil.EMPTY;

@@ -10,7 +10,7 @@ public interface NodeMapper {
 
     int deleteByExample(NodeExample example);
 
-    int deleteByPrimaryKey(Integer nodeId);
+    int deleteByPrimaryKey(Long nodeId);
 
     int insert(Node record);
 
@@ -18,7 +18,7 @@ public interface NodeMapper {
 
     List<Node> selectByExample(NodeExample example);
 
-    Node selectByPrimaryKey(Integer nodeId);
+    Node selectByPrimaryKey(Long nodeId);
 
     int updateByExampleSelective(@Param("record") Node record, @Param("example") NodeExample example);
 

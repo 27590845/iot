@@ -10,7 +10,7 @@ public interface NodeTrigMapper {
 
     int deleteByExample(NodeTrigExample example);
 
-    int deleteByPrimaryKey(Integer ntId);
+    int deleteByPrimaryKey(Long ntId);
 
     int insert(NodeTrig record);
 
@@ -18,7 +18,7 @@ public interface NodeTrigMapper {
 
     List<NodeTrig> selectByExample(NodeTrigExample example);
 
-    NodeTrig selectByPrimaryKey(Integer ntId);
+    NodeTrig selectByPrimaryKey(Long ntId);
 
     int updateByExampleSelective(@Param("record") NodeTrig record, @Param("example") NodeTrigExample example);
 

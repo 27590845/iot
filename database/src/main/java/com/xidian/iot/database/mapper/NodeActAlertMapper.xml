@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xidian.iot.database.mapper.NodeActAlertMapper">
   <resultMap id="BaseResultMap" type="com.xidian.iot.database.pojo.NodeActAlert">
-    <id column="naa_id" jdbcType="INTEGER" property="naaId" />
-    <result column="nt_id" jdbcType="INTEGER" property="ntId" />
+    <id column="naa_id" jdbcType="BIGINT" property="naaId" />
+    <result column="nt_id" jdbcType="BIGINT" property="ntId" />
     <result column="naa_type" jdbcType="TINYINT" property="naaType" />
     <result column="naa_val" jdbcType="VARCHAR" property="naaVal" />
     <result column="naa_content" jdbcType="VARCHAR" property="naaContent" />
@@ -84,15 +84,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from node_act_alert
-    where naa_id = #{naaId,jdbcType=INTEGER}
+    where naa_id = #{naaId,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from node_act_alert
-    where naa_id = #{naaId,jdbcType=INTEGER}
+    where naa_id = #{naaId,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.xidian.iot.database.pojo.NodeActAlertExample">
     delete from node_act_alert
@@ -101,16 +101,16 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xidian.iot.database.pojo.NodeActAlert">
-    <selectKey keyProperty="naaId" order="AFTER" resultType="java.lang.Integer">
+    <selectKey keyProperty="naaId" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into node_act_alert (nt_id, naa_type, naa_val, 
       naa_content)
-    values (#{ntId,jdbcType=INTEGER}, #{naaType,jdbcType=TINYINT}, #{naaVal,jdbcType=VARCHAR}, 
+    values (#{ntId,jdbcType=BIGINT}, #{naaType,jdbcType=TINYINT}, #{naaVal,jdbcType=VARCHAR}, 
       #{naaContent,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.iot.database.pojo.NodeActAlert">
-    <selectKey keyProperty="naaId" order="AFTER" resultType="java.lang.Integer">
+    <selectKey keyProperty="naaId" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into node_act_alert
@@ -130,7 +130,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="ntId != null">
-        #{ntId,jdbcType=INTEGER},
+        #{ntId,jdbcType=BIGINT},
       </if>
       <if test="naaType != null">
         #{naaType,jdbcType=TINYINT},
@@ -153,10 +153,10 @@
     update node_act_alert
     <set>
       <if test="record.naaId != null">
-        naa_id = #{record.naaId,jdbcType=INTEGER},
+        naa_id = #{record.naaId,jdbcType=BIGINT},
       </if>
       <if test="record.ntId != null">
-        nt_id = #{record.ntId,jdbcType=INTEGER},
+        nt_id = #{record.ntId,jdbcType=BIGINT},
       </if>
       <if test="record.naaType != null">
         naa_type = #{record.naaType,jdbcType=TINYINT},
@@ -174,8 +174,8 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update node_act_alert
-    set naa_id = #{record.naaId,jdbcType=INTEGER},
-      nt_id = #{record.ntId,jdbcType=INTEGER},
+    set naa_id = #{record.naaId,jdbcType=BIGINT},
+      nt_id = #{record.ntId,jdbcType=BIGINT},
       naa_type = #{record.naaType,jdbcType=TINYINT},
       naa_val = #{record.naaVal,jdbcType=VARCHAR},
       naa_content = #{record.naaContent,jdbcType=VARCHAR}
@@ -187,7 +187,7 @@
     update node_act_alert
     <set>
       <if test="ntId != null">
-        nt_id = #{ntId,jdbcType=INTEGER},
+        nt_id = #{ntId,jdbcType=BIGINT},
       </if>
       <if test="naaType != null">
         naa_type = #{naaType,jdbcType=TINYINT},
@@ -199,14 +199,14 @@
         naa_content = #{naaContent,jdbcType=VARCHAR},
       </if>
     </set>
-    where naa_id = #{naaId,jdbcType=INTEGER}
+    where naa_id = #{naaId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xidian.iot.database.pojo.NodeActAlert">
     update node_act_alert
-    set nt_id = #{ntId,jdbcType=INTEGER},
+    set nt_id = #{ntId,jdbcType=BIGINT},
       naa_type = #{naaType,jdbcType=TINYINT},
       naa_val = #{naaVal,jdbcType=VARCHAR},
       naa_content = #{naaContent,jdbcType=VARCHAR}
-    where naa_id = #{naaId,jdbcType=INTEGER}
+    where naa_id = #{naaId,jdbcType=BIGINT}
   </update>
 </mapper>

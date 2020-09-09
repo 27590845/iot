@@ -115,52 +115,52 @@ public class SceneExample {
             return (Criteria) this;
         }
 
-        public Criteria andSceneIdEqualTo(Integer value) {
+        public Criteria andSceneIdEqualTo(Long value) {
             addCriterion("scene_id =", value, "sceneId");
             return (Criteria) this;
         }
 
-        public Criteria andSceneIdNotEqualTo(Integer value) {
+        public Criteria andSceneIdNotEqualTo(Long value) {
             addCriterion("scene_id <>", value, "sceneId");
             return (Criteria) this;
         }
 
-        public Criteria andSceneIdGreaterThan(Integer value) {
+        public Criteria andSceneIdGreaterThan(Long value) {
             addCriterion("scene_id >", value, "sceneId");
             return (Criteria) this;
         }
 
-        public Criteria andSceneIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andSceneIdGreaterThanOrEqualTo(Long value) {
             addCriterion("scene_id >=", value, "sceneId");
             return (Criteria) this;
         }
 
-        public Criteria andSceneIdLessThan(Integer value) {
+        public Criteria andSceneIdLessThan(Long value) {
             addCriterion("scene_id <", value, "sceneId");
             return (Criteria) this;
         }
 
-        public Criteria andSceneIdLessThanOrEqualTo(Integer value) {
+        public Criteria andSceneIdLessThanOrEqualTo(Long value) {
             addCriterion("scene_id <=", value, "sceneId");
             return (Criteria) this;
         }
 
-        public Criteria andSceneIdIn(List<Integer> values) {
+        public Criteria andSceneIdIn(List<Long> values) {
             addCriterion("scene_id in", values, "sceneId");
             return (Criteria) this;
         }
 
-        public Criteria andSceneIdNotIn(List<Integer> values) {
+        public Criteria andSceneIdNotIn(List<Long> values) {
             addCriterion("scene_id not in", values, "sceneId");
             return (Criteria) this;
         }
 
-        public Criteria andSceneIdBetween(Integer value1, Integer value2) {
+        public Criteria andSceneIdBetween(Long value1, Long value2) {
             addCriterion("scene_id between", value1, value2, "sceneId");
             return (Criteria) this;
         }
 
-        public Criteria andSceneIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andSceneIdNotBetween(Long value1, Long value2) {
             addCriterion("scene_id not between", value1, value2, "sceneId");
             return (Criteria) this;
         }

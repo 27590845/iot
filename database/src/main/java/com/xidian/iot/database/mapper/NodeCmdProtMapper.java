@@ -10,7 +10,7 @@ public interface NodeCmdProtMapper {
 
     int deleteByExample(NodeCmdProtExample example);
 
-    int deleteByPrimaryKey(Integer ncpId);
+    int deleteByPrimaryKey(Long ncpId);
 
     int insert(NodeCmdProt record);
 
@@ -18,7 +18,7 @@ public interface NodeCmdProtMapper {
 
     List<NodeCmdProt> selectByExample(NodeCmdProtExample example);
 
-    NodeCmdProt selectByPrimaryKey(Integer ncpId);
+    NodeCmdProt selectByPrimaryKey(Long ncpId);
 
     int updateByExampleSelective(@Param("record") NodeCmdProt record, @Param("example") NodeCmdProtExample example);
 

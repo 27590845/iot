@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xidian.iot.database.mapper.NodeTrigMapper">
   <resultMap id="BaseResultMap" type="com.xidian.iot.database.pojo.NodeTrig">
-    <id column="nt_id" jdbcType="INTEGER" property="ntId" />
+    <id column="nt_id" jdbcType="BIGINT" property="ntId" />
     <result column="nt_name" jdbcType="VARCHAR" property="ntName" />
     <result column="nt_desc" jdbcType="VARCHAR" property="ntDesc" />
-    <result column="node_id" jdbcType="INTEGER" property="nodeId" />
+    <result column="node_id" jdbcType="BIGINT" property="nodeId" />
     <result column="nt_invl" jdbcType="INTEGER" property="ntInvl" />
     <result column="nt_rept" jdbcType="TINYINT" property="ntRept" />
     <result column="nt_exec" jdbcType="TINYINT" property="ntExec" />
@@ -87,15 +87,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from node_trig
-    where nt_id = #{ntId,jdbcType=INTEGER}
+    where nt_id = #{ntId,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from node_trig
-    where nt_id = #{ntId,jdbcType=INTEGER}
+    where nt_id = #{ntId,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.xidian.iot.database.pojo.NodeTrigExample">
     delete from node_trig
@@ -104,18 +104,18 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xidian.iot.database.pojo.NodeTrig">
-    <selectKey keyProperty="ntId" order="AFTER" resultType="java.lang.Integer">
+    <selectKey keyProperty="ntId" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into node_trig (nt_name, nt_desc, node_id, 
       nt_invl, nt_rept, nt_exec, 
       nt_expr)
-    values (#{ntName,jdbcType=VARCHAR}, #{ntDesc,jdbcType=VARCHAR}, #{nodeId,jdbcType=INTEGER}, 
+    values (#{ntName,jdbcType=VARCHAR}, #{ntDesc,jdbcType=VARCHAR}, #{nodeId,jdbcType=BIGINT}, 
       #{ntInvl,jdbcType=INTEGER}, #{ntRept,jdbcType=TINYINT}, #{ntExec,jdbcType=TINYINT}, 
       #{ntExpr,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.iot.database.pojo.NodeTrig">
-    <selectKey keyProperty="ntId" order="AFTER" resultType="java.lang.Integer">
+    <selectKey keyProperty="ntId" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into node_trig
@@ -150,7 +150,7 @@
         #{ntDesc,jdbcType=VARCHAR},
       </if>
       <if test="nodeId != null">
-        #{nodeId,jdbcType=INTEGER},
+        #{nodeId,jdbcType=BIGINT},
       </if>
       <if test="ntInvl != null">
         #{ntInvl,jdbcType=INTEGER},
@@ -176,7 +176,7 @@
     update node_trig
     <set>
       <if test="record.ntId != null">
-        nt_id = #{record.ntId,jdbcType=INTEGER},
+        nt_id = #{record.ntId,jdbcType=BIGINT},
       </if>
       <if test="record.ntName != null">
         nt_name = #{record.ntName,jdbcType=VARCHAR},
@@ -185,7 +185,7 @@
         nt_desc = #{record.ntDesc,jdbcType=VARCHAR},
       </if>
       <if test="record.nodeId != null">
-        node_id = #{record.nodeId,jdbcType=INTEGER},
+        node_id = #{record.nodeId,jdbcType=BIGINT},
       </if>
       <if test="record.ntInvl != null">
         nt_invl = #{record.ntInvl,jdbcType=INTEGER},
@@ -206,10 +206,10 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update node_trig
-    set nt_id = #{record.ntId,jdbcType=INTEGER},
+    set nt_id = #{record.ntId,jdbcType=BIGINT},
       nt_name = #{record.ntName,jdbcType=VARCHAR},
       nt_desc = #{record.ntDesc,jdbcType=VARCHAR},
-      node_id = #{record.nodeId,jdbcType=INTEGER},
+      node_id = #{record.nodeId,jdbcType=BIGINT},
       nt_invl = #{record.ntInvl,jdbcType=INTEGER},
       nt_rept = #{record.ntRept,jdbcType=TINYINT},
       nt_exec = #{record.ntExec,jdbcType=TINYINT},
@@ -228,7 +228,7 @@
         nt_desc = #{ntDesc,jdbcType=VARCHAR},
       </if>
       <if test="nodeId != null">
-        node_id = #{nodeId,jdbcType=INTEGER},
+        node_id = #{nodeId,jdbcType=BIGINT},
       </if>
       <if test="ntInvl != null">
         nt_invl = #{ntInvl,jdbcType=INTEGER},
@@ -243,17 +243,17 @@
         nt_expr = #{ntExpr,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where nt_id = #{ntId,jdbcType=INTEGER}
+    where nt_id = #{ntId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xidian.iot.database.pojo.NodeTrig">
     update node_trig
     set nt_name = #{ntName,jdbcType=VARCHAR},
       nt_desc = #{ntDesc,jdbcType=VARCHAR},
-      node_id = #{nodeId,jdbcType=INTEGER},
+      node_id = #{nodeId,jdbcType=BIGINT},
       nt_invl = #{ntInvl,jdbcType=INTEGER},
       nt_rept = #{ntRept,jdbcType=TINYINT},
       nt_exec = #{ntExec,jdbcType=TINYINT},
       nt_expr = #{ntExpr,jdbcType=TIMESTAMP}
-    where nt_id = #{ntId,jdbcType=INTEGER}
+    where nt_id = #{ntId,jdbcType=BIGINT}
   </update>
 </mapper>

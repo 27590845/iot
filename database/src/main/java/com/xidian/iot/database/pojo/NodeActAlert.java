@@ -4,18 +4,18 @@ package com.xidian.iot.database.pojo;
  * 一旦一个节点触发器被触发，就会有一个报警信息被发出
  *
  * @author mrl
- * @date   2020/09/01
+ * @date   2020/09/09
  */
 public class NodeActAlert {
     /**
      * 
      */
-    private Integer naaId;
+    private Long naaId;
 
     /**
      * 
      */
-    private Integer ntId;
+    private Long ntId;
 
     /**
      * 警报类型 1短信 2email 3站内信
@@ -32,19 +32,19 @@ public class NodeActAlert {
      */
     private String naaContent;
 
-    public Integer getNaaId() {
+    public Long getNaaId() {
         return naaId;
     }
 
-    public void setNaaId(Integer naaId) {
+    public void setNaaId(Long naaId) {
         this.naaId = naaId;
     }
 
-    public Integer getNtId() {
+    public Long getNtId() {
         return ntId;
     }
 
-    public void setNtId(Integer ntId) {
+    public void setNtId(Long ntId) {
         this.ntId = ntId;
     }
 

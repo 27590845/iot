@@ -10,7 +10,7 @@ public interface NodeCondMapper {
 
     int deleteByExample(NodeCondExample example);
 
-    int deleteByPrimaryKey(Integer ncId);
+    int deleteByPrimaryKey(Long ncId);
 
     int insert(NodeCond record);
 
@@ -18,7 +18,7 @@ public interface NodeCondMapper {
 
     List<NodeCond> selectByExample(NodeCondExample example);
 
-    NodeCond selectByPrimaryKey(Integer ncId);
+    NodeCond selectByPrimaryKey(Long ncId);
 
     int updateByExampleSelective(@Param("record") NodeCond record, @Param("example") NodeCondExample example);
 

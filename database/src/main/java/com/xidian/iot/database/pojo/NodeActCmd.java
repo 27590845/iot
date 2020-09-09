@@ -4,33 +4,33 @@ package com.xidian.iot.database.pojo;
  * 一旦一个节点触发器被触发，可能会执行多个命令
  *
  * @author mrl
- * @date   2020/09/01
+ * @date   2020/09/09
  */
 public class NodeActCmd {
     /**
      * 
      */
-    private Integer nacId;
+    private Long nacId;
 
     /**
      * 
      */
-    private Integer ncId;
+    private Long ncId;
 
     /**
      * 
      */
-    private Integer nodeId;
+    private Long nodeId;
 
     /**
      * 
      */
-    private Integer sceneId;
+    private Long sceneId;
 
     /**
      * 
      */
-    private Integer ntId;
+    private Long ntId;
 
     /**
      * 节点SN
@@ -42,43 +42,43 @@ public class NodeActCmd {
      */
     private String sceneSn;
 
-    public Integer getNacId() {
+    public Long getNacId() {
         return nacId;
     }
 
-    public void setNacId(Integer nacId) {
+    public void setNacId(Long nacId) {
         this.nacId = nacId;
     }
 
-    public Integer getNcId() {
+    public Long getNcId() {
         return ncId;
     }
 
-    public void setNcId(Integer ncId) {
+    public void setNcId(Long ncId) {
         this.ncId = ncId;
     }
 
-    public Integer getNodeId() {
+    public Long getNodeId() {
         return nodeId;
     }
 
-    public void setNodeId(Integer nodeId) {
+    public void setNodeId(Long nodeId) {
         this.nodeId = nodeId;
     }
 
-    public Integer getSceneId() {
+    public Long getSceneId() {
         return sceneId;
     }
 
-    public void setSceneId(Integer sceneId) {
+    public void setSceneId(Long sceneId) {
         this.sceneId = sceneId;
     }
 
-    public Integer getNtId() {
+    public Long getNtId() {
         return ntId;
     }
 
-    public void setNtId(Integer ntId) {
+    public void setNtId(Long ntId) {
         this.ntId = ntId;
     }
 

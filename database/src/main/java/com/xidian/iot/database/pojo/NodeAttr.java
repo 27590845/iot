@@ -4,18 +4,18 @@ package com.xidian.iot.database.pojo;
  * 节点属性表，一个节点下有多个属性。逻辑上可看作数据单元里的一个字段；物理上可看作底层感知设备，比如传感器
  *
  * @author mrl
- * @date   2020/09/01
+ * @date   2020/09/09
  */
 public class NodeAttr {
     /**
      * 节点属性ID
      */
-    private Integer naId;
+    private Long naId;
 
     /**
      * 节点ID，一个节点属性对应一个节点，一个节点有多个节点属性
      */
-    private Integer nodeId;
+    private Long nodeId;
 
     /**
      * 属性标识
@@ -37,19 +37,19 @@ public class NodeAttr {
      */
     private String naSym;
 
-    public Integer getNaId() {
+    public Long getNaId() {
         return naId;
     }
 
-    public void setNaId(Integer naId) {
+    public void setNaId(Long naId) {
         this.naId = naId;
     }
 
-    public Integer getNodeId() {
+    public Long getNodeId() {
         return nodeId;
     }
 
-    public void setNodeId(Integer nodeId) {
+    public void setNodeId(Long nodeId) {
         this.nodeId = nodeId;
     }
 

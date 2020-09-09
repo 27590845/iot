@@ -10,7 +10,7 @@ public interface SceneMapper {
 
     int deleteByExample(SceneExample example);
 
-    int deleteByPrimaryKey(Integer sceneId);
+    int deleteByPrimaryKey(Long sceneId);
 
     int insert(Scene record);
 
@@ -18,7 +18,7 @@ public interface SceneMapper {
 
     List<Scene> selectByExample(SceneExample example);
 
-    Scene selectByPrimaryKey(Integer sceneId);
+    Scene selectByPrimaryKey(Long sceneId);
 
     int updateByExampleSelective(@Param("record") Scene record, @Param("example") SceneExample example);
 

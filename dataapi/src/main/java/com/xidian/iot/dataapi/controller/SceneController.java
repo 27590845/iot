@@ -24,7 +24,7 @@ public class SceneController {
 
     @ApiOperation(value = "获取指定资产信息接口")
     @GetMapping("/{sceneId}")
-    public HttpResult getAsset(@ApiParam(name = "sceneId",value = "场景id") @PathVariable("assetId") Integer sceneId){
+    public HttpResult getAsset(@ApiParam(name = "sceneId",value = "场景id") @PathVariable("sceneId") Integer sceneId){
         return HttpResult.responseOK(sceneService.getSceneById(sceneId));
     }
 

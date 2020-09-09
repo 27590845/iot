@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xidian.iot.database.mapper.NodeCondMapper">
   <resultMap id="BaseResultMap" type="com.xidian.iot.database.pojo.NodeCond">
-    <id column="nc_id" jdbcType="INTEGER" property="ncId" />
-    <result column="na_id" jdbcType="INTEGER" property="naId" />
-    <result column="scene_id" jdbcType="INTEGER" property="sceneId" />
-    <result column="node_id" jdbcType="INTEGER" property="nodeId" />
-    <result column="nt_id" jdbcType="INTEGER" property="ntId" />
+    <id column="nc_id" jdbcType="BIGINT" property="ncId" />
+    <result column="na_id" jdbcType="BIGINT" property="naId" />
+    <result column="scene_id" jdbcType="BIGINT" property="sceneId" />
+    <result column="node_id" jdbcType="BIGINT" property="nodeId" />
+    <result column="nt_id" jdbcType="BIGINT" property="ntId" />
     <result column="nc_op" jdbcType="TINYINT" property="ncOp" />
     <result column="nc_val" jdbcType="VARCHAR" property="ncVal" />
     <result column="node_sn" jdbcType="VARCHAR" property="nodeSn" />
@@ -89,15 +89,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from node_cond
-    where nc_id = #{ncId,jdbcType=INTEGER}
+    where nc_id = #{ncId,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from node_cond
-    where nc_id = #{ncId,jdbcType=INTEGER}
+    where nc_id = #{ncId,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.xidian.iot.database.pojo.NodeCondExample">
     delete from node_cond
@@ -106,20 +106,18 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xidian.iot.database.pojo.NodeCond">
-    <selectKey keyProperty="ncId" order="AFTER" resultType="java.lang.Integer">
+    <selectKey keyProperty="ncId" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into node_cond (na_id, scene_id, node_id, 
-      nt_id, nc_op, nc_val, 
-      node_sn, scene_sn, nc_fit_time
-      )
-    values (#{naId,jdbcType=INTEGER}, #{sceneId,jdbcType=INTEGER}, #{nodeId,jdbcType=INTEGER}, 
-      #{ntId,jdbcType=INTEGER}, #{ncOp,jdbcType=TINYINT}, #{ncVal,jdbcType=VARCHAR}, 
-      #{nodeSn,jdbcType=VARCHAR}, #{sceneSn,jdbcType=VARCHAR}, #{ncFitTime,jdbcType=INTEGER}
-      )
+      nt_id, nc_op, nc_val, node_sn, 
+      scene_sn, nc_fit_time)
+    values (#{naId,jdbcType=BIGINT}, #{sceneId,jdbcType=BIGINT}, #{nodeId,jdbcType=BIGINT}, 
+      #{ntId,jdbcType=BIGINT}, #{ncOp,jdbcType=TINYINT}, #{ncVal,jdbcType=VARCHAR}, #{nodeSn,jdbcType=VARCHAR}, 
+      #{sceneSn,jdbcType=VARCHAR}, #{ncFitTime,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.iot.database.pojo.NodeCond">
-    <selectKey keyProperty="ncId" order="AFTER" resultType="java.lang.Integer">
+    <selectKey keyProperty="ncId" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into node_cond
@@ -154,16 +152,16 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="naId != null">
-        #{naId,jdbcType=INTEGER},
+        #{naId,jdbcType=BIGINT},
       </if>
       <if test="sceneId != null">
-        #{sceneId,jdbcType=INTEGER},
+        #{sceneId,jdbcType=BIGINT},
       </if>
       <if test="nodeId != null">
-        #{nodeId,jdbcType=INTEGER},
+        #{nodeId,jdbcType=BIGINT},
       </if>
       <if test="ntId != null">
-        #{ntId,jdbcType=INTEGER},
+        #{ntId,jdbcType=BIGINT},
       </if>
       <if test="ncOp != null">
         #{ncOp,jdbcType=TINYINT},
@@ -192,19 +190,19 @@
     update node_cond
     <set>
       <if test="record.ncId != null">
-        nc_id = #{record.ncId,jdbcType=INTEGER},
+        nc_id = #{record.ncId,jdbcType=BIGINT},
       </if>
       <if test="record.naId != null">
-        na_id = #{record.naId,jdbcType=INTEGER},
+        na_id = #{record.naId,jdbcType=BIGINT},
       </if>
       <if test="record.sceneId != null">
-        scene_id = #{record.sceneId,jdbcType=INTEGER},
+        scene_id = #{record.sceneId,jdbcType=BIGINT},
       </if>
       <if test="record.nodeId != null">
-        node_id = #{record.nodeId,jdbcType=INTEGER},
+        node_id = #{record.nodeId,jdbcType=BIGINT},
       </if>
       <if test="record.ntId != null">
-        nt_id = #{record.ntId,jdbcType=INTEGER},
+        nt_id = #{record.ntId,jdbcType=BIGINT},
       </if>
       <if test="record.ncOp != null">
         nc_op = #{record.ncOp,jdbcType=TINYINT},
@@ -228,11 +226,11 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update node_cond
-    set nc_id = #{record.ncId,jdbcType=INTEGER},
-      na_id = #{record.naId,jdbcType=INTEGER},
-      scene_id = #{record.sceneId,jdbcType=INTEGER},
-      node_id = #{record.nodeId,jdbcType=INTEGER},
-      nt_id = #{record.ntId,jdbcType=INTEGER},
+    set nc_id = #{record.ncId,jdbcType=BIGINT},
+      na_id = #{record.naId,jdbcType=BIGINT},
+      scene_id = #{record.sceneId,jdbcType=BIGINT},
+      node_id = #{record.nodeId,jdbcType=BIGINT},
+      nt_id = #{record.ntId,jdbcType=BIGINT},
       nc_op = #{record.ncOp,jdbcType=TINYINT},
       nc_val = #{record.ncVal,jdbcType=VARCHAR},
       node_sn = #{record.nodeSn,jdbcType=VARCHAR},
@@ -246,16 +244,16 @@
     update node_cond
     <set>
       <if test="naId != null">
-        na_id = #{naId,jdbcType=INTEGER},
+        na_id = #{naId,jdbcType=BIGINT},
       </if>
       <if test="sceneId != null">
-        scene_id = #{sceneId,jdbcType=INTEGER},
+        scene_id = #{sceneId,jdbcType=BIGINT},
       </if>
       <if test="nodeId != null">
-        node_id = #{nodeId,jdbcType=INTEGER},
+        node_id = #{nodeId,jdbcType=BIGINT},
       </if>
       <if test="ntId != null">
-        nt_id = #{ntId,jdbcType=INTEGER},
+        nt_id = #{ntId,jdbcType=BIGINT},
       </if>
       <if test="ncOp != null">
         nc_op = #{ncOp,jdbcType=TINYINT},
@@ -273,19 +271,19 @@
         nc_fit_time = #{ncFitTime,jdbcType=INTEGER},
       </if>
     </set>
-    where nc_id = #{ncId,jdbcType=INTEGER}
+    where nc_id = #{ncId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xidian.iot.database.pojo.NodeCond">
     update node_cond
-    set na_id = #{naId,jdbcType=INTEGER},
-      scene_id = #{sceneId,jdbcType=INTEGER},
-      node_id = #{nodeId,jdbcType=INTEGER},
-      nt_id = #{ntId,jdbcType=INTEGER},
+    set na_id = #{naId,jdbcType=BIGINT},
+      scene_id = #{sceneId,jdbcType=BIGINT},
+      node_id = #{nodeId,jdbcType=BIGINT},
+      nt_id = #{ntId,jdbcType=BIGINT},
       nc_op = #{ncOp,jdbcType=TINYINT},
       nc_val = #{ncVal,jdbcType=VARCHAR},
       node_sn = #{nodeSn,jdbcType=VARCHAR},
       scene_sn = #{sceneSn,jdbcType=VARCHAR},
       nc_fit_time = #{ncFitTime,jdbcType=INTEGER}
-    where nc_id = #{ncId,jdbcType=INTEGER}
+    where nc_id = #{ncId,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -5,7 +5,6 @@ import com.xidian.iot.common.cache.RedisUtil;
 import com.xidian.iot.database.mapper.SceneMapper;
 import com.xidian.iot.database.pojo.Scene;
 import com.xidian.iot.database.pojo.SceneExample;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +19,7 @@ import java.util.List;
  * @Description: scene service
  * @date 2020/9/1 11:02 上午
  */
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 @Service
 public class SceneService {
 

@@ -10,7 +10,7 @@ public interface NodeAttrStdMapper {
 
     int deleteByExample(NodeAttrStdExample example);
 
-    int deleteByPrimaryKey(Integer nasId);
+    int deleteByPrimaryKey(Long nasId);
 
     int insert(NodeAttrStd record);
 
@@ -18,7 +18,7 @@ public interface NodeAttrStdMapper {
 
     List<NodeAttrStd> selectByExample(NodeAttrStdExample example);
 
-    NodeAttrStd selectByPrimaryKey(Integer nasId);
+    NodeAttrStd selectByPrimaryKey(Long nasId);
 
     int updateByExampleSelective(@Param("record") NodeAttrStd record, @Param("example") NodeAttrStdExample example);
 
