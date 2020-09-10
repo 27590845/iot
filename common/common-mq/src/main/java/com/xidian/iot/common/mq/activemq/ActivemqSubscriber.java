@@ -2,16 +2,13 @@ package com.xidian.iot.common.mq.activemq;
 
 import com.xidian.iot.common.mq.MqMessageListener;
 import com.xidian.iot.common.mq.MqSubscriber;
-import com.xidian.iot.common.util.StringUtil;
+import com.xidian.iot.common.mq.activemq.parser.JmsMessageParser;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.activemq.command.ActiveMQTopic;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.jms.core.JmsTemplate;
 
 import javax.jms.*;
-import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -22,11 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @Description: 动态订阅
  * @date 2020/9/1 11:06 下午
  */
-@Slf4j
 public class ActivemqSubscriber implements MqSubscriber {
-
-    public final static int MSG_TOPIC = 0;
-    public final static int MSG_CONTENT = 1;
 
     /**
      * 该map用来保存订阅者及其对应的 activemq connection
@@ -55,8 +48,9 @@ public class ActivemqSubscriber implements MqSubscriber {
         consumer.setMessageListener(new MessageListener() {
             @Override
             public void onMessage(Message message) {
-                Map<Integer, Object> res = parseJmsMessage(message);
-                listener.onMessage(res.get(MSG_TOPIC), res.get(MSG_CONTENT));
+                Map<Integer, Object> res = JmsMessageParser.parse(message);
+                if(res==null || res.size()<=0) return;
+                listener.onMessage(res.get(JmsMessageParser.MSG_TOPIC), res.get(JmsMessageParser.MSG_CONTENT));
             }
         });
         //将connection的clientId作为consumerId
@@ -75,44 +69,5 @@ public class ActivemqSubscriber implements MqSubscriber {
             }
         }
         return false;
-    }
-
-    public Map<Integer, Object> parseJmsMessage(Message msg) {
-        if(msg == null) return null;
-        Object msgContent = null;
-        String msgtopic = null;
-        Map<Integer, Object> res = null;
-        try {
-            msgtopic = msg.getJMSDestination().toString();
-            if (msg instanceof BytesMessage) {
-                log.info("------Received BytesMessage------");
-                BytesMessage message = (BytesMessage) msg;
-                byte[] byteContent = new byte[1024];
-                int length = -1;
-                StringBuffer content = new StringBuffer();
-                //如果消息体不为空
-                while ((length = message.readBytes(byteContent)) != -1) {
-                    content.append(new String(byteContent, 0, length));
-                }
-                // 消息体
-                msgContent = content.toString();
-            }else if(msg instanceof ObjectMessage){
-                log.info("------Received ObjectMessage------");
-                Serializable message = ((ObjectMessage)msg).getObject();
-                msgContent = message.toString();
-            }else {
-                log.info("------Received TextMessage------");
-                TextMessage message = (TextMessage) msg;
-                msgContent = message.getText();
-            }
-        } catch (JMSException e) {
-            e.printStackTrace();
-        }
-        if(StringUtils.isNotEmpty(msgtopic)){
-            res = new HashMap<>();
-            res.put(MSG_TOPIC, msgtopic);
-            res.put(MSG_CONTENT, msgContent);
-        }
-        return res;
     }
 }

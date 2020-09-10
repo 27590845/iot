@@ -29,8 +29,6 @@ import java.util.concurrent.CountDownLatch;
 @Slf4j
 public class KafkaTest {
 
-    static final Logger logger = LoggerFactory.getLogger(ActivemqTest.class);
-
     @Resource
     MqSender mqSender;
 

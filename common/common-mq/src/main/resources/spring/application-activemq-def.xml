@@ -45,15 +45,14 @@
 
 
 
-<!--    &lt;!&ndash; 主题监听Topic&ndash;&gt;-->
+    <!-- 主题监听Topic-->
 <!--    <bean id="dataTopic" class="org.apache.activemq.command.ActiveMQTopic">-->
 <!--        <constructor-arg>-->
 <!--            <value>hello_topic</value>-->
 <!--        </constructor-arg>-->
 <!--    </bean>-->
-<!--    &lt;!&ndash; 监听类&ndash;&gt;-->
-<!--    <bean id="receive" class="com.xidian.iot.common.mq.activemq.listener.TestConsumerListener"/>-->
-<!--    &lt;!&ndash; 主题监听容器 （Topic） &ndash;&gt;-->
+    <!-- 监听类 -->
+<!--    <bean id="receive" class="com.xidian.iot.common.mq.activemq.listener.TestListenerJmsJms"/>-->
 <!--    <bean id="dataListener" class="org.springframework.jms.listener.DefaultMessageListenerContainer">-->
 <!--        <property name="connectionFactory" ref="jmsFactory" />-->
 <!--        <property name="destination" ref="dataTopic" />-->

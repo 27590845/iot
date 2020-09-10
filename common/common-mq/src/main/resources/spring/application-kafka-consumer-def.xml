@@ -83,9 +83,9 @@
 
 
     <!-- 实际执行消息消费的类 -->
-    <bean id="messageListener" class="com.xidian.iot.common.mq.kafka.listener.TestStrConsumerListener" />
+<!--    <bean id="messageListener" class="com.xidian.iot.common.mq.kafka.listener.JmsConsumerListener/>-->
 
-<!--    &lt;!&ndash; 消费者容器配置信息 &ndash;&gt;-->
+    <!-- 消费者容器配置信息 -->
 <!--    <bean id="containerProperties"-->
 <!--          class="org.springframework.kafka.listener.ContainerProperties">-->
 <!--        <constructor-arg>-->
@@ -96,7 +96,7 @@
 <!--        <property name="messageListener" ref="messageListener" />-->
 <!--    </bean>-->
 
-<!--    &lt;!&ndash; 创建messageListenerContainer bean，使用的时候，只需要注入这个bean &ndash;&gt;-->
+    <!-- 创建messageListenerContainer bean，使用的时候，只需要注入这个bean -->
 <!--    <bean id="messageListenerContainer"-->
 <!--          class="org.springframework.kafka.listener.KafkaMessageListenerContainer"-->
 <!--          init-method="doStart">-->
