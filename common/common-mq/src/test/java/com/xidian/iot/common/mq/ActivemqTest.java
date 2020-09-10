@@ -5,6 +5,9 @@ import static org.junit.Assert.assertTrue;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.xidian.iot.common.mq.activemq.ActivemqSender;
 import com.xidian.iot.common.mq.activemq.ActivemqSubscriber;
+import com.xidian.iot.common.util.JsonUtil;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -13,10 +16,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
-import javax.jms.Connection;
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.MessageListener;
+import javax.jms.*;
+import java.io.Serializable;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -25,10 +26,9 @@ import java.util.concurrent.CountDownLatch;
 @RunWith(SpringJUnit4ClassRunner.class)
 //@WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:spring/application-activemq-def.xml"})
+@Slf4j
 public class ActivemqTest
 {
-    static final Logger logger = LoggerFactory.getLogger(ActivemqTest.class);
-
     /**
      * Rigorous Test :-)
      */
@@ -41,9 +41,21 @@ public class ActivemqTest
     @Resource
     MqSender mqSender;
 
+    final static String topic = "hello_topic";
+
     @Test
-    public void send() throws JsonProcessingException {
-        mqSender.send("test_topic", "hello word");
+    public void send1() throws JsonProcessingException {
+        mqSender.send(topic, "hello word");
+    }
+
+    @Test
+    public void send2() throws JsonProcessingException {
+        mqSender.sendSeriObjByte(topic, JsonUtil.toJson(new User("hansey", "niupi", 9999)));
+    }
+
+    @Test
+    public void send3() throws JsonProcessingException {
+        mqSender.sendSeriObj(topic, new User("hansey", "niupi", 9999));
     }
 
     @Resource
@@ -51,16 +63,17 @@ public class ActivemqTest
 
     @Test
     public void subscribe() throws JMSException, InterruptedException {
-        final CountDownLatch latch = new CountDownLatch(1);
-        String clientId = mqSubscriber.subscribe("test_topic", new MessageListener() {
+        //消费1000个消息后关闭
+        final CountDownLatch latch = new CountDownLatch(1000);
+        String clientId = mqSubscriber.subscribe(new MqMessageListener() {
             @Override
-            public void onMessage(Message message) {
-                System.out.println("test_topic-----"+message.toString());
+            public void onMessage(Object topicName, Object message) {
+                System.out.printf("topicName = %s, message = %s\n", topicName, message);
                 latch.countDown();
             }
-        });
+        }, topic);
         latch.await();
-        logger.info("####close connection###");
+        log.info("####close connection###");
         if(clientId!=null){
             Connection connection = ActivemqSubscriber.getConnection(clientId);
             if(connection!=null){
@@ -68,4 +81,18 @@ public class ActivemqTest
             }
         }
     }
+
+    @Data
+    class User implements Serializable {
+        String name;
+        String gender;
+        Integer age;
+        public User(){}
+        public User(String name, String gender, Integer age){
+            this.name = name;
+            this.age = age;
+            this.gender = gender;
+        }
+    }
+
 }

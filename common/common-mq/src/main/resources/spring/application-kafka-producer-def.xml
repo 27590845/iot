@@ -12,12 +12,12 @@
     <bean id="producerProperties" class="java.util.HashMap">
         <constructor-arg>
             <map>
-                <entry key="bootstrap.servers" value="${bootstrap.servers}" />
-                <entry key="group.id" value="${group.id}" />
-                <entry key="retries" value="${retries}" />
-                <entry key="batch.size" value="${batch.size}" />
-                <entry key="linger.ms" value="${linger.ms}" />
-                <entry key="buffer.memory" value="${buffer.memory}" />
+                <entry key="bootstrap.servers" value="${kafka.bootstrap.servers}" />
+                <entry key="group.id" value="${kafka.group.id}" />
+                <entry key="retries" value="${kafka.retries}" />
+                <entry key="batch.size" value="${kafka.batch.size}" />
+                <entry key="linger.ms" value="${kafka.linger.ms}" />
+                <entry key="buffer.memory" value="${kafka.buffer.memory}" />
 <!--                <entry key="key.serializer"-->
 <!--                       value="org.apache.kafka.common.serialization.StringSerializer" />-->
 <!--                <entry key="value.serializer"-->

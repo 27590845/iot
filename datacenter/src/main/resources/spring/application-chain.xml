@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- json格式上数，责任链 -->
+    <bean name="jsonChain" class="org.apache.commons.chain.impl.ChainBase">
+        <constructor-arg>
+            <list>
+                <ref bean="checkJsonDataCommand" />
+                <ref bean="conversionNodeDataCommand" />
+                <ref bean="autoAddNodeCommand" />
+                <ref bean="autoAddAttributeCommand" />
+                <ref bean="saveNodeDataCmd" />
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <!--JSON数据处理 -->
+    <bean name="checkJsonDataCommand"
+          class="com.xidian.iot.datacenter.service.chain.json.CheckJsonDataCommand" />
+    <bean name="conversionNodeDataCommand"
+          class="com.thingslink.langyan.service.chain.json.ConversionNodeDataCommand" />
+    <bean name="autoAddNodeCommand"
+          class="com.thingslink.langyan.service.chain.json.AutoAddNodeCommand" />
+    <bean name="autoAddAttributeCommand"
+          class="com.thingslink.langyan.service.chain.json.AutoAddAttributeCommand" />
+    <bean name="filterNodeDataCommand"
+          class="com.thingslink.langyan.service.chain.json.FilterNodeDataCommand" />
+
+    <!-- image数据处理 -->
+    <bean name="getImageDataCmd"
+          class="com.thingslink.langyan.service.chain.img.GetImageDataCommand" />
+    <bean name="saveFileCmd" class="com.thingslink.langyan.service.chain.img.SaveFileCommand">
+        <property name="uploadPath" value="${upload.path}"></property>
+    </bean>
+
+    <!-- 保存节点数据 -->
+    <bean name="saveNodeDataCmd" class="com.thingslink.langyan.service.chain.SaveNodeDataCommand" />
+
+</beans>

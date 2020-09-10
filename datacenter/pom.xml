@@ -39,6 +39,11 @@
       <artifactId>fastjson</artifactId>
       <version>${alibaba.fastjson.version}</version>
     </dependency>
+    <dependency>
+      <groupId>commons-chain</groupId>
+      <artifactId>commons-chain</artifactId>
+      <version>${common.chain.version}</version>
+    </dependency>
     <!-- util end -->
 
     <!-- springframework start -->

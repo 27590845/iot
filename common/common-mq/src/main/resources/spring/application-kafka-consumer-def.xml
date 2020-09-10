@@ -6,16 +6,16 @@
      http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:property-placeholder location="classpath:conf/kafka-def.properties" ignore-unresolvable="true"/>
-
+    <context:component-scan base-package="com.xidian.iot.common.mq.kafka"/>
     <!-- 定义consumer的参数 -->
     <bean id="consumerProperties" class="java.util.HashMap">
         <constructor-arg>
             <map>
-                <entry key="bootstrap.servers" value="${bootstrap.servers}" />
-                <entry key="group.id" value="${group.id}" />
-                <entry key="enable.auto.commit" value="${enable.auto.commit}" />
-                <entry key="auto.commit.interval.ms" value="${auto.commit.interval.ms}" />
-                <entry key="session.timeout.ms" value="${session.timeout.ms}" />
+                <entry key="bootstrap.servers" value="${kafka.bootstrap.servers}" />
+                <entry key="group.id" value="${kafka.group.id}" />
+                <entry key="enable.auto.commit" value="${kafka.enable.auto.commit}" />
+                <entry key="auto.commit.interval.ms" value="${kafka.auto.commit.interval.ms}" />
+                <entry key="session.timeout.ms" value="${kafka.session.timeout.ms}" />
 <!--                <entry key="key.deserializer"-->
 <!--                       value="org.apache.kafka.common.serialization.StringDeserializer" />-->
 <!--                <entry key="value.deserializer"-->
@@ -62,6 +62,19 @@
         </constructor-arg>
     </bean>
 
+    <bean id="messageListenerContainerFactory" class="com.xidian.iot.common.mq.kafka.factory.MessageListenerContainerFactory">
+        <property name="strConsumerFactory" ref="strConsumerFactory"/>
+        <property name="byteConsumerFactory" ref="byteConsumerFactory"/>
+        <property name="objConsumerFactory" ref="objConsumerFactory"/>
+    </bean>
+
+    <bean id="mqSubscriber" class="com.xidian.iot.common.mq.kafka.KafkaSubscriber">
+<!--        <property name="strConsumerFactory" ref="strConsumerFactory"/>-->
+<!--        <property name="byteConsumerFactory" ref="byteConsumerFactory"/>-->
+<!--        <property name="objConsumerFactory" ref="objConsumerFactory"/>-->
+        <property name="containerFactory" ref="messageListenerContainerFactory"/>
+    </bean>
+
 
 
 
@@ -70,26 +83,37 @@
 
 
     <!-- 实际执行消息消费的类 -->
-    <bean id="messageListener" class="com.xidian.iot.common.mq.kafka.listener.TestStrConsumerListener" />
+<!--    <bean id="messageListener" class="com.xidian.iot.common.mq.kafka.listener.JmsConsumerListener/>-->
 
     <!-- 消费者容器配置信息 -->
-    <bean id="containerProperties"
-          class="org.springframework.kafka.listener.ContainerProperties">
-        <constructor-arg>
-            <array>
-                <value>test</value> <!-- 配置topic -->
-                <value>hello_topic</value>
-            </array>
-        </constructor-arg>
-        <property name="messageListener" ref="messageListener" />
-    </bean>
+<!--    <bean id="containerProperties"-->
+<!--          class="org.springframework.kafka.listener.ContainerProperties">-->
+<!--        <constructor-arg>-->
+<!--            <array>-->
+<!--                <value>hello_topic</value>&lt;!&ndash; 配置topic &ndash;&gt;-->
+<!--            </array>-->
+<!--        </constructor-arg>-->
+<!--        <property name="messageListener" ref="messageListener" />-->
+<!--    </bean>-->
 
     <!-- 创建messageListenerContainer bean，使用的时候，只需要注入这个bean -->
-    <bean id="messageListenerContainer"
-          class="org.springframework.kafka.listener.KafkaMessageListenerContainer"
-          init-method="doStart">
-        <constructor-arg ref="strConsumerFactory" />
-        <constructor-arg ref="containerProperties" />
-    </bean>
+<!--    <bean id="messageListenerContainer"-->
+<!--          class="org.springframework.kafka.listener.KafkaMessageListenerContainer"-->
+<!--          init-method="doStart">-->
+<!--        <constructor-arg ref="strConsumerFactory" />-->
+<!--        <constructor-arg ref="containerProperties" />-->
+<!--    </bean>-->
+
+    <!-- 通过工厂模式生产消息监听器容器，下面代码等价于上面注释掉的代码；具体业务中需要自行设计messageListener -->
+<!--    <bean id="messageListenerContainer" factory-bean="messageListenerContainerFactory"-->
+<!--          factory-method="getKafkaMessageListenerContainer" init-method="doStart">-->
+<!--        <constructor-arg index="0" value="${strMessageFactory.type}"/>-->
+<!--        <constructor-arg index="1" ref="messageListener"/>-->
+<!--        <constructor-arg index="2">-->
+<!--            <list>-->
+<!--                <value>hello_topic</value>-->
+<!--            </list>-->
+<!--        </constructor-arg>-->
+<!--    </bean>-->
 
 </beans>

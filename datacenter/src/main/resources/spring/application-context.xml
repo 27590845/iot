@@ -1,8 +1,9 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
     <context:component-scan base-package="com.xidian.iot.datacenter"/>
     <context:annotation-config/>
@@ -10,7 +11,8 @@
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations"> <!-- PropertyPlaceholderConfigurer类中有个locations属性，接收的是一个数组，即我们可以在下面配好多个properties文件 -->
             <array>
-                <value>classpath:conf/activemq-def.properties</value>
+<!--                <value>classpath:conf/activemq-def.properties</value>-->
+                <value>classpath:conf/kafka-def.properties</value>
                 <value>classpath:conf/redis-def.properties</value>
                 <value>classpath:conf/jdbc-def.properties</value>
                 <value>classpath:conf/mongo-def.properties</value>
@@ -19,15 +21,26 @@
         </property>
     </bean>
 
-<!--    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate"/>-->
-<!--    <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>-->
-<!--    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
-<!--        <property name="defaultEncoding" value="utf-8"></property>-->
-<!--        <property name="maxUploadSize" value="10485760000"></property>-->
-<!--        <property name="maxInMemorySize" value="40960"></property>-->
-<!--    </bean>-->
     <import resource="application-mybatis-def.xml"/>
     <import resource="application-mongo-def.xml"/>
     <import resource="application-redis-def.xml"/>
-    <import resource="application-activemq-def.xml"/>
+<!--    <import resource="application-activemq-def.xml"/>-->
+    <import resource="application-kafka-consumer-def.xml"/>
+    <import resource="application-kafka-producer-def.xml"/>
+
+    <task:executor id="taskExecutor"
+                   pool-size="${thread.pool.corePoolSize}-${thread.pool.maxPoolSize}"
+                   queue-capacity="${thread.pool.queueCapacity}" />
+
+    <bean id="messageListener" class="com.xidian.iot.datacenter.listener.UpdataListener"/>
+    <bean id="messageListenerContainer" factory-bean="messageListenerContainerFactory"
+          factory-method="getKafkaMessageListenerContainer" init-method="doStart">
+        <constructor-arg index="0" value="${strMessageFactory.type}"/>
+        <constructor-arg index="1" ref="messageListener"/>
+        <constructor-arg index="2">
+            <list>
+                <value>hello_topic</value>
+            </list>
+        </constructor-arg>
+    </bean>
 </beans>

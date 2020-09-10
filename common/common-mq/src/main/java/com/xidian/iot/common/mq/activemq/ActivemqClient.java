@@ -16,7 +16,6 @@ import javax.jms.*;
  * @Description: activemq client
  * @date 2020/9/1 10:53 下午
  */
-@Slf4j
 public class ActivemqClient {
 
     @Setter
