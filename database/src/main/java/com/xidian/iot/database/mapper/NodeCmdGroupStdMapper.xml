@@ -99,18 +99,17 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xidian.iot.database.entity.NodeCmdGroupStd">
-    <selectKey keyProperty="ncgsId" order="AFTER" resultType="java.lang.Long">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into node_cmd_group_std (ncgs_name, ncgs_key)
-    values (#{ncgsName,jdbcType=VARCHAR}, #{ncgsKey,jdbcType=VARCHAR})
+    insert into node_cmd_group_std (ncgs_id, ncgs_name, ncgs_key
+      )
+    values (#{ncgsId,jdbcType=BIGINT}, #{ncgsName,jdbcType=VARCHAR}, #{ncgsKey,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.iot.database.entity.NodeCmdGroupStd">
-    <selectKey keyProperty="ncgsId" order="AFTER" resultType="java.lang.Long">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
     insert into node_cmd_group_std
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ncgsId != null">
+        ncgs_id,
+      </if>
       <if test="ncgsName != null">
         ncgs_name,
       </if>
@@ -119,6 +118,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ncgsId != null">
+        #{ncgsId,jdbcType=BIGINT},
+      </if>
       <if test="ncgsName != null">
         #{ncgsName,jdbcType=VARCHAR},
       </if>

@@ -101,20 +101,17 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xidian.iot.database.entity.NodeCmdProt">
-    <selectKey keyProperty="ncpId" order="AFTER" resultType="java.lang.Long">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into node_cmd_prot (node_id, ncp_type, ncp_down, 
-      ncp_up)
-    values (#{nodeId,jdbcType=BIGINT}, #{ncpType,jdbcType=VARCHAR}, #{ncpDown,jdbcType=VARCHAR}, 
-      #{ncpUp,jdbcType=VARCHAR})
+    insert into node_cmd_prot (ncp_id, node_id, ncp_type, 
+      ncp_down, ncp_up)
+    values (#{ncpId,jdbcType=BIGINT}, #{nodeId,jdbcType=BIGINT}, #{ncpType,jdbcType=VARCHAR}, 
+      #{ncpDown,jdbcType=VARCHAR}, #{ncpUp,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.iot.database.entity.NodeCmdProt">
-    <selectKey keyProperty="ncpId" order="AFTER" resultType="java.lang.Long">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
     insert into node_cmd_prot
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ncpId != null">
+        ncp_id,
+      </if>
       <if test="nodeId != null">
         node_id,
       </if>
@@ -129,6 +126,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ncpId != null">
+        #{ncpId,jdbcType=BIGINT},
+      </if>
       <if test="nodeId != null">
         #{nodeId,jdbcType=BIGINT},
       </if>

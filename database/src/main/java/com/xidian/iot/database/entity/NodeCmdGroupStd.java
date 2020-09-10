@@ -4,7 +4,7 @@ package com.xidian.iot.database.entity;
  * 节点命令组名称模版，node_cmd_group_std.ncgs_name对应node_cmd_group.ncg_name，供添加命令组选择“命令组名称“
  *
  * @author mrl
- * @date   2020/09/09
+ * @date   2020/09/10
  */
 public class NodeCmdGroupStd {
     /**

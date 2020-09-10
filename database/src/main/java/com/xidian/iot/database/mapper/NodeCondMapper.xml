@@ -106,22 +106,21 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xidian.iot.database.entity.NodeCond">
-    <selectKey keyProperty="ncId" order="AFTER" resultType="java.lang.Long">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into node_cond (na_id, scene_id, node_id, 
-      nt_id, nc_op, nc_val, node_sn, 
-      scene_sn, nc_fit_time)
-    values (#{naId,jdbcType=BIGINT}, #{sceneId,jdbcType=BIGINT}, #{nodeId,jdbcType=BIGINT}, 
-      #{ntId,jdbcType=BIGINT}, #{ncOp,jdbcType=TINYINT}, #{ncVal,jdbcType=VARCHAR}, #{nodeSn,jdbcType=VARCHAR}, 
-      #{sceneSn,jdbcType=VARCHAR}, #{ncFitTime,jdbcType=INTEGER})
+    insert into node_cond (nc_id, na_id, scene_id, 
+      node_id, nt_id, nc_op, nc_val, 
+      node_sn, scene_sn, nc_fit_time
+      )
+    values (#{ncId,jdbcType=BIGINT}, #{naId,jdbcType=BIGINT}, #{sceneId,jdbcType=BIGINT}, 
+      #{nodeId,jdbcType=BIGINT}, #{ntId,jdbcType=BIGINT}, #{ncOp,jdbcType=TINYINT}, #{ncVal,jdbcType=VARCHAR}, 
+      #{nodeSn,jdbcType=VARCHAR}, #{sceneSn,jdbcType=VARCHAR}, #{ncFitTime,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.iot.database.entity.NodeCond">
-    <selectKey keyProperty="ncId" order="AFTER" resultType="java.lang.Long">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
     insert into node_cond
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ncId != null">
+        nc_id,
+      </if>
       <if test="naId != null">
         na_id,
       </if>
@@ -151,6 +150,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ncId != null">
+        #{ncId,jdbcType=BIGINT},
+      </if>
       <if test="naId != null">
         #{naId,jdbcType=BIGINT},
       </if>

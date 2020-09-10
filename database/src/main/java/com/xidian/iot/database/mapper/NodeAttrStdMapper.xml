@@ -101,20 +101,17 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xidian.iot.database.entity.NodeAttrStd">
-    <selectKey keyProperty="nasId" order="AFTER" resultType="java.lang.Long">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into node_attr_std (nas_key, nas_desc, nas_unit, 
-      nas_sym)
-    values (#{nasKey,jdbcType=VARCHAR}, #{nasDesc,jdbcType=VARCHAR}, #{nasUnit,jdbcType=VARCHAR}, 
-      #{nasSym,jdbcType=VARCHAR})
+    insert into node_attr_std (nas_id, nas_key, nas_desc, 
+      nas_unit, nas_sym)
+    values (#{nasId,jdbcType=BIGINT}, #{nasKey,jdbcType=VARCHAR}, #{nasDesc,jdbcType=VARCHAR}, 
+      #{nasUnit,jdbcType=VARCHAR}, #{nasSym,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.iot.database.entity.NodeAttrStd">
-    <selectKey keyProperty="nasId" order="AFTER" resultType="java.lang.Long">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
     insert into node_attr_std
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="nasId != null">
+        nas_id,
+      </if>
       <if test="nasKey != null">
         nas_key,
       </if>
@@ -129,6 +126,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="nasId != null">
+        #{nasId,jdbcType=BIGINT},
+      </if>
       <if test="nasKey != null">
         #{nasKey,jdbcType=VARCHAR},
       </if>

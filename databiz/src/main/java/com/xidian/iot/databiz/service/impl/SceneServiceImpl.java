@@ -2,9 +2,9 @@ package com.xidian.iot.databiz.service.impl;
 
 import com.baidu.fsg.uid.UidGenerator;
 import com.github.pagehelper.PageHelper;
-import com.xidian.iot.database.mapper.SceneMapper;
 import com.xidian.iot.database.entity.Scene;
 import com.xidian.iot.database.entity.SceneExample;
+import com.xidian.iot.database.mapper.SceneMapper;
 import com.xidian.iot.database.param.SceneAddParam;
 import com.xidian.iot.databiz.constants.EncodeType;
 import com.xidian.iot.databiz.service.SceneService;
@@ -59,6 +59,7 @@ public class SceneServiceImpl implements SceneService {
         String sequence = String.format("%06d", countScene());
         //物联网唯一标示体系
         scene.setSceneSn(String.valueOf(EncodeType.EncodeGateway.getCode())+"866101022"+param.getUsageCode()+param.getCommCode()+sequence);
+        sceneMapper.insertSelective(scene);
         return scene;
     }
 
