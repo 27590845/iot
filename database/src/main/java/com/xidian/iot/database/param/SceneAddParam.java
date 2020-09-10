@@ -3,13 +3,12 @@ package com.xidian.iot.database.param;
 import com.xidian.iot.database.entity.Scene;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang.StringUtils;
+import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.*;
-import java.awt.*;
 import java.util.Date;
 
 /**
@@ -27,11 +26,11 @@ public class SceneAddParam {
     private String sceneName;
 
     @ApiModelProperty(value = "通讯协议码、一位")
-    @Pattern(regexp = "^[1-9]\\d*$",message = "通讯协议码为一位请从新确认")
+    @Pattern(regexp = "^([1-9]|10)$",message = "通讯协议码为一位")
     private String commCode;
 
     @ApiModelProperty(value = "使用场景码、一位")
-    @Pattern(regexp = "^[1-9]\\d*$",message = "使用场景码仅一位请从新确认")
+    @Pattern(regexp = "^([1-9]|10)$",message = "使用场景码仅一位")
     private String usageCode;
 
     @ApiModelProperty(value = "地点名称")
@@ -39,12 +38,12 @@ public class SceneAddParam {
 
     @ApiModelProperty(value = "经度")
     @NotNull(message = "经度不能为空")
-    @Pattern(regexp = "^-?((0|1?[0-7]?[0-9]?)(([.][0-9]{1,4})?)|180(([.][0]{1,4})?))$",message = "经度范围错误")
+    @Range(min=-180, max=180)
     private Double sceneLng;
 
     @ApiModelProperty(value = "纬度")
+    @Range(min=-90, max=90)
     @NotNull(message = "纬度不能为空")
-    @Pattern(regexp = "^-?((0|[1-8]?[0-9]?)(([.][0-9]{1,4})?)|90(([.][0]{1,4})?))$",message = "纬度范围错误")
     private Double sceneLat;
 
     @ApiModelProperty(value = "海拔")
