@@ -46,6 +46,14 @@
     </dependency>
     <!-- lombok end-->
 
+    <dependency>
+      <groupId>org.hibernate.validator</groupId>
+      <artifactId>hibernate-validator</artifactId>
+      <version>6.1.5.Final</version>
+    </dependency>
+
+
+
     <!-- screw start -->
     <dependency>
       <groupId>cn.smallbun.screw</groupId>
@@ -59,7 +67,12 @@
       <artifactId>HikariCP</artifactId>
       <version>${HikariCP.version}</version>
     </dependency>
-      <!-- screw end -->
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-swagger2</artifactId>
+      <version>${swagger.version}</version>
+    </dependency>
+    <!-- screw end -->
 
   </dependencies>
 

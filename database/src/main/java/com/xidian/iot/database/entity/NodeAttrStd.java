@@ -1,4 +1,4 @@
-package com.xidian.iot.database.pojo;
+package com.xidian.iot.database.entity;
 
 /**
  * 节点属性模版，记录了一类节点属性的元数据，比如记录了某节点属性的计数单位

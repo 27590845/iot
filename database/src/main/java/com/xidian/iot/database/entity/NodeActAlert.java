@@ -1,4 +1,4 @@
-package com.xidian.iot.database.pojo;
+package com.xidian.iot.database.entity;
 
 /**
  * 一旦一个节点触发器被触发，就会有一个报警信息被发出

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xidian.iot.database.mapper.NodeTrigMapper">
-  <resultMap id="BaseResultMap" type="com.xidian.iot.database.pojo.NodeTrig">
+  <resultMap id="BaseResultMap" type="com.xidian.iot.database.entity.NodeTrig">
     <id column="nt_id" jdbcType="BIGINT" property="ntId" />
     <result column="nt_name" jdbcType="VARCHAR" property="ntName" />
     <result column="nt_desc" jdbcType="VARCHAR" property="ntDesc" />
@@ -72,7 +72,7 @@
   <sql id="Base_Column_List">
     nt_id, nt_name, nt_desc, node_id, nt_invl, nt_rept, nt_exec, nt_expr
   </sql>
-  <select id="selectByExample" parameterType="com.xidian.iot.database.pojo.NodeTrigExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.xidian.iot.database.entity.NodeTrigExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -97,13 +97,13 @@
     delete from node_trig
     where nt_id = #{ntId,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.xidian.iot.database.pojo.NodeTrigExample">
+  <delete id="deleteByExample" parameterType="com.xidian.iot.database.entity.NodeTrigExample">
     delete from node_trig
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.xidian.iot.database.pojo.NodeTrig">
+  <insert id="insert" parameterType="com.xidian.iot.database.entity.NodeTrig">
     <selectKey keyProperty="ntId" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -114,7 +114,7 @@
       #{ntInvl,jdbcType=INTEGER}, #{ntRept,jdbcType=TINYINT}, #{ntExec,jdbcType=TINYINT}, 
       #{ntExpr,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.xidian.iot.database.pojo.NodeTrig">
+  <insert id="insertSelective" parameterType="com.xidian.iot.database.entity.NodeTrig">
     <selectKey keyProperty="ntId" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -166,7 +166,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.xidian.iot.database.pojo.NodeTrigExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.xidian.iot.database.entity.NodeTrigExample" resultType="java.lang.Long">
     select count(*) from node_trig
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -218,7 +218,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xidian.iot.database.pojo.NodeTrig">
+  <update id="updateByPrimaryKeySelective" parameterType="com.xidian.iot.database.entity.NodeTrig">
     update node_trig
     <set>
       <if test="ntName != null">
@@ -245,7 +245,7 @@
     </set>
     where nt_id = #{ntId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.xidian.iot.database.pojo.NodeTrig">
+  <update id="updateByPrimaryKey" parameterType="com.xidian.iot.database.entity.NodeTrig">
     update node_trig
     set nt_name = #{ntName,jdbcType=VARCHAR},
       nt_desc = #{ntDesc,jdbcType=VARCHAR},

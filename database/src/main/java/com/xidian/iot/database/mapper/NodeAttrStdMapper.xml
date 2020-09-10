@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xidian.iot.database.mapper.NodeAttrStdMapper">
-  <resultMap id="BaseResultMap" type="com.xidian.iot.database.pojo.NodeAttrStd">
+  <resultMap id="BaseResultMap" type="com.xidian.iot.database.entity.NodeAttrStd">
     <id column="nas_id" jdbcType="BIGINT" property="nasId" />
     <result column="nas_key" jdbcType="VARCHAR" property="nasKey" />
     <result column="nas_desc" jdbcType="VARCHAR" property="nasDesc" />
@@ -69,7 +69,7 @@
   <sql id="Base_Column_List">
     nas_id, nas_key, nas_desc, nas_unit, nas_sym
   </sql>
-  <select id="selectByExample" parameterType="com.xidian.iot.database.pojo.NodeAttrStdExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.xidian.iot.database.entity.NodeAttrStdExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -94,13 +94,13 @@
     delete from node_attr_std
     where nas_id = #{nasId,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.xidian.iot.database.pojo.NodeAttrStdExample">
+  <delete id="deleteByExample" parameterType="com.xidian.iot.database.entity.NodeAttrStdExample">
     delete from node_attr_std
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.xidian.iot.database.pojo.NodeAttrStd">
+  <insert id="insert" parameterType="com.xidian.iot.database.entity.NodeAttrStd">
     <selectKey keyProperty="nasId" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -109,7 +109,7 @@
     values (#{nasKey,jdbcType=VARCHAR}, #{nasDesc,jdbcType=VARCHAR}, #{nasUnit,jdbcType=VARCHAR}, 
       #{nasSym,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.xidian.iot.database.pojo.NodeAttrStd">
+  <insert id="insertSelective" parameterType="com.xidian.iot.database.entity.NodeAttrStd">
     <selectKey keyProperty="nasId" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -143,7 +143,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.xidian.iot.database.pojo.NodeAttrStdExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.xidian.iot.database.entity.NodeAttrStdExample" resultType="java.lang.Long">
     select count(*) from node_attr_std
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -183,7 +183,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xidian.iot.database.pojo.NodeAttrStd">
+  <update id="updateByPrimaryKeySelective" parameterType="com.xidian.iot.database.entity.NodeAttrStd">
     update node_attr_std
     <set>
       <if test="nasKey != null">
@@ -201,7 +201,7 @@
     </set>
     where nas_id = #{nasId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.xidian.iot.database.pojo.NodeAttrStd">
+  <update id="updateByPrimaryKey" parameterType="com.xidian.iot.database.entity.NodeAttrStd">
     update node_attr_std
     set nas_key = #{nasKey,jdbcType=VARCHAR},
       nas_desc = #{nasDesc,jdbcType=VARCHAR},

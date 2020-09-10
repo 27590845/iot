@@ -1,5 +1,6 @@
 package com.xidian.iot.dataapi.exception.handler;
 
+import com.xidian.iot.common.constants.ExceptionEnum;
 import com.xidian.iot.dataapi.controller.res.HttpResult;
 import com.xidian.iot.common.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
@@ -54,6 +55,7 @@ public class GlobalExceptionHandler {
         return build(e.getCode(), e.getMessage());
     }
 
+
     /**
      * 所有未捕获的的异常,一律报系统错误
      */
@@ -97,7 +99,7 @@ public class GlobalExceptionHandler {
 
         log.info("MethodArgumentNotValidException异常! URI: {}, Method: {}, RemoteHost: {}  ",
                 request.getRequestURI(),
-                request.getMethod(), request.getRemoteHost(), e);
+                request.getMethod(), request.getRemoteHost());
 
         return build(PARAM_ERROR, message);
     }

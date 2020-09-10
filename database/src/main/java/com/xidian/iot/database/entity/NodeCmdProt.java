@@ -1,4 +1,4 @@
-package com.xidian.iot.database.pojo;
+package com.xidian.iot.database.entity;
 
 /**
  * 节点通信协议，一个节点可以对应一个数据上传协议，和一个命令下发协议

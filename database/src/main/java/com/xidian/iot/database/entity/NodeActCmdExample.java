@@ -1,16 +1,16 @@
-package com.xidian.iot.database.pojo;
+package com.xidian.iot.database.entity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NodeAttrExample {
+public class NodeActCmdExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public NodeAttrExample() {
+    public NodeActCmdExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -104,63 +104,123 @@ public class NodeAttrExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andNaIdIsNull() {
-            addCriterion("na_id is null");
+        public Criteria andNacIdIsNull() {
+            addCriterion("nac_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andNaIdIsNotNull() {
-            addCriterion("na_id is not null");
+        public Criteria andNacIdIsNotNull() {
+            addCriterion("nac_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andNaIdEqualTo(Long value) {
-            addCriterion("na_id =", value, "naId");
+        public Criteria andNacIdEqualTo(Long value) {
+            addCriterion("nac_id =", value, "nacId");
             return (Criteria) this;
         }
 
-        public Criteria andNaIdNotEqualTo(Long value) {
-            addCriterion("na_id <>", value, "naId");
+        public Criteria andNacIdNotEqualTo(Long value) {
+            addCriterion("nac_id <>", value, "nacId");
             return (Criteria) this;
         }
 
-        public Criteria andNaIdGreaterThan(Long value) {
-            addCriterion("na_id >", value, "naId");
+        public Criteria andNacIdGreaterThan(Long value) {
+            addCriterion("nac_id >", value, "nacId");
             return (Criteria) this;
         }
 
-        public Criteria andNaIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("na_id >=", value, "naId");
+        public Criteria andNacIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("nac_id >=", value, "nacId");
             return (Criteria) this;
         }
 
-        public Criteria andNaIdLessThan(Long value) {
-            addCriterion("na_id <", value, "naId");
+        public Criteria andNacIdLessThan(Long value) {
+            addCriterion("nac_id <", value, "nacId");
             return (Criteria) this;
         }
 
-        public Criteria andNaIdLessThanOrEqualTo(Long value) {
-            addCriterion("na_id <=", value, "naId");
+        public Criteria andNacIdLessThanOrEqualTo(Long value) {
+            addCriterion("nac_id <=", value, "nacId");
             return (Criteria) this;
         }
 
-        public Criteria andNaIdIn(List<Long> values) {
-            addCriterion("na_id in", values, "naId");
+        public Criteria andNacIdIn(List<Long> values) {
+            addCriterion("nac_id in", values, "nacId");
             return (Criteria) this;
         }
 
-        public Criteria andNaIdNotIn(List<Long> values) {
-            addCriterion("na_id not in", values, "naId");
+        public Criteria andNacIdNotIn(List<Long> values) {
+            addCriterion("nac_id not in", values, "nacId");
             return (Criteria) this;
         }
 
-        public Criteria andNaIdBetween(Long value1, Long value2) {
-            addCriterion("na_id between", value1, value2, "naId");
+        public Criteria andNacIdBetween(Long value1, Long value2) {
+            addCriterion("nac_id between", value1, value2, "nacId");
             return (Criteria) this;
         }
 
-        public Criteria andNaIdNotBetween(Long value1, Long value2) {
-            addCriterion("na_id not between", value1, value2, "naId");
+        public Criteria andNacIdNotBetween(Long value1, Long value2) {
+            addCriterion("nac_id not between", value1, value2, "nacId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNcIdIsNull() {
+            addCriterion("nc_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNcIdIsNotNull() {
+            addCriterion("nc_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNcIdEqualTo(Long value) {
+            addCriterion("nc_id =", value, "ncId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNcIdNotEqualTo(Long value) {
+            addCriterion("nc_id <>", value, "ncId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNcIdGreaterThan(Long value) {
+            addCriterion("nc_id >", value, "ncId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNcIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("nc_id >=", value, "ncId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNcIdLessThan(Long value) {
+            addCriterion("nc_id <", value, "ncId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNcIdLessThanOrEqualTo(Long value) {
+            addCriterion("nc_id <=", value, "ncId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNcIdIn(List<Long> values) {
+            addCriterion("nc_id in", values, "ncId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNcIdNotIn(List<Long> values) {
+            addCriterion("nc_id not in", values, "ncId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNcIdBetween(Long value1, Long value2) {
+            addCriterion("nc_id between", value1, value2, "ncId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNcIdNotBetween(Long value1, Long value2) {
+            addCriterion("nc_id not between", value1, value2, "ncId");
             return (Criteria) this;
         }
 
@@ -224,283 +284,263 @@ public class NodeAttrExample {
             return (Criteria) this;
         }
 
-        public Criteria andNaKeyIsNull() {
-            addCriterion("na_key is null");
+        public Criteria andSceneIdIsNull() {
+            addCriterion("scene_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andNaKeyIsNotNull() {
-            addCriterion("na_key is not null");
+        public Criteria andSceneIdIsNotNull() {
+            addCriterion("scene_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andNaKeyEqualTo(String value) {
-            addCriterion("na_key =", value, "naKey");
+        public Criteria andSceneIdEqualTo(Long value) {
+            addCriterion("scene_id =", value, "sceneId");
             return (Criteria) this;
         }
 
-        public Criteria andNaKeyNotEqualTo(String value) {
-            addCriterion("na_key <>", value, "naKey");
+        public Criteria andSceneIdNotEqualTo(Long value) {
+            addCriterion("scene_id <>", value, "sceneId");
             return (Criteria) this;
         }
 
-        public Criteria andNaKeyGreaterThan(String value) {
-            addCriterion("na_key >", value, "naKey");
+        public Criteria andSceneIdGreaterThan(Long value) {
+            addCriterion("scene_id >", value, "sceneId");
             return (Criteria) this;
         }
 
-        public Criteria andNaKeyGreaterThanOrEqualTo(String value) {
-            addCriterion("na_key >=", value, "naKey");
+        public Criteria andSceneIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("scene_id >=", value, "sceneId");
             return (Criteria) this;
         }
 
-        public Criteria andNaKeyLessThan(String value) {
-            addCriterion("na_key <", value, "naKey");
+        public Criteria andSceneIdLessThan(Long value) {
+            addCriterion("scene_id <", value, "sceneId");
             return (Criteria) this;
         }
 
-        public Criteria andNaKeyLessThanOrEqualTo(String value) {
-            addCriterion("na_key <=", value, "naKey");
+        public Criteria andSceneIdLessThanOrEqualTo(Long value) {
+            addCriterion("scene_id <=", value, "sceneId");
             return (Criteria) this;
         }
 
-        public Criteria andNaKeyLike(String value) {
-            addCriterion("na_key like", value, "naKey");
+        public Criteria andSceneIdIn(List<Long> values) {
+            addCriterion("scene_id in", values, "sceneId");
             return (Criteria) this;
         }
 
-        public Criteria andNaKeyNotLike(String value) {
-            addCriterion("na_key not like", value, "naKey");
+        public Criteria andSceneIdNotIn(List<Long> values) {
+            addCriterion("scene_id not in", values, "sceneId");
             return (Criteria) this;
         }
 
-        public Criteria andNaKeyIn(List<String> values) {
-            addCriterion("na_key in", values, "naKey");
+        public Criteria andSceneIdBetween(Long value1, Long value2) {
+            addCriterion("scene_id between", value1, value2, "sceneId");
             return (Criteria) this;
         }
 
-        public Criteria andNaKeyNotIn(List<String> values) {
-            addCriterion("na_key not in", values, "naKey");
+        public Criteria andSceneIdNotBetween(Long value1, Long value2) {
+            addCriterion("scene_id not between", value1, value2, "sceneId");
             return (Criteria) this;
         }
 
-        public Criteria andNaKeyBetween(String value1, String value2) {
-            addCriterion("na_key between", value1, value2, "naKey");
+        public Criteria andNtIdIsNull() {
+            addCriterion("nt_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andNaKeyNotBetween(String value1, String value2) {
-            addCriterion("na_key not between", value1, value2, "naKey");
+        public Criteria andNtIdIsNotNull() {
+            addCriterion("nt_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andNaNameIsNull() {
-            addCriterion("na_name is null");
+        public Criteria andNtIdEqualTo(Long value) {
+            addCriterion("nt_id =", value, "ntId");
             return (Criteria) this;
         }
 
-        public Criteria andNaNameIsNotNull() {
-            addCriterion("na_name is not null");
+        public Criteria andNtIdNotEqualTo(Long value) {
+            addCriterion("nt_id <>", value, "ntId");
             return (Criteria) this;
         }
 
-        public Criteria andNaNameEqualTo(String value) {
-            addCriterion("na_name =", value, "naName");
+        public Criteria andNtIdGreaterThan(Long value) {
+            addCriterion("nt_id >", value, "ntId");
             return (Criteria) this;
         }
 
-        public Criteria andNaNameNotEqualTo(String value) {
-            addCriterion("na_name <>", value, "naName");
+        public Criteria andNtIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("nt_id >=", value, "ntId");
             return (Criteria) this;
         }
 
-        public Criteria andNaNameGreaterThan(String value) {
-            addCriterion("na_name >", value, "naName");
+        public Criteria andNtIdLessThan(Long value) {
+            addCriterion("nt_id <", value, "ntId");
             return (Criteria) this;
         }
 
-        public Criteria andNaNameGreaterThanOrEqualTo(String value) {
-            addCriterion("na_name >=", value, "naName");
+        public Criteria andNtIdLessThanOrEqualTo(Long value) {
+            addCriterion("nt_id <=", value, "ntId");
             return (Criteria) this;
         }
 
-        public Criteria andNaNameLessThan(String value) {
-            addCriterion("na_name <", value, "naName");
+        public Criteria andNtIdIn(List<Long> values) {
+            addCriterion("nt_id in", values, "ntId");
             return (Criteria) this;
         }
 
-        public Criteria andNaNameLessThanOrEqualTo(String value) {
-            addCriterion("na_name <=", value, "naName");
+        public Criteria andNtIdNotIn(List<Long> values) {
+            addCriterion("nt_id not in", values, "ntId");
             return (Criteria) this;
         }
 
-        public Criteria andNaNameLike(String value) {
-            addCriterion("na_name like", value, "naName");
+        public Criteria andNtIdBetween(Long value1, Long value2) {
+            addCriterion("nt_id between", value1, value2, "ntId");
             return (Criteria) this;
         }
 
-        public Criteria andNaNameNotLike(String value) {
-            addCriterion("na_name not like", value, "naName");
+        public Criteria andNtIdNotBetween(Long value1, Long value2) {
+            addCriterion("nt_id not between", value1, value2, "ntId");
             return (Criteria) this;
         }
 
-        public Criteria andNaNameIn(List<String> values) {
-            addCriterion("na_name in", values, "naName");
+        public Criteria andNodeSnIsNull() {
+            addCriterion("node_sn is null");
             return (Criteria) this;
         }
 
-        public Criteria andNaNameNotIn(List<String> values) {
-            addCriterion("na_name not in", values, "naName");
+        public Criteria andNodeSnIsNotNull() {
+            addCriterion("node_sn is not null");
             return (Criteria) this;
         }
 
-        public Criteria andNaNameBetween(String value1, String value2) {
-            addCriterion("na_name between", value1, value2, "naName");
+        public Criteria andNodeSnEqualTo(String value) {
+            addCriterion("node_sn =", value, "nodeSn");
             return (Criteria) this;
         }
 
-        public Criteria andNaNameNotBetween(String value1, String value2) {
-            addCriterion("na_name not between", value1, value2, "naName");
+        public Criteria andNodeSnNotEqualTo(String value) {
+            addCriterion("node_sn <>", value, "nodeSn");
             return (Criteria) this;
         }
 
-        public Criteria andNaUnitIsNull() {
-            addCriterion("na_unit is null");
+        public Criteria andNodeSnGreaterThan(String value) {
+            addCriterion("node_sn >", value, "nodeSn");
             return (Criteria) this;
         }
 
-        public Criteria andNaUnitIsNotNull() {
-            addCriterion("na_unit is not null");
+        public Criteria andNodeSnGreaterThanOrEqualTo(String value) {
+            addCriterion("node_sn >=", value, "nodeSn");
             return (Criteria) this;
         }
 
-        public Criteria andNaUnitEqualTo(String value) {
-            addCriterion("na_unit =", value, "naUnit");
+        public Criteria andNodeSnLessThan(String value) {
+            addCriterion("node_sn <", value, "nodeSn");
             return (Criteria) this;
         }
 
-        public Criteria andNaUnitNotEqualTo(String value) {
-            addCriterion("na_unit <>", value, "naUnit");
+        public Criteria andNodeSnLessThanOrEqualTo(String value) {
+            addCriterion("node_sn <=", value, "nodeSn");
             return (Criteria) this;
         }
 
-        public Criteria andNaUnitGreaterThan(String value) {
-            addCriterion("na_unit >", value, "naUnit");
+        public Criteria andNodeSnLike(String value) {
+            addCriterion("node_sn like", value, "nodeSn");
             return (Criteria) this;
         }
 
-        public Criteria andNaUnitGreaterThanOrEqualTo(String value) {
-            addCriterion("na_unit >=", value, "naUnit");
+        public Criteria andNodeSnNotLike(String value) {
+            addCriterion("node_sn not like", value, "nodeSn");
             return (Criteria) this;
         }
 
-        public Criteria andNaUnitLessThan(String value) {
-            addCriterion("na_unit <", value, "naUnit");
+        public Criteria andNodeSnIn(List<String> values) {
+            addCriterion("node_sn in", values, "nodeSn");
             return (Criteria) this;
         }
 
-        public Criteria andNaUnitLessThanOrEqualTo(String value) {
-            addCriterion("na_unit <=", value, "naUnit");
+        public Criteria andNodeSnNotIn(List<String> values) {
+            addCriterion("node_sn not in", values, "nodeSn");
             return (Criteria) this;
         }
 
-        public Criteria andNaUnitLike(String value) {
-            addCriterion("na_unit like", value, "naUnit");
+        public Criteria andNodeSnBetween(String value1, String value2) {
+            addCriterion("node_sn between", value1, value2, "nodeSn");
             return (Criteria) this;
         }
 
-        public Criteria andNaUnitNotLike(String value) {
-            addCriterion("na_unit not like", value, "naUnit");
+        public Criteria andNodeSnNotBetween(String value1, String value2) {
+            addCriterion("node_sn not between", value1, value2, "nodeSn");
             return (Criteria) this;
         }
 
-        public Criteria andNaUnitIn(List<String> values) {
-            addCriterion("na_unit in", values, "naUnit");
+        public Criteria andSceneSnIsNull() {
+            addCriterion("scene_sn is null");
             return (Criteria) this;
         }
 
-        public Criteria andNaUnitNotIn(List<String> values) {
-            addCriterion("na_unit not in", values, "naUnit");
+        public Criteria andSceneSnIsNotNull() {
+            addCriterion("scene_sn is not null");
             return (Criteria) this;
         }
 
-        public Criteria andNaUnitBetween(String value1, String value2) {
-            addCriterion("na_unit between", value1, value2, "naUnit");
+        public Criteria andSceneSnEqualTo(String value) {
+            addCriterion("scene_sn =", value, "sceneSn");
             return (Criteria) this;
         }
 
-        public Criteria andNaUnitNotBetween(String value1, String value2) {
-            addCriterion("na_unit not between", value1, value2, "naUnit");
+        public Criteria andSceneSnNotEqualTo(String value) {
+            addCriterion("scene_sn <>", value, "sceneSn");
             return (Criteria) this;
         }
 
-        public Criteria andNaSymIsNull() {
-            addCriterion("na_sym is null");
+        public Criteria andSceneSnGreaterThan(String value) {
+            addCriterion("scene_sn >", value, "sceneSn");
             return (Criteria) this;
         }
 
-        public Criteria andNaSymIsNotNull() {
-            addCriterion("na_sym is not null");
+        public Criteria andSceneSnGreaterThanOrEqualTo(String value) {
+            addCriterion("scene_sn >=", value, "sceneSn");
             return (Criteria) this;
         }
 
-        public Criteria andNaSymEqualTo(String value) {
-            addCriterion("na_sym =", value, "naSym");
+        public Criteria andSceneSnLessThan(String value) {
+            addCriterion("scene_sn <", value, "sceneSn");
             return (Criteria) this;
         }
 
-        public Criteria andNaSymNotEqualTo(String value) {
-            addCriterion("na_sym <>", value, "naSym");
+        public Criteria andSceneSnLessThanOrEqualTo(String value) {
+            addCriterion("scene_sn <=", value, "sceneSn");
             return (Criteria) this;
         }
 
-        public Criteria andNaSymGreaterThan(String value) {
-            addCriterion("na_sym >", value, "naSym");
+        public Criteria andSceneSnLike(String value) {
+            addCriterion("scene_sn like", value, "sceneSn");
             return (Criteria) this;
         }
 
-        public Criteria andNaSymGreaterThanOrEqualTo(String value) {
-            addCriterion("na_sym >=", value, "naSym");
+        public Criteria andSceneSnNotLike(String value) {
+            addCriterion("scene_sn not like", value, "sceneSn");
             return (Criteria) this;
         }
 
-        public Criteria andNaSymLessThan(String value) {
-            addCriterion("na_sym <", value, "naSym");
+        public Criteria andSceneSnIn(List<String> values) {
+            addCriterion("scene_sn in", values, "sceneSn");
             return (Criteria) this;
         }
 
-        public Criteria andNaSymLessThanOrEqualTo(String value) {
-            addCriterion("na_sym <=", value, "naSym");
+        public Criteria andSceneSnNotIn(List<String> values) {
+            addCriterion("scene_sn not in", values, "sceneSn");
             return (Criteria) this;
         }
 
-        public Criteria andNaSymLike(String value) {
-            addCriterion("na_sym like", value, "naSym");
+        public Criteria andSceneSnBetween(String value1, String value2) {
+            addCriterion("scene_sn between", value1, value2, "sceneSn");
             return (Criteria) this;
         }
 
-        public Criteria andNaSymNotLike(String value) {
-            addCriterion("na_sym not like", value, "naSym");
-            return (Criteria) this;
-        }
-
-        public Criteria andNaSymIn(List<String> values) {
-            addCriterion("na_sym in", values, "naSym");
-            return (Criteria) this;
-        }
-
-        public Criteria andNaSymNotIn(List<String> values) {
-            addCriterion("na_sym not in", values, "naSym");
-            return (Criteria) this;
-        }
-
-        public Criteria andNaSymBetween(String value1, String value2) {
-            addCriterion("na_sym between", value1, value2, "naSym");
-            return (Criteria) this;
-        }
-
-        public Criteria andNaSymNotBetween(String value1, String value2) {
-            addCriterion("na_sym not between", value1, value2, "naSym");
+        public Criteria andSceneSnNotBetween(String value1, String value2) {
+            addCriterion("scene_sn not between", value1, value2, "sceneSn");
             return (Criteria) this;
         }
     }

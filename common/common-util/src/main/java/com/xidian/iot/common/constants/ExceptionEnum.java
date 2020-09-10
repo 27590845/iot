@@ -15,6 +15,7 @@ public enum ExceptionEnum implements ExceptionInfo {
     INVALID_TOKEN(-10002, "无效的token"),
     UNKNOWN_ACCOUNT(-10003, "用户名或密码错误"),
     NETWORK_ERROR(-10004, "网络异常，请稍后重试"),
+    PARAMETER_VERIFICATION_ERROR(-10005, "参数校验错误"),
 
     ;
 

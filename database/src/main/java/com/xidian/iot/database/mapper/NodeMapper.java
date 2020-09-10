@@ -1,7 +1,7 @@
 package com.xidian.iot.database.mapper;
 
-import com.xidian.iot.database.pojo.Node;
-import com.xidian.iot.database.pojo.NodeExample;
+import com.xidian.iot.database.entity.Node;
+import com.xidian.iot.database.entity.NodeExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

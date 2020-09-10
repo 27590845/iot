@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xidian.iot.database.mapper.NodeCmdGroupMapper">
-  <resultMap id="BaseResultMap" type="com.xidian.iot.database.pojo.NodeCmdGroup">
+  <resultMap id="BaseResultMap" type="com.xidian.iot.database.entity.NodeCmdGroup">
     <id column="ncg_id" jdbcType="BIGINT" property="ncgId" />
     <result column="node_id" jdbcType="BIGINT" property="nodeId" />
     <result column="ncg_name" jdbcType="VARCHAR" property="ncgName" />
@@ -68,7 +68,7 @@
   <sql id="Base_Column_List">
     ncg_id, node_id, ncg_name, ncg_key
   </sql>
-  <select id="selectByExample" parameterType="com.xidian.iot.database.pojo.NodeCmdGroupExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.xidian.iot.database.entity.NodeCmdGroupExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -93,13 +93,13 @@
     delete from node_cmd_group
     where ncg_id = #{ncgId,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.xidian.iot.database.pojo.NodeCmdGroupExample">
+  <delete id="deleteByExample" parameterType="com.xidian.iot.database.entity.NodeCmdGroupExample">
     delete from node_cmd_group
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.xidian.iot.database.pojo.NodeCmdGroup">
+  <insert id="insert" parameterType="com.xidian.iot.database.entity.NodeCmdGroup">
     <selectKey keyProperty="ncgId" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -108,7 +108,7 @@
     values (#{nodeId,jdbcType=BIGINT}, #{ncgName,jdbcType=VARCHAR}, #{ncgKey,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.xidian.iot.database.pojo.NodeCmdGroup">
+  <insert id="insertSelective" parameterType="com.xidian.iot.database.entity.NodeCmdGroup">
     <selectKey keyProperty="ncgId" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -136,7 +136,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.xidian.iot.database.pojo.NodeCmdGroupExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.xidian.iot.database.entity.NodeCmdGroupExample" resultType="java.lang.Long">
     select count(*) from node_cmd_group
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -172,7 +172,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xidian.iot.database.pojo.NodeCmdGroup">
+  <update id="updateByPrimaryKeySelective" parameterType="com.xidian.iot.database.entity.NodeCmdGroup">
     update node_cmd_group
     <set>
       <if test="nodeId != null">
@@ -187,7 +187,7 @@
     </set>
     where ncg_id = #{ncgId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.xidian.iot.database.pojo.NodeCmdGroup">
+  <update id="updateByPrimaryKey" parameterType="com.xidian.iot.database.entity.NodeCmdGroup">
     update node_cmd_group
     set node_id = #{nodeId,jdbcType=BIGINT},
       ncg_name = #{ncgName,jdbcType=VARCHAR},

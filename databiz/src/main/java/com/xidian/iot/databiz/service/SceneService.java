@@ -1,6 +1,7 @@
 package com.xidian.iot.databiz.service;
 
-import com.xidian.iot.database.pojo.Scene;
+import com.xidian.iot.database.entity.Scene;
+import com.xidian.iot.database.param.SceneAddParam;
 
 import java.util.List;
 
@@ -14,7 +15,20 @@ public interface SceneService {
     /**
     * 根据场景ID获取场景
     * */
-    Scene getSceneById(Integer sceneId);
+    Scene getSceneById(Long sceneId);
 
+    /**
+    * 测试生成Id
+    * */
     public void testId();
+
+    /**
+    * 添加场景
+    * */
+    Scene addScene(SceneAddParam param);
+
+    /**
+    * 查询场景数量
+    * */
+    int countScene();
 }

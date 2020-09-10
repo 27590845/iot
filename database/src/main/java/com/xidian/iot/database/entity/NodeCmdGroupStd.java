@@ -1,4 +1,4 @@
-package com.xidian.iot.database.pojo;
+package com.xidian.iot.database.entity;
 
 /**
  * 节点命令组名称模版，node_cmd_group_std.ncgs_name对应node_cmd_group.ncg_name，供添加命令组选择“命令组名称“

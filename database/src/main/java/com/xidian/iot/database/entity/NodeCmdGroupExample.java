@@ -1,16 +1,16 @@
-package com.xidian.iot.database.pojo;
+package com.xidian.iot.database.entity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NodeCmdProtExample {
+public class NodeCmdGroupExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public NodeCmdProtExample() {
+    public NodeCmdGroupExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -104,63 +104,63 @@ public class NodeCmdProtExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andNcpIdIsNull() {
-            addCriterion("ncp_id is null");
+        public Criteria andNcgIdIsNull() {
+            addCriterion("ncg_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andNcpIdIsNotNull() {
-            addCriterion("ncp_id is not null");
+        public Criteria andNcgIdIsNotNull() {
+            addCriterion("ncg_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andNcpIdEqualTo(Long value) {
-            addCriterion("ncp_id =", value, "ncpId");
+        public Criteria andNcgIdEqualTo(Long value) {
+            addCriterion("ncg_id =", value, "ncgId");
             return (Criteria) this;
         }
 
-        public Criteria andNcpIdNotEqualTo(Long value) {
-            addCriterion("ncp_id <>", value, "ncpId");
+        public Criteria andNcgIdNotEqualTo(Long value) {
+            addCriterion("ncg_id <>", value, "ncgId");
             return (Criteria) this;
         }
 
-        public Criteria andNcpIdGreaterThan(Long value) {
-            addCriterion("ncp_id >", value, "ncpId");
+        public Criteria andNcgIdGreaterThan(Long value) {
+            addCriterion("ncg_id >", value, "ncgId");
             return (Criteria) this;
         }
 
-        public Criteria andNcpIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("ncp_id >=", value, "ncpId");
+        public Criteria andNcgIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("ncg_id >=", value, "ncgId");
             return (Criteria) this;
         }
 
-        public Criteria andNcpIdLessThan(Long value) {
-            addCriterion("ncp_id <", value, "ncpId");
+        public Criteria andNcgIdLessThan(Long value) {
+            addCriterion("ncg_id <", value, "ncgId");
             return (Criteria) this;
         }
 
-        public Criteria andNcpIdLessThanOrEqualTo(Long value) {
-            addCriterion("ncp_id <=", value, "ncpId");
+        public Criteria andNcgIdLessThanOrEqualTo(Long value) {
+            addCriterion("ncg_id <=", value, "ncgId");
             return (Criteria) this;
         }
 
-        public Criteria andNcpIdIn(List<Long> values) {
-            addCriterion("ncp_id in", values, "ncpId");
+        public Criteria andNcgIdIn(List<Long> values) {
+            addCriterion("ncg_id in", values, "ncgId");
             return (Criteria) this;
         }
 
-        public Criteria andNcpIdNotIn(List<Long> values) {
-            addCriterion("ncp_id not in", values, "ncpId");
+        public Criteria andNcgIdNotIn(List<Long> values) {
+            addCriterion("ncg_id not in", values, "ncgId");
             return (Criteria) this;
         }
 
-        public Criteria andNcpIdBetween(Long value1, Long value2) {
-            addCriterion("ncp_id between", value1, value2, "ncpId");
+        public Criteria andNcgIdBetween(Long value1, Long value2) {
+            addCriterion("ncg_id between", value1, value2, "ncgId");
             return (Criteria) this;
         }
 
-        public Criteria andNcpIdNotBetween(Long value1, Long value2) {
-            addCriterion("ncp_id not between", value1, value2, "ncpId");
+        public Criteria andNcgIdNotBetween(Long value1, Long value2) {
+            addCriterion("ncg_id not between", value1, value2, "ncgId");
             return (Criteria) this;
         }
 
@@ -224,213 +224,143 @@ public class NodeCmdProtExample {
             return (Criteria) this;
         }
 
-        public Criteria andNcpTypeIsNull() {
-            addCriterion("ncp_type is null");
+        public Criteria andNcgNameIsNull() {
+            addCriterion("ncg_name is null");
             return (Criteria) this;
         }
 
-        public Criteria andNcpTypeIsNotNull() {
-            addCriterion("ncp_type is not null");
+        public Criteria andNcgNameIsNotNull() {
+            addCriterion("ncg_name is not null");
             return (Criteria) this;
         }
 
-        public Criteria andNcpTypeEqualTo(String value) {
-            addCriterion("ncp_type =", value, "ncpType");
+        public Criteria andNcgNameEqualTo(String value) {
+            addCriterion("ncg_name =", value, "ncgName");
             return (Criteria) this;
         }
 
-        public Criteria andNcpTypeNotEqualTo(String value) {
-            addCriterion("ncp_type <>", value, "ncpType");
+        public Criteria andNcgNameNotEqualTo(String value) {
+            addCriterion("ncg_name <>", value, "ncgName");
             return (Criteria) this;
         }
 
-        public Criteria andNcpTypeGreaterThan(String value) {
-            addCriterion("ncp_type >", value, "ncpType");
+        public Criteria andNcgNameGreaterThan(String value) {
+            addCriterion("ncg_name >", value, "ncgName");
             return (Criteria) this;
         }
 
-        public Criteria andNcpTypeGreaterThanOrEqualTo(String value) {
-            addCriterion("ncp_type >=", value, "ncpType");
+        public Criteria andNcgNameGreaterThanOrEqualTo(String value) {
+            addCriterion("ncg_name >=", value, "ncgName");
             return (Criteria) this;
         }
 
-        public Criteria andNcpTypeLessThan(String value) {
-            addCriterion("ncp_type <", value, "ncpType");
+        public Criteria andNcgNameLessThan(String value) {
+            addCriterion("ncg_name <", value, "ncgName");
             return (Criteria) this;
         }
 
-        public Criteria andNcpTypeLessThanOrEqualTo(String value) {
-            addCriterion("ncp_type <=", value, "ncpType");
+        public Criteria andNcgNameLessThanOrEqualTo(String value) {
+            addCriterion("ncg_name <=", value, "ncgName");
             return (Criteria) this;
         }
 
-        public Criteria andNcpTypeLike(String value) {
-            addCriterion("ncp_type like", value, "ncpType");
+        public Criteria andNcgNameLike(String value) {
+            addCriterion("ncg_name like", value, "ncgName");
             return (Criteria) this;
         }
 
-        public Criteria andNcpTypeNotLike(String value) {
-            addCriterion("ncp_type not like", value, "ncpType");
+        public Criteria andNcgNameNotLike(String value) {
+            addCriterion("ncg_name not like", value, "ncgName");
             return (Criteria) this;
         }
 
-        public Criteria andNcpTypeIn(List<String> values) {
-            addCriterion("ncp_type in", values, "ncpType");
+        public Criteria andNcgNameIn(List<String> values) {
+            addCriterion("ncg_name in", values, "ncgName");
             return (Criteria) this;
         }
 
-        public Criteria andNcpTypeNotIn(List<String> values) {
-            addCriterion("ncp_type not in", values, "ncpType");
+        public Criteria andNcgNameNotIn(List<String> values) {
+            addCriterion("ncg_name not in", values, "ncgName");
             return (Criteria) this;
         }
 
-        public Criteria andNcpTypeBetween(String value1, String value2) {
-            addCriterion("ncp_type between", value1, value2, "ncpType");
+        public Criteria andNcgNameBetween(String value1, String value2) {
+            addCriterion("ncg_name between", value1, value2, "ncgName");
             return (Criteria) this;
         }
 
-        public Criteria andNcpTypeNotBetween(String value1, String value2) {
-            addCriterion("ncp_type not between", value1, value2, "ncpType");
+        public Criteria andNcgNameNotBetween(String value1, String value2) {
+            addCriterion("ncg_name not between", value1, value2, "ncgName");
             return (Criteria) this;
         }
 
-        public Criteria andNcpDownIsNull() {
-            addCriterion("ncp_down is null");
+        public Criteria andNcgKeyIsNull() {
+            addCriterion("ncg_key is null");
             return (Criteria) this;
         }
 
-        public Criteria andNcpDownIsNotNull() {
-            addCriterion("ncp_down is not null");
+        public Criteria andNcgKeyIsNotNull() {
+            addCriterion("ncg_key is not null");
             return (Criteria) this;
         }
 
-        public Criteria andNcpDownEqualTo(String value) {
-            addCriterion("ncp_down =", value, "ncpDown");
+        public Criteria andNcgKeyEqualTo(String value) {
+            addCriterion("ncg_key =", value, "ncgKey");
             return (Criteria) this;
         }
 
-        public Criteria andNcpDownNotEqualTo(String value) {
-            addCriterion("ncp_down <>", value, "ncpDown");
+        public Criteria andNcgKeyNotEqualTo(String value) {
+            addCriterion("ncg_key <>", value, "ncgKey");
             return (Criteria) this;
         }
 
-        public Criteria andNcpDownGreaterThan(String value) {
-            addCriterion("ncp_down >", value, "ncpDown");
+        public Criteria andNcgKeyGreaterThan(String value) {
+            addCriterion("ncg_key >", value, "ncgKey");
             return (Criteria) this;
         }
 
-        public Criteria andNcpDownGreaterThanOrEqualTo(String value) {
-            addCriterion("ncp_down >=", value, "ncpDown");
+        public Criteria andNcgKeyGreaterThanOrEqualTo(String value) {
+            addCriterion("ncg_key >=", value, "ncgKey");
             return (Criteria) this;
         }
 
-        public Criteria andNcpDownLessThan(String value) {
-            addCriterion("ncp_down <", value, "ncpDown");
+        public Criteria andNcgKeyLessThan(String value) {
+            addCriterion("ncg_key <", value, "ncgKey");
             return (Criteria) this;
         }
 
-        public Criteria andNcpDownLessThanOrEqualTo(String value) {
-            addCriterion("ncp_down <=", value, "ncpDown");
+        public Criteria andNcgKeyLessThanOrEqualTo(String value) {
+            addCriterion("ncg_key <=", value, "ncgKey");
             return (Criteria) this;
         }
 
-        public Criteria andNcpDownLike(String value) {
-            addCriterion("ncp_down like", value, "ncpDown");
+        public Criteria andNcgKeyLike(String value) {
+            addCriterion("ncg_key like", value, "ncgKey");
             return (Criteria) this;
         }
 
-        public Criteria andNcpDownNotLike(String value) {
-            addCriterion("ncp_down not like", value, "ncpDown");
+        public Criteria andNcgKeyNotLike(String value) {
+            addCriterion("ncg_key not like", value, "ncgKey");
             return (Criteria) this;
         }
 
-        public Criteria andNcpDownIn(List<String> values) {
-            addCriterion("ncp_down in", values, "ncpDown");
+        public Criteria andNcgKeyIn(List<String> values) {
+            addCriterion("ncg_key in", values, "ncgKey");
             return (Criteria) this;
         }
 
-        public Criteria andNcpDownNotIn(List<String> values) {
-            addCriterion("ncp_down not in", values, "ncpDown");
+        public Criteria andNcgKeyNotIn(List<String> values) {
+            addCriterion("ncg_key not in", values, "ncgKey");
             return (Criteria) this;
         }
 
-        public Criteria andNcpDownBetween(String value1, String value2) {
-            addCriterion("ncp_down between", value1, value2, "ncpDown");
+        public Criteria andNcgKeyBetween(String value1, String value2) {
+            addCriterion("ncg_key between", value1, value2, "ncgKey");
             return (Criteria) this;
         }
 
-        public Criteria andNcpDownNotBetween(String value1, String value2) {
-            addCriterion("ncp_down not between", value1, value2, "ncpDown");
-            return (Criteria) this;
-        }
-
-        public Criteria andNcpUpIsNull() {
-            addCriterion("ncp_up is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andNcpUpIsNotNull() {
-            addCriterion("ncp_up is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andNcpUpEqualTo(String value) {
-            addCriterion("ncp_up =", value, "ncpUp");
-            return (Criteria) this;
-        }
-
-        public Criteria andNcpUpNotEqualTo(String value) {
-            addCriterion("ncp_up <>", value, "ncpUp");
-            return (Criteria) this;
-        }
-
-        public Criteria andNcpUpGreaterThan(String value) {
-            addCriterion("ncp_up >", value, "ncpUp");
-            return (Criteria) this;
-        }
-
-        public Criteria andNcpUpGreaterThanOrEqualTo(String value) {
-            addCriterion("ncp_up >=", value, "ncpUp");
-            return (Criteria) this;
-        }
-
-        public Criteria andNcpUpLessThan(String value) {
-            addCriterion("ncp_up <", value, "ncpUp");
-            return (Criteria) this;
-        }
-
-        public Criteria andNcpUpLessThanOrEqualTo(String value) {
-            addCriterion("ncp_up <=", value, "ncpUp");
-            return (Criteria) this;
-        }
-
-        public Criteria andNcpUpLike(String value) {
-            addCriterion("ncp_up like", value, "ncpUp");
-            return (Criteria) this;
-        }
-
-        public Criteria andNcpUpNotLike(String value) {
-            addCriterion("ncp_up not like", value, "ncpUp");
-            return (Criteria) this;
-        }
-
-        public Criteria andNcpUpIn(List<String> values) {
-            addCriterion("ncp_up in", values, "ncpUp");
-            return (Criteria) this;
-        }
-
-        public Criteria andNcpUpNotIn(List<String> values) {
-            addCriterion("ncp_up not in", values, "ncpUp");
-            return (Criteria) this;
-        }
-
-        public Criteria andNcpUpBetween(String value1, String value2) {
-            addCriterion("ncp_up between", value1, value2, "ncpUp");
-            return (Criteria) this;
-        }
-
-        public Criteria andNcpUpNotBetween(String value1, String value2) {
-            addCriterion("ncp_up not between", value1, value2, "ncpUp");
+        public Criteria andNcgKeyNotBetween(String value1, String value2) {
+            addCriterion("ncg_key not between", value1, value2, "ncgKey");
             return (Criteria) this;
         }
     }

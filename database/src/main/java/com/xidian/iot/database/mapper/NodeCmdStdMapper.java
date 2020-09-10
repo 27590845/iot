@@ -1,7 +1,7 @@
 package com.xidian.iot.database.mapper;
 
-import com.xidian.iot.database.pojo.NodeCmdStd;
-import com.xidian.iot.database.pojo.NodeCmdStdExample;
+import com.xidian.iot.database.entity.NodeCmdStd;
+import com.xidian.iot.database.entity.NodeCmdStdExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

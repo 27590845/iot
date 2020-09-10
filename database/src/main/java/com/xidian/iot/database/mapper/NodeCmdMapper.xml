@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xidian.iot.database.mapper.NodeCmdMapper">
-  <resultMap id="BaseResultMap" type="com.xidian.iot.database.pojo.NodeCmd">
+  <resultMap id="BaseResultMap" type="com.xidian.iot.database.entity.NodeCmd">
     <id column="nc_id" jdbcType="BIGINT" property="ncId" />
     <result column="node_id" jdbcType="BIGINT" property="nodeId" />
     <result column="ncg_id" jdbcType="BIGINT" property="ncgId" />
@@ -69,7 +69,7 @@
   <sql id="Base_Column_List">
     nc_id, node_id, ncg_id, nc_content, nc_name
   </sql>
-  <select id="selectByExample" parameterType="com.xidian.iot.database.pojo.NodeCmdExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.xidian.iot.database.entity.NodeCmdExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -94,13 +94,13 @@
     delete from node_cmd
     where nc_id = #{ncId,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.xidian.iot.database.pojo.NodeCmdExample">
+  <delete id="deleteByExample" parameterType="com.xidian.iot.database.entity.NodeCmdExample">
     delete from node_cmd
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.xidian.iot.database.pojo.NodeCmd">
+  <insert id="insert" parameterType="com.xidian.iot.database.entity.NodeCmd">
     <selectKey keyProperty="ncId" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -109,7 +109,7 @@
     values (#{nodeId,jdbcType=BIGINT}, #{ncgId,jdbcType=BIGINT}, #{ncContent,jdbcType=VARCHAR}, 
       #{ncName,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.xidian.iot.database.pojo.NodeCmd">
+  <insert id="insertSelective" parameterType="com.xidian.iot.database.entity.NodeCmd">
     <selectKey keyProperty="ncId" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -143,7 +143,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.xidian.iot.database.pojo.NodeCmdExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.xidian.iot.database.entity.NodeCmdExample" resultType="java.lang.Long">
     select count(*) from node_cmd
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -183,7 +183,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xidian.iot.database.pojo.NodeCmd">
+  <update id="updateByPrimaryKeySelective" parameterType="com.xidian.iot.database.entity.NodeCmd">
     update node_cmd
     <set>
       <if test="nodeId != null">
@@ -201,7 +201,7 @@
     </set>
     where nc_id = #{ncId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.xidian.iot.database.pojo.NodeCmd">
+  <update id="updateByPrimaryKey" parameterType="com.xidian.iot.database.entity.NodeCmd">
     update node_cmd
     set node_id = #{nodeId,jdbcType=BIGINT},
       ncg_id = #{ncgId,jdbcType=BIGINT},

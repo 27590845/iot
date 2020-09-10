@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xidian.iot.database.mapper.NodeActCmdMapper">
-  <resultMap id="BaseResultMap" type="com.xidian.iot.database.pojo.NodeActCmd">
+  <resultMap id="BaseResultMap" type="com.xidian.iot.database.entity.NodeActCmd">
     <id column="nac_id" jdbcType="BIGINT" property="nacId" />
     <result column="nc_id" jdbcType="BIGINT" property="ncId" />
     <result column="node_id" jdbcType="BIGINT" property="nodeId" />
@@ -71,7 +71,7 @@
   <sql id="Base_Column_List">
     nac_id, nc_id, node_id, scene_id, nt_id, node_sn, scene_sn
   </sql>
-  <select id="selectByExample" parameterType="com.xidian.iot.database.pojo.NodeActCmdExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.xidian.iot.database.entity.NodeActCmdExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -96,13 +96,13 @@
     delete from node_act_cmd
     where nac_id = #{nacId,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.xidian.iot.database.pojo.NodeActCmdExample">
+  <delete id="deleteByExample" parameterType="com.xidian.iot.database.entity.NodeActCmdExample">
     delete from node_act_cmd
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.xidian.iot.database.pojo.NodeActCmd">
+  <insert id="insert" parameterType="com.xidian.iot.database.entity.NodeActCmd">
     <selectKey keyProperty="nacId" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -113,7 +113,7 @@
       #{ntId,jdbcType=BIGINT}, #{nodeSn,jdbcType=VARCHAR}, #{sceneSn,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.xidian.iot.database.pojo.NodeActCmd">
+  <insert id="insertSelective" parameterType="com.xidian.iot.database.entity.NodeActCmd">
     <selectKey keyProperty="nacId" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -159,7 +159,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.xidian.iot.database.pojo.NodeActCmdExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.xidian.iot.database.entity.NodeActCmdExample" resultType="java.lang.Long">
     select count(*) from node_act_cmd
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -207,7 +207,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xidian.iot.database.pojo.NodeActCmd">
+  <update id="updateByPrimaryKeySelective" parameterType="com.xidian.iot.database.entity.NodeActCmd">
     update node_act_cmd
     <set>
       <if test="ncId != null">
@@ -231,7 +231,7 @@
     </set>
     where nac_id = #{nacId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.xidian.iot.database.pojo.NodeActCmd">
+  <update id="updateByPrimaryKey" parameterType="com.xidian.iot.database.entity.NodeActCmd">
     update node_act_cmd
     set nc_id = #{ncId,jdbcType=BIGINT},
       node_id = #{nodeId,jdbcType=BIGINT},
