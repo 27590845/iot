@@ -1,4 +1,4 @@
-package com.xidian.iot.database.pojo.mongo;
+package com.xidian.iot.database.entity.mongo;
 
 import lombok.Data;
 

@@ -1,7 +1,7 @@
 package com.xidian.iot.datacenter.service.chain.json;
 
-import com.xidian.iot.database.pojo.NodeAttr;
-import com.xidian.iot.database.pojo.mongo.NodeData;
+import com.xidian.iot.database.entity.NodeAttr;
+import com.xidian.iot.database.entity.mongo.NodeData;
 import com.xidian.iot.datacenter.service.chain.BaseContext;
 import lombok.Data;
 
