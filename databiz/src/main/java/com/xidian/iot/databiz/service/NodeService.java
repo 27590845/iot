@@ -15,4 +15,12 @@ public interface NodeService {
      * @return com.xidian.iot.database.entity.Node
      * */ 
     Node addNode(NodeAddParam param);
+
+    /**
+     * 根据sceneSn和nodeSn获取node
+     * @param sceneSn
+     * @param nodeSn
+     * @return
+     */
+    Node getNodeBySn(String sceneSn, String nodeSn);
 }

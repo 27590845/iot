@@ -30,6 +30,11 @@ public interface NodeCondService {
      */
     List<NodeCondExt> getNodeCondExtBySnAvl(String sceneSn, String nodeSn);
 
+    /**
+     * 根据nodeTrig.ntId获取NodeCondExt
+     * @param ntId
+     * @return
+     */
     List<NodeCondExt> getNodeCondExtByNtId(Long ntId);
 
     /**

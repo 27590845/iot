@@ -3,7 +3,9 @@ package com.xidian.iot.datacenter.service.triger;
 import com.xidian.iot.database.entity.NodeAttr;
 import com.xidian.iot.database.entity.custom.NodeCondExt;
 import com.xidian.iot.database.entity.custom.NodeTrigExt;
+import com.xidian.iot.databiz.service.NodeAttrService;
 import com.xidian.iot.databiz.service.NodeCondService;
+import com.xidian.iot.databiz.service.NodeService;
 import com.xidian.iot.databiz.service.NodeTrigService;
 import com.xidian.iot.datacenter.service.BaseTask;
 import lombok.Setter;
@@ -15,6 +17,16 @@ import org.apache.commons.lang.math.NumberUtils;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
+
+/**
+ * 触发规则，对nodeCondExtList中每个元素执行如下操作：
+ * 1. 判断该条件关联的nodeAttr是否存在，否则跳过本次循环
+ * 2. 当前时间与上次判断该条件的时间差，是否超过nodeTrig.ntInvl，否则跳过本次循环
+ * 3. 该条件在数值上是否满足，是则nodeCondExt.currentFitCount加一，否则归零
+ * 4. 当前条件是否满足nodeCondExt.currentFitCount>=nodeCondExt.ncFitTime，是则本次条件满足，否则不满足
+ * 5. 当前条件的满足状态是否和上次判断该条件得出的满足状态相异，是，并且条件满足，则进入下一个任务
+ * 6. 更新缓存中的nodeCondExt
+ */
 
 /**
  * @author mrl
@@ -50,12 +62,7 @@ public class CompareNodeCondTask extends BaseTask implements Runnable {
      * 节点属性数据访问接口。
      */
     @Resource
-    private NodeAttrDao nodeAttrDao;
-    /**
-     * 节点数据访问接口。
-     */
-    @Resource
-    private NodeDao nodeDao;
+    private NodeAttrService nodeAttrService;
 
     /**
      * 任务从这里开始。
@@ -112,7 +119,7 @@ public class CompareNodeCondTask extends BaseTask implements Runnable {
      */
     private String hasKey(NodeCondExt nodeCondExt) {
         // 获得节点属性
-        NodeAttr nodeAttr = nodeAttrDao.getNodeAttrById(nodeCondExt.getNaId());
+        NodeAttr nodeAttr = nodeAttrService.getNodeAttrById(nodeCondExt.getNaId());
         String attrKey = nodeAttr.getNaKey();
         log.info("get node attr {}", nodeAttr);
         // 判断此次上数数据不包含此属性则不做操作
@@ -132,7 +139,7 @@ public class CompareNodeCondTask extends BaseTask implements Runnable {
         // 判断这个条件是否满足
         boolean fit = isFitCondition(nodeCondExt, attrKey);
         log.info("compareCondition() fit={}", fit);
-        // 判断如果发生了变化，才执行更新、检查触发器操作
+        // 判断如果发生了变化，才执行更新、检查触发器操作z
         if (fit != nodeCondExt.isFit()) {
             // 更新变化后的fit值，并更新到缓存
             nodeCondExt.setFit(fit);

@@ -17,7 +17,7 @@ import java.util.List;
  * @author mrl
  * @Title: CheckingTrigTask
  * @Package
- * @Description: 检查是否触发某一触发器，根据触发器的条件是否都满足，如果都满足则交由{@link SendMessageTask}进行消息发送    copy from langyan
+ * @Description: 检查是否触发某一触发器，根据触发器的条件是否都满足，如果都满足则交由{@link SendCmdTask}进行命令发送    copy from langyan
  * @date 2020/9/10 5:53 下午
  */
 @Slf4j
@@ -54,7 +54,7 @@ public class CheckingTrigTask extends BaseTask implements Runnable {
         // 判断是否出发这个触发器
         if (isTrig(nodeCondExtList)) {
             // 执行发送消息的任务
-            doSendMessageTask(nodeCondExtList);
+//            doSendMessageTask(nodeCondExtList);
             // 执行发送命令的任务
             doSendCommandTask();
             // 设置更新最后运行时间及是否需要继续执行
@@ -83,22 +83,22 @@ public class CheckingTrigTask extends BaseTask implements Runnable {
         SendCmdTask sendCmdTask = (SendCmdTask) applicationContext.getBean("sendCmdTask");
         // 设置触发器ID
         sendCmdTask.setNtId(ntId);
-        sendCmdTask.run();
-//		taskExecutor.execute(sendCmdTask);
+//        sendCmdTask.run();
+		taskExecutor.execute(sendCmdTask);
     }
 
     /**
      * 执行发送消息的任务
      */
-    private void doSendMessageTask(List<NodeCondExt> nodeCondExtList) {
-        SendMessageTask sendMessageTask = (SendMessageTask) applicationContext.getBean("sendMessageTask");
-        // 设置触发器ID
-        sendMessageTask.setNtId(ntId);
-        // 设置触发条件
-        sendMessageTask.setNodeCondExtList(nodeCondExtList);
-        sendMessageTask.run();
+//    private void doSendMessageTask(List<NodeCondExt> nodeCondExtList) {
+//        SendMessageTask sendMessageTask = (SendMessageTask) applicationContext.getBean("sendMessageTask");
+//        // 设置触发器ID
+//        sendMessageTask.setNtId(ntId);
+//        // 设置触发条件
+//        sendMessageTask.setNodeCondExtList(nodeCondExtList);
+////        sendMessageTask.run();
 //		taskExecutor.execute(sendMessageTask);
-    }
+//    }
 
     /**
      * 重置触发器条件
