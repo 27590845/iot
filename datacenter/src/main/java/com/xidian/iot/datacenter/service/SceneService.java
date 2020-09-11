@@ -24,7 +24,7 @@ public class SceneService {
 
     //用于手动添加缓存
     @Resource
-    private RedisUtil redisUtil = null;
+    private RedisUtil redisUtil;
 
     @Resource
     private SceneMapper sceneMapper;

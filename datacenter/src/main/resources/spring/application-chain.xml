@@ -8,8 +8,6 @@
             <list>
                 <ref bean="checkJsonDataCommand" />
                 <ref bean="conversionNodeDataCommand" />
-                <ref bean="autoAddNodeCommand" />
-                <ref bean="autoAddAttributeCommand" />
                 <ref bean="saveNodeDataCmd" />
             </list>
         </constructor-arg>
@@ -19,22 +17,8 @@
     <bean name="checkJsonDataCommand"
           class="com.xidian.iot.datacenter.service.chain.json.CheckJsonDataCommand" />
     <bean name="conversionNodeDataCommand"
-          class="com.thingslink.langyan.service.chain.json.ConversionNodeDataCommand" />
-    <bean name="autoAddNodeCommand"
-          class="com.thingslink.langyan.service.chain.json.AutoAddNodeCommand" />
-    <bean name="autoAddAttributeCommand"
-          class="com.thingslink.langyan.service.chain.json.AutoAddAttributeCommand" />
-    <bean name="filterNodeDataCommand"
-          class="com.thingslink.langyan.service.chain.json.FilterNodeDataCommand" />
-
-    <!-- image数据处理 -->
-    <bean name="getImageDataCmd"
-          class="com.thingslink.langyan.service.chain.img.GetImageDataCommand" />
-    <bean name="saveFileCmd" class="com.thingslink.langyan.service.chain.img.SaveFileCommand">
-        <property name="uploadPath" value="${upload.path}"></property>
-    </bean>
-
+          class="com.xidian.iot.datacenter.service.chain.json.ConversionNodeDataCommand" />
     <!-- 保存节点数据 -->
-    <bean name="saveNodeDataCmd" class="com.thingslink.langyan.service.chain.SaveNodeDataCommand" />
+    <bean name="saveNodeDataCmd" class="com.xidian.iot.datacenter.service.chain.SaveNodeDataCommand" />
 
 </beans>
