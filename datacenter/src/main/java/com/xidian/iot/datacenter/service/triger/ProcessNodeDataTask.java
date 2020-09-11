@@ -1,20 +1,15 @@
 package com.xidian.iot.datacenter.service.triger;
 
 import com.xidian.iot.common.mq.MqSender;
-import com.xidian.iot.database.entity.NodeCond;
-import com.xidian.iot.database.entity.NodeTrig;
 import com.xidian.iot.database.entity.Scene;
+import com.xidian.iot.database.entity.custom.NodeCondExt;
 import com.xidian.iot.database.entity.mongo.NodeData;
 import com.xidian.iot.databiz.service.NodeCondService;
 import com.xidian.iot.datacenter.service.BaseTask;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.MapUtils;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -42,11 +37,6 @@ public class ProcessNodeDataTask extends BaseTask implements Runnable {
      */
     @Resource
     private NodeCondService nodeCondService;
-    /**
-     * 手机推送服务
-     */
-    @Resource
-    private MqSender mqttSender;
 
     /**
      * 任务从这里开始。
@@ -68,23 +58,23 @@ public class ProcessNodeDataTask extends BaseTask implements Runnable {
         for (NodeData nodeData : nodeDataList) {
             log.info("nodeData({})", nodeData);
             //只获取条件所关联的触发器未失效的节点条件
-            List<NodeCond> nodeCondListResult = nodeCondService.getByNodeSnAvl(nodeData.getNodeSn());
+            List<NodeCondExt> nodeCondExtListResult = nodeCondService.getNodeCondExtBySnAvl(scene.getSceneSn(), nodeData.getNodeSn());
             //执行条件比较任务
-            doCompareNodeCondTask(nodeData, nodeCondListResult);
+            doCompareNodeCondTask(nodeData, nodeCondExtListResult);
         }
     }
 
     /**
      * 执行比较触发条件的任务
      * @param nodeData 上传数据
-     * @param nodeCondList 条件列表
+     * @param nodeCondExtList 条件列表
      */
-    private void doCompareNodeCondTask(NodeData nodeData, List<NodeCond> nodeCondList) {
+    private void doCompareNodeCondTask(NodeData nodeData, List<NodeCondExt> nodeCondExtList) {
         CompareNodeCondTask compareNodeCondTask = (CompareNodeCondTask) applicationContext.getBean("compareNodeCondTask");
         // 设置节点数据
         compareNodeCondTask.setData(nodeData.getData());
         // 设置条件列表
-        compareNodeCondTask.setNodeCondList(nodeCondList);
+        compareNodeCondTask.setNodeCondExtList(nodeCondExtList);
 //        compareNodeCondTask.run();
 		taskExecutor.execute(compareNodeCondTask);
     }

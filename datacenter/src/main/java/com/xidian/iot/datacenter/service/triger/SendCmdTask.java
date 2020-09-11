@@ -10,12 +10,12 @@ import java.util.concurrent.TimeoutException;
 
 /**
  * @author mrl
- * @Title: SendCommandTask
+ * @Title: SendCmdTask
  * @Package
  * @Description: 触发器被触发后，执行对应的命令    copy from langyan
  * @date 2020/9/10 7:21 下午
  */
-public class SendCommandTask extends BaseTask implements Runnable {
+public class SendCmdTask extends BaseTask implements Runnable {
 
     /**
      * 触发器ID。

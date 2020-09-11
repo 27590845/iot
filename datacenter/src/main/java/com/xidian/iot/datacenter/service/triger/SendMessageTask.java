@@ -1,6 +1,7 @@
 package com.xidian.iot.datacenter.service.triger;
 
 import com.xidian.iot.database.entity.*;
+import com.xidian.iot.database.entity.custom.NodeCondExt;
 import com.xidian.iot.datacenter.service.BaseTask;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +30,7 @@ public class SendMessageTask extends BaseTask implements Runnable {
      * 触发条件
      */
     @Setter
-    private List<NodeCond> nodeCondList;
+    private List<NodeCondExt> nodeCondExtList;
     /**
      * 场景数据访问接口。
      */
@@ -167,17 +168,17 @@ public class SendMessageTask extends BaseTask implements Runnable {
         }
         //zl 3.9 修改
         else if(nodeActionAlert.getActionType().intValue() == 7){
-            for(NodeCond nodeCond : nodeCondList){
+            for(NodeCondExt nodeCondExt : nodeCondExtList){
                 try {
                     String clientid = nodeActionAlert.getValue();
                     String topicName = "Application.push."+clientid;
                     //以json字符串封装
                     HashMap<String , String> map = new HashMap<String , String>();
-                    map.put("sceneSn", nodeCond.getSceneSn());
-                    map.put("nodeSn", nodeCond.getNodeSn());
-                    map.put("currentValue", nodeCond.getCurrentValue().toString());
+                    map.put("sceneSn", nodeCondExt.getSceneSn());
+                    map.put("nodeSn", nodeCondExt.getNodeSn());
+                    map.put("currentValue", nodeCondExt.getCurrentValue().toString());
                     String content = JsonUtil.toJson(map);
-                    //String content = "{\"" +"currentValue"+"\":\"" + nodeCond.getCurrentValue().toString()+"\"}";
+                    //String content = "{\"" +"currentValue"+"\":\"" + nodeCondExt.getCurrentValue().toString()+"\"}";
                     //通过currentValue(clientid)去表app查询app_secret
                     String key = appDao.getAppByClientid(clientid);
                     //key对content加密
@@ -230,10 +231,10 @@ public class SendMessageTask extends BaseTask implements Runnable {
         Node node = null;
         NodeAttr nodeAttr = null;
         ProductAttribute proudctAttribute = null;
-        for (NodeCond nodeCond : nodeCondList) {
+        for (NodeCondExt nodeCondExt : nodeCondExtList) {
 
-            scene = sceneDao.getSceneBySn(new Scene(nodeCond.getSceneSn()));
-            node = nodeDao.getNodeBySceneSnNodeSn(new Node(scene.getSnValue(), nodeCond.getNodeSn()));
+            scene = sceneDao.getSceneBySn(new Scene(nodeCondExt.getSceneSn()));
+            node = nodeDao.getNodeBySceneSnNodeSn(new Node(scene.getSnValue(), nodeCondExt.getNodeSn()));
 
             // 若场景和节点不存在，则不进行处理
             if (scene == null || node == null) {
@@ -250,15 +251,15 @@ public class SendMessageTask extends BaseTask implements Runnable {
             // 获得单位
             String unit = null;
             if (node.isProductNode()) {
-                proudctAttribute = productAttributeDao.getProductAttributeById(new ProductAttribute(nodeCond.getNaId()));
+                proudctAttribute = productAttributeDao.getProductAttributeById(new ProductAttribute(nodeCondExt.getNaId()));
                 unit = proudctAttribute.getUnit();
             } else {
-                nodeAttr = nodeAttrDao.getNodeAttrById(new NodeAttr(nodeCond.getNaId()));
+                nodeAttr = nodeAttrDao.getNodeAttrById(new NodeAttr(nodeCondExt.getNaId()));
                 unit = nodeAttr.getUnit();
             }
 
             // 封装文字
-            sb.append(scene.getTitle()).append("的").append(node.getName()).append("为").append(nodeCond.getCurrentValue()).append(unit).append(",");
+            sb.append(scene.getTitle()).append("的").append(node.getName()).append("为").append(nodeCondExt.getCurrentValue()).append(unit).append(",");
         }
 
         // 接去掉最后一个逗号

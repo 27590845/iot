@@ -11,13 +11,13 @@ import java.util.List;
 
 /**
  * @author mrl
- * @Title: NodeTrigEx
+ * @Title: NodeTrigExt
  * @Package
  * @Description: NodeTrig的扩展
  * @date 2020/9/10 5:59 下午
  */
 @Data
-public class NodeTrigEx extends NodeTrig {
+public class NodeTrigExt extends NodeTrig {
 
     // 最后执行的时间
     private Date lastRunTime;

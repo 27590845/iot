@@ -1,6 +1,7 @@
 package com.xidian.iot.databiz.service;
 
 import com.xidian.iot.database.entity.NodeCond;
+import com.xidian.iot.database.entity.custom.NodeCondExt;
 
 import java.util.List;
 
@@ -14,16 +15,26 @@ import java.util.List;
 public interface NodeCondService {
 
     /**
-     * 根据nodeId获取NodeCond列表
+     * 根据sceneSn和nodeSn获取可用的NodeCond列表：nodeTrig.getNtExec()==1||nodeTrig.getNtExpr().before(new Date())
+     * @param sceneSn
      * @param nodeSn
      * @return
      */
-    List<NodeCond> getByNodeId(String nodeSn);
+    List<NodeCond> getNodeCondBySnAvl(String sceneSn, String nodeSn);
 
     /**
-     * 根据nodeId获取可用的NodeCond列表：nodeTrig.getNtExec()==1||nodeTrig.getNtExpr().before(new Date())
+     * 根据sceneSn和nodeSn获取可用的NodeCond列表：nodeTrig.getNtExec()==1||nodeTrig.getNtExpr().before(new Date())
+     * @param sceneSn
      * @param nodeSn
      * @return
      */
-    List<NodeCond> getByNodeSnAvl(String nodeSn);
+    List<NodeCondExt> getNodeCondExtBySnAvl(String sceneSn, String nodeSn);
+
+    List<NodeCondExt> getNodeCondExtByNtId(Long ntId);
+
+    /**
+     * 更新条件的condition 并更新到memcache
+     * @param nodeCondExt 条件
+     */
+    NodeCondExt updateNodeCondExt(NodeCondExt nodeCondExt);
 }

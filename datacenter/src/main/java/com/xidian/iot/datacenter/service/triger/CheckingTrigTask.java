@@ -1,14 +1,15 @@
 package com.xidian.iot.datacenter.service.triger;
 
-import com.xidian.iot.database.entity.NodeCond;
-import com.xidian.iot.database.entity.NodeTrig;
+import com.xidian.iot.database.entity.custom.NodeCondExt;
+import com.xidian.iot.database.entity.custom.NodeTrigExt;
+import com.xidian.iot.databiz.service.NodeCondService;
+import com.xidian.iot.databiz.service.NodeTrigService;
 import com.xidian.iot.datacenter.service.BaseTask;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,20 +29,15 @@ public class CheckingTrigTask extends BaseTask implements Runnable {
     @Setter
     private Long ntId;
     /**
-     * 触发器服务类
-     */
-    @Resource
-    private TrigService trigService;
-    /**
      * 节点触发器条件数据访问接口。
      */
     @Resource
-    private NodeCondDao nodeCondDao;
+    private NodeCondService nodeCondService;
     /**
      * 节点触发器访问接口
      */
     @Resource
-    private NodeTrigDao nodeTrigDao;
+    private NodeTrigService nodeTrigService;
 
     /**
      * 任务从这里开始。
@@ -50,21 +46,21 @@ public class CheckingTrigTask extends BaseTask implements Runnable {
     public void run() {
 
         // 获得触发器条件
-        List<NodeCond> nodeCondList = getNodeCondList();
+        List<NodeCondExt> nodeCondExtList = nodeCondService.getNodeCondExtByNtId(ntId);
 
         log.info("doing CheckingTrigTask ntId=[{}]", ntId);
-        log.info("Node trig have condition [{}]", nodeCondList);
+        log.info("Node trig have condition [{}]", nodeCondExtList);
 
         // 判断是否出发这个触发器
-        if (isTrig(nodeCondList)) {
+        if (isTrig(nodeCondExtList)) {
             // 执行发送消息的任务
-            doSendMessageTask(nodeCondList);
+            doSendMessageTask(nodeCondExtList);
             // 执行发送命令的任务
             doSendCommandTask();
             // 设置更新最后运行时间及是否需要继续执行
             updateLastRunTime();
             // 复位触发器条件
-            reset();
+            reset(nodeCondExtList);
         }
     }
 
@@ -72,34 +68,34 @@ public class CheckingTrigTask extends BaseTask implements Runnable {
      * 更新触发器最后运行时间及是否需要继续执行
      */
     private void updateLastRunTime() {
-        NodeTrig nodeTrig = nodeTrigDao.getNodeTrigById(new NodeTrig(ntId));
-        nodeTrig.setLastRunTime(new Date());
-        if(nodeTrig.getRepeated()==1){		//如触发器不重复执行则将executed置为1（不再执行）
-            nodeTrig.setExecuted(1);
+        NodeTrigExt nodeTrigExt = nodeTrigService.getNodeTrigExtById(ntId);
+        nodeTrigExt.setLastRunTime(new Date());
+        if(nodeTrigExt.getNtRept()==1){		//如触发器不重复执行则将executed置为1（不再执行）
+            nodeTrigExt.setNtExec((byte) 1);
         }
-        nodeTrigDao.updateNodeTrig(nodeTrig);
+        nodeTrigService.updateNodeTrigExt(nodeTrigExt);
     }
 
     /**
      * 执行发送命令的任务
      */
     private void doSendCommandTask() {
-        SendCommandTask sendCommandTask = (SendCommandTask) applicationContext.getBean("sendCommandTask");
+        SendCmdTask sendCmdTask = (SendCmdTask) applicationContext.getBean("sendCmdTask");
         // 设置触发器ID
-        sendCommandTask.setNtId(ntId);
-        sendCommandTask.run();
-//		taskExecutor.execute(sendCommandTask);
+        sendCmdTask.setNtId(ntId);
+        sendCmdTask.run();
+//		taskExecutor.execute(sendCmdTask);
     }
 
     /**
      * 执行发送消息的任务
      */
-    private void doSendMessageTask(List<NodeCond> nodeCondList) {
+    private void doSendMessageTask(List<NodeCondExt> nodeCondExtList) {
         SendMessageTask sendMessageTask = (SendMessageTask) applicationContext.getBean("sendMessageTask");
         // 设置触发器ID
         sendMessageTask.setNtId(ntId);
         // 设置触发条件
-        sendMessageTask.setNodeCondList(nodeCondList);
+        sendMessageTask.setNodeCondExtList(nodeCondExtList);
         sendMessageTask.run();
 //		taskExecutor.execute(sendMessageTask);
     }
@@ -107,54 +103,34 @@ public class CheckingTrigTask extends BaseTask implements Runnable {
     /**
      * 重置触发器条件
      */
-    private void reset() {
-        for (NodeCond nodeCond : getNodeCondList()) {
-            nodeCond.reset();
-            trigService.changeCondition(nodeCond);
+    private void reset(List<NodeCondExt> nodeCondExtList) {
+        for (NodeCondExt nodeCondExt : nodeCondExtList) {
+            nodeCondExt.reset();
+            nodeCondService.updateNodeCondExt(nodeCondExt);
         }
     }
 
     /**
      * 判断触发器的所有条件是否都满足。
-     *
-     * @param nodeCondList
-     *            触发条件列表。
+     * @param nodeCondExtList 触发条件列表。
      * @return true 触发，false 不触发
      */
-    private boolean isTrig(List<NodeCond> nodeCondList) {
-
+    private boolean isTrig(List<NodeCondExt> nodeCondExtList) {
         // 如果一个条件都没有，返回false.
-        if (CollectionUtils.isEmpty(nodeCondList)) {
-            log.info("isTrig() nodeCondList is empty.return false;");
+        if (CollectionUtils.isEmpty(nodeCondExtList)) {
+            log.info("isTrig() nodeCondExtList is empty.return false;");
             return false;
         }
-
-        for (NodeCond nodeCond : nodeCondList) {
-            if (nodeCond.isMeet()) {
-                log.info("nodeCond is meet,id is ({})", nodeCond.getNcId());
+        for (NodeCondExt nodeCondExt : nodeCondExtList) {
+            if (nodeCondExt.isFit()) {
+                log.info("nodeCondExt is meet,id is ({})", nodeCondExt.getNcId());
                 continue;
             }
-            log.info("nodeCond is not meet,id is ({})", nodeCond.getNcId());
+            log.info("nodeCondExt is not meet,id is ({})", nodeCondExt.getNcId());
             // 任何一个条件不满足，不能触发
             return false;
         }
-
         log.info("isTrig() return true;this nodeTrig id is ({})", ntId);
         return true;
     }
-
-    /**
-     * 获得触发器条件列表
-     *
-     * @return 返回{@link #ntId}的条件列表
-     */
-    private List<NodeCond> getNodeCondList() {
-        // 获得触发器条件列表
-        List<NodeCond> nodeCondList = new ArrayList<NodeCond>();
-        for (Long ncId : nodeCondDao.getNcIdListByNtId(new NcIdListByNtId(ntId))) {
-            nodeCondList.add(nodeCondDao.getNodeCondById(new NodeCond(ncId)));
-        }
-        return nodeCondList;
-    }
-
 }
