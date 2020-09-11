@@ -26,6 +26,7 @@ public class TestController {
     @GetMapping("/welcome")
     public HttpResult welcome(){
         sceneService.testId();
+        sceneService.getSceneById(1822406163315200L);
         return new HttpResult();
     }
 

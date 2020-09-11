@@ -14,6 +14,14 @@ public interface SceneService {
     public List<Scene> getScene(String sceneSn, int page, int limit);
 
     /**
+     * 分页获取当前所有的场景号
+     * @param page
+     * @param limit
+     * @return java.util.List<com.xidian.iot.database.entity.Scene>
+     * */
+    List<Scene> getAllScenes(int page, int limit);
+
+    /**
      * 根据场景ID获取场景
      * */
     Scene getSceneById(Long sceneId);
@@ -47,4 +55,5 @@ public interface SceneService {
      * 更新scene
      * */
     void updateScene(String sceneSn, SceneUpdateParam param);
+
 }

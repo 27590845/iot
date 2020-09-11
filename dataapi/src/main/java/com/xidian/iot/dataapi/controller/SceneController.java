@@ -24,6 +24,13 @@ public class SceneController {
     @Autowired
     private SceneService sceneService;
 
+    @ApiOperation(value = "分页获取当前用户下所有的网关号")
+    @GetMapping("/all")
+    public HttpResult getUserScenes(@ApiParam(name = "page",value = "页号") @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                                  @ApiParam(name = "limit",value = "页数") @RequestParam(value = "limit", required = false, defaultValue = "5") int limit){
+        return HttpResult.responseOK(sceneService.getAllScenes(page,limit));
+    }
+
     @ApiOperation(value = "根据Sn获取指定场景接口")
     @GetMapping("/{sceneSn}")
     public HttpResult getScene(@ApiParam(name = "sceneSn",value = "场景sn") @PathVariable("sceneSn") String sceneSn){

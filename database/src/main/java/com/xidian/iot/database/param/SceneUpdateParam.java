@@ -48,7 +48,11 @@ public class SceneUpdateParam {
         this.sceneDesc = (StringUtils.isNotBlank(sceneDesc)?sceneDesc:null);
         return this;
     }
-
+    /**
+     *  过滤非法场景、地点名称、描述
+     * @param sceneId
+     * @return com.xidian.iot.database.entity.Scene
+     * */
     public Scene build(Long sceneId){
         Scene scene = new Scene();
         scene.setSceneId(sceneId);
