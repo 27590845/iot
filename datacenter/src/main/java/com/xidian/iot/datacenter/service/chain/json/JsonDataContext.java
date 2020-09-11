@@ -1,7 +1,7 @@
 package com.xidian.iot.datacenter.service.chain.json;
 
-import com.xidian.iot.database.pojo.NodeAttr;
-import com.xidian.iot.database.pojo.mongo.NodeData;
+import com.xidian.iot.database.entity.NodeAttr;
+import com.xidian.iot.database.entity.mongo.NodeData;
 import com.xidian.iot.datacenter.service.chain.BaseContext;
 import lombok.Data;
 
@@ -18,6 +18,8 @@ import java.util.Map;
 @Data
 public class JsonDataContext extends BaseContext {
 
+    //上传数据中，主数据的 filed name
+    public static final String MAIN_FILED = "datastreams";
     //上数数据中，节点数据的，sn的key
     public static final String NODE_SN_KEY = "sn";
     //上数数据中，节点数据的，at的key

@@ -27,6 +27,7 @@
 <!--    <import resource="application-activemq-def.xml"/>-->
     <import resource="application-kafka-consumer-def.xml"/>
     <import resource="application-kafka-producer-def.xml"/>
+    <import resource="application-chain.xml"/>
 
     <task:executor id="taskExecutor"
                    pool-size="${thread.pool.corePoolSize}-${thread.pool.maxPoolSize}"
