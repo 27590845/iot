@@ -33,4 +33,9 @@ public class NodeServiceImpl implements NodeService {
         //设置nodeSn
         return null;
     }
+
+    @Override
+    public Node getNodeBySn(String sceneSn, String nodeSn) {
+        return null;
+    }
 }

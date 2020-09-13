@@ -55,22 +55,22 @@ public class SaveNodeDataCommand implements Command, ApplicationContextAware {
         log.debug("Saved Node Data.");
 
         // 执行触发器
-        doProcessNodeDataTask(upContext.getScene(), nodeDataList);
+        doProcessNodeDataTask(upContext.getSceneSn(), nodeDataList);
 
         // 到此责任链完成
         return true;
     }
 
     /**
-     * 执行一个节点的触发器任务。
-     *
-     * @param scene 此次上传的数据。
+     * 执行一个节点的触发器任务
+     * @param sceneSn
+     * @param nodeDataList
      */
-    public void doProcessNodeDataTask(Scene scene, List<NodeData> nodeDataList) {
+    public void doProcessNodeDataTask(String sceneSn, List<NodeData> nodeDataList) {
         ProcessNodeDataTask processNodeDataTask = (ProcessNodeDataTask) applicationContext.getBean("processNodeDataTask");
         // 设置节点数据列表
         processNodeDataTask.setNodeDataList(nodeDataList);
-        processNodeDataTask.setScene(scene);
+        processNodeDataTask.setSceneSn(sceneSn);
 
         taskExecutor.execute(processNodeDataTask);
     }

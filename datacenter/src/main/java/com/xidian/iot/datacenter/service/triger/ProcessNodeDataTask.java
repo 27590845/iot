@@ -1,7 +1,5 @@
 package com.xidian.iot.datacenter.service.triger;
 
-import com.xidian.iot.common.mq.MqSender;
-import com.xidian.iot.database.entity.Scene;
 import com.xidian.iot.database.entity.custom.NodeCondExt;
 import com.xidian.iot.database.entity.mongo.NodeData;
 import com.xidian.iot.databiz.service.NodeCondService;
@@ -28,10 +26,10 @@ public class ProcessNodeDataTask extends BaseTask implements Runnable {
     @Setter
     private List<NodeData> nodeDataList;
     /**
-     * 此次上数的场景
+     * 此次上数的场景Sn
      */
     @Setter
-    private Scene scene;
+    private String sceneSn;
     /**
      * 触发器条件数据访问接口。
      */
@@ -58,7 +56,7 @@ public class ProcessNodeDataTask extends BaseTask implements Runnable {
         for (NodeData nodeData : nodeDataList) {
             log.info("nodeData({})", nodeData);
             //只获取条件所关联的触发器未失效的节点条件
-            List<NodeCondExt> nodeCondExtListResult = nodeCondService.getNodeCondExtBySnAvl(scene.getSceneSn(), nodeData.getNodeSn());
+            List<NodeCondExt> nodeCondExtListResult = nodeCondService.getNodeCondExtBySnAvl(sceneSn, nodeData.getNodeSn());
             //执行条件比较任务
             doCompareNodeCondTask(nodeData, nodeCondExtListResult);
         }

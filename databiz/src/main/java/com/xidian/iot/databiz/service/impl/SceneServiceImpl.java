@@ -63,7 +63,7 @@ public class SceneServiceImpl implements SceneService {
     @Override
     public Scene getSceneBySn(String sceneSn) {
         SceneExample sceneExample = new SceneExample();
-        sceneExample.createCriteria().andSceneDescEqualTo(sceneSn);
+        sceneExample.createCriteria().andSceneSnEqualTo(sceneSn);
         List<Scene> scenes = sceneMapper.selectByExample(sceneExample);
         Assert.isTrue(scenes.size() > 0, ExceptionEnum.SCENE_NOT_EXIST);
         return scenes.get(0);
