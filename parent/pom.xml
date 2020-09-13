@@ -16,11 +16,10 @@
     <maven.compiler.target>1.7</maven.compiler.target>
     <jdk.version>1.8</jdk.version>
     <junit.version>4.12</junit.version>
-    <swagger.version>2.7.0</swagger.version>
+    <swagger.version>2.10.5</swagger.version>
 <!--    <swagger.jersey.version>1.5.23</swagger.jersey.version>-->
-    <springfox.swagger.version>2.7.0</springfox.swagger.version>
     <slf4j.version>1.8.0-beta2</slf4j.version>
-    <log4j.version>2.12.1</log4j.version>
+    <logback.version>1.2.3</logback.version>
     <activemq.core.version>5.7.0</activemq.core.version>
     <activemq.version>5.15.10</activemq.version>
     <spring.kafka.version>2.3.10.RELEASE</spring.kafka.version>
