@@ -57,11 +57,11 @@
       <version>${springframework.version}</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.springframework.session</groupId>
-      <artifactId>spring-session-data-redis</artifactId>
-      <version>${spring.session.data.redis.version}</version>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>org.springframework.session</groupId>-->
+<!--      <artifactId>spring-session-data-redis</artifactId>-->
+<!--      <version>${spring.session.data.redis.version}</version>-->
+<!--    </dependency>-->
     <!-- springframework end -->
 
     <!-- web component start -->

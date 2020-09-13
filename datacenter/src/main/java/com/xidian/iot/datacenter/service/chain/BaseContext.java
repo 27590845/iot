@@ -28,8 +28,6 @@ public abstract class BaseContext extends ContextBase {
     protected String apiKey;
     //网关的出厂序列号
     protected String sceneSn;
-    //网关对应的场景
-    protected Scene scene;
     //本次需要存储的节点数据
     protected List<NodeData> nodeDataList;
     //新添加的节点列表

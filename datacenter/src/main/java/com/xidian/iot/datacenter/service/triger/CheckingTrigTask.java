@@ -7,7 +7,7 @@ import com.xidian.iot.databiz.service.NodeTrigService;
 import com.xidian.iot.datacenter.service.BaseTask;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -17,7 +17,7 @@ import java.util.List;
  * @author mrl
  * @Title: CheckingTrigTask
  * @Package
- * @Description: 检查是否触发某一触发器，根据触发器的条件是否都满足，如果都满足则交由{@link SendCmdTask}进行命令发送    copy from langyan
+ * @Description: 检查是否触发某一触发器，根据触发器的条件是否都满足，如果都满足则交由{@link SendCmdTask}进行发送命令    copy from langyan
  * @date 2020/9/10 5:53 下午
  */
 @Slf4j
