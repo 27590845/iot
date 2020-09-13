@@ -45,7 +45,7 @@ public class SceneServiceImpl implements SceneService {
         return sceneMapper.selectByExample(example);
     }
 
-    @Cacheable(value = "scene")
+    @Cacheable(value = "getAllScenes")
     @Override
     public List<Scene> getAllScenes(int page, int limit) {
         if (page >= 0 && limit > 0) {
@@ -60,6 +60,7 @@ public class SceneServiceImpl implements SceneService {
         return sceneMapper.selectByPrimaryKey(sceneId);
     }
 
+    @Cacheable(value = "getSceneBySn")
     @Override
     public Scene getSceneBySn(String sceneSn) {
         SceneExample sceneExample = new SceneExample();
