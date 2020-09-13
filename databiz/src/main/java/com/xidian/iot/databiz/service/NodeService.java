@@ -2,6 +2,7 @@ package com.xidian.iot.databiz.service;
 
 import com.xidian.iot.database.entity.Node;
 import com.xidian.iot.database.param.NodeAddParam;
+import com.xidian.iot.database.param.NodeUpdateParam;
 
 /**
  * @author: Hansey
@@ -17,10 +18,29 @@ public interface NodeService {
     Node addNode(NodeAddParam param);
 
     /**
+     * 根据sceneSn和nodeSn删除node
+     * @param sceneSn
+     * @param nodeSn
+     * @return void
+     * */
+    void delNode(String sceneSn, String nodeSn);
+
+    /**
+     * 根据sceneSn和nodeSn更改node信息
+     * @param sceneSn
+     * @param nodeSn
+     * @param param
+     * @return void
+     * */
+    Node updateNode(String sceneSn, String nodeSn, NodeUpdateParam param);
+
+    /**
      * 根据sceneSn和nodeSn获取node
      * @param sceneSn
      * @param nodeSn
      * @return
      */
     Node getNodeBySn(String sceneSn, String nodeSn);
+
+
 }

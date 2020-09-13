@@ -17,7 +17,12 @@ public enum ExceptionEnum implements ExceptionInfo {
     NETWORK_ERROR(-10004, "网络异常，请稍后重试"),
     PARAMETER_VERIFICATION_ERROR(-10005, "参数校验错误"),
 
+
     SCENE_NOT_EXIST(-10006, "该网关不存在"),
+    NODE_NOT_EXIST(-10007, "该节点不存在"),
+    NODE_ATTR_NOT_EXIST(-10008, "该节点属性不存在"),
+    NODE_ATTR_STD_EXIST(-10009, "该节点属性模版不存在"),
+
 
     ;
 

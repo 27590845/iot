@@ -25,10 +25,10 @@ public class SceneController {
     private SceneService sceneService;
 
     @ApiOperation(value = "分页获取当前用户下所有的网关号")
-    @GetMapping("/all")
+    @GetMapping("/list")
     public HttpResult getUserScenes(@ApiParam(name = "page",value = "页号") @RequestParam(value = "page", required = false, defaultValue = "1") int page,
                                   @ApiParam(name = "limit",value = "页数") @RequestParam(value = "limit", required = false, defaultValue = "5") int limit){
-        return HttpResult.responseOK(sceneService.getAllScenes(page,limit));
+        return HttpResult.responseOK(sceneService.getScenes(page,limit));
     }
 
     @ApiOperation(value = "根据Sn获取指定场景接口")
@@ -56,5 +56,12 @@ public class SceneController {
                                   @ApiParam(name = "SceneUpdateParam",value = "场景更新信息") @Valid @RequestBody SceneUpdateParam param){
         sceneService.updateScene(sceneSn, param);
         return HttpResult.oK().message("更新场景成功");
+    }
+
+    @ApiOperation(value = "查看一个节点的数据")
+    @GetMapping("/{sceneSn}/node/{nodeSn}")
+    public HttpResult getScene(@ApiParam(name = "sceneSn",value = "场景sn") @PathVariable("sceneSn") String sceneSn
+                                ,@ApiParam(name = "nodeSn",value = "节点sn") @PathVariable("nodeSn") String nodeSn){
+        return HttpResult.responseOK(sceneService.getSceneBySn(sceneSn));
     }
 }
