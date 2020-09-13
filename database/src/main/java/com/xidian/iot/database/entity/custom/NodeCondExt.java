@@ -5,8 +5,8 @@ import com.xidian.iot.database.entity.NodeAttr;
 import com.xidian.iot.database.entity.NodeCond;
 import com.xidian.iot.database.entity.Scene;
 import lombok.Data;
-import org.apache.commons.lang.StringEscapeUtils;
-import org.apache.commons.lang.math.NumberUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 
 /**
  * @author mrl
@@ -112,25 +112,26 @@ public class NodeCondExt extends NodeCond {
      */
     public String getOperatorCharStr() {
         int operatorChar = getNcOp();
-        if (operatorChar == 1) {
-            return StringEscapeUtils.escapeHtml(">");
-        } else if (operatorChar == 2) {
-            return StringEscapeUtils.escapeHtml(">=");
-        } else if (operatorChar == 3) {
-            return StringEscapeUtils.escapeHtml("<");
-        } else if (operatorChar == 4) {
-            return StringEscapeUtils.escapeHtml("<=");
-        } else if (operatorChar == 5) {
-            return StringEscapeUtils.escapeHtml("==");
-        } else if (operatorChar == 6) {
-            return "新值";
-        } else if (operatorChar == 7) {
-            return "冻结";
-        } else if (operatorChar == 8) {
-            return "复活";
-        } else {
-            return "";
-        }
+//        if (operatorChar == 1) {
+//            return StringEscapeUtils.escapeHtml(">");
+//        } else if (operatorChar == 2) {
+//            return StringEscapeUtils.escapeHtml(">=");
+//        } else if (operatorChar == 3) {
+//            return StringEscapeUtils.escapeHtml("<");
+//        } else if (operatorChar == 4) {
+//            return StringEscapeUtils.escapeHtml("<=");
+//        } else if (operatorChar == 5) {
+//            return StringEscapeUtils.escapeHtml("==");
+//        } else if (operatorChar == 6) {
+//            return "新值";
+//        } else if (operatorChar == 7) {
+//            return "冻结";
+//        } else if (operatorChar == 8) {
+//            return "复活";
+//        } else {
+//            return "";
+//        }
+        return "";
     }
 
     /**

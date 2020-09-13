@@ -1,6 +1,6 @@
 package com.xidian.iot.databiz.service.impl;
 
-import com.baidu.fsg.uid.UidGenerator;
+//import com.baidu.fsg.uid.UidGenerator;
 import com.github.pagehelper.PageHelper;
 import com.xidian.iot.common.constants.ExceptionEnum;
 import com.xidian.iot.common.util.Assert;
@@ -32,8 +32,8 @@ public class SceneServiceImpl implements SceneService {
     private SceneMapper sceneMapper;
 //    @Autowired
 //    private SceneCustomMapper sceneCustomMapper;
-    @Autowired
-    private UidGenerator uidGenerator;
+//    @Autowired
+//    private UidGenerator uidGenerator;
 
     @Override
     public List<Scene> getScene(String sceneSn, int page, int limit) {
@@ -71,14 +71,14 @@ public class SceneServiceImpl implements SceneService {
 
     @Override
     public void testId() {
-        long uid = uidGenerator.getUID();
-        System.out.println(uidGenerator.parseUID(uid));
+//        long uid = uidGenerator.getUID();
+//        System.out.println(uidGenerator.parseUID(uid));
     }
 
     @Override
     public Scene addScene(SceneAddParam param) {
         Scene scene = param.build();
-        scene.setSceneId(uidGenerator.getUID());
+//        scene.setSceneId(uidGenerator.getUID());
         String sceneSnPre = EncodeType.EncodeGateway.getCode() + "866101022";
         //补零操作、如果是6位也就是最多支持一百台。同一个区域的第几台。
 //        String sequence = String.format("%06d", sceneCustomMapper.countDomains(sceneSnPre) + 1);

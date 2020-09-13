@@ -13,7 +13,7 @@
 
   <artifactId>datacenter</artifactId>
   <name>datacenter</name>
-  <packaging>war</packaging>
+  <packaging>jar</packaging>
 
   <dependencies>
     <dependency>
