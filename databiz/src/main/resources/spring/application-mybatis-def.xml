@@ -9,7 +9,6 @@
 
     <!-- Spring annotation扫描 -->
     <context:component-scan base-package="com.xidian.iot.*"/>
-    <context:annotation-config/>
 
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
         <property name="driverClassName" value="${jdbc.driverClassName}"/>
@@ -52,7 +51,7 @@
         <property name="dataSource" ref="dataSource"/>
         <!-- 指定sqlMapConfig总配置文件，订制的environment在spring容器中不在生效 -->
         <property name="configLocation" value="classpath:/mybatis/mybatis-config-def.xml"/>
-<!--        <property name="mapperLocations" value="classpath:/META-INF/mybatis/mapper/WORKER_NODE.xml" />-->
+<!--        <property name="mapperLocations" value="classpath:/META-INF/mybatis/mapper/WorkerNodeMapper.xml" />-->
         <!-- 注意其他配置 -->
         <property name="plugins">
             <array>
@@ -80,13 +79,13 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
     <!-- 事务相关配置 -->
-<!--    <tx:annotation-driven transaction-manager="transactionManager" order="1" />-->
-<!--    <bean id="batchSqlSession" class="org.mybatis.spring.SqlSessionTemplate">-->
-<!--        <constructor-arg index="0" ref="sqlSessionFactory" />-->
-<!--        <constructor-arg index="1" value="BATCH" />-->
-<!--    </bean>-->
-    <tx:annotation-driven/>
+    <tx:annotation-driven transaction-manager="transactionManager" order="1" />
+    <bean id="batchSqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory" />
+        <constructor-arg index="1" value="BATCH" />
+    </bean>
+<!--    <tx:annotation-driven/>-->
 
 
-<!--    <import resource="cached-uid-spring.xml"/>-->
+    <import resource="cached-uid-spring.xml"/>
 </beans>

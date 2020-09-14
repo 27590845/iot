@@ -28,7 +28,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
                 .enable(true)//true或false决定文档是否显示
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.xidian.iot.dataapi.controller"))
+                .apis(RequestHandlerSelectors.basePackage(BASE_PACKAGE))
                 .paths(PathSelectors.any())
                 .build();
     }

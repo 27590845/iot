@@ -1,5 +1,7 @@
 package com.xidian.iot.databiz.service;
 
+import com.xidian.iot.exception.UidGenerateException;
+
 /**
  * id生成工具
  * @author: Hansey
@@ -7,7 +9,20 @@ package com.xidian.iot.databiz.service;
  */
 public interface UidGenerator {
 
-    long getUID();
+    /**
+     * Get a unique ID
+     *
+     * @return UID
+     * @throws UidGenerateException
+     */
+    long getUID() throws UidGenerateException;
 
-    boolean parseUID(long uid);
+    /**
+     * Parse the UID into elements which are used to generate the UID. <br>
+     * Such as timestamp & workerId & sequence...
+     *
+     * @param uid
+     * @return Parsed info
+     */
+    String parseUID(long uid);
 }
