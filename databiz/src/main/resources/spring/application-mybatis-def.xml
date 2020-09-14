@@ -87,12 +87,12 @@
     <tx:annotation-driven/>
 
     <!-- UidGenerator start -->
-    <bean id="uidGenerator" scope="singleton" class="com.xidian.iot.common.tmp.UidGeneratorImpl">
+    <bean id="uidGenerator" scope="singleton" class="com.xidian.iot.common.uid.UidGeneratorImpl">
         <constructor-arg index="0">
             <bean class="java.util.concurrent.locks.ReentrantLock"/>
         </constructor-arg>
         <constructor-arg index="1">
-            <bean id="uidPrefixFactory" class="com.xidian.iot.common.tmp.UidPrefixFactoryImpl">
+            <bean id="uidPrefixFactory" class="com.xidian.iot.common.uid.UidPrefixFactoryImpl">
                 <property name="prefixSource" value="http://master:port/uid/prefix"/>
             </bean>
         </constructor-arg>

@@ -1,7 +1,7 @@
 package com.xidian.iot.databiz.service.impl;
 
 //import com.baidu.fsg.uid.UidGeneratorImpl;
-import com.xidian.iot.common.tmp.UidGenerator;
+import com.xidian.iot.common.uid.UidGenerator;
 import com.xidian.iot.database.entity.Node;
 import com.xidian.iot.database.entity.Scene;
 import com.xidian.iot.database.mapper.NodeMapper;

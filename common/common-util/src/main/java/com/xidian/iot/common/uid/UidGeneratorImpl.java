@@ -1,5 +1,6 @@
-package com.xidian.iot.common.tmp;
+package com.xidian.iot.common.uid;
 
+import lombok.Setter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,6 +22,10 @@ public class UidGeneratorImpl implements UidGenerator {
     private final long prefix;
     //本地自增变量也可以用AtomicLong替代，AtomicLong不需要锁保护
     private volatile long start;
+
+    @Setter
+    private long startTime;
+    public static final int threadNum = 2500;
 
     /**
      * Id生成器应保持全局唯一
@@ -52,6 +57,9 @@ public class UidGeneratorImpl implements UidGenerator {
             try {
                 uid = (prefix<<32) + (++start);
                 System.out.printf("uid-----%08x\n", uid);
+                if(start==threadNum){
+                    System.out.println(System.currentTimeMillis()-startTime);
+                }
             } catch (Exception e) {
                 System.out.println("exception-----"+e);
             } finally {
@@ -63,17 +71,17 @@ public class UidGeneratorImpl implements UidGenerator {
 
     public static void main(String[] args) {
         UidGeneratorImpl uidGeneratorImpl = new UidGeneratorImpl(new ReentrantLock(), new UidPrefixFactoryImpl());
-        final int threadNum = 1000000;
         Thread[] threads = new Thread[threadNum];
         for(int i=0;i<threadNum;i++){
             threads[i] = new Thread(new Runnable() {
                 @SneakyThrows
                 @Override
                 public void run() {
-                    uidGeneratorImpl.getUID(10000);
+                    uidGeneratorImpl.getUID(1000);
                 }
             });
         }
+        uidGeneratorImpl.setStartTime(System.currentTimeMillis());
         for(Thread thread : threads){
             thread.start();
         }

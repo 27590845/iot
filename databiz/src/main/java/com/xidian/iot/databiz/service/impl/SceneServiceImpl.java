@@ -3,7 +3,7 @@ package com.xidian.iot.databiz.service.impl;
 //import com.baidu.fsg.uid.UidGeneratorImpl;
 import com.github.pagehelper.PageHelper;
 import com.xidian.iot.common.constants.ExceptionEnum;
-import com.xidian.iot.common.tmp.UidGeneratorImpl;
+import com.xidian.iot.common.uid.UidGeneratorImpl;
 import com.xidian.iot.common.util.Assert;
 import com.xidian.iot.database.entity.Scene;
 import com.xidian.iot.database.entity.SceneExample;
@@ -14,11 +14,9 @@ import com.xidian.iot.database.param.SceneUpdateParam;
 import com.xidian.iot.databiz.constants.EncodeType;
 import com.xidian.iot.databiz.service.SceneService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

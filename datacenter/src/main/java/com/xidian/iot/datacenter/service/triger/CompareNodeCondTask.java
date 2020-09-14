@@ -82,12 +82,12 @@ public class CompareNodeCondTask extends BaseTask implements Runnable {
         for (NodeCondExt nodeCondExt : nodeCondExtList) {
             log.info("CompareNodeCondTask foreach nodeCondList,nodeCondExt=[{}]", nodeCondExt);
             // 获得属性key
-            String attrKey = hasKey(nodeCondExt);
+            String attrKey = hasKey(nodeCondExt.getNaId());
             if (attrKey == null) {
                 continue;
             }
             // 间隔时间外才能正常进行条件比较
-            if (outIntervalTime(nodeCondExt)) {
+            if (outIntervalTime(nodeCondExt.getNtId())) {
                 log.info("this condition out IntervalTime.");
                 // 比较条件，并检查触发器
                 compareCondition(nodeCondExt, attrKey);
@@ -97,11 +97,11 @@ public class CompareNodeCondTask extends BaseTask implements Runnable {
 
     /**
      * 判断条件的触发器是否处于间隔时间外
-     * @param nodeCondExt
+     * @param ntId
      * @return
      */
-    private boolean outIntervalTime(NodeCondExt nodeCondExt) {
-        NodeTrigExt nodeTrigExt = nodeTrigService.getNodeTrigExtById(nodeCondExt.getNtId());
+    private boolean outIntervalTime(Long ntId) {
+        NodeTrigExt nodeTrigExt = nodeTrigService.getNodeTrigExtById(ntId);
         if (nodeTrigExt.getLastRunTime() != null) {
             // 计算间隔时间
             long time = nodeTrigExt.getLastRunTime().getTime();
@@ -116,12 +116,12 @@ public class CompareNodeCondTask extends BaseTask implements Runnable {
 
     /**
      * 上述数据是否包含比较的属性key
-     * @param nodeCondExt
+     * @param naId nodeAttr.naId
      * @return null 不包含这个key,not null 返回属性key.
      */
-    private String hasKey(NodeCondExt nodeCondExt) {
+    private String hasKey(Long naId) {
         // 获得节点属性
-        NodeAttr nodeAttr = nodeAttrService.getNodeAttrById(nodeCondExt.getNaId());
+        NodeAttr nodeAttr = nodeAttrService.getNodeAttrById(naId);
         String attrKey = nodeAttr.getNaKey();
         log.info("get node attr {}", nodeAttr);
         // 判断此次上数数据不包含此属性则不做操作

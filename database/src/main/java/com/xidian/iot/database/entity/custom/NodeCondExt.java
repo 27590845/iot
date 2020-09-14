@@ -8,6 +8,9 @@ import lombok.Data;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author mrl
  * @Title: NodeCondExt
@@ -17,6 +20,21 @@ import org.apache.commons.lang3.math.NumberUtils;
  */
 @Data
 public class NodeCondExt extends NodeCond {
+
+    public NodeCondExt(){}
+
+    public NodeCondExt(NodeCond nodeCond){
+        if (nodeCond == null) return;
+        setNcId(nodeCond.getNcId());
+        setNaId(nodeCond.getNaId());
+        setSceneId(nodeCond.getSceneId());
+        setSceneSn(nodeCond.getSceneSn());
+        setNodeId(nodeCond.getNodeId());
+        setNodeSn(nodeCond.getNodeSn());
+        setNcOp(nodeCond.getNcOp());
+        setNcVal(nodeCond.getNcVal());
+        setNcFitTime(nodeCond.getNcFitTime());
+    }
 
     /**
      * 此条件是否被满足，根据这个值决定是否检查触发器。
@@ -159,5 +177,14 @@ public class NodeCondExt extends NodeCond {
         } else {
             return "";
         }
+    }
+
+    public static List<NodeCondExt> getExts(List<NodeCond> nodeConds){
+        if(nodeConds == null) return null;
+        List<NodeCondExt> nodeCondExtList = new ArrayList<>();
+        for(NodeCond nodeCond : nodeConds){
+            nodeCondExtList.add(new NodeCondExt(nodeCond));
+        }
+        return nodeCondExtList;
     }
 }

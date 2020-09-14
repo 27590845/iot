@@ -1,4 +1,4 @@
-package com.xidian.iot.common.tmp;
+package com.xidian.iot.common.uid;
 
 import lombok.Setter;
 
