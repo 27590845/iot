@@ -7,7 +7,7 @@
         <module>common-util</module>
         <module>common-mq</module>
         <module>common-cache</module>
-        <module>uid-generator-master</module>
+<!--        <module>uid-generator-master</module>-->
     </modules>
 
     <parent>

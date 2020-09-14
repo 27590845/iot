@@ -1,8 +1,7 @@
 package com.xidian.iot.dataapi.controller;
 
 import com.xidian.iot.dataapi.controller.res.HttpResult;
-import com.xidian.iot.database.param.SceneAddParam;
-import com.xidian.iot.database.param.SceneUpdateParam;
+import com.xidian.iot.database.param.NodeAttrStdParam;
 import com.xidian.iot.databiz.service.NodeAttrStdService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,32 +34,26 @@ public class NodeAttrStdController {
     public HttpResult getNodeAttrStd(@ApiParam(name = "nasId",value = "节点属性模版ID") @PathVariable("nasId") Long nasId){
         return HttpResult.responseOK(nodeAttrStdService.getNodeAttrStd(nasId));
     }
-//
-//    @ApiOperation(value = "添加节点属性模版")
-//    @PostMapping
-//    public HttpResult addNodeAttrStd(@ApiParam(name = "SceneAddParam",value = "场景信息") @Valid @RequestBody SceneAddParam param){
-//        return HttpResult.responseOK(nodeAttrStdService.addNodeAttrStd(param));
-//    }
-//
-//    @ApiOperation(value = "删除场景")
-//    @DeleteMapping("/{nasId}")
-//    public HttpResult delNodeAttrStd(@ApiParam(name = "nasId",value = "节点属性模版ID") @PathVariable("nasId") Long nasId){
-//        nodeAttrStdService.delNodeAttrStd(nasId);
-//        return HttpResult.oK().message("删除场景成功");
-//    }
-//
-//    @ApiOperation(value = "更新场景")
-//    @PutMapping("/{sceneSn}")
-//    public HttpResult updateScene(@ApiParam(name = "sceneSn",value = "场景sn") @PathVariable("sceneSn") String sceneSn,
-//                                  @ApiParam(name = "SceneUpdateParam",value = "场景更新信息") @Valid @RequestBody SceneUpdateParam param){
-//        sceneService.updateScene(sceneSn, param);
-//        return HttpResult.oK().message("更新场景成功");
-//    }
-//
-//    @ApiOperation(value = "查看一个节点的数据")
-//    @GetMapping("/{sceneSn}/node/{nodeSn}")
-//    public HttpResult getScene(@ApiParam(name = "sceneSn",value = "场景sn") @PathVariable("sceneSn") String sceneSn
-//            ,@ApiParam(name = "nodeSn",value = "节点sn") @PathVariable("nodeSn") String nodeSn){
-//        return HttpResult.responseOK(sceneService.getSceneBySn(sceneSn));
-//    }
+
+    @ApiOperation(value = "添加节点属性模版")
+    @PostMapping
+    public HttpResult addNodeAttrStd(@ApiParam(name = "NodeAttrStdParam",value = "节点属性模版") @Valid @RequestBody NodeAttrStdParam param){
+        return HttpResult.responseOK(nodeAttrStdService.addNodeAttrStd(param));
+    }
+
+    @ApiOperation(value = "删除节点属性模版")
+    @DeleteMapping("/{nasId}")
+    public HttpResult delNodeAttrStd(@ApiParam(name = "nasId",value = "节点属性模版ID") @PathVariable("nasId") Long nasId){
+        nodeAttrStdService.delNodeAttrStd(nasId);
+        return HttpResult.oK().message("删除节点属性模版");
+    }
+
+    @ApiOperation(value = "更新节点属性模版")
+    @PutMapping("/{nasId}")
+    public HttpResult updateScene(@ApiParam(name = "nasId",value = "节点属性模版ID") @PathVariable("nasId") Long nasId,
+                                  @ApiParam(name = "NodeAttrStdParam",value = "节点属性模版") @Valid @RequestBody NodeAttrStdParam param){
+        nodeAttrStdService.updateNodeAttrStd(nasId, param);
+        return HttpResult.oK().message("更新节点属性模版成功");
+    }
+
 }

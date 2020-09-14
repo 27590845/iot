@@ -1,15 +1,11 @@
 package com.xidian.iot.dataapi.controller;
 
 import com.xidian.iot.common.constants.ExceptionEnum;
-import com.xidian.iot.common.util.Assert;
 import com.xidian.iot.common.util.StringUtil;
 import com.xidian.iot.dataapi.controller.res.HttpResult;
 import com.xidian.iot.database.param.NodeAddParam;
 import com.xidian.iot.database.param.NodeUpdateParam;
-import com.xidian.iot.database.param.SceneAddParam;
-import com.xidian.iot.database.param.SceneUpdateParam;
 import com.xidian.iot.databiz.service.NodeService;
-import com.xidian.iot.databiz.service.SceneService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -32,13 +28,14 @@ public class NodeController {
 
     @ApiOperation(value = "添加节点")
     @PostMapping
-    public HttpResult addScene(@ApiParam(name = "NodeAdd", value = "场景信息") @Valid @RequestBody NodeAddParam param) {
+    public HttpResult addNode(@ApiParam(name = "NodeAdd", value = "场景信息") @Valid @RequestBody NodeAddParam param) {
         return HttpResult.responseOK(nodeService.addNode(param));
     }
 
+
     @ApiOperation(value = "删除节点")
     @DeleteMapping("/{sceneSn}/{nodeSn}")
-    public HttpResult delScene(@ApiParam(name = "sceneSn", value = "场景sn") @PathVariable("sceneSn") String sceneSn,
+    public HttpResult delNode(@ApiParam(name = "sceneSn", value = "场景sn") @PathVariable("sceneSn") String sceneSn,
                                @ApiParam(name = "nodeSn", value = "节点sn") @PathVariable(value = "nodeSn") String nodeSn) {
         nodeService.delNode(sceneSn, nodeSn);
         return HttpResult.oK().message("删除场景成功");

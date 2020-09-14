@@ -1,6 +1,5 @@
 package com.xidian.iot.databiz.service.impl;
 
-import com.baidu.fsg.uid.UidGenerator;
 import com.xidian.iot.common.constants.ExceptionEnum;
 import com.xidian.iot.common.util.Assert;
 import com.xidian.iot.database.entity.Node;
@@ -11,6 +10,7 @@ import com.xidian.iot.database.param.NodeAddParam;
 import com.xidian.iot.database.param.NodeUpdateParam;
 import com.xidian.iot.databiz.service.NodeService;
 import com.xidian.iot.databiz.service.SceneService;
+import com.xidian.iot.databiz.service.UidGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
