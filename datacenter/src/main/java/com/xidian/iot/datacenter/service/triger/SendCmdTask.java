@@ -15,6 +15,7 @@ import com.xidian.iot.datacenter.service.BaseTask;
 import com.xidian.iot.datacenter.service.SceneService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.concurrent.TimeoutException;
@@ -27,6 +28,7 @@ import java.util.concurrent.TimeoutException;
  * @date 2020/9/10 7:21 下午
  */
 @Slf4j
+//@Component
 public class SendCmdTask extends BaseTask implements Runnable {
 
     /**
