@@ -13,9 +13,11 @@ import com.xidian.iot.database.param.SceneUpdateParam;
 import com.xidian.iot.databiz.constants.EncodeType;
 import com.xidian.iot.databiz.service.SceneService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -82,9 +84,9 @@ public class SceneServiceImpl implements SceneService {
 //        scene.setSceneId(uidGenerator.getUID());
         String sceneSnPre = EncodeType.EncodeGateway.getCode() + "866101022";
         //补零操作、如果是6位也就是最多支持一百台。同一个区域的第几台。
-//        String sequence = String.format("%06d", sceneCustomMapper.countDomains(sceneSnPre) + 1);
+        String sequence = String.format("%06d", countScene() + 1);
         //物联网唯一标示体系
-//        scene.setSceneSn(sceneSnPre + param.getUsageCode() + param.getCommCode() + sequence);
+        scene.setSceneSn(sceneSnPre + param.getUsageCode() + param.getCommCode() + sequence);
         sceneMapper.insertSelective(scene);
         return scene;
     }
