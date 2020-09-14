@@ -106,6 +106,34 @@ public class NodeCondExt extends NodeCond {
     }
 
     /**
+     * 返回操作符对应的显示字符串
+     *
+     * @return 操作字符串
+     */
+    public String getOperatorCharStr() {
+        int operatorChar = getNcOp();
+        if (operatorChar == 1) {
+            return StringEscapeUtils.escapeHtml4(">");
+        } else if (operatorChar == 2) {
+            return StringEscapeUtils.escapeHtml4(">=");
+        } else if (operatorChar == 3) {
+            return StringEscapeUtils.escapeHtml4("<");
+        } else if (operatorChar == 4) {
+            return StringEscapeUtils.escapeHtml4("<=");
+        } else if (operatorChar == 5) {
+            return StringEscapeUtils.escapeHtml4("==");
+        } else if (operatorChar == 6) {
+            return "新值";
+        } else if (operatorChar == 7) {
+            return "冻结";
+        } else if (operatorChar == 8) {
+            return "复活";
+        } else {
+            return "";
+        }
+    }
+
+    /**
      * 返回操作符对应的显示中文
      *
      * @return 操作字符串

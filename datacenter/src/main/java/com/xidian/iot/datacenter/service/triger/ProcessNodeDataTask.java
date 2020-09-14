@@ -6,6 +6,7 @@ import com.xidian.iot.databiz.service.NodeCondService;
 import com.xidian.iot.datacenter.service.BaseTask;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.List;
  * @date 2020/9/10 5:19 下午
  */
 @Slf4j
+@Component
 public class ProcessNodeDataTask extends BaseTask implements Runnable {
 
     /**
@@ -33,7 +35,7 @@ public class ProcessNodeDataTask extends BaseTask implements Runnable {
     /**
      * 触发器条件数据访问接口。
      */
-    @Resource
+//    @Resource
     private NodeCondService nodeCondService;
 
     /**
@@ -43,8 +45,9 @@ public class ProcessNodeDataTask extends BaseTask implements Runnable {
     public void run() {
         long ss = System.currentTimeMillis();
         // 处理节点数据
-        processNodeData();
+//        processNodeData();
         log.debug("processNodeData:{}ms",System.currentTimeMillis() - ss);
+        log.debug("------process completed-------");
     }
 
     /**

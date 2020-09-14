@@ -45,6 +45,7 @@ public class UpdataListener extends KafkaConsumerListener {
             // 约定用 prefix.sceneSn 作为订阅主题？
             context.setSceneSn(getSceneSnFromTopicName((String) topicName));
             context.setJsonData(jsonData);
+            log.debug("-----process start-----");
             executeChain(jsonChain, context);
         } catch (AbortChainException e) {
             e.printStackTrace();

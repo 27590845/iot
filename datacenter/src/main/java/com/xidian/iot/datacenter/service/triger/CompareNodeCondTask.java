@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -36,6 +37,7 @@ import java.util.Map;
  * @date 2020/9/10 5:38 下午
  */
 @Slf4j
+//@Component
 public class CompareNodeCondTask extends BaseTask implements Runnable {
 
     /**

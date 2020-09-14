@@ -8,6 +8,7 @@ import com.xidian.iot.datacenter.service.BaseTask;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -21,6 +22,7 @@ import java.util.List;
  * @date 2020/9/10 5:53 下午
  */
 @Slf4j
+//@Component
 public class CheckingTrigTask extends BaseTask implements Runnable {
 
     /**
