@@ -1,8 +1,9 @@
 package com.xidian.iot.databiz.service.impl;
 
-//import com.baidu.fsg.uid.UidGenerator;
+//import com.baidu.fsg.uid.UidGeneratorImpl;
 import com.github.pagehelper.PageHelper;
 import com.xidian.iot.common.constants.ExceptionEnum;
+import com.xidian.iot.common.tmp.UidGeneratorImpl;
 import com.xidian.iot.common.util.Assert;
 import com.xidian.iot.database.entity.Scene;
 import com.xidian.iot.database.entity.SceneExample;
@@ -34,8 +35,8 @@ public class SceneServiceImpl implements SceneService {
     private SceneMapper sceneMapper;
 //    @Autowired
 //    private SceneCustomMapper sceneCustomMapper;
-//    @Autowired
-//    private UidGenerator uidGenerator;
+    @Autowired
+    private UidGeneratorImpl uidGenerator;
 
     @Override
     public List<Scene> getScene(String sceneSn, int page, int limit) {
@@ -74,14 +75,21 @@ public class SceneServiceImpl implements SceneService {
 
     @Override
     public void testId() {
-//        long uid = uidGenerator.getUID();
-//        System.out.println(uidGenerator.parseUID(uid));
+        try {
+            long uid = uidGenerator.getUID(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public Scene addScene(SceneAddParam param) {
         Scene scene = param.build();
-//        scene.setSceneId(uidGenerator.getUID());
+        try {
+            scene.setSceneId(uidGenerator.getUID(10000));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         String sceneSnPre = EncodeType.EncodeGateway.getCode() + "866101022";
         //补零操作、如果是6位也就是最多支持一百台。同一个区域的第几台。
         String sequence = String.format("%06d", countScene() + 1);

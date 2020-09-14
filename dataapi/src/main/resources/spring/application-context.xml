@@ -26,6 +26,19 @@
 <!--        <property name="maxUploadSize" value="10485760000"></property>-->
 <!--        <property name="maxInMemorySize" value="40960"></property>-->
 <!--    </bean>-->
+
+    <!-- 用于获取uid前缀的工厂 -->
+    <bean id="uidGenerator" scope="singleton" class="com.xidian.iot.common.tmp.UidGeneratorImpl">
+        <constructor-arg index="0">
+            <bean class="java.util.concurrent.locks.ReentrantLock"/>
+        </constructor-arg>
+        <constructor-arg index="1">
+            <bean id="uidPrefixFactory" class="com.xidian.iot.common.tmp.UidPrefixFactoryImpl">
+                <property name="prefixSource" value="http://master:port/uid/prefix"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+
     <import resource="application-mybatis-def.xml"/>
     <import resource="application-mongo-def.xml"/>
     <import resource="application-redis-def.xml"/>
