@@ -49,7 +49,7 @@ public class NodeCondServiceImpl implements NodeCondService {
 
     @CachePut
     @Override
-    public NodeCondExt updateNodeCondExt(NodeCondExt nodeCondExt) {
+    public NodeCondExt changeNodeCondExt(NodeCondExt nodeCondExt) {
         return nodeCondExt;
     }
 }

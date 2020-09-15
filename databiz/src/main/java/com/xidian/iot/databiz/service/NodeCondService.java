@@ -38,8 +38,8 @@ public interface NodeCondService {
     List<NodeCondExt> getNodeCondExtByNtId(Long ntId);
 
     /**
-     * 更新条件的condition 并更新到memcache
+     * 更新条件的condition 并更新到缓存
      * @param nodeCondExt 条件
      */
-    NodeCondExt updateNodeCondExt(NodeCondExt nodeCondExt);
+    NodeCondExt changeNodeCondExt(NodeCondExt nodeCondExt);
 }

@@ -5,7 +5,6 @@ import com.xidian.iot.database.entity.custom.NodeCondExt;
 import com.xidian.iot.database.entity.custom.NodeTrigExt;
 import com.xidian.iot.databiz.service.NodeAttrService;
 import com.xidian.iot.databiz.service.NodeCondService;
-import com.xidian.iot.databiz.service.NodeService;
 import com.xidian.iot.databiz.service.NodeTrigService;
 import com.xidian.iot.datacenter.service.BaseTask;
 import lombok.Setter;
@@ -37,7 +36,7 @@ import java.util.Map;
  * @date 2020/9/10 5:38 下午
  */
 @Slf4j
-//@Component
+@Component
 public class CompareNodeCondTask extends BaseTask implements Runnable {
 
     /**
@@ -145,7 +144,7 @@ public class CompareNodeCondTask extends BaseTask implements Runnable {
         if (fit != nodeCondExt.isFit()) {
             // 更新变化后的fit值，并更新到缓存
             nodeCondExt.setFit(fit);
-            nodeCondService.updateNodeCondExt(nodeCondExt);
+            nodeCondService.changeNodeCondExt(nodeCondExt);
             // 发生变化，且是满足条件的就执行触发器检查
             // 因为条件不满足是不触发检查的
             if (fit) {
@@ -155,7 +154,7 @@ public class CompareNodeCondTask extends BaseTask implements Runnable {
             }
         } else {
             // 更新满足次数
-            nodeCondService.updateNodeCondExt(nodeCondExt);
+            nodeCondService.changeNodeCondExt(nodeCondExt);
         }
     }
 

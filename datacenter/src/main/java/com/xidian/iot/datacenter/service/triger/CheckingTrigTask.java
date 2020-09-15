@@ -22,7 +22,7 @@ import java.util.List;
  * @date 2020/9/10 5:53 下午
  */
 @Slf4j
-//@Component
+@Component
 public class CheckingTrigTask extends BaseTask implements Runnable {
 
     /**
@@ -58,7 +58,7 @@ public class CheckingTrigTask extends BaseTask implements Runnable {
             // 执行发送消息的任务
 //            doSendMessageTask(nodeCondExtList);
             // 执行发送命令的任务
-            doSendCommandTask();
+//            doSendCommandTask();
             // 设置更新最后运行时间及是否需要继续执行
             updateLastRunTime();
             // 复位触发器条件
@@ -108,7 +108,7 @@ public class CheckingTrigTask extends BaseTask implements Runnable {
     private void reset(List<NodeCondExt> nodeCondExtList) {
         for (NodeCondExt nodeCondExt : nodeCondExtList) {
             nodeCondExt.reset();
-            nodeCondService.updateNodeCondExt(nodeCondExt);
+            nodeCondService.changeNodeCondExt(nodeCondExt);
         }
     }
 
