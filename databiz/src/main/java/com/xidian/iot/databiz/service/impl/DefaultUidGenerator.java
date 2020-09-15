@@ -19,11 +19,11 @@ package com.xidian.iot.databiz.service.impl;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import com.xidian.iot.BitsAllocator;
+import com.xidian.iot.common.uid.BitsAllocator;
 import com.xidian.iot.databiz.service.UidGenerator;
-import com.xidian.iot.exception.UidGenerateException;
-import com.xidian.iot.utils.DateUtils;
-import com.xidian.iot.worker.WorkerIdAssigner;
+import com.xidian.iot.common.uid.exception.UidGenerateException;
+import com.xidian.iot.common.uid.utils.DateUtils;
+import com.xidian.iot.common.uid.worker.WorkerIdAssigner;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -7,9 +7,6 @@
 
     <context:property-placeholder location="classpath:conf/jdbc-def.properties" ignore-unresolvable="true" />
 
-    <!-- Spring annotation扫描 -->
-    <context:component-scan base-package="com.xidian.iot.*"/>
-
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
         <property name="driverClassName" value="${jdbc.driverClassName}"/>
         <property name="url" value="${jdbc.url}"/>
@@ -86,18 +83,16 @@
     </bean>
 <!--    <tx:annotation-driven/>-->
 
-    <!-- UidGenerator start -->
-    <bean id="uidGenerator" scope="singleton" class="com.xidian.iot.common.uid.UidGeneratorImpl">
-        <constructor-arg index="0">
-            <bean class="java.util.concurrent.locks.ReentrantLock"/>
-        </constructor-arg>
-        <constructor-arg index="1">
-            <bean id="uidPrefixFactory" class="com.xidian.iot.common.uid.UidPrefixFactoryImpl">
-                <property name="prefixSource" value="http://master:port/uid/prefix"/>
-            </bean>
-        </constructor-arg>
-    </bean>
+    <!-- tmp UidGenerator start -->
+<!--    <bean id="uidGenerator" scope="singleton" class="com.xidian.iot.common.util.uid.UidGeneratorImpl">-->
+<!--        <constructor-arg index="0">-->
+<!--            <bean class="java.util.concurrent.locks.ReentrantLock"/>-->
+<!--        </constructor-arg>-->
+<!--        <constructor-arg index="1">-->
+<!--            <bean id="uidPrefixFactory" class="com.xidian.iot.common.util.uid.UidPrefixFactoryImpl">-->
+<!--                <property name="prefixSource" value="http://master:port/uid/prefix"/>-->
+<!--            </bean>-->
+<!--        </constructor-arg>-->
+<!--    </bean>-->
     <!-- UidGenerator end -->
-
-    <import resource="cached-uid-spring.xml"/>
 </beans>

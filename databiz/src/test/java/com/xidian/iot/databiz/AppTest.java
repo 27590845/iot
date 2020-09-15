@@ -23,7 +23,7 @@ import static org.junit.Assert.assertTrue;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 //@WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:spring/application-mybatis-def.xml"})
+@ContextConfiguration(locations = {"classpath:spring/application-databiz.xml"})
 public class AppTest
 {
     /**

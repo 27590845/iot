@@ -1,6 +1,6 @@
 package com.xidian.iot.datacenter.exception;
 
-import com.xidian.iot.common.exception.ExceptionInfo;
+import com.xidian.iot.common.util.exception.ExceptionInfo;
 import com.xidian.iot.datacenter.constant.ErrorCode;
 import lombok.Getter;
 import org.springframework.core.NestedCheckedException;

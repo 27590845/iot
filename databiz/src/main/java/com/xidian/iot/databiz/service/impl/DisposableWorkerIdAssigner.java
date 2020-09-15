@@ -17,9 +17,9 @@ package com.xidian.iot.databiz.service.impl;
 
 import com.xidian.iot.database.entity.WorkerNodeEntity;
 import com.xidian.iot.database.mapper.custom.WorkerNodeMapper;
-import com.xidian.iot.utils.DockerUtils;
-import com.xidian.iot.utils.NetUtils;
-import com.xidian.iot.worker.WorkerIdAssigner;
+import com.xidian.iot.common.uid.utils.DockerUtils;
+import com.xidian.iot.common.uid.utils.NetUtils;
+import com.xidian.iot.common.uid.worker.WorkerIdAssigner;
 import com.xidian.iot.database.enums.WorkerNodeType;
 import org.apache.commons.lang3.RandomUtils;
 import org.slf4j.Logger;

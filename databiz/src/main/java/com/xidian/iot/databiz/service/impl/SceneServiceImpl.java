@@ -1,7 +1,7 @@
 package com.xidian.iot.databiz.service.impl;
 
 import com.github.pagehelper.PageHelper;
-import com.xidian.iot.common.constants.ExceptionEnum;
+import com.xidian.iot.common.util.constants.ExceptionEnum;
 import com.xidian.iot.common.util.Assert;
 import com.xidian.iot.database.entity.Scene;
 import com.xidian.iot.database.entity.SceneExample;
