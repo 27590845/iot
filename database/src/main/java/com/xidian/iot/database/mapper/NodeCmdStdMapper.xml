@@ -99,18 +99,17 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xidian.iot.database.entity.NodeCmdStd">
-    <selectKey keyProperty="ncsId" order="AFTER" resultType="java.lang.Long">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into node_cmd_std (ncs_key, ncs_name)
-    values (#{ncsKey,jdbcType=VARCHAR}, #{ncsName,jdbcType=VARCHAR})
+    insert into node_cmd_std (ncs_id, ncs_key, ncs_name
+      )
+    values (#{ncsId,jdbcType=BIGINT}, #{ncsKey,jdbcType=VARCHAR}, #{ncsName,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.iot.database.entity.NodeCmdStd">
-    <selectKey keyProperty="ncsId" order="AFTER" resultType="java.lang.Long">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
     insert into node_cmd_std
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ncsId != null">
+        ncs_id,
+      </if>
       <if test="ncsKey != null">
         ncs_key,
       </if>
@@ -119,6 +118,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ncsId != null">
+        #{ncsId,jdbcType=BIGINT},
+      </if>
       <if test="ncsKey != null">
         #{ncsKey,jdbcType=VARCHAR},
       </if>

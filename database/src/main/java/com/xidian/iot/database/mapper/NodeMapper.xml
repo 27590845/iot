@@ -103,22 +103,19 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xidian.iot.database.entity.Node">
-    <selectKey keyProperty="nodeId" order="AFTER" resultType="java.lang.Long">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into node (scene_id, scene_sn, node_name, 
-      node_desc, node_sn, create_time
-      )
-    values (#{sceneId,jdbcType=BIGINT}, #{sceneSn,jdbcType=CHAR}, #{nodeName,jdbcType=VARCHAR}, 
-      #{nodeDesc,jdbcType=VARCHAR}, #{nodeSn,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
-      )
+    insert into node (node_id, scene_id, scene_sn, 
+      node_name, node_desc, node_sn, 
+      create_time)
+    values (#{nodeId,jdbcType=BIGINT}, #{sceneId,jdbcType=BIGINT}, #{sceneSn,jdbcType=CHAR}, 
+      #{nodeName,jdbcType=VARCHAR}, #{nodeDesc,jdbcType=VARCHAR}, #{nodeSn,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.iot.database.entity.Node">
-    <selectKey keyProperty="nodeId" order="AFTER" resultType="java.lang.Long">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
     insert into node
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="nodeId != null">
+        node_id,
+      </if>
       <if test="sceneId != null">
         scene_id,
       </if>
@@ -139,6 +136,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="nodeId != null">
+        #{nodeId,jdbcType=BIGINT},
+      </if>
       <if test="sceneId != null">
         #{sceneId,jdbcType=BIGINT},
       </if>

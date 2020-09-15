@@ -1,15 +1,25 @@
 package com.xidian.iot.common.cache;
 
+import lombok.Getter;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.cache.RedisCacheWriter;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializationContext;
+import org.springframework.data.redis.serializer.RedisSerializer;
 
 import java.lang.reflect.Method;
+import java.time.Duration;
 
 /**
  * @author mrl
@@ -22,8 +32,11 @@ import java.lang.reflect.Method;
 @Configuration
 public class RedisCacheConfig extends CachingConfigurerSupport {
 
+    @Getter
     private volatile JedisConnectionFactory jedisConnectionFactory;
+    @Getter
     private volatile RedisTemplate<String, String> redisTemplate;
+    @Getter
     private volatile RedisCacheManager redisCacheManager;
 
     public RedisCacheConfig() {
@@ -44,17 +57,6 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
         this.redisCacheManager = redisCacheManager;
     }
 
-    public JedisConnectionFactory getJedisConnecionFactory() {
-        return jedisConnectionFactory;
-    }
-
-    public RedisTemplate<String, String> getRedisTemplate() {
-        return redisTemplate;
-    }
-
-    public RedisCacheManager getRedisCacheManager() {
-        return redisCacheManager;
-    }
     @Bean
     public KeyGenerator keyGenerator() {
         return new KeyGenerator() {

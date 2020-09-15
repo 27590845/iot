@@ -13,7 +13,7 @@
 
   <artifactId>datacenter</artifactId>
   <name>datacenter</name>
-  <packaging>war</packaging>
+  <packaging>jar</packaging>
 
   <dependencies>
     <dependency>
@@ -47,6 +47,11 @@
     <!-- util end -->
 
     <!-- springframework start -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <version>${springframework.version}</version>
+    </dependency>
     <!-- springframework end -->
 
   </dependencies>

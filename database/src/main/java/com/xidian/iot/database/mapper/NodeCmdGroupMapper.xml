@@ -100,20 +100,17 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xidian.iot.database.entity.NodeCmdGroup">
-    <selectKey keyProperty="ncgId" order="AFTER" resultType="java.lang.Long">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into node_cmd_group (node_id, ncg_name, ncg_key
-      )
-    values (#{nodeId,jdbcType=BIGINT}, #{ncgName,jdbcType=VARCHAR}, #{ncgKey,jdbcType=VARCHAR}
-      )
+    insert into node_cmd_group (ncg_id, node_id, ncg_name, 
+      ncg_key)
+    values (#{ncgId,jdbcType=BIGINT}, #{nodeId,jdbcType=BIGINT}, #{ncgName,jdbcType=VARCHAR}, 
+      #{ncgKey,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.iot.database.entity.NodeCmdGroup">
-    <selectKey keyProperty="ncgId" order="AFTER" resultType="java.lang.Long">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
     insert into node_cmd_group
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ncgId != null">
+        ncg_id,
+      </if>
       <if test="nodeId != null">
         node_id,
       </if>
@@ -125,6 +122,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ncgId != null">
+        #{ncgId,jdbcType=BIGINT},
+      </if>
       <if test="nodeId != null">
         #{nodeId,jdbcType=BIGINT},
       </if>

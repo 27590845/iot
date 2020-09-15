@@ -2,9 +2,9 @@ package com.xidian.iot.datacenter.service;
 
 import com.github.pagehelper.PageHelper;
 import com.xidian.iot.common.cache.RedisUtil;
-import com.xidian.iot.database.mapper.SceneMapper;
 import com.xidian.iot.database.entity.Scene;
 import com.xidian.iot.database.entity.SceneExample;
+import com.xidian.iot.database.mapper.SceneMapper;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +24,7 @@ public class SceneService {
 
     //用于手动添加缓存
     @Resource
-    private RedisUtil redisUtil = null;
+    private RedisUtil redisUtil;
 
     @Resource
     private SceneMapper sceneMapper;

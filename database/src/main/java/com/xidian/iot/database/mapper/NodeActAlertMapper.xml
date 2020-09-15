@@ -101,20 +101,17 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xidian.iot.database.entity.NodeActAlert">
-    <selectKey keyProperty="naaId" order="AFTER" resultType="java.lang.Long">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into node_act_alert (nt_id, naa_type, naa_val, 
-      naa_content)
-    values (#{ntId,jdbcType=BIGINT}, #{naaType,jdbcType=TINYINT}, #{naaVal,jdbcType=VARCHAR}, 
-      #{naaContent,jdbcType=VARCHAR})
+    insert into node_act_alert (naa_id, nt_id, naa_type, 
+      naa_val, naa_content)
+    values (#{naaId,jdbcType=BIGINT}, #{ntId,jdbcType=BIGINT}, #{naaType,jdbcType=TINYINT}, 
+      #{naaVal,jdbcType=VARCHAR}, #{naaContent,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.iot.database.entity.NodeActAlert">
-    <selectKey keyProperty="naaId" order="AFTER" resultType="java.lang.Long">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
     insert into node_act_alert
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="naaId != null">
+        naa_id,
+      </if>
       <if test="ntId != null">
         nt_id,
       </if>
@@ -129,6 +126,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="naaId != null">
+        #{naaId,jdbcType=BIGINT},
+      </if>
       <if test="ntId != null">
         #{ntId,jdbcType=BIGINT},
       </if>

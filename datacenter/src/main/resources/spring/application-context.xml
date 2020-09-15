@@ -5,7 +5,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
-    <context:component-scan base-package="com.xidian.iot.datacenter"/>
+    <context:component-scan base-package="com.xidian.iot"/>
     <context:annotation-config/>
 <!--    <context:property-placeholder location="classpath:/conf/*.properties"/>-->
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -27,6 +27,7 @@
 <!--    <import resource="application-activemq-def.xml"/>-->
     <import resource="application-kafka-consumer-def.xml"/>
     <import resource="application-kafka-producer-def.xml"/>
+    <import resource="application-chain.xml"/>
 
     <task:executor id="taskExecutor"
                    pool-size="${thread.pool.corePoolSize}-${thread.pool.maxPoolSize}"
@@ -39,7 +40,7 @@
         <constructor-arg index="1" ref="messageListener"/>
         <constructor-arg index="2">
             <list>
-                <value>hello_topic</value>
+                <value>hello_topic.A18600</value>
             </list>
         </constructor-arg>
     </bean>

@@ -1,6 +1,6 @@
 package com.xidian.iot.common.util;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 
@@ -14,9 +14,8 @@ import java.io.File;
  * @author zhengrunjin
  * @since 0.1
  */
+@Slf4j
 public class ImageUtil {
-
-	private static Logger log = Logger.getLogger(com.xidian.iot.common.util.ImageUtil.class);
 
 	/**
 	 * gm命令路径。

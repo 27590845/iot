@@ -104,22 +104,19 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xidian.iot.database.entity.NodeTrig">
-    <selectKey keyProperty="ntId" order="AFTER" resultType="java.lang.Long">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into node_trig (nt_name, nt_desc, node_id, 
-      nt_invl, nt_rept, nt_exec, 
-      nt_expr)
-    values (#{ntName,jdbcType=VARCHAR}, #{ntDesc,jdbcType=VARCHAR}, #{nodeId,jdbcType=BIGINT}, 
-      #{ntInvl,jdbcType=INTEGER}, #{ntRept,jdbcType=TINYINT}, #{ntExec,jdbcType=TINYINT}, 
-      #{ntExpr,jdbcType=TIMESTAMP})
+    insert into node_trig (nt_id, nt_name, nt_desc, 
+      node_id, nt_invl, nt_rept, 
+      nt_exec, nt_expr)
+    values (#{ntId,jdbcType=BIGINT}, #{ntName,jdbcType=VARCHAR}, #{ntDesc,jdbcType=VARCHAR}, 
+      #{nodeId,jdbcType=BIGINT}, #{ntInvl,jdbcType=INTEGER}, #{ntRept,jdbcType=TINYINT}, 
+      #{ntExec,jdbcType=TINYINT}, #{ntExpr,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.iot.database.entity.NodeTrig">
-    <selectKey keyProperty="ntId" order="AFTER" resultType="java.lang.Long">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
     insert into node_trig
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ntId != null">
+        nt_id,
+      </if>
       <if test="ntName != null">
         nt_name,
       </if>
@@ -143,6 +140,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ntId != null">
+        #{ntId,jdbcType=BIGINT},
+      </if>
       <if test="ntName != null">
         #{ntName,jdbcType=VARCHAR},
       </if>

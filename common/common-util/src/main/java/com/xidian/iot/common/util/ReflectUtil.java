@@ -1,6 +1,6 @@
 package com.xidian.iot.common.util;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -14,9 +14,8 @@ import java.lang.reflect.Modifier;
  * @author zhengrunjin
  * @since 0.1
  */
+@Slf4j
 public class ReflectUtil {
-
-	private static Logger log = Logger.getLogger(com.xidian.iot.common.util.ReflectUtil.class);
 
 	/**
 	 * 获得指定对象的字段定义。

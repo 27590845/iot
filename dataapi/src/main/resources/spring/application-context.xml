@@ -4,7 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="com.xidian.iot.*,com.baidu.fsg.uid.*"/>
+    <context:component-scan base-package="com.xidian.iot.*"/>
     <context:annotation-config/>
 <!--    <context:property-placeholder location="classpath:/conf/*.properties"/>-->
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -26,6 +26,7 @@
 <!--        <property name="maxUploadSize" value="10485760000"></property>-->
 <!--        <property name="maxInMemorySize" value="40960"></property>-->
 <!--    </bean>-->
+
     <import resource="application-mybatis-def.xml"/>
     <import resource="application-mongo-def.xml"/>
     <import resource="application-redis-def.xml"/>
