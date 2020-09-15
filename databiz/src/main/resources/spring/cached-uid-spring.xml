@@ -4,7 +4,7 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
 
     <!-- CachedUidGenerator -->
-    <bean id="cachedUidGenerator" class="com.baidu.fsg.uid.impl.CachedUidGenerator">
+    <bean id="cachedUidGenerator" class="com.xidian.iot.databiz.service.impl.CachedUidGenerator">
         <property name="workerIdAssigner" ref="disposableWorkerIdAssigner" />
 
         <!-- 以下为可选配置, 如未指定将采用默认值 这里配置的可以满足在136年内、每个节点的并发512UID/s -->
@@ -39,5 +39,5 @@
     </bean>
 
     <!-- 用完即弃的WorkerIdAssigner, 依赖DB操作 -->
-    <bean id="disposableWorkerIdAssigner" class="com.baidu.fsg.uid.worker.DisposableWorkerIdAssigner" />
+    <bean id="disposableWorkerIdAssigner" class="com.xidian.iot.databiz.service.impl.DisposableWorkerIdAssigner" />
 </beans>

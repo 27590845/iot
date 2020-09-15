@@ -19,7 +19,7 @@ public interface SceneService {
      * @param limit
      * @return java.util.List<com.xidian.iot.database.entity.Scene>
      * */
-    List<Scene> getAllScenes(int page, int limit);
+    List<Scene> getScenes(int page, int limit);
 
     /**
      * 根据场景ID获取场景
