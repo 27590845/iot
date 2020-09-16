@@ -7,9 +7,11 @@ import com.xidian.iot.database.mapper.NodeCondMapper;
 import com.xidian.iot.database.mapper.custom.NodeCondCustomMapper;
 import com.xidian.iot.databiz.service.NodeCondService;
 import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,15 +29,19 @@ public class NodeCondServiceImpl implements NodeCondService {
     @Resource
     private NodeCondCustomMapper nodeCondCustomMapper;
 
-    @Override
-    public List<NodeCond> getNodeCondBySnAvl(String sceneSn, String nodeSn) {
-        return null;
-    }
+    private final Cache cache = new Cache();
 
     @Override
     public List<NodeCondExt> getNodeCondExtBySnAvl(String sceneSn, String nodeSn) {
-        List<NodeCond> nodeConds = nodeCondCustomMapper.getNodeCondAvl(sceneSn, nodeSn);
-        return NodeCondExt.getExts(nodeConds);
+        List<Long> nodeCondIds = nodeCondCustomMapper.getNodeCondIdsAvl(sceneSn, nodeSn);
+        List<NodeCondExt> nodeCondExtList = new ArrayList<>();
+        for(Long ncId : nodeCondIds){
+            NodeCond nodeCond = getNodeCondExtById(ncId);
+            if(nodeCond != null) {
+                nodeCondExtList.add(new NodeCondExt(nodeCond));
+            }
+        }
+        return nodeCondExtList;
     }
 
     @Override
@@ -47,9 +53,25 @@ public class NodeCondServiceImpl implements NodeCondService {
         return nodeCondExtList;
     }
 
-    @CachePut
     @Override
+    public NodeCondExt getNodeCondExtById(Long ncId) {
+        return cache.getNodeCondExtById(ncId);
+    }
+
+    @Override
+    @CachePut(value = "NodeCondExt", key = "'getNodeCondExtById:'+#nodeCondExt.ncId")
     public NodeCondExt changeNodeCondExt(NodeCondExt nodeCondExt) {
         return nodeCondExt;
+    }
+
+    /**
+     * 内部调用，org.springframework.cache 不会生效，所以暂时把内部调用时用到cache的函数写到内部类中
+     */
+    class Cache {
+        @Cacheable(value = "NodeCondExt", key = "'getNodeCondExtById:'+#ncId")
+        public NodeCondExt getNodeCondExtById(Long ncId) {
+            NodeCond nodeCond = nodeCondMapper.selectByPrimaryKey(ncId);
+            return new NodeCondExt(nodeCond);
+        }
     }
 }

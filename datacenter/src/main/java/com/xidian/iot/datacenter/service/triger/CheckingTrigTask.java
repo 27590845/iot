@@ -75,7 +75,7 @@ public class CheckingTrigTask extends BaseTask implements Runnable {
         if(nodeTrigExt.getNtRept()==1){		//如触发器不重复执行则将executed置为1（不再执行）
             nodeTrigExt.setNtExec((byte) 1);
         }
-        nodeTrigService.updateNodeTrigExt(nodeTrigExt);
+        nodeTrigService.updateNodeTrigExtById(nodeTrigExt);
     }
 
     /**

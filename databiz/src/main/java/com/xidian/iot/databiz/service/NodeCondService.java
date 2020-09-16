@@ -15,12 +15,11 @@ import java.util.List;
 public interface NodeCondService {
 
     /**
-     * 根据sceneSn和nodeSn获取可用的NodeCond列表：nodeTrig.getNtExec()==1||nodeTrig.getNtExpr().before(new Date())
-     * @param sceneSn
-     * @param nodeSn
+     * 通过nodeCond.ncId获取NodeCondExt
+     * @param ncId
      * @return
      */
-    List<NodeCond> getNodeCondBySnAvl(String sceneSn, String nodeSn);
+    NodeCondExt getNodeCondExtById(Long ncId);
 
     /**
      * 根据sceneSn和nodeSn获取可用的NodeCond列表：nodeTrig.getNtExec()==1||nodeTrig.getNtExpr().before(new Date())

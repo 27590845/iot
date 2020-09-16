@@ -13,14 +13,13 @@
         <result column="scene_sn" jdbcType="VARCHAR" property="sceneSn"/>
         <result column="nc_fit_time" jdbcType="INTEGER" property="ncFitTime"/>
     </resultMap>
-    <sql id="Base_Column_List">
-        nc_id, na_id, scene_id, node_id, nt_id, nc_op, nc_val, node_sn, scene_sn, nc_fit_time
-    </sql>
-    <select id="getNodeCondAvl" resultMap="BaseResultMap">
-        select nc.* from
-        node_cond nc left join (select nt_id, nt_exec, nt_expr form node_trig) as nt on nc.nt_id=nt.nt_id
+    <select id="getNodeCondIdsAvl" resultType="java.lang.Long" parameterType="java.lang.String">
+        select nc.nc_id from
+            (select nc_id, nt_id, scene_sn, node_sn from node_cond) as nc
+            left join
+            (select nt_id, nt_exec, nt_expr from node_trig) as nt on nc.nt_id=nt.nt_id
         where nt.nt_exec=0 and nt.nt_expr>now()
         and nc.scene_sn=#{sceneSn,jdbcType=VARCHAR}
-        and nc_node_sn=#{nodeSn,jdbcType=VARCHAR};
+        and nc.node_sn=#{nodeSn,jdbcType=VARCHAR};
     </select>
 </mapper>

@@ -135,7 +135,7 @@
           <!--driver-->
           <driverClassName>com.mysql.cj.jdbc.Driver</driverClassName>
           <!--jdbc url-->
-          <jdbcUrl>jdbc:mysql://114.115.240.14:3306/iotdata?characterEncoding=UTF-8</jdbcUrl>
+          <jdbcUrl>jdbc:mysql://test.public.mysql:3306/iotdata?characterEncoding=UTF-8</jdbcUrl>
           <!--生成文件类型-->
           <fileType>Markdown</fileType>
           <!--打开文件输出目录-->

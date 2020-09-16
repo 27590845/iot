@@ -20,9 +20,9 @@ public interface NodeTrigService {
     NodeTrigExt getNodeTrigExtById(Long ntId);
 
     /**
-     * 更新NodeTrigExt
+     * 通过Id更新NodeTrigExt
      * @param nodeTrigExt
      * @return
      */
-    NodeTrigExt updateNodeTrigExt(NodeTrigExt nodeTrigExt);
+    NodeTrigExt updateNodeTrigExtById(NodeTrigExt nodeTrigExt);
 }

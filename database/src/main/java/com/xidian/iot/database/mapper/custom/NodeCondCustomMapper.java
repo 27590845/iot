@@ -1,6 +1,7 @@
 package com.xidian.iot.database.mapper.custom;
 
 import com.xidian.iot.database.entity.NodeCond;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,5 +14,5 @@ import java.util.List;
  */
 public interface NodeCondCustomMapper {
 
-    List<NodeCond> getNodeCondAvl(String sceneSn, String nodeSn);
+    List<Long> getNodeCondIdsAvl(@Param("sceneSn") String sceneSn, @Param("nodeSn") String nodeSn);
 }

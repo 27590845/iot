@@ -28,9 +28,9 @@ public class NodeTrigServiceImpl implements NodeTrigService {
         return new NodeTrigExt(nodeTrig);
     }
 
-    @CachePut
+    @CachePut(value = "NodeTrigExt", key = "'getNodeTrigExtById'+#nodeTrigExt.ntId")
     @Override
-    public NodeTrigExt updateNodeTrigExt(NodeTrigExt nodeTrigExt) {
+    public NodeTrigExt updateNodeTrigExtById(NodeTrigExt nodeTrigExt) {
 //        nodeTrigMapper.updateByExample();
         return nodeTrigExt;
     }
