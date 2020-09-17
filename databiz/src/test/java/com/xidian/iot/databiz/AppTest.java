@@ -1,9 +1,12 @@
 package com.xidian.iot.databiz;
 
 import com.github.pagehelper.PageHelper;
+import com.xidian.iot.database.entity.NodeCond;
 import com.xidian.iot.database.entity.Scene;
 import com.xidian.iot.database.entity.SceneExample;
+import com.xidian.iot.database.entity.custom.NodeCondExt;
 import com.xidian.iot.database.mapper.SceneMapper;
+import com.xidian.iot.databiz.service.NodeCondService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -43,5 +46,18 @@ public class AppTest
         PageHelper.startPage(0,0);
         List<Scene> scenes = sceneMapper.selectByExample(new SceneExample());
         System.out.println(scenes.size());
+    }
+
+    @Resource
+    NodeCondService nodeCondService;
+
+    @Test
+    public void getNodeCond() throws InterruptedException {
+        for(int i=0;i<100;i++){
+            NodeCondExt nodeCondExt = nodeCondService.getNodeCondExtById((long) 234567);
+            nodeCondExt.setCurrentFitCount(nodeCondExt.getCurrentFitCount()+1);
+            nodeCondService.changeNodeCondExt(nodeCondExt);
+            Thread.sleep(1000);
+        }
     }
 }

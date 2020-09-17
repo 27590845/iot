@@ -1,7 +1,6 @@
 package com.xidian.iot.databiz.service.impl;
 
 import com.xidian.iot.database.entity.NodeCond;
-import com.xidian.iot.database.entity.NodeCondExample;
 import com.xidian.iot.database.entity.custom.NodeCondExt;
 import com.xidian.iot.database.mapper.NodeCondMapper;
 import com.xidian.iot.database.mapper.custom.NodeCondCustomMapper;
@@ -11,7 +10,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,49 +27,51 @@ public class NodeCondServiceImpl implements NodeCondService {
     @Resource
     private NodeCondCustomMapper nodeCondCustomMapper;
 
-    private final Cache cache = new Cache();
-
+    @Cacheable(value = "NodeCondIds", key = "'getNodeCondIdsAvlBySn:'+#sceneSn+':'+#nodeSn")
     @Override
-    public List<NodeCondExt> getNodeCondExtBySnAvl(String sceneSn, String nodeSn) {
-        List<Long> nodeCondIds = nodeCondCustomMapper.getNodeCondIdsAvl(sceneSn, nodeSn);
-        List<NodeCondExt> nodeCondExtList = new ArrayList<>();
-        for(Long ncId : nodeCondIds){
-            NodeCond nodeCond = getNodeCondExtById(ncId);
-            if(nodeCond != null) {
-                nodeCondExtList.add(new NodeCondExt(nodeCond));
-            }
-        }
-        return nodeCondExtList;
+    public List<Long> getNodeCondIdsAvlBySn(String sceneSn, String nodeSn) {
+        return nodeCondCustomMapper.getNodeCondIdsAvlBySn(sceneSn, nodeSn);
     }
 
+    @Cacheable(value = "NodeCondIds", key = "'getNodeCondIdsByNtId:'+#ntId")
     @Override
-    public List<NodeCondExt> getNodeCondExtByNtId(Long ntId) {
-        NodeCondExample nodeCondExample = new NodeCondExample();
-        nodeCondExample.createCriteria().andNtIdEqualTo(ntId);
-        List<NodeCond> nodeConds = nodeCondMapper.selectByExample(nodeCondExample);
-        List<NodeCondExt> nodeCondExtList = NodeCondExt.getExts(nodeConds);
-        return nodeCondExtList;
+    public List<Long> getNodeCondIdsByNtId(Long ntId) {
+        return nodeCondCustomMapper.getNodeCondIdsByNtId(ntId);
     }
 
+
+//    @Override
+//    public List<NodeCondExt> getNodeCondExtAvlBySn(String sceneSn, String nodeSn) {
+//        List<Long> nodeCondIds = nodeCondCustomMapper.getNodeCondIdsAvl(sceneSn, nodeSn);
+//        List<NodeCondExt> nodeCondExtList = new ArrayList<>();
+//        for(Long ncId : nodeCondIds){
+//            NodeCond nodeCond = getNodeCondExtById(ncId);
+//            if(nodeCond != null) {
+//                nodeCondExtList.add(new NodeCondExt(nodeCond));
+//            }
+//        }
+//        return nodeCondExtList;
+//    }
+
+//    @Override
+//    public List<NodeCondExt> getNodeCondExtByNtId(Long ntId) {
+//        NodeCondExample nodeCondExample = new NodeCondExample();
+//        nodeCondExample.createCriteria().andNtIdEqualTo(ntId);
+//        List<NodeCond> nodeConds = nodeCondMapper.selectByExample(nodeCondExample);
+//        List<NodeCondExt> nodeCondExtList = NodeCondExt.getExts(nodeConds);
+//        return nodeCondExtList;
+//    }
+
     @Override
+    @Cacheable(value = "NodeCondExt", key = "'getNodeCondExtById:'+#ncId")
     public NodeCondExt getNodeCondExtById(Long ncId) {
-        return cache.getNodeCondExtById(ncId);
+        NodeCond nodeCond = nodeCondMapper.selectByPrimaryKey(ncId);
+        return new NodeCondExt(nodeCond);
     }
 
     @Override
     @CachePut(value = "NodeCondExt", key = "'getNodeCondExtById:'+#nodeCondExt.ncId")
     public NodeCondExt changeNodeCondExt(NodeCondExt nodeCondExt) {
         return nodeCondExt;
-    }
-
-    /**
-     * 内部调用，org.springframework.cache 不会生效，所以暂时把内部调用时用到cache的函数写到内部类中
-     */
-    class Cache {
-        @Cacheable(value = "NodeCondExt", key = "'getNodeCondExtById:'+#ncId")
-        public NodeCondExt getNodeCondExtById(Long ncId) {
-            NodeCond nodeCond = nodeCondMapper.selectByPrimaryKey(ncId);
-            return new NodeCondExt(nodeCond);
-        }
     }
 }

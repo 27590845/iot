@@ -75,11 +75,11 @@ public class CompareNodeCondTask extends BaseTask implements Runnable {
                 || MapUtils.isEmpty(data)) {
             return;
         }
-        log.info("doing CompareNodeCondTask");
-        log.info("data[{}]", data);
+        log.debug("doing CompareNodeCondTask");
+        log.debug("data[{}]", data);
         // 处理触发器条件
         for (NodeCondExt nodeCondExt : nodeCondExtList) {
-            log.info("CompareNodeCondTask foreach nodeCondList,nodeCondExt=[{}]", nodeCondExt);
+            log.debug("CompareNodeCondTask foreach nodeCondList,nodeCondExt=[{}]", nodeCondExt);
             // 获得属性key
             String attrKey = hasKey(nodeCondExt.getNaId());
             if (attrKey == null) {
@@ -87,7 +87,7 @@ public class CompareNodeCondTask extends BaseTask implements Runnable {
             }
             // 间隔时间外才能正常进行条件比较
             if (outIntervalTime(nodeCondExt.getNtId())) {
-                log.info("this condition out IntervalTime.");
+                log.debug("this condition out IntervalTime.");
                 // 比较条件，并检查触发器
                 compareCondition(nodeCondExt, attrKey);
             }
@@ -122,10 +122,10 @@ public class CompareNodeCondTask extends BaseTask implements Runnable {
         // 获得节点属性
         NodeAttr nodeAttr = nodeAttrService.getNodeAttrById(naId);
         String attrKey = nodeAttr.getNaKey();
-        log.info("get node attr {}", nodeAttr);
+        log.debug("get node attr {}", nodeAttr);
         // 判断此次上数数据不包含此属性则不做操作
         if (!data.containsKey(attrKey)) {
-            log.info("Compare not contains key {},{}", attrKey, data);
+            log.debug("Compare not contains key {},{}", attrKey, data);
             return null;
         }
         return attrKey;
@@ -139,7 +139,7 @@ public class CompareNodeCondTask extends BaseTask implements Runnable {
     private void compareCondition(NodeCondExt nodeCondExt, String attrKey) {
         // 判断这个条件是否满足
         boolean fit = isFitCondition(nodeCondExt, attrKey);
-        log.info("compareCondition() fit={}", fit);
+        log.debug("compareCondition() fit={}", fit);
         // 判断如果发生了变化，才执行更新、检查触发器操作z
         if (fit != nodeCondExt.isFit()) {
             // 更新变化后的fit值，并更新到缓存
@@ -168,7 +168,7 @@ public class CompareNodeCondTask extends BaseTask implements Runnable {
         Double value = toDoubleValue(data.get(attrKey));
         // 当上数值不合法则此条件不满足
         if (value == null) {
-            log.info("isFitCondition() value is null.");
+            log.debug("isFitCondition() value is null.");
             return false;
         }
         // 将当前值保存，用于SendMessageTask拼接站内信时发送currentValue.
@@ -180,8 +180,8 @@ public class CompareNodeCondTask extends BaseTask implements Runnable {
             int currentFitCount = nodeCondExt.getCurrentFitCount() + 1;
             nodeCondExt.setCurrentFitCount(currentFitCount);
             // 当次数达到要求，则此条件为满足
-            if (currentFitCount == nodeCondExt.getNcFitTime()) {
-                log.info("isFitCondition() fit count==currentFitCount.");
+            if (currentFitCount >= nodeCondExt.getNcFitTime()) {
+                log.debug("isFitCondition() fit count==currentFitCount.");
                 return true;
             }
         } else {
@@ -189,7 +189,7 @@ public class CompareNodeCondTask extends BaseTask implements Runnable {
             nodeCondExt.setCurrentFitCount(0);
         }
 
-        log.info("isFitCondition() return false.");
+        log.debug("isFitCondition() return false.");
         return false;
     }
 
@@ -221,8 +221,8 @@ public class CompareNodeCondTask extends BaseTask implements Runnable {
                 .getBean("checkingTrigTask");
         // 设置触发器ID
         checkingTrigTask.setNtId(ntId);
-//        checkingTrigTask.run();
-		taskExecutor.execute(checkingTrigTask);
+        checkingTrigTask.run();
+//		taskExecutor.execute(checkingTrigTask);
     }
 
 }

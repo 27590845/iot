@@ -10,19 +10,20 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author mrl
- * @Title: UidGeneratorImpl
+ * @Title: SimpleUidGeneratorImpl
  * @Package
  * @Description: 临时Id生成器
  * @date 2020/9/14 11:14 上午
  */
 @Slf4j
-public class UidGeneratorImpl implements UidGenerator {
+public class SimpleUidGeneratorImpl implements SimpleUidGenerator {
 
     private final Lock lock;
     private final long prefix;
     //本地自增变量也可以用AtomicLong替代，AtomicLong不需要锁保护
     private volatile long start;
 
+    //用于测试的参数
     @Setter
     private long startTime;
     public static final int threadNum = 2500;
@@ -30,18 +31,18 @@ public class UidGeneratorImpl implements UidGenerator {
     /**
      * Id生成器应保持全局唯一
      * @param lock ${@link Lock}的任意实现
-     * @param uidPrefixFactory uid前缀工厂，通过工厂获取前缀，如果工厂为null，则由本地默认算法生成前缀
+     * @param simpleUidPrefixFactory uid前缀工厂，通过工厂获取前缀，如果工厂为null，则由本地默认算法生成前缀
      */
-    public UidGeneratorImpl(Lock lock, UidPrefixFactory uidPrefixFactory) {
+    public SimpleUidGeneratorImpl(Lock lock, SimpleUidPrefixFactory simpleUidPrefixFactory) {
         if(lock==null){
             throw new RuntimeException();
         }
         this.lock = lock;
         //前缀由master分配 固定32位二进制
-        if(uidPrefixFactory==null){
+        if(simpleUidPrefixFactory ==null){
             prefix = getDefaultPrefix();
         }else {
-            prefix = uidPrefixFactory.getPrefix();
+            prefix = simpleUidPrefixFactory.getPrefix();
         }
         this.start = 0;
     }
@@ -70,7 +71,7 @@ public class UidGeneratorImpl implements UidGenerator {
     }
 
     public static void main(String[] args) {
-        UidGeneratorImpl uidGeneratorImpl = new UidGeneratorImpl(new ReentrantLock(), new UidPrefixFactoryImpl());
+        SimpleUidGeneratorImpl uidGeneratorImpl = new SimpleUidGeneratorImpl(new ReentrantLock(), new SimpleUidPrefixFactoryImpl());
         Thread[] threads = new Thread[threadNum];
         for(int i=0;i<threadNum;i++){
             threads[i] = new Thread(new Runnable() {

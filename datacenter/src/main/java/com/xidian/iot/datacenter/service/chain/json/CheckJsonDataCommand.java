@@ -40,7 +40,7 @@ public class CheckJsonDataCommand implements Command {
         getAndSetDatastreamsList(upContext);
         // 检查datastreamsList
         checkJsonDatestreamsList(upContext);
-        log.debug("================================End check JSON data.================================");
+        log.debug("================================Complete check JSON data.================================");
         return false;
     }
 

@@ -33,7 +33,7 @@ public class DynamicEnumloadServiceImpl implements InitializingBean {
             properties1.load(new InputStreamReader(inputStream1, "UTF-8"));
             properties2.load(new InputStreamReader(inputStream2, "UTF-8"));
         } catch (IOException e) {
-            log.info("动态枚举加载失败......");
+            log.error("动态枚举加载失败......");
             e.printStackTrace();
         }
 

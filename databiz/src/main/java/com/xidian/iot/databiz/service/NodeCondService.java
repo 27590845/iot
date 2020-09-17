@@ -15,6 +15,21 @@ import java.util.List;
 public interface NodeCondService {
 
     /**
+     * 根据sceneSn和nodeSn获取可用的nodeCond.ncId列表：nodeTrig.getNtExec()==1||nodeTrig.getNtExpr().before(new Date())
+     * @param sceneSn
+     * @param nodeSn
+     * @return
+     */
+    List<Long> getNodeCondIdsAvlBySn(String sceneSn, String nodeSn);
+
+    /**
+     * 根据nodeTrig.ntId获取关联的NodeCond
+     * @param ntId
+     * @return
+     */
+    List<Long> getNodeCondIdsByNtId(Long ntId);
+
+    /**
      * 通过nodeCond.ncId获取NodeCondExt
      * @param ncId
      * @return
@@ -27,17 +42,17 @@ public interface NodeCondService {
      * @param nodeSn
      * @return
      */
-    List<NodeCondExt> getNodeCondExtBySnAvl(String sceneSn, String nodeSn);
+//    List<NodeCondExt> getNodeCondExtAvlBySn(String sceneSn, String nodeSn);
 
     /**
      * 根据nodeTrig.ntId获取NodeCondExt
      * @param ntId
      * @return
      */
-    List<NodeCondExt> getNodeCondExtByNtId(Long ntId);
+//    List<NodeCondExt> getNodeCondExtByNtId(Long ntId);
 
     /**
-     * 更新条件的condition 并更新到缓存
+     * 更新条件的condition 只更新到缓存
      * @param nodeCondExt 条件
      */
     NodeCondExt changeNodeCondExt(NodeCondExt nodeCondExt);

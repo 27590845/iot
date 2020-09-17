@@ -99,7 +99,7 @@ public class SendCmdTask extends BaseTask implements Runnable {
         queueCommand.addCommand(cmdKey, cmdStr);
         // 将对队列命令添加到队列中
         try {
-            log.info("Add to queue '[{}]',{}", QueueCommand.QUEUE_NAME,
+            log.debug("Add to queue '[{}]',{}", QueueCommand.QUEUE_NAME,
                     queueCommand);
             // kestrelClient.set(QueueCommand.QUEUE_NAME, 0, queueCommand);
             mqSender.send(QueueCommand.QUEUE_NAME, JsonUtil.toJson(queueCommand));

@@ -14,5 +14,7 @@ import java.util.List;
  */
 public interface NodeCondCustomMapper {
 
-    List<Long> getNodeCondIdsAvl(@Param("sceneSn") String sceneSn, @Param("nodeSn") String nodeSn);
+    List<Long> getNodeCondIdsAvlBySn(@Param("sceneSn") String sceneSn, @Param("nodeSn") String nodeSn);
+
+    List<Long> getNodeCondIdsByNtId(@Param("ntId") Long ntId);
 }
