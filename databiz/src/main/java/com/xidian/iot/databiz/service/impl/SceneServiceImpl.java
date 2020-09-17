@@ -9,12 +9,16 @@ import com.xidian.iot.database.mapper.SceneMapper;
 import com.xidian.iot.database.mapper.custom.SceneCustomMapper;
 import com.xidian.iot.database.param.SceneAddParam;
 import com.xidian.iot.database.param.SceneUpdateParam;
+import com.xidian.iot.database.vo.SceneVo;
 import com.xidian.iot.databiz.constants.EncodeType;
 import com.xidian.iot.databiz.service.SceneService;
 import com.xidian.iot.databiz.service.UidGenerator;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.crypto.Data;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,6 +29,7 @@ import java.util.List;
  * @date 2020/9/1 5:31 下午
  */
 @Service
+@Slf4j
 public class SceneServiceImpl implements SceneService {
 
     @Autowired
@@ -101,6 +106,16 @@ public class SceneServiceImpl implements SceneService {
     public void updateScene(String sceneSn, SceneUpdateParam param) {
         Scene scene = param.build(getSceneBySn(sceneSn).getSceneId());
         sceneMapper.updateByPrimaryKeySelective(scene);
+    }
+
+    @Override
+    public SceneVo getSceneVoBySn(String sceneSn) {
+        log.info(String.valueOf(System.currentTimeMillis()));
+        SceneVo sceneVo1 = sceneCustomMapper.getSceneVoBySn(sceneSn);
+        log.info(String.valueOf(System.currentTimeMillis()));
+        SceneVo sceneVo2 = sceneCustomMapper.getSceneVoBySnJoin(sceneSn);
+        log.info(String.valueOf(System.currentTimeMillis()));
+        return sceneVo2;
     }
 
 }

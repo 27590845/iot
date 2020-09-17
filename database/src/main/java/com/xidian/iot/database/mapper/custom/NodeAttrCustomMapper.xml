@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xidian.iot.database.mapper.custom.NodeAttrCustomMapper">
+    <resultMap id="BaseResultMap" type="com.xidian.iot.database.entity.NodeAttr" extends="com.xidian.iot.database.mapper.NodeAttrMapper.BaseResultMap">
+    </resultMap>
+    <sql id="Base_Column_List">
+    na_id, node_id, na_key, na_name, na_unit, na_sym
+    </sql>
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into node_attr (na_id, node_id, na_key,
+        na_name, na_unit, na_sym
+        )
+        values
+        <foreach collection="nodeAttrs" item="nodeAttr" index="index" separator=",">
+            (#{nodeAttr.naId,jdbcType=BIGINT},
+            #{nodeAttr.nodeId,jdbcType=BIGINT},
+            #{nodeAttr.naKey,jdbcType=VARCHAR},
+            #{nodeAttr.naName,jdbcType=VARCHAR},
+            #{nodeAttr.naUnit,jdbcType=VARCHAR},
+            #{nodeAttr.naSym,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <select id="getNodeAttrByNodeId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from node_attr
+        where node_id =  #{nodeId,jdbcType=BIGINT}
+    </select>
+</mapper>
