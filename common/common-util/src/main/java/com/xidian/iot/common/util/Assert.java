@@ -1,7 +1,7 @@
 package com.xidian.iot.common.util;
 
-import com.xidian.iot.common.exception.BusinessException;
-import com.xidian.iot.common.exception.ExceptionInfo;
+import com.xidian.iot.common.util.exception.BusinessException;
+import com.xidian.iot.common.util.exception.ExceptionInfo;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 

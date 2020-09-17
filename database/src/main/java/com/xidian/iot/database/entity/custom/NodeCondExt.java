@@ -1,5 +1,6 @@
 package com.xidian.iot.database.entity.custom;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xidian.iot.database.entity.Node;
 import com.xidian.iot.database.entity.NodeAttr;
 import com.xidian.iot.database.entity.NodeCond;
@@ -7,6 +8,9 @@ import com.xidian.iot.database.entity.Scene;
 import lombok.Data;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author mrl
@@ -17,6 +21,22 @@ import org.apache.commons.lang3.math.NumberUtils;
  */
 @Data
 public class NodeCondExt extends NodeCond {
+
+    public NodeCondExt(){}
+
+    public NodeCondExt(NodeCond nodeCond){
+        if (nodeCond == null) return;
+        setNcId(nodeCond.getNcId());
+        setNaId(nodeCond.getNaId());
+        setNtId(nodeCond.getNtId());
+        setSceneId(nodeCond.getSceneId());
+        setSceneSn(nodeCond.getSceneSn());
+        setNodeId(nodeCond.getNodeId());
+        setNodeSn(nodeCond.getNodeSn());
+        setNcOp(nodeCond.getNcOp());
+        setNcVal(nodeCond.getNcVal());
+        setNcFitTime(nodeCond.getNcFitTime());
+    }
 
     /**
      * 此条件是否被满足，根据这个值决定是否检查触发器。
@@ -58,9 +78,9 @@ public class NodeCondExt extends NodeCond {
      *
      * @return 节点属性key。
      */
-    public String getNodeAttrKey() {
-        return nodeAttribute.getNaKey();
-    }
+//    public String getNodeAttrKey() {
+//        return nodeAttribute.getNaKey();
+//    }
 
     /**
      * 判断一个值，是否满足这个节点条件。
@@ -110,6 +130,7 @@ public class NodeCondExt extends NodeCond {
      *
      * @return 操作字符串
      */
+    @JsonIgnore
     public String getOperatorCharStr() {
         int operatorChar = getNcOp();
         if (operatorChar == 1) {
@@ -138,6 +159,7 @@ public class NodeCondExt extends NodeCond {
      *
      * @return 操作字符串
      */
+    @JsonIgnore
     public String getOperatorCN() {
         int operatorChar = getNcOp();
         if (operatorChar == 1) {
@@ -159,5 +181,14 @@ public class NodeCondExt extends NodeCond {
         } else {
             return "";
         }
+    }
+
+    public static List<NodeCondExt> getExts(List<NodeCond> nodeConds){
+        if(nodeConds == null) return null;
+        List<NodeCondExt> nodeCondExtList = new ArrayList<>();
+        for(NodeCond nodeCond : nodeConds){
+            nodeCondExtList.add(new NodeCondExt(nodeCond));
+        }
+        return nodeCondExtList;
     }
 }

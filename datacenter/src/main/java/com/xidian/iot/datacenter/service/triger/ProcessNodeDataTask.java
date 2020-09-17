@@ -1,5 +1,6 @@
 package com.xidian.iot.datacenter.service.triger;
 
+import com.xidian.iot.database.entity.NodeCond;
 import com.xidian.iot.database.entity.custom.NodeCondExt;
 import com.xidian.iot.database.entity.mongo.NodeData;
 import com.xidian.iot.databiz.service.NodeCondService;
@@ -9,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,7 +37,7 @@ public class ProcessNodeDataTask extends BaseTask implements Runnable {
     /**
      * 触发器条件数据访问接口。
      */
-//    @Resource
+    @Resource
     private NodeCondService nodeCondService;
 
     /**
@@ -45,9 +47,8 @@ public class ProcessNodeDataTask extends BaseTask implements Runnable {
     public void run() {
         long ss = System.currentTimeMillis();
         // 处理节点数据
-//        processNodeData();
+        processNodeData();
         log.debug("processNodeData:{}ms",System.currentTimeMillis() - ss);
-        log.debug("------process completed-------");
     }
 
     /**
@@ -57,9 +58,9 @@ public class ProcessNodeDataTask extends BaseTask implements Runnable {
     private void processNodeData() {
         // 逐个处理上行数据
         for (NodeData nodeData : nodeDataList) {
-            log.info("nodeData({})", nodeData);
+            log.debug("nodeData({})", nodeData);
             //只获取条件所关联的触发器未失效的节点条件
-            List<NodeCondExt> nodeCondExtListResult = nodeCondService.getNodeCondExtBySnAvl(sceneSn, nodeData.getNodeSn());
+            List<NodeCondExt> nodeCondExtListResult = getNodeCondExtAvlBySn(sceneSn, nodeData.getNodeSn());
             //执行条件比较任务
             doCompareNodeCondTask(nodeData, nodeCondExtListResult);
         }
@@ -76,8 +77,20 @@ public class ProcessNodeDataTask extends BaseTask implements Runnable {
         compareNodeCondTask.setData(nodeData.getData());
         // 设置条件列表
         compareNodeCondTask.setNodeCondExtList(nodeCondExtList);
-//        compareNodeCondTask.run();
-		taskExecutor.execute(compareNodeCondTask);
+        compareNodeCondTask.run();
+//		taskExecutor.execute(compareNodeCondTask);
+    }
+
+    public List<NodeCondExt> getNodeCondExtAvlBySn(String sceneSn, String nodeSn) {
+        List<Long> nodeCondIds = nodeCondService.getNodeCondIdsAvlBySn(sceneSn, nodeSn);
+        List<NodeCondExt> nodeCondExtList = new ArrayList<>();
+        for(Long ncId : nodeCondIds){
+            NodeCondExt nodeCondExt = nodeCondService.getNodeCondExtById(ncId);
+            if(nodeCondExt != null) {
+                nodeCondExtList.add(nodeCondExt);
+            }
+        }
+        return nodeCondExtList;
     }
 
     /**

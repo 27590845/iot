@@ -1,6 +1,6 @@
 package com.xidian.iot.databiz.service;
 
-import com.xidian.iot.exception.UidGenerateException;
+import com.xidian.iot.common.uid.exception.UidGenerateException;
 
 /**
  * id生成工具

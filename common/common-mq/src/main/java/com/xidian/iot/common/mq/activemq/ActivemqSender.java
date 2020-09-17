@@ -32,7 +32,7 @@ public class ActivemqSender implements MqSender {
                 return om;
             }
         });
-        log.info("成功发送了一条JMS消息--ActivemqSender  topic:"+topicName);
+        log.debug("成功发送了一条JMS消息--ActivemqSender  topic:"+topicName);
     }
 
     public void sendSeriObjByte(String topicName, final String jsonStr) {
@@ -51,7 +51,7 @@ public class ActivemqSender implements MqSender {
                 return bm;
             }
         });
-        log.info("成功发送了一条JMS消息--ActivemqSender  topic:"+topicName);
+        log.debug("成功发送了一条JMS消息--ActivemqSender  topic:"+topicName);
     }
 
     public void send(String topicName,final String message){
@@ -62,6 +62,6 @@ public class ActivemqSender implements MqSender {
                 return session.createTextMessage(message);
             }
         });
-        log.info("成功发送了一条JMS消息--ActivemqSender  topic:"+topicName);
+        log.debug("成功发送了一条JMS消息--ActivemqSender  topic:"+topicName);
     }
 }

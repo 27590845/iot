@@ -23,7 +23,7 @@
 
         <!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://114.115.240.14:3306/iotdata"
+                        connectionURL="jdbc:mysql://test.public.mysql:3306/iotdata"
                         userId="root"
                         password="xidian@123">
             <!-- 添加表注释 -->

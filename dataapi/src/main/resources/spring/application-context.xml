@@ -19,15 +19,9 @@
         </property>
     </bean>
 
-<!--    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate"/>-->
-<!--    <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>-->
-<!--    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
-<!--        <property name="defaultEncoding" value="utf-8"></property>-->
-<!--        <property name="maxUploadSize" value="10485760000"></property>-->
-<!--        <property name="maxInMemorySize" value="40960"></property>-->
-<!--    </bean>-->
-    <import resource="application-mybatis-def.xml"/>
-    <import resource="application-mongo-def.xml"/>
-    <import resource="application-redis-def.xml"/>
+    <import resource="application-databiz.xml"/>
+    <!-- mongo、redis已经包含在application-databiz.xml内 -->
+<!--    <import resource="application-mongo-def.xml"/>-->
+<!--    <import resource="application-redis-def.xml"/>-->
     <import resource="application-activemq-def.xml"/>
 </beans>

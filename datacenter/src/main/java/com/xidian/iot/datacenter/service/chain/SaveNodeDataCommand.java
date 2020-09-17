@@ -50,9 +50,9 @@ public class SaveNodeDataCommand implements Command, ApplicationContextAware {
         List<NodeData> nodeDataList = upContext.getNodeDataList();
 
         // 保存节点数据
-        log.debug("Begin Saving nodeDataList.[{}]", nodeDataList);
+        log.debug("================================Start Saving nodeDataList.[{}]", nodeDataList);
         nodeDataService.addNodeData(nodeDataList);
-        log.debug("Saved Node Data.");
+        log.debug("================================Complete Saved Node Data.");
 
         // 执行触发器
         doProcessNodeDataTask(upContext.getSceneSn(), nodeDataList);
@@ -73,6 +73,7 @@ public class SaveNodeDataCommand implements Command, ApplicationContextAware {
         processNodeDataTask.setSceneSn(sceneSn);
 
         taskExecutor.execute(processNodeDataTask);
+//        processNodeDataTask.run();
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.xidian.iot.dataapi.controller;
 
-import com.xidian.iot.common.constants.ExceptionEnum;
+import com.xidian.iot.common.util.constants.ExceptionEnum;
 import com.xidian.iot.common.util.StringUtil;
 import com.xidian.iot.dataapi.controller.res.HttpResult;
 import com.xidian.iot.database.param.NodeAddParam;

@@ -46,6 +46,7 @@ public class UpdataListener extends KafkaConsumerListener {
             context.setSceneSn(getSceneSnFromTopicName((String) topicName));
             context.setJsonData(jsonData);
             log.debug("-----process start-----");
+            log.debug("nodeData: [{}]", jsonData);
             executeChain(jsonChain, context);
         } catch (AbortChainException e) {
             e.printStackTrace();
@@ -71,7 +72,7 @@ public class UpdataListener extends KafkaConsumerListener {
         try {
             chain.execute(context);
         } catch (AbortChainException ex) {
-            log.debug("[{}]-[{}],", ex.getCode(), ex.getMessage());
+            log.error("[{}]-[{}],", ex.getCode(), ex.getMessage());
         } catch (Exception ex) {
             log.error("......system happend error.......", ex);
         }

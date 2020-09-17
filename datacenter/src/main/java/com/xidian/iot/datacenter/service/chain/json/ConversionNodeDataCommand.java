@@ -44,7 +44,7 @@ public class ConversionNodeDataCommand implements Command {
         log.debug("================================Start conversion node data.================================");
         // 将json数据转换为NodeData
         conversionNodeData((JsonDataContext) context);
-        log.debug("================================End conversion node data.================================");
+        log.debug("================================Complete conversion node data.================================");
         return false;
     }
 

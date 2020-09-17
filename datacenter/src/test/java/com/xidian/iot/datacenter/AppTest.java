@@ -26,17 +26,20 @@ import java.util.Map;
 @ContextConfiguration(locations = {"classpath:spring/application-context.xml"})
 public class AppTest {
 
-    final static String topic = "hello_topic.A18600";
+    final static String sceneSn = "A18600";
+    final static String nodeSn = "K99990";
+    final static String topic = "hello_topic."+sceneSn;
 
     @Resource
     MqSender mqSender;
 
     @Test
     public void appTest() throws JsonProcessingException, InterruptedException {
-        String msg = "{\"datastreams\":[{\"TVOC\":69,\"hum\":54.0,\"at\":1597737850021,\"pm2p5\":33,\"co2\":509,\"pm10\":59,\"sn\":\"K99990\",\"ch20\":19,\"tem\":32.0}]}";
+//        String msg = "{\"datastreams\":[{\"TVOC\":69,\"hum\":54.0,\"at\":1597737850021,\"pm2p5\":33,\"co2\":509,\"pm10\":59,\"sn\":\""+nodeSn+"\",\"ch20\":19,\"tem\":32.0}]}";
+        String msg = "{\"datastreams\":[{\"tem1\":110,\"tem2\":44.0,\"at\":1597737850021,\"sn\":\""+nodeSn+"\"}]}";
         for(int i=0; i< 1000; i++){
             mqSender.send(topic, msg);
-            Thread.sleep(1000);
+            Thread.sleep(10000);
         }
     }
 }

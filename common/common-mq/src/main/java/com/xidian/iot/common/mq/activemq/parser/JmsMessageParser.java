@@ -29,7 +29,7 @@ public class JmsMessageParser {
         try {
             msgtopic = msg.getJMSDestination().toString();
             if (msg instanceof BytesMessage) {
-                log.info("------Received BytesMessage------");
+                log.debug("------Received BytesMessage------");
                 BytesMessage message = (BytesMessage) msg;
                 byte[] byteContent = new byte[1024];
                 int length = -1;
@@ -41,11 +41,11 @@ public class JmsMessageParser {
                 // 消息体
                 msgContent = content.toString();
             }else if(msg instanceof ObjectMessage){
-                log.info("------Received ObjectMessage------");
+                log.debug("------Received ObjectMessage------");
                 Serializable message = ((ObjectMessage)msg).getObject();
                 msgContent = message.toString();
             }else {
-                log.info("------Received TextMessage------");
+                log.debug("------Received TextMessage------");
                 TextMessage message = (TextMessage) msg;
                 msgContent = message.getText();
             }
