@@ -44,9 +44,8 @@ public interface NodeAttrStdService {
 
     /**
      * 根据nasId更新节点属性模版
-     * @param nasId
      * @param param
      * @return void
      * */
-    void updateNodeAttrStd(Long nasId, NodeAttrStdParam param);
+    void updateNodeAttrStd(NodeAttrStd param);
 }

@@ -3,6 +3,7 @@ package com.xidian.iot.database.param;
 import com.xidian.iot.database.entity.NodeAttrStd;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.constraints.NotBlank;
 
@@ -26,11 +27,16 @@ public class NodeAttrStdParam {
     @NotBlank(message = "节点属性的模版单位")
     private String nasUnit;
 
-    @ApiModelProperty(value = "节点属性的模版单位")
+    @ApiModelProperty(value = "节点属性的模版符号")
     @NotBlank(message = "节点属性模版符号")
     private String nasSym;
 
-    public NodeAttrStd buildNodeAttrStd(Long nasId){
+    /**
+     * NodeAttrStdParam转为NodeAttrStd
+     * @param nasId
+     * @return com.xidian.iot.database.entity.NodeAttrStd
+     */
+    public NodeAttrStd buildNodeAttrStd(Long nasId) {
         NodeAttrStd nodeAttrStd = new NodeAttrStd();
         nodeAttrStd.setNasId(nasId);
         nodeAttrStd.setNasDesc(nasDesc);
@@ -39,4 +45,22 @@ public class NodeAttrStdParam {
         nodeAttrStd.setNasSym(nasSym);
         return nodeAttrStd;
     }
+
+    /**
+     * NodeAttrStdParam转为NodeAttrStd同时过滤非空元素
+     * 因为更新可以部分更新（用于部分更新节点模版属性时使用）
+     *
+     * @param nasId
+     * @return com.xidian.iot.database.entity.NodeAttrStd
+     */
+    public NodeAttrStd filterNodeAttrStd(Long nasId) {
+        NodeAttrStd nodeAttrStd = new NodeAttrStd();
+        nodeAttrStd.setNasId(nasId);
+        nodeAttrStd.setNasDesc(StringUtils.isNotBlank(nasDesc) ? nasDesc : null);
+        nodeAttrStd.setNasKey(StringUtils.isNotBlank(nasKey) ? nasKey : null);
+        nodeAttrStd.setNasUnit(StringUtils.isNotBlank(nasUnit) ? nasUnit : null);
+        nodeAttrStd.setNasSym(StringUtils.isNotBlank(nasSym) ? nasSym : null);
+        return nodeAttrStd;
+    }
+
 }

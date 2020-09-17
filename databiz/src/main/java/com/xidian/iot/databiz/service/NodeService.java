@@ -3,6 +3,7 @@ package com.xidian.iot.databiz.service;
 import com.xidian.iot.database.entity.Node;
 import com.xidian.iot.database.param.NodeAddParam;
 import com.xidian.iot.database.param.NodeUpdateParam;
+import com.xidian.iot.database.vo.NodeVo;
 
 /**
  * @author: Hansey
@@ -42,5 +43,11 @@ public interface NodeService {
      */
     Node getNodeBySn(String sceneSn, String nodeSn);
 
-
+    /**
+     *
+     * @param sceneSn
+     * @param nodeSn
+     * @return com.xidian.iot.database.vo.NodeVo
+     * */
+    NodeVo getNodeVoBySn(String sceneSn, String nodeSn);
 }

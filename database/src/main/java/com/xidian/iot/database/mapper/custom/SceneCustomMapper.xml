@@ -12,6 +12,43 @@
         <result column="scene_desc" jdbcType="VARCHAR" property="sceneDesc" />
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     </resultMap>
+    <resultMap id="SceneVoMap" type="com.xidian.iot.database.vo.SceneVo" extends="BaseResultMap">
+        <collection property="nodeVos" javaType="ArrayList"
+                    ofType="com.xidian.iot.database.vo.NodeVo"
+                    select="com.xidian.iot.database.mapper.custom.NodeCustomMapper.getNodeVosBySceneId"
+                    column="scene_id">
+        </collection>
+    </resultMap>
+    <resultMap id="SceneVoMapJoin" type="com.xidian.iot.database.vo.SceneVo">
+        <id column="scene_id" jdbcType="BIGINT" property="sceneId" />
+        <result column="scene_sn" jdbcType="CHAR" property="sceneSn" />
+        <result column="scene_name" jdbcType="VARCHAR" property="sceneName" />
+        <result column="scene_loc" jdbcType="VARCHAR" property="sceneLoc" />
+        <result column="scene_lng" jdbcType="DOUBLE" property="sceneLng" />
+        <result column="scene_lat" jdbcType="DOUBLE" property="sceneLat" />
+        <result column="scene_el" jdbcType="DOUBLE" property="sceneEl" />
+        <result column="scene_desc" jdbcType="VARCHAR" property="sceneDesc" />
+        <result column="create_time1" jdbcType="TIMESTAMP" property="createTime" />
+        <collection property="nodeVos" javaType="ArrayList"
+                    ofType="com.xidian.iot.database.vo.NodeVo">
+            <id column="node_id" jdbcType="BIGINT" property="nodeId" />
+<!--            <result column="scene_id" jdbcType="BIGINT" property="sceneId" />-->
+<!--            <result column="scene_sn" jdbcType="CHAR" property="sceneSn" />-->
+            <result column="node_name" jdbcType="VARCHAR" property="nodeName" />
+            <result column="node_desc" jdbcType="VARCHAR" property="nodeDesc" />
+            <result column="node_sn" jdbcType="VARCHAR" property="nodeSn" />
+            <result column="create_time2" jdbcType="TIMESTAMP" property="createTime" />
+            <collection property="nodeAttrList" javaType="ArrayList"
+                        ofType="com.xidian.iot.database.entity.NodeAttr">
+                <id column="na_id" jdbcType="BIGINT" property="naId" />
+<!--                <result column="node_id" jdbcType="BIGINT" property="nodeId" />-->
+                <result column="na_key" jdbcType="VARCHAR" property="naKey" />
+                <result column="na_name" jdbcType="VARCHAR" property="naName" />
+                <result column="na_unit" jdbcType="VARCHAR" property="naUnit" />
+                <result column="na_sym" jdbcType="VARCHAR" property="naSym" />
+            </collection>
+        </collection>
+    </resultMap>
     <sql id="Base_Column_List">
     scene_id, scene_sn, scene_name, scene_loc, scene_lng, scene_lat, scene_el, scene_desc,
     create_time
@@ -19,5 +56,33 @@
     <select id="maxSceneSn" parameterType="java.lang.String" resultType="java.lang.String">
         select MAX(substring(s.scene_sn,13,6)) from scene s
         where substring(s.scene_sn,1,10) = #{sceneSnPre, jdbcType=VARCHAR}
+    </select>
+    <select id="getSceneVoBySn" parameterType="java.lang.String" resultMap="SceneVoMap">
+        select s.* from scene s
+        where s.scene_sn = #{sceneSn, jdbcType=VARCHAR}
+    </select>
+
+    <select id="getSceneVoBySnJoin" parameterType="java.lang.String" resultMap="SceneVoMapJoin">
+        select
+        s.scene_id,
+        s.scene_sn,
+        s.scene_name,
+        s.scene_loc,
+        s.scene_lng,
+        s.scene_lat,
+        s.scene_el,
+        s.scene_desc,
+        s.create_time as create_time1,
+        n.node_name,
+        n.node_desc,
+        n.node_sn,
+        n.create_time as create_time2,
+        na.na_id,
+        na.na_key,
+        na.na_name,
+        na.na_unit,
+        na.na_sym
+        from (scene s left join node n on s.scene_id = n.scene_id)left join node_attr na on n.node_id = na.node_id
+        where s.scene_sn = #{sceneSn, jdbcType=VARCHAR}
     </select>
 </mapper>

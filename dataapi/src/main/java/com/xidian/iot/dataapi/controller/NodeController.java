@@ -32,7 +32,6 @@ public class NodeController {
         return HttpResult.responseOK(nodeService.addNode(param));
     }
 
-
     @ApiOperation(value = "删除节点")
     @DeleteMapping("/{sceneSn}/{nodeSn}")
     public HttpResult delNode(@ApiParam(name = "sceneSn", value = "场景sn") @PathVariable("sceneSn") String sceneSn,
@@ -53,10 +52,10 @@ public class NodeController {
         return HttpResult.oK().message("更新成功");
     }
 
-    @ApiOperation(value = "根据Sn获取指定场景接口")
+    @ApiOperation(value = "根据Sn获取指定场景接口（查询结果包含其节点的属性）")
     @GetMapping("/{sceneSn}/{nodeSn}")
     public HttpResult getNode(@ApiParam(name = "sceneSn", value = "场景sn") @PathVariable("sceneSn") String sceneSn,
                               @ApiParam(name = "nodeSn", value = "节点sn") @PathVariable("nodeSn") String nodeSn) {
-        return HttpResult.responseOK(nodeService.getNodeBySn(sceneSn, nodeSn));
+        return HttpResult.responseOK(nodeService.getNodeVoBySn(sceneSn, nodeSn));
     }
 }

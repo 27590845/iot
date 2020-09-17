@@ -2,6 +2,7 @@ package com.xidian.iot.databiz.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.xidian.iot.common.constants.ExceptionEnum;
+import com.xidian.iot.common.exception.BusinessException;
 import com.xidian.iot.common.util.Assert;
 import com.xidian.iot.database.entity.NodeAttrStd;
 import com.xidian.iot.database.entity.NodeAttrStdExample;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 节点属性模版业务逻辑类
@@ -58,8 +60,17 @@ public class NodeAttrStdServiceImpl implements NodeAttrStdService {
     }
 
     @Override
-    public void updateNodeAttrStd(Long nasId, NodeAttrStdParam param) {
-        getNodeAttrStd(nasId);
-        nodeAttrStdMapper.updateByPrimaryKeySelective(param.buildNodeAttrStd(nasId));
+    public void updateNodeAttrStd(NodeAttrStd nodeAttrStd) {
+        //判断该nasId是否存在
+        getNodeAttrStd(nodeAttrStd.getNasId());
+        //如果更改了nasKey就判断该nasKey是否已经存在
+        if (!Objects.isNull(nodeAttrStd.getNasKey())) {
+            NodeAttrStdExample nodeAttrStdExample = new NodeAttrStdExample();
+            nodeAttrStdExample.createCriteria().andNasIdNotEqualTo(nodeAttrStd.getNasId()).andNasKeyEqualTo(nodeAttrStd.getNasKey());
+            if(nodeAttrStdMapper.countByExample(nodeAttrStdExample)>0){
+                throw new BusinessException(-1, "更改节点属性模版失败，该节点属性模版key在系统中已经存在");
+            }
+        }
+        nodeAttrStdMapper.updateByPrimaryKeySelective(nodeAttrStd);
     }
 }

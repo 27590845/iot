@@ -3,6 +3,7 @@ package com.xidian.iot.databiz.service;
 import com.xidian.iot.database.entity.Scene;
 import com.xidian.iot.database.param.SceneAddParam;
 import com.xidian.iot.database.param.SceneUpdateParam;
+import com.xidian.iot.database.vo.SceneVo;
 
 import java.util.List;
 
@@ -27,7 +28,7 @@ public interface SceneService {
     Scene getSceneById(Long sceneId);
 
     /**
-     * 根据场景SN获取场景及其下属的NODE和NODE_ATTR
+     * 根据场景SN获取场景
      * */
     Scene getSceneBySn(String sceneSn);
 
@@ -56,4 +57,8 @@ public interface SceneService {
      * */
     void updateScene(String sceneSn, SceneUpdateParam param);
 
+    /**
+     * 根据场景SN获取场景及其下属的NODE和NODE_ATTR
+     * */
+    SceneVo getSceneVoBySn(String sceneSn);
 }

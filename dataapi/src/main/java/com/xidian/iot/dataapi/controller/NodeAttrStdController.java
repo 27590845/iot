@@ -18,6 +18,7 @@ import javax.validation.Valid;
  */
 @Api(tags = "/nodeAttrStd", description = "提供节点属性操作的相关接口")
 @RestControllerAdvice
+@RequestMapping("/nodeAttrStd")
 public class NodeAttrStdController {
     @Autowired
     private NodeAttrStdService nodeAttrStdService;
@@ -38,7 +39,7 @@ public class NodeAttrStdController {
     @ApiOperation(value = "添加节点属性模版")
     @PostMapping
     public HttpResult addNodeAttrStd(@ApiParam(name = "NodeAttrStdParam",value = "节点属性模版") @Valid @RequestBody NodeAttrStdParam param){
-        return HttpResult.responseOK(nodeAttrStdService.addNodeAttrStd(param));
+        return HttpResult.oK().message("添加成功").data(nodeAttrStdService.addNodeAttrStd(param));
     }
 
     @ApiOperation(value = "删除节点属性模版")
@@ -50,9 +51,17 @@ public class NodeAttrStdController {
 
     @ApiOperation(value = "更新节点属性模版")
     @PutMapping("/{nasId}")
-    public HttpResult updateScene(@ApiParam(name = "nasId",value = "节点属性模版ID") @PathVariable("nasId") Long nasId,
+    public HttpResult updateNodeAttrStd(@ApiParam(name = "nasId",value = "节点属性模版ID") @PathVariable("nasId") Long nasId,
                                   @ApiParam(name = "NodeAttrStdParam",value = "节点属性模版") @Valid @RequestBody NodeAttrStdParam param){
-        nodeAttrStdService.updateNodeAttrStd(nasId, param);
+        nodeAttrStdService.updateNodeAttrStd(param.buildNodeAttrStd(nasId));
+        return HttpResult.oK().message("更新节点属性模版成功");
+    }
+
+    @ApiOperation(value = "部分更新节点属性模版")
+    @PatchMapping("/{nasId}")
+    public HttpResult selectUpdateScene(@ApiParam(name = "nasId",value = "节点属性模版ID") @PathVariable("nasId") Long nasId,
+                                  @ApiParam(name = "NodeAttrStdParam",value = "节点属性模版")  @RequestBody NodeAttrStdParam param){
+        nodeAttrStdService.updateNodeAttrStd(param.filterNodeAttrStd(nasId));
         return HttpResult.oK().message("更新节点属性模版成功");
     }
 
