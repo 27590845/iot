@@ -6,12 +6,12 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author mrl
- * @Title: SimpleUidPrefixFactoryImpl
+ * @Title: UidPrefixFactoryImpl
  * @Package
  * @Description:
  * @date 2020/9/14 3:51 下午
  */
-public class SimpleUidPrefixFactoryImpl implements SimpleUidPrefixFactory {
+public class UidPrefixFactoryImpl implements UidPrefixFactory {
 
     private volatile AtomicLong start = new AtomicLong(System.currentTimeMillis()/1000);
 

@@ -24,17 +24,17 @@
     <import resource="application-redis-def.xml"/>
 <!--    <import resource="cached-uid-spring.xml"/>-->
 
-    <!-- 测试时暂时使用 simple SimpleUidGenerator start -->
-    <bean id="simpleUidGenerator" scope="singleton" class="com.xidian.iot.common.util.uid.SimpleUidGeneratorImpl">
+    <!-- 测试时暂时使用 simple UidGen start -->
+    <bean id="simpleUidGenerator" scope="singleton" class="com.xidian.iot.common.util.uid.UidGenImpl">
         <constructor-arg index="0">
             <bean class="java.util.concurrent.locks.ReentrantLock"/>
         </constructor-arg>
         <constructor-arg index="1">
-            <bean id="simpleUidPrefixFactory" class="com.xidian.iot.common.util.uid.SimpleUidPrefixFactoryImpl">
+            <bean id="uidPrefixFactory" class="com.xidian.iot.common.util.uid.UidPrefixFactoryImpl">
                 <property name="prefixSourceUri" value="http://master:port/uid/prefix"/>
             </bean>
         </constructor-arg>
     </bean>
-    <!-- simple SimpleUidGenerator end -->
+    <!-- simple UidGen end -->
 
 </beans>

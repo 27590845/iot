@@ -2,12 +2,12 @@ package com.xidian.iot.common.util.uid;
 
 /**
  * @author mrl
- * @Title: SimpleUidGenerator
+ * @Title: UidGen
  * @Package
  * @Description:
  * @date 2020/9/14 3:59 下午
  */
-public interface SimpleUidGenerator {
+public interface UidGen {
 
     /**
      * 规定时间内未能获取到UId就主动放弃

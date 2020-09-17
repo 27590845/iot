@@ -1,7 +1,7 @@
 package com.xidian.iot.databiz.service.impl;
 
 import com.xidian.iot.common.uid.exception.UidGenerateException;
-import com.xidian.iot.common.util.uid.SimpleUidGenerator;
+import com.xidian.iot.common.util.uid.UidGen;
 import com.xidian.iot.databiz.service.UidGenerator;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +9,7 @@ import javax.annotation.Resource;
 
 /**
  * @author mrl
- * @Title: SimpleUidGenerator
+ * @Title: UidGen
  * @Package
  * @Description: 另一种Uid生成方式，测试时用较方便
  * @date 2020/9/17 9:18 上午
@@ -18,12 +18,12 @@ import javax.annotation.Resource;
 public class SimpleUidGeneratorImpl implements UidGenerator {
 
     @Resource
-    private SimpleUidGenerator simpleUidGenerator;
+    private UidGen uidGen;
 
     @Override
     public long getUID() throws UidGenerateException {
         try {
-            return simpleUidGenerator.getUID(10000);
+            return uidGen.getUID(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
