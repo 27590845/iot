@@ -9,7 +9,7 @@ import java.util.List;
  * @author mrl
  * @Title: NodeCondService
  * @Package
- * @Description:
+ * @Description: 为了使用缓存，统一使用主键查询NodeCond相关信息，并提供获取其主键的常用函数
  * @date 2020/9/10 9:52 下午
  */
 public interface NodeCondService {
@@ -56,4 +56,11 @@ public interface NodeCondService {
      * @param nodeCondExt 条件
      */
     NodeCondExt changeNodeCondExt(NodeCondExt nodeCondExt);
+
+    /**
+     * 添加一个NodeCond
+     * @param nodeCond
+     * @return
+     */
+    NodeCond addNodeCond(NodeCond nodeCond);
 }

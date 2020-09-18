@@ -25,4 +25,6 @@ public interface NodeTrigService {
      * @return
      */
     NodeTrigExt updateNodeTrigExtById(NodeTrigExt nodeTrigExt);
+
+
 }

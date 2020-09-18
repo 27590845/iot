@@ -5,6 +5,7 @@ import com.xidian.iot.database.entity.custom.NodeCondExt;
 import com.xidian.iot.database.mapper.NodeCondMapper;
 import com.xidian.iot.database.mapper.custom.NodeCondCustomMapper;
 import com.xidian.iot.databiz.service.NodeCondService;
+import com.xidian.iot.databiz.service.UidGenerator;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,8 @@ import java.util.List;
 @Service
 public class NodeCondServiceImpl implements NodeCondService {
 
+    @Resource
+    private UidGenerator uidGenerator;
     @Resource
     private NodeCondMapper nodeCondMapper;
     @Resource
@@ -73,5 +76,10 @@ public class NodeCondServiceImpl implements NodeCondService {
     @CachePut(value = "NodeCondExt", key = "'getNodeCondExtById:'+#nodeCondExt.ncId")
     public NodeCondExt changeNodeCondExt(NodeCondExt nodeCondExt) {
         return nodeCondExt;
+    }
+
+    @Override
+    public NodeCond addNodeCond(NodeCond nodeCond) {
+        return null;
     }
 }
