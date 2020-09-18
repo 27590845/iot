@@ -13,78 +13,22 @@
         <result column="scene_sn" jdbcType="VARCHAR" property="sceneSn"/>
         <result column="nc_fit_time" jdbcType="INTEGER" property="ncFitTime"/>
     </resultMap>
-    <sql id="where_nodeTrig">
-        <if test="ntId != null">
-            nt.nt_id=#{ntId,jdbcType=BIGINT}
-        </if>
-        <if test="ntName != null">
-            and nt.nt_name=#{ntName,jdbcType=VARCHAR}
-        </if>
-        <if test="ntDesc != null">
-            and nt.nt_desc=#{ntDesc,jdbcType=VARCHAR}
-        </if>
-        <if test="ntInvl != null">
-            and nt.nt_invl=#{ntInvl,jdbcType=INTEGER}
-        </if>
-        <if test="ntRept != null">
-            and nt.nt_rept=#{ntRept,jdbcType=TINYINT}
-        </if>
-        <if test="ntExec != null">
-            and nt.nt_exec#{ntExec,jdbcType=TINYINT}
-        </if>
-        <choose>
-            <when test="ntExpr != null">
-                and nt.nt_expr=#{ntExpr,jdbcType=TIMESTAMP}
-            </when>
-            <otherwise>
-                and nt.nt_expr>now()
-            </otherwise>
-        </choose>
-        <if test="ntExpr != null">
-            and nt.nt_expr=#{ntExpr,jdbcType=TIMESTAMP}
-        </if>
-    </sql>
-    <sql id="where_nodeCond">
-        <if test="ncId != null">
-            and nc.nc_id=#{ncId,jdbcType=BIGINT}
-        </if>
-        <if test="naId != null">
-            and nc.na_id=#{naId,jdbcType=BIGINT}
-        </if>
-        <if test="sceneId != null">
-            and nc.scene_id=#{sceneId,jdbcType=BIGINT}
-        </if>
-        <if test="nodeId != null">
-            and nc.node_id=#{nodeId,jdbcType=BIGINT}
-        </if>
-        <if test="ntId != null">
-            and nc.nt_id=#{ntId,jdbcType=BIGINT}
-        </if>
-        <if test="ncOp != null">
-            and nc.nc_op=#{ncOp,jdbcType=TINYINT}
-        </if>
-        <if test="ncVal != null">
-            and nc.nc_val=#{ncVal,jdbcType=VARCHAR}
-        </if>
-        <if test="nodeSn != null">
-            and nc.node_sn=#{nodeSn,jdbcType=VARCHAR}
-        </if>
-        <if test="sceneSn != null">
-            and nc.scene_sn=#{sceneSn,jdbcType=VARCHAR}
-        </if>
-        <if test="ncFitTime != null">
-            and nc.nc_fit_time=#{ncFitTime,jdbcType=INTEGER}
-        </if>
-    </sql>
     <select id="getNodeCondIdsByNtId" parameterType="java.lang.Long" resultType="java.lang.Long">
         select nc.nc_id from node_cond nc where nc.nt_id=#{ntId,jdbcType=BIGINT};
     </select>
+<!--    <select id="getNodeCondIdsAvlBySn" parameterType="java.lang.String" resultType="java.lang.Long">-->
+<!--        select nc.nc_id from-->
+<!--            (select nc_id, nt_id, scene_sn, node_sn from node_cond) as nc-->
+<!--            left join-->
+<!--            (select nt_id, nt_exec, nt_expr from node_trig) as nt on nc.nt_id=nt.nt_id-->
+<!--        where nt.nt_exec=0 and nt.nt_expr>now()-->
+<!--        and nc.scene_sn=#{sceneSn,jdbcType=VARCHAR}-->
+<!--        and nc.node_sn=#{nodeSn,jdbcType=VARCHAR};-->
+<!--    </select>-->
+    <!-- 去掉连接操作 -->
     <select id="getNodeCondIdsAvlBySn" parameterType="java.lang.String" resultType="java.lang.Long">
-        select nc.nc_id from
-            (select nc_id, nt_id, scene_sn, node_sn from node_cond) as nc
-            left join
-            (select nt_id, nt_exec, nt_expr from node_trig) as nt on nc.nt_id=nt.nt_id
-        where nt.nt_exec=0 and nt.nt_expr>now()
+        select nc.nc_id from node_cond nc
+        where nc.nt_id in (select nt_id from node_trig where nt_exec=0 and nt_expr>now())
         and nc.scene_sn=#{sceneSn,jdbcType=VARCHAR}
         and nc.node_sn=#{nodeSn,jdbcType=VARCHAR};
     </select>
