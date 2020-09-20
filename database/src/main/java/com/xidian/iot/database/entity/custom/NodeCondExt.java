@@ -39,6 +39,11 @@ public class NodeCondExt extends NodeCond {
     }
 
     /**
+     * 关联的NodeAttr.naKey
+     */
+    private String naKey;
+
+    /**
      * 此条件是否被满足，根据这个值决定是否检查触发器。
      */
     private boolean fit = false;

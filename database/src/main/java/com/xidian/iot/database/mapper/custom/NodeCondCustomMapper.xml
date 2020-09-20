@@ -13,23 +13,19 @@
         <result column="scene_sn" jdbcType="VARCHAR" property="sceneSn"/>
         <result column="nc_fit_time" jdbcType="INTEGER" property="ncFitTime"/>
     </resultMap>
-    <select id="getNodeCondIdsByNtId" parameterType="java.lang.Long" resultType="java.lang.Long">
+    <select id="getNcIdsByNtId" parameterType="java.lang.Long" resultType="java.lang.Long">
         select nc.nc_id from node_cond nc where nc.nt_id=#{ntId,jdbcType=BIGINT};
     </select>
-<!--    <select id="getNodeCondIdsAvlBySn" parameterType="java.lang.String" resultType="java.lang.Long">-->
-<!--        select nc.nc_id from-->
-<!--            (select nc_id, nt_id, scene_sn, node_sn from node_cond) as nc-->
-<!--            left join-->
-<!--            (select nt_id, nt_exec, nt_expr from node_trig) as nt on nc.nt_id=nt.nt_id-->
-<!--        where nt.nt_exec=0 and nt.nt_expr>now()-->
-<!--        and nc.scene_sn=#{sceneSn,jdbcType=VARCHAR}-->
-<!--        and nc.node_sn=#{nodeSn,jdbcType=VARCHAR};-->
-<!--    </select>-->
-    <!-- 去掉连接操作 -->
-    <select id="getNodeCondIdsAvlBySn" parameterType="java.lang.String" resultType="java.lang.Long">
-        select nc.nc_id from node_cond nc
-        where nc.nt_id in (select nt_id from node_trig where nt_exec=0 and nt_expr>now())
+    <!-- 连接查询，尽量不用 -->
+    <select id="getNcIdsAvlBySn" parameterType="java.lang.String" resultType="java.lang.Long">
+        select nc.nc_id from node_cond nc left join node_trig nt
+        where nt.nt_exec=0 and nt.nt_expr>now()
         and nc.scene_sn=#{sceneSn,jdbcType=VARCHAR}
+        and nc.node_sn=#{nodeSn,jdbcType=VARCHAR};
+    </select>
+    <select id="getNcIdsBySn" parameterType="java.lang.String" resultType="java.lang.Long">
+        select nc.nc_id from node_cond nc
+        where nc.scene_sn=#{sceneSn,jdbcType=VARCHAR}
         and nc.node_sn=#{nodeSn,jdbcType=VARCHAR};
     </select>
 </mapper>

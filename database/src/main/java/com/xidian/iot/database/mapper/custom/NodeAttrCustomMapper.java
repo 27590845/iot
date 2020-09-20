@@ -4,6 +4,7 @@ import com.xidian.iot.database.entity.NodeAttr;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 自定义节点属性mapper
@@ -16,4 +17,5 @@ public interface NodeAttrCustomMapper {
 
     List<NodeAttr> getNodeAttrByNodeId(@Param("nodeId") Long nodeId);
 
+    List<Map<String, Object>> getNaSimplesBySn(@Param("sceneSn") String sceneSn, @Param("nodeSn") String nodeSn);
 }

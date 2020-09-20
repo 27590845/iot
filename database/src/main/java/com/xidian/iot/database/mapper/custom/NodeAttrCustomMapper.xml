@@ -27,4 +27,9 @@
         from node_attr
         where node_id =  #{nodeId,jdbcType=BIGINT}
     </select>
+    <select id="getNaSimplesBySn" resultType="java.util.Map">
+        select na.na_id, na.na_key from node_attr na
+        where na.scene_sn=#{sceneSn,jdbcType=VARCHAR}
+        and na.node_sn=#{nodeSn,jdbcType=VARCHAR};
+    </select>
 </mapper>

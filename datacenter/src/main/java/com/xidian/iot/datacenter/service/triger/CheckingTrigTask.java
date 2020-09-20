@@ -1,18 +1,15 @@
 package com.xidian.iot.datacenter.service.triger;
 
-import com.xidian.iot.database.entity.NodeCond;
 import com.xidian.iot.database.entity.custom.NodeCondExt;
 import com.xidian.iot.database.entity.custom.NodeTrigExt;
-import com.xidian.iot.databiz.service.NodeCondService;
-import com.xidian.iot.databiz.service.NodeTrigService;
 import com.xidian.iot.datacenter.service.BaseTask;
+import com.xidian.iot.datacenter.service.CommonService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -32,16 +29,9 @@ public class CheckingTrigTask extends BaseTask implements Runnable {
      */
     @Setter
     private Long ntId;
-    /**
-     * 节点触发器条件数据访问接口。
-     */
+
     @Resource
-    private NodeCondService nodeCondService;
-    /**
-     * 节点触发器访问接口
-     */
-    @Resource
-    private NodeTrigService nodeTrigService;
+    private CommonService commonService;
 
     /**
      * 任务从这里开始。
@@ -50,7 +40,7 @@ public class CheckingTrigTask extends BaseTask implements Runnable {
     public void run() {
 
         // 获得触发器条件
-        List<NodeCondExt> nodeCondExtList = getNodeCondExtByNtId(ntId);
+        List<NodeCondExt> nodeCondExtList = commonService.getNodeCondExts(ntId);
 
         log.debug("doing CheckingTrigTask ntId=[{}]", ntId);
         log.debug("Node trig have condition [{}]", nodeCondExtList);
@@ -74,12 +64,12 @@ public class CheckingTrigTask extends BaseTask implements Runnable {
      * 更新触发器最后运行时间及是否需要继续执行
      */
     private void updateLastRunTime() {
-        NodeTrigExt nodeTrigExt = nodeTrigService.getNodeTrigExtById(ntId);
+        NodeTrigExt nodeTrigExt = commonService.getNodeTrigExt(ntId);
         nodeTrigExt.setLastRunTime(new Date());
         if(nodeTrigExt.getNtRept()==1){		//如触发器不重复执行则将executed置为1（不再执行）
             nodeTrigExt.setNtExec((byte) 1);
         }
-        nodeTrigService.updateNodeTrigExtById(nodeTrigExt);
+        commonService.updateNodeTrigExtById(nodeTrigExt);
     }
 
     /**
@@ -112,7 +102,7 @@ public class CheckingTrigTask extends BaseTask implements Runnable {
     private void reset(List<NodeCondExt> nodeCondExtList) {
         for (NodeCondExt nodeCondExt : nodeCondExtList) {
             nodeCondExt.reset();
-            nodeCondService.changeNodeCondExt(nodeCondExt);
+            commonService.changeNodeCondExt(nodeCondExt);
         }
     }
 
@@ -138,17 +128,5 @@ public class CheckingTrigTask extends BaseTask implements Runnable {
         }
         log.debug("isTrig() return true;this nodeTrig id is ({})", ntId);
         return true;
-    }
-
-    public List<NodeCondExt> getNodeCondExtByNtId(Long ntId) {
-        List<Long> nodeCondIds = nodeCondService.getNodeCondIdsByNtId(ntId);
-        List<NodeCondExt> nodeCondExtList = new ArrayList<>();
-        for(Long ncId : nodeCondIds){
-            NodeCondExt nodeCondExt = nodeCondService.getNodeCondExtById(ncId);
-            if(nodeCondExt != null) {
-                nodeCondExtList.add(nodeCondExt);
-            }
-        }
-        return nodeCondExtList;
     }
 }

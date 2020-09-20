@@ -5,6 +5,7 @@ import com.xidian.iot.database.param.NodeAttrParam;
 import com.xidian.iot.database.param.NodeAttrUpdateParam;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author mrl
@@ -56,4 +57,12 @@ public interface NodeAttrService {
      * @return void
      * */
     void updateNodeAttr(Long naId, NodeAttrUpdateParam param);
+
+    /**
+     * 根据sceneSn和nodeSn获取NodeAttr的简要信息，key代表naId，value代表naKey
+     * @param sceneSn
+     * @param nodeSn
+     * @return
+     */
+    Map<String, String> getNaMapBySn(String sceneSn, String nodeSn);
 }

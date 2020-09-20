@@ -2,7 +2,11 @@ package com.xidian.iot.datacenter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.xidian.iot.common.mq.MqSender;
+import com.xidian.iot.database.entity.custom.NodeCondExt;
 import com.xidian.iot.database.entity.mongo.NodeData;
+import com.xidian.iot.databiz.service.NodeAttrService;
+import com.xidian.iot.databiz.service.NodeCondService;
+import com.xidian.iot.datacenter.service.CommonService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,9 +14,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author mrl
@@ -41,5 +44,24 @@ public class AppTest {
             mqSender.send(topic, msg);
             Thread.sleep(10000);
         }
+    }
+
+    @Resource
+    CommonService commonService;
+
+    @Test
+    public void getNodeCondExtByNtId() {
+        Long ntId = 123456L;
+        List<NodeCondExt> nodeCondExts = commonService.getNodeCondExts(ntId);
+        System.out.println(nodeCondExts);
+    }
+
+    @Test
+    public void getNodeCondExts(){
+        String sceneSn="A18600", nodeSn="K99990";
+        Set<String> naKeys = new HashSet<>();
+        naKeys.add("tem1");
+        List<NodeCondExt> nodeCondExts = commonService.getNodeCondExts(sceneSn, nodeSn, naKeys);
+        System.out.println(nodeCondExts);
     }
 }
