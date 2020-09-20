@@ -21,6 +21,16 @@ import javax.validation.constraints.Pattern;
 @ApiModel("触发器(规则)条件传输参数封装类")
 public class NodeCondParam extends NodeCond {
 
+    @Override
+    public String getNodeSn() {
+        return super.getNodeSn();
+    }
+
+    @Override
+    public String getSceneSn() {
+        return super.getSceneSn();
+    }
+
     @ApiModelProperty("关联节点属性的ID")
     @NotNull(groups = {ValidGroup.INSERT.class}, message = "节点属性ID不能为空")
     @Pattern(regexp = "/^\\d{16}|\\d{19}$/", message = "非法的节点属性ID")
@@ -29,13 +39,13 @@ public class NodeCondParam extends NodeCond {
         return super.getNaId();
     }
 
-    @ApiModelProperty("关联节点的ID")
-    @NotNull(groups = {ValidGroup.INSERT.class}, message = "节点ID不能为空")
-    @Pattern(regexp = "/^\\d{16}|\\d{19}$/", message = "非法的节点ID")
-    @Override
-    public Long getNodeId() {
-        return super.getNodeId();
-    }
+//    @ApiModelProperty("关联节点的ID")
+//    @NotNull(groups = {ValidGroup.INSERT.class}, message = "节点ID不能为空")
+//    @Pattern(regexp = "/^\\d{16}|\\d{19}$/", message = "非法的节点ID")
+//    @Override
+//    public Long getNodeId() {
+//        return super.getNodeId();
+//    }
 
     @ApiModelProperty("触发器条件的操作符，1>，2>=，3<，4<=，5==，6新值，7冻结，8复活")
     @NotNull(groups = {ValidGroup.INSERT.class}, message = "操作符不能为空")

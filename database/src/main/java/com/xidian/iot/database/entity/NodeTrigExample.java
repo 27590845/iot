@@ -305,66 +305,6 @@ public class NodeTrigExample {
             return (Criteria) this;
         }
 
-        public Criteria andNodeIdIsNull() {
-            addCriterion("node_id is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andNodeIdIsNotNull() {
-            addCriterion("node_id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andNodeIdEqualTo(Long value) {
-            addCriterion("node_id =", value, "nodeId");
-            return (Criteria) this;
-        }
-
-        public Criteria andNodeIdNotEqualTo(Long value) {
-            addCriterion("node_id <>", value, "nodeId");
-            return (Criteria) this;
-        }
-
-        public Criteria andNodeIdGreaterThan(Long value) {
-            addCriterion("node_id >", value, "nodeId");
-            return (Criteria) this;
-        }
-
-        public Criteria andNodeIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("node_id >=", value, "nodeId");
-            return (Criteria) this;
-        }
-
-        public Criteria andNodeIdLessThan(Long value) {
-            addCriterion("node_id <", value, "nodeId");
-            return (Criteria) this;
-        }
-
-        public Criteria andNodeIdLessThanOrEqualTo(Long value) {
-            addCriterion("node_id <=", value, "nodeId");
-            return (Criteria) this;
-        }
-
-        public Criteria andNodeIdIn(List<Long> values) {
-            addCriterion("node_id in", values, "nodeId");
-            return (Criteria) this;
-        }
-
-        public Criteria andNodeIdNotIn(List<Long> values) {
-            addCriterion("node_id not in", values, "nodeId");
-            return (Criteria) this;
-        }
-
-        public Criteria andNodeIdBetween(Long value1, Long value2) {
-            addCriterion("node_id between", value1, value2, "nodeId");
-            return (Criteria) this;
-        }
-
-        public Criteria andNodeIdNotBetween(Long value1, Long value2) {
-            addCriterion("node_id not between", value1, value2, "nodeId");
-            return (Criteria) this;
-        }
-
         public Criteria andNtInvlIsNull() {
             addCriterion("nt_invl is null");
             return (Criteria) this;

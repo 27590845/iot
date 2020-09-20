@@ -98,7 +98,7 @@ public @interface EnumValidation {
 
     /**
      * 用法示例1
-     * @ {@link EnumValidation}(clazz = {@link TestEnum}.class, method = "getKey", message = "参数不在已知集合内")
+     * @ {@link EnumValidation}(clazz = {@link com.xidian.iot.database.contant.TestEnum}.class, method = "getKey", message = "参数不在已知集合内")
      * private String paramVal;
      *
      * 用法示例2

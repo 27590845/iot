@@ -4,7 +4,7 @@ package com.xidian.iot.database.entity;
  * 一旦一个节点触发器被触发，可能会执行多个命令
  *
  * @author mrl
- * @date   2020/09/10
+ * @date   2020/09/20
  */
 public class NodeActCmd {
     /**
@@ -13,19 +13,9 @@ public class NodeActCmd {
     private Long nacId;
 
     /**
-     * 
+     * 关联的命令，node_cmd.nc_id
      */
     private Long ncId;
-
-    /**
-     * 
-     */
-    private Long nodeId;
-
-    /**
-     * 
-     */
-    private Long sceneId;
 
     /**
      * 
@@ -56,22 +46,6 @@ public class NodeActCmd {
 
     public void setNcId(Long ncId) {
         this.ncId = ncId;
-    }
-
-    public Long getNodeId() {
-        return nodeId;
-    }
-
-    public void setNodeId(Long nodeId) {
-        this.nodeId = nodeId;
-    }
-
-    public Long getSceneId() {
-        return sceneId;
-    }
-
-    public void setSceneId(Long sceneId) {
-        this.sceneId = sceneId;
     }
 
     public Long getNtId() {

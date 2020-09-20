@@ -1,4 +1,4 @@
-package com.xidian.iot.database.valid;
+package com.xidian.iot.database.contant;
 
 import lombok.*;
 

@@ -4,7 +4,7 @@ package com.xidian.iot.database.entity;
  * 节点命令名称模版，node_cmd_std.ncs_name字段对应node_cmd.nc_name，供添加命令选择“控制名称”
  *
  * @author mrl
- * @date   2020/09/10
+ * @date   2020/09/20
  */
 public class NodeCmdStd {
     /**
