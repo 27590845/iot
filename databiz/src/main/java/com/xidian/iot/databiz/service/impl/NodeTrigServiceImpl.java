@@ -36,4 +36,10 @@ public class NodeTrigServiceImpl implements NodeTrigService {
 //        nodeTrigMapper.updateByExample();
         return nodeTrigExt;
     }
+
+    @Override
+    public NodeTrigExt addNodeTrig(NodeTrig nodeTrig) {
+
+        return null;
+    }
 }

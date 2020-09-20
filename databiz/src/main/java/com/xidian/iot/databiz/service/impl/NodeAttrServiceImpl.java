@@ -14,9 +14,11 @@ import com.xidian.iot.databiz.service.NodeAttrService;
 import com.xidian.iot.databiz.service.NodeService;
 import com.xidian.iot.databiz.service.UidGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -133,5 +135,14 @@ public class NodeAttrServiceImpl implements NodeAttrService {
             }
         }
         nodeAttrMapper.updateByPrimaryKeySelective(nodeAttr1);
+    }
+
+    @Cacheable(value = "NaMap", key = "'getNaMapBySn:'+#sceneSn+':'+#nodeSn")
+    @Override
+    public Map<String, String> getNaMapBySn(String sceneSn, String nodeSn) {
+        List<Map<String, Object>> naSimples = nodeAttrCustomMapper.getNaSimplesBySn(sceneSn, nodeSn);
+        //reids存储Map时，key只能反序列化为String，暂时无更好的决方案
+        Map<String, String> naMap = naSimples.stream().collect(Collectors.toMap(m -> String.valueOf(m.get("na_id")), m -> (String) m.get("na_key")));
+        return naMap;
     }
 }

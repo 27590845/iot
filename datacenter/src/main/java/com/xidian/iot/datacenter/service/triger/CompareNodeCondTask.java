@@ -2,11 +2,8 @@ package com.xidian.iot.datacenter.service.triger;
 
 import com.xidian.iot.database.entity.NodeAttr;
 import com.xidian.iot.database.entity.custom.NodeCondExt;
-import com.xidian.iot.database.entity.custom.NodeTrigExt;
-import com.xidian.iot.databiz.service.NodeAttrService;
-import com.xidian.iot.databiz.service.NodeCondService;
-import com.xidian.iot.databiz.service.NodeTrigService;
 import com.xidian.iot.datacenter.service.BaseTask;
+import com.xidian.iot.datacenter.service.CommonService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -45,25 +42,13 @@ public class CompareNodeCondTask extends BaseTask implements Runnable {
     @Setter
     private Map<String, Object> data;
     /**
-     * 触发器服务类
-     */
-    @Resource
-    private NodeTrigService nodeTrigService;
-    /**
-     * 触发器条件服务
-     */
-    @Resource
-    private NodeCondService nodeCondService;
-    /**
      * 触发条件列表
      */
     @Setter
     private List<NodeCondExt> nodeCondExtList;
-    /**
-     * 节点属性数据访问接口。
-     */
+
     @Resource
-    private NodeAttrService nodeAttrService;
+    private CommonService commonService;
 
     /**
      * 任务从这里开始。
@@ -76,75 +61,64 @@ public class CompareNodeCondTask extends BaseTask implements Runnable {
             return;
         }
         log.debug("doing CompareNodeCondTask");
-        log.debug("data[{}]", data);
         // 处理触发器条件
         for (NodeCondExt nodeCondExt : nodeCondExtList) {
             log.debug("CompareNodeCondTask foreach nodeCondList,nodeCondExt=[{}]", nodeCondExt);
-            // 获得属性key
-            String attrKey = hasKey(nodeCondExt.getNaId());
-            if (attrKey == null) {
-                continue;
-            }
-            // 间隔时间外才能正常进行条件比较
-            if (outIntervalTime(nodeCondExt.getNtId())) {
-                log.debug("this condition out IntervalTime.");
-                // 比较条件，并检查触发器
-                compareCondition(nodeCondExt, attrKey);
-            }
+            // 比较条件，并检查触发器
+            compareCondition(nodeCondExt);
         }
     }
 
-    /**
-     * 判断条件的触发器是否处于间隔时间外
-     * @param ntId
-     * @return
-     */
-    private boolean outIntervalTime(Long ntId) {
-        NodeTrigExt nodeTrigExt = nodeTrigService.getNodeTrigExtById(ntId);
-        if (nodeTrigExt.getLastRunTime() != null) {
-            // 计算间隔时间
-            long time = nodeTrigExt.getLastRunTime().getTime();
-            time += (nodeTrigExt.getNtInvl() * 1000);
-            // 若当前时间没有超出间隔时间，则返回false代表还在间隔时间内
-            if (time > System.currentTimeMillis()) {
-                return false;
-            }
-        }
-        return true;
-    }
+//    /**
+//     * 判断条件的触发器是否处于间隔时间外
+//     * @param ntId
+//     * @return
+//     */
+//    private boolean outIntervalTime(Long ntId) {
+//        NodeTrigExt nodeTrigExt = commonService.getNodeTrigExt(ntId);
+//        if (nodeTrigExt.getLastRunTime() != null) {
+//            // 计算间隔时间
+//            long time = nodeTrigExt.getLastRunTime().getTime();
+//            time += (nodeTrigExt.getNtInvl() * 1000);
+//            // 若当前时间没有超出间隔时间，则返回false代表还在间隔时间内
+//            if (time > System.currentTimeMillis()) {
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
 
     /**
      * 上述数据是否包含比较的属性key
      * @param naId nodeAttr.naId
      * @return null 不包含这个key,not null 返回属性key.
      */
-    private String hasKey(Long naId) {
-        // 获得节点属性
-        NodeAttr nodeAttr = nodeAttrService.getNodeAttrById(naId);
-        String attrKey = nodeAttr.getNaKey();
-        log.debug("get node attr {}", nodeAttr);
-        // 判断此次上数数据不包含此属性则不做操作
-        if (!data.containsKey(attrKey)) {
-            log.debug("Compare not contains key {},{}", attrKey, data);
-            return null;
-        }
-        return attrKey;
-    }
+//    private String hasKey(Long naId) {
+//        // 获得节点属性
+//        NodeAttr nodeAttr = nodeAttrService.getNodeAttrById(naId);
+//        String attrKey = nodeAttr.getNaKey();
+//        log.debug("get node attr {}", nodeAttr);
+//        // 判断此次上数数据不包含此属性则不做操作
+//        if (!data.containsKey(attrKey)) {
+//            log.debug("Compare not contains key {},{}", attrKey, data);
+//            return null;
+//        }
+//        return attrKey;
+//    }
 
     /**
      * 比较条件，看是否满足触发需求
      * @param nodeCondExt
-     * @param attrKey
      */
-    private void compareCondition(NodeCondExt nodeCondExt, String attrKey) {
+    private void compareCondition(NodeCondExt nodeCondExt) {
         // 判断这个条件是否满足
-        boolean fit = isFitCondition(nodeCondExt, attrKey);
+        boolean fit = isFitCondition(nodeCondExt);
         log.debug("compareCondition() fit={}", fit);
         // 判断如果发生了变化，才执行更新、检查触发器操作z
         if (fit != nodeCondExt.isFit()) {
             // 更新变化后的fit值，并更新到缓存
             nodeCondExt.setFit(fit);
-            nodeCondService.changeNodeCondExt(nodeCondExt);
+            commonService.changeNodeCondExt(nodeCondExt);
             // 发生变化，且是满足条件的就执行触发器检查
             // 因为条件不满足是不触发检查的
             if (fit) {
@@ -154,7 +128,7 @@ public class CompareNodeCondTask extends BaseTask implements Runnable {
             }
         } else {
             // 更新满足次数
-            nodeCondService.changeNodeCondExt(nodeCondExt);
+            commonService.changeNodeCondExt(nodeCondExt);
         }
     }
 
@@ -163,9 +137,9 @@ public class CompareNodeCondTask extends BaseTask implements Runnable {
      * @param nodeCondExt 触发器条件
      * @return true 条件被满足，false 条件不满足
      */
-    private boolean isFitCondition(NodeCondExt nodeCondExt, String attrKey) {
+    private boolean isFitCondition(NodeCondExt nodeCondExt) {
         // 获得上数值
-        Double value = toDoubleValue(data.get(attrKey));
+        Double value = toDoubleValue(data.get(nodeCondExt.getNaKey()));
         // 当上数值不合法则此条件不满足
         if (value == null) {
             log.debug("isFitCondition() value is null.");

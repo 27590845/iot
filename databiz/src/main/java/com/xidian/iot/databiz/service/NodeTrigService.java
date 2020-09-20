@@ -25,4 +25,11 @@ public interface NodeTrigService {
      * @return
      */
     NodeTrigExt updateNodeTrigExtById(NodeTrigExt nodeTrigExt);
+
+    /**
+     * 添加一条触发器数据
+     * @param nodeTrig
+     * @return
+     */
+    NodeTrigExt addNodeTrig(NodeTrig nodeTrig);
 }

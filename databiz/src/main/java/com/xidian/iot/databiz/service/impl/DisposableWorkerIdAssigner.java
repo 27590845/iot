@@ -20,7 +20,7 @@ import com.xidian.iot.database.mapper.custom.WorkerNodeMapper;
 import com.xidian.iot.common.uid.utils.DockerUtils;
 import com.xidian.iot.common.uid.utils.NetUtils;
 import com.xidian.iot.common.uid.worker.WorkerIdAssigner;
-import com.xidian.iot.database.enums.WorkerNodeType;
+import com.xidian.iot.common.uid.enums.WorkerNodeType;
 import org.apache.commons.lang3.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

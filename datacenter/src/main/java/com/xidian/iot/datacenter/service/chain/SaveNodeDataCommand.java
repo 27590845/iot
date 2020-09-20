@@ -70,7 +70,6 @@ public class SaveNodeDataCommand implements Command, ApplicationContextAware {
         ProcessNodeDataTask processNodeDataTask = (ProcessNodeDataTask) applicationContext.getBean("processNodeDataTask");
         // 设置节点数据列表
         processNodeDataTask.setNodeDataList(nodeDataList);
-        processNodeDataTask.setSceneSn(sceneSn);
 
         taskExecutor.execute(processNodeDataTask);
 //        processNodeDataTask.run();

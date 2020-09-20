@@ -3,7 +3,7 @@ package com.xidian.iot.common.mq.kafka.constant;
 /**
  * @author mrl
  * @Title: KafkaMsgConstant
- * @Package com.xidian.iot.common.mq.kafka.constant
+ * @Package com.xidian.iot.common.mq.kafka.valid
  * @Description:
  * @date 2020/9/8 4:56 下午
  */

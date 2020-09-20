@@ -17,7 +17,7 @@ package com.xidian.iot.database.entity;
 
 import java.util.Date;
 
-import com.xidian.iot.database.enums.WorkerNodeType;
+//import com.xidian.iot.common.uid.enums.WorkerNodeType;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
