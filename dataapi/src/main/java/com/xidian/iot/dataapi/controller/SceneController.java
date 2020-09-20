@@ -1,17 +1,23 @@
 package com.xidian.iot.dataapi.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.xidian.iot.common.util.exception.BusinessException;
 import com.xidian.iot.dataapi.controller.res.HttpResult;
 import com.xidian.iot.database.param.SceneAddParam;
 import com.xidian.iot.database.param.SceneUpdateParam;
+import com.xidian.iot.databiz.service.NodeService;
 import com.xidian.iot.databiz.service.SceneService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 /**
  * @author: Hansey
@@ -23,6 +29,8 @@ import javax.validation.Valid;
 public class SceneController {
     @Autowired
     private SceneService sceneService;
+    @Autowired
+    private NodeService nodeService;
 
     @ApiOperation(value = "分页获取当前用户下所有的网关号")
     @GetMapping("/list")
@@ -58,10 +66,40 @@ public class SceneController {
         return HttpResult.oK().message("更新场景成功");
     }
 
-    @ApiOperation(value = "查看一个节点的数据")
+    @ApiOperation(value = "查看一个节点的数据、如果其中包含了st和et那么就表示的是起始时间和结束时间，没有就取出最后一次上传的数据")
     @GetMapping("/{sceneSn}/node/{nodeSn}")
-    public HttpResult getScene(@ApiParam(name = "sceneSn", value = "场景sn") @PathVariable("sceneSn") String sceneSn
+    public HttpResult getNodeData(@ApiParam(name = "sceneSn", value = "场景sn") @PathVariable("sceneSn") String sceneSn,
+                                  @ApiParam(name = "nodeSn", value = "节点sn") @PathVariable("nodeSn") String nodeSn,
+                                  @ApiParam(name = "st", value = "开始时间st、et的格式为yyyy-MM-dd HH:mm:ss") @RequestParam("st") String st,
+                                  @ApiParam(name = "et", value = "结束时间同st的时间格式et的格式") @RequestParam("et") String et) {
+        //如果上传的st和et不为空说明查询的是历史时间
+        if(StringUtils.isNotBlank(st)&&StringUtils.isNotBlank(et)){
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            long stL = 0L, etL = 0L;
+            try {
+                stL = sdf.parse(st).getTime() / 1000;
+                etL = sdf.parse(et).getTime() / 1000;
+            } catch (ParseException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                throw new BusinessException(-1, "传入的时间格式有误，请检查后重新上传");
+            }
+            return HttpResult.responseOK(nodeService.getMongoData(sceneSn,nodeSn,stL,etL));
+        }
+        return HttpResult.responseOK(nodeService.getMongoLD(sceneSn,nodeSn));
+    }
+
+    @ApiOperation(value = "查看一个节点的数据、15分钟内最新的消息")
+    @GetMapping("/{sceneSn}/node/{nodeSn}/current")
+    public HttpResult getCurrentNodesData(@ApiParam(name = "sceneSn", value = "场景sn") @PathVariable("sceneSn") String sceneSn
             , @ApiParam(name = "nodeSn", value = "节点sn") @PathVariable("nodeSn") String nodeSn) {
-        return HttpResult.responseOK(sceneService.getSceneBySn(sceneSn));
+        nodeService.getNodeBySn(sceneSn,nodeSn);//先查询是否存在该节点
+        return HttpResult.responseOK(nodeService.getMongoCD(sceneSn,nodeSn));
+    }
+
+    @ApiOperation(value = "查看一个场景下15分钟内最新的数据")
+    @GetMapping("/{sceneSn}/nodes/current")
+    public HttpResult getLatestNodesData(@ApiParam(name = "sceneSn", value = "场景sn") @PathVariable("sceneSn") String sceneSn) {
+        return HttpResult.responseOK(sceneService.getLatestNodesData(sceneSn));
     }
 }

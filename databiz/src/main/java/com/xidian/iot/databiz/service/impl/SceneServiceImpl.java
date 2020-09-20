@@ -5,21 +5,25 @@ import com.xidian.iot.common.util.constants.ExceptionEnum;
 import com.xidian.iot.common.util.Assert;
 import com.xidian.iot.database.entity.Scene;
 import com.xidian.iot.database.entity.SceneExample;
+import com.xidian.iot.database.entity.mongo.NodeData;
 import com.xidian.iot.database.mapper.SceneMapper;
+import com.xidian.iot.database.mapper.custom.NodeCustomMapper;
 import com.xidian.iot.database.mapper.custom.SceneCustomMapper;
 import com.xidian.iot.database.param.SceneAddParam;
 import com.xidian.iot.database.param.SceneUpdateParam;
+import com.xidian.iot.database.vo.NodeVo;
 import com.xidian.iot.database.vo.SceneVo;
 import com.xidian.iot.databiz.constants.EncodeType;
+import com.xidian.iot.databiz.service.NodeService;
 import com.xidian.iot.databiz.service.SceneService;
 import com.xidian.iot.databiz.service.UidGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.xml.crypto.Data;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author mrl
@@ -36,6 +40,10 @@ public class SceneServiceImpl implements SceneService {
     private SceneMapper sceneMapper;
     @Autowired
     private SceneCustomMapper sceneCustomMapper;
+    @Autowired
+    private NodeCustomMapper nodeCustomMapper;
+    @Autowired
+    private NodeService nodeService;
     @Autowired
     private UidGenerator uidGenerator;
 
@@ -83,7 +91,7 @@ public class SceneServiceImpl implements SceneService {
         scene.setSceneId(uidGenerator.getUID());
         String sceneSnPre = EncodeType.EncodeGateway.getCode() + "866101022";
         //补零操作、如果是6位也就是最多支持一百台。同一个区域的第几台。
-        String sequence = String.format("%06d", Integer.valueOf(sceneCustomMapper.maxSceneSn(sceneSnPre))+ 1);
+        String sequence = String.format("%06d", Integer.valueOf(sceneCustomMapper.maxSceneSn(sceneSnPre)) + 1);
         //物联网唯一标示体系
         scene.setSceneSn(sceneSnPre + param.getUsageCode() + param.getCommCode() + sequence);
         sceneMapper.insertSelective(scene);
@@ -111,6 +119,7 @@ public class SceneServiceImpl implements SceneService {
     @Override
     public SceneVo getSceneVoBySn(String sceneSn) {
         log.info(String.valueOf(System.currentTimeMillis()));
+        //考虑到之后分表分库所有的查询不使用联合查询
         SceneVo sceneVo1 = sceneCustomMapper.getSceneVoBySn(sceneSn);
         log.info(String.valueOf(System.currentTimeMillis()));
         SceneVo sceneVo2 = sceneCustomMapper.getSceneVoBySnJoin(sceneSn);
@@ -118,4 +127,18 @@ public class SceneServiceImpl implements SceneService {
         return sceneVo2;
     }
 
+    @Override
+    public List<NodeData> getLatestNodesData(String sceneSn) {
+        //确定是否存在该节点
+        Scene scene = getSceneBySn(sceneSn);
+        List<NodeVo> nodeVos = nodeCustomMapper.getNodeVosBySceneId(scene.getSceneId());
+        List<NodeData> nodeDataList = new ArrayList<>();
+        nodeVos.forEach(nodeVo -> {
+            NodeData nodeData = nodeService.getMongoCD(nodeVo.getSceneSn(), nodeVo.getNodeSn());
+            if (!Objects.isNull(nodeData)) {
+                nodeDataList.add(nodeData);
+            }
+        });
+        return nodeDataList;
+    }
 }

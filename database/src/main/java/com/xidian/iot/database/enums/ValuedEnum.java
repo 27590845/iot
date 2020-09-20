@@ -15,6 +15,8 @@
  */
 package com.xidian.iot.database.enums;
 
+import org.apache.commons.lang3.EnumUtils;
+
 /**
  * {@code ValuedEnum} defines an enumeration which is bounded to a value, you
  * may implements this interface when you defines such kind of enumeration, that

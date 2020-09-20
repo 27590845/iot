@@ -32,8 +32,8 @@
         <collection property="nodeVos" javaType="ArrayList"
                     ofType="com.xidian.iot.database.vo.NodeVo">
             <id column="node_id" jdbcType="BIGINT" property="nodeId" />
-<!--            <result column="scene_id" jdbcType="BIGINT" property="sceneId" />-->
-<!--            <result column="scene_sn" jdbcType="CHAR" property="sceneSn" />-->
+            <result column="scene_id" jdbcType="BIGINT" property="sceneId" />
+            <result column="scene_sn" jdbcType="CHAR" property="sceneSn" />
             <result column="node_name" jdbcType="VARCHAR" property="nodeName" />
             <result column="node_desc" jdbcType="VARCHAR" property="nodeDesc" />
             <result column="node_sn" jdbcType="VARCHAR" property="nodeSn" />
@@ -41,7 +41,7 @@
             <collection property="nodeAttrList" javaType="ArrayList"
                         ofType="com.xidian.iot.database.entity.NodeAttr">
                 <id column="na_id" jdbcType="BIGINT" property="naId" />
-<!--                <result column="node_id" jdbcType="BIGINT" property="nodeId" />-->
+                <result column="node_id" jdbcType="BIGINT" property="nodeId" />
                 <result column="na_key" jdbcType="VARCHAR" property="naKey" />
                 <result column="na_name" jdbcType="VARCHAR" property="naName" />
                 <result column="na_unit" jdbcType="VARCHAR" property="naUnit" />
@@ -73,6 +73,7 @@
         s.scene_el,
         s.scene_desc,
         s.create_time as create_time1,
+        n.node_id,
         n.node_name,
         n.node_desc,
         n.node_sn,
