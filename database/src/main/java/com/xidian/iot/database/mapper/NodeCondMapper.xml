@@ -4,8 +4,6 @@
   <resultMap id="BaseResultMap" type="com.xidian.iot.database.entity.NodeCond">
     <id column="nc_id" jdbcType="BIGINT" property="ncId" />
     <result column="na_id" jdbcType="BIGINT" property="naId" />
-    <result column="scene_id" jdbcType="BIGINT" property="sceneId" />
-    <result column="node_id" jdbcType="BIGINT" property="nodeId" />
     <result column="nt_id" jdbcType="BIGINT" property="ntId" />
     <result column="nc_op" jdbcType="TINYINT" property="ncOp" />
     <result column="nc_val" jdbcType="VARCHAR" property="ncVal" />
@@ -72,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    nc_id, na_id, scene_id, node_id, nt_id, nc_op, nc_val, node_sn, scene_sn, nc_fit_time
+    nc_id, na_id, nt_id, nc_op, nc_val, node_sn, scene_sn, nc_fit_time
   </sql>
   <select id="selectByExample" parameterType="com.xidian.iot.database.entity.NodeCondExample" resultMap="BaseResultMap">
     select
@@ -106,14 +104,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xidian.iot.database.entity.NodeCond">
-    insert into node_cond (nc_id, na_id, scene_id, 
-      node_id, nt_id, nc_op, nc_val, 
-      node_sn, scene_sn, nc_fit_time
-      )
-    values (#{ncId,jdbcType=BIGINT}, #{naId,jdbcType=BIGINT}, #{sceneId,jdbcType=BIGINT}, 
-      #{nodeId,jdbcType=BIGINT}, #{ntId,jdbcType=BIGINT}, #{ncOp,jdbcType=TINYINT}, #{ncVal,jdbcType=VARCHAR}, 
-      #{nodeSn,jdbcType=VARCHAR}, #{sceneSn,jdbcType=VARCHAR}, #{ncFitTime,jdbcType=INTEGER}
-      )
+    insert into node_cond (nc_id, na_id, nt_id, 
+      nc_op, nc_val, node_sn, 
+      scene_sn, nc_fit_time)
+    values (#{ncId,jdbcType=BIGINT}, #{naId,jdbcType=BIGINT}, #{ntId,jdbcType=BIGINT}, 
+      #{ncOp,jdbcType=TINYINT}, #{ncVal,jdbcType=VARCHAR}, #{nodeSn,jdbcType=VARCHAR}, 
+      #{sceneSn,jdbcType=VARCHAR}, #{ncFitTime,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.iot.database.entity.NodeCond">
     insert into node_cond
@@ -123,12 +119,6 @@
       </if>
       <if test="naId != null">
         na_id,
-      </if>
-      <if test="sceneId != null">
-        scene_id,
-      </if>
-      <if test="nodeId != null">
-        node_id,
       </if>
       <if test="ntId != null">
         nt_id,
@@ -155,12 +145,6 @@
       </if>
       <if test="naId != null">
         #{naId,jdbcType=BIGINT},
-      </if>
-      <if test="sceneId != null">
-        #{sceneId,jdbcType=BIGINT},
-      </if>
-      <if test="nodeId != null">
-        #{nodeId,jdbcType=BIGINT},
       </if>
       <if test="ntId != null">
         #{ntId,jdbcType=BIGINT},
@@ -197,12 +181,6 @@
       <if test="record.naId != null">
         na_id = #{record.naId,jdbcType=BIGINT},
       </if>
-      <if test="record.sceneId != null">
-        scene_id = #{record.sceneId,jdbcType=BIGINT},
-      </if>
-      <if test="record.nodeId != null">
-        node_id = #{record.nodeId,jdbcType=BIGINT},
-      </if>
       <if test="record.ntId != null">
         nt_id = #{record.ntId,jdbcType=BIGINT},
       </if>
@@ -230,8 +208,6 @@
     update node_cond
     set nc_id = #{record.ncId,jdbcType=BIGINT},
       na_id = #{record.naId,jdbcType=BIGINT},
-      scene_id = #{record.sceneId,jdbcType=BIGINT},
-      node_id = #{record.nodeId,jdbcType=BIGINT},
       nt_id = #{record.ntId,jdbcType=BIGINT},
       nc_op = #{record.ncOp,jdbcType=TINYINT},
       nc_val = #{record.ncVal,jdbcType=VARCHAR},
@@ -247,12 +223,6 @@
     <set>
       <if test="naId != null">
         na_id = #{naId,jdbcType=BIGINT},
-      </if>
-      <if test="sceneId != null">
-        scene_id = #{sceneId,jdbcType=BIGINT},
-      </if>
-      <if test="nodeId != null">
-        node_id = #{nodeId,jdbcType=BIGINT},
       </if>
       <if test="ntId != null">
         nt_id = #{ntId,jdbcType=BIGINT},
@@ -278,8 +248,6 @@
   <update id="updateByPrimaryKey" parameterType="com.xidian.iot.database.entity.NodeCond">
     update node_cond
     set na_id = #{naId,jdbcType=BIGINT},
-      scene_id = #{sceneId,jdbcType=BIGINT},
-      node_id = #{nodeId,jdbcType=BIGINT},
       nt_id = #{ntId,jdbcType=BIGINT},
       nc_op = #{ncOp,jdbcType=TINYINT},
       nc_val = #{ncVal,jdbcType=VARCHAR},

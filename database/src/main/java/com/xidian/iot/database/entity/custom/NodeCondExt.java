@@ -29,9 +29,7 @@ public class NodeCondExt extends NodeCond {
         setNcId(nodeCond.getNcId());
         setNaId(nodeCond.getNaId());
         setNtId(nodeCond.getNtId());
-        setSceneId(nodeCond.getSceneId());
         setSceneSn(nodeCond.getSceneSn());
-        setNodeId(nodeCond.getNodeId());
         setNodeSn(nodeCond.getNodeSn());
         setNcOp(nodeCond.getNcOp());
         setNcVal(nodeCond.getNcVal());

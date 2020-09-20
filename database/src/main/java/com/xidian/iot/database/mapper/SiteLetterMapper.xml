@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xidian.iot.database.mapper.NodeActCmdMapper">
-  <resultMap id="BaseResultMap" type="com.xidian.iot.database.entity.NodeActCmd">
-    <id column="nac_id" jdbcType="BIGINT" property="nacId" />
-    <result column="nc_id" jdbcType="BIGINT" property="ncId" />
-    <result column="nt_id" jdbcType="BIGINT" property="ntId" />
-    <result column="node_sn" jdbcType="VARCHAR" property="nodeSn" />
-    <result column="scene_sn" jdbcType="VARCHAR" property="sceneSn" />
+<mapper namespace="com.xidian.iot.database.mapper.SiteLetterMapper">
+  <resultMap id="BaseResultMap" type="com.xidian.iot.database.entity.SiteLetter">
+    <id column="sl_id" jdbcType="BIGINT" property="slId" />
+    <result column="is_read" jdbcType="SMALLINT" property="isRead" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="current_value" jdbcType="VARCHAR" property="currentValue" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -67,16 +66,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    nac_id, nc_id, nt_id, node_sn, scene_sn
+    sl_id, is_read, create_time, current_value
   </sql>
-  <select id="selectByExample" parameterType="com.xidian.iot.database.entity.NodeActCmdExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.xidian.iot.database.entity.SiteLetterExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     'true' as QUERYID,
     <include refid="Base_Column_List" />
-    from node_act_cmd
+    from site_letter
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -87,85 +86,76 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from node_act_cmd
-    where nac_id = #{nacId,jdbcType=BIGINT}
+    from site_letter
+    where sl_id = #{slId,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from node_act_cmd
-    where nac_id = #{nacId,jdbcType=BIGINT}
+    delete from site_letter
+    where sl_id = #{slId,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.xidian.iot.database.entity.NodeActCmdExample">
-    delete from node_act_cmd
+  <delete id="deleteByExample" parameterType="com.xidian.iot.database.entity.SiteLetterExample">
+    delete from site_letter
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.xidian.iot.database.entity.NodeActCmd">
-    insert into node_act_cmd (nac_id, nc_id, nt_id, 
-      node_sn, scene_sn)
-    values (#{nacId,jdbcType=BIGINT}, #{ncId,jdbcType=BIGINT}, #{ntId,jdbcType=BIGINT}, 
-      #{nodeSn,jdbcType=VARCHAR}, #{sceneSn,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="com.xidian.iot.database.entity.SiteLetter">
+    insert into site_letter (sl_id, is_read, create_time, 
+      current_value)
+    values (#{slId,jdbcType=BIGINT}, #{isRead,jdbcType=SMALLINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{currentValue,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.xidian.iot.database.entity.NodeActCmd">
-    insert into node_act_cmd
+  <insert id="insertSelective" parameterType="com.xidian.iot.database.entity.SiteLetter">
+    insert into site_letter
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="nacId != null">
-        nac_id,
+      <if test="slId != null">
+        sl_id,
       </if>
-      <if test="ncId != null">
-        nc_id,
+      <if test="isRead != null">
+        is_read,
       </if>
-      <if test="ntId != null">
-        nt_id,
+      <if test="createTime != null">
+        create_time,
       </if>
-      <if test="nodeSn != null">
-        node_sn,
-      </if>
-      <if test="sceneSn != null">
-        scene_sn,
+      <if test="currentValue != null">
+        current_value,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="nacId != null">
-        #{nacId,jdbcType=BIGINT},
+      <if test="slId != null">
+        #{slId,jdbcType=BIGINT},
       </if>
-      <if test="ncId != null">
-        #{ncId,jdbcType=BIGINT},
+      <if test="isRead != null">
+        #{isRead,jdbcType=SMALLINT},
       </if>
-      <if test="ntId != null">
-        #{ntId,jdbcType=BIGINT},
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="nodeSn != null">
-        #{nodeSn,jdbcType=VARCHAR},
-      </if>
-      <if test="sceneSn != null">
-        #{sceneSn,jdbcType=VARCHAR},
+      <if test="currentValue != null">
+        #{currentValue,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.xidian.iot.database.entity.NodeActCmdExample" resultType="java.lang.Long">
-    select count(*) from node_act_cmd
+  <select id="countByExample" parameterType="com.xidian.iot.database.entity.SiteLetterExample" resultType="java.lang.Long">
+    select count(*) from site_letter
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update node_act_cmd
+    update site_letter
     <set>
-      <if test="record.nacId != null">
-        nac_id = #{record.nacId,jdbcType=BIGINT},
+      <if test="record.slId != null">
+        sl_id = #{record.slId,jdbcType=BIGINT},
       </if>
-      <if test="record.ncId != null">
-        nc_id = #{record.ncId,jdbcType=BIGINT},
+      <if test="record.isRead != null">
+        is_read = #{record.isRead,jdbcType=SMALLINT},
       </if>
-      <if test="record.ntId != null">
-        nt_id = #{record.ntId,jdbcType=BIGINT},
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.nodeSn != null">
-        node_sn = #{record.nodeSn,jdbcType=VARCHAR},
-      </if>
-      <if test="record.sceneSn != null">
-        scene_sn = #{record.sceneSn,jdbcType=VARCHAR},
+      <if test="record.currentValue != null">
+        current_value = #{record.currentValue,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -173,40 +163,35 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update node_act_cmd
-    set nac_id = #{record.nacId,jdbcType=BIGINT},
-      nc_id = #{record.ncId,jdbcType=BIGINT},
-      nt_id = #{record.ntId,jdbcType=BIGINT},
-      node_sn = #{record.nodeSn,jdbcType=VARCHAR},
-      scene_sn = #{record.sceneSn,jdbcType=VARCHAR}
+    update site_letter
+    set sl_id = #{record.slId,jdbcType=BIGINT},
+      is_read = #{record.isRead,jdbcType=SMALLINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      current_value = #{record.currentValue,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xidian.iot.database.entity.NodeActCmd">
-    update node_act_cmd
+  <update id="updateByPrimaryKeySelective" parameterType="com.xidian.iot.database.entity.SiteLetter">
+    update site_letter
     <set>
-      <if test="ncId != null">
-        nc_id = #{ncId,jdbcType=BIGINT},
+      <if test="isRead != null">
+        is_read = #{isRead,jdbcType=SMALLINT},
       </if>
-      <if test="ntId != null">
-        nt_id = #{ntId,jdbcType=BIGINT},
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="nodeSn != null">
-        node_sn = #{nodeSn,jdbcType=VARCHAR},
-      </if>
-      <if test="sceneSn != null">
-        scene_sn = #{sceneSn,jdbcType=VARCHAR},
+      <if test="currentValue != null">
+        current_value = #{currentValue,jdbcType=VARCHAR},
       </if>
     </set>
-    where nac_id = #{nacId,jdbcType=BIGINT}
+    where sl_id = #{slId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.xidian.iot.database.entity.NodeActCmd">
-    update node_act_cmd
-    set nc_id = #{ncId,jdbcType=BIGINT},
-      nt_id = #{ntId,jdbcType=BIGINT},
-      node_sn = #{nodeSn,jdbcType=VARCHAR},
-      scene_sn = #{sceneSn,jdbcType=VARCHAR}
-    where nac_id = #{nacId,jdbcType=BIGINT}
+  <update id="updateByPrimaryKey" parameterType="com.xidian.iot.database.entity.SiteLetter">
+    update site_letter
+    set is_read = #{isRead,jdbcType=SMALLINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      current_value = #{currentValue,jdbcType=VARCHAR}
+    where sl_id = #{slId,jdbcType=BIGINT}
   </update>
 </mapper>

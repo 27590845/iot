@@ -1,14 +1,20 @@
 package com.xidian.iot.database.param;
 
 import com.xidian.iot.database.valid.EnumValidation;
+import com.xidian.iot.database.valid.ReptValidation;
 import com.xidian.iot.database.valid.ValidGroup;
 import com.xidian.iot.database.entity.NodeTrig;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author mrl
@@ -63,4 +69,11 @@ public class NodeTrigParam extends NodeTrig {
     public Date getNtExpr() {
         return super.getNtExpr();
     }
+
+    @Getter
+    @Setter
+    @NotNull(groups = {ValidGroup.INSERT.class}, message = "触发器条件列表不能为空")
+    @ReptValidation(message = "条件列表中不能有重复")
+    @Valid
+    private List<NodeCondParam> nodeCondParams;
 }

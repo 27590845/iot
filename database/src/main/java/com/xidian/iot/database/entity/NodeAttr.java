@@ -4,7 +4,7 @@ package com.xidian.iot.database.entity;
  * 节点属性表，一个节点下有多个属性。逻辑上可看作数据单元里的一个字段；物理上可看作底层感知设备，比如传感器
  *
  * @author mrl
- * @date   2020/09/10
+ * @date   2020/09/20
  */
 public class NodeAttr {
     /**
@@ -36,6 +36,16 @@ public class NodeAttr {
      * 属性符号
      */
     private String naSym;
+
+    /**
+     * 场景SN
+     */
+    private String sceneSn;
+
+    /**
+     * 节点SN
+     */
+    private String nodeSn;
 
     public Long getNaId() {
         return naId;
@@ -83,5 +93,21 @@ public class NodeAttr {
 
     public void setNaSym(String naSym) {
         this.naSym = naSym == null ? null : naSym.trim();
+    }
+
+    public String getSceneSn() {
+        return sceneSn;
+    }
+
+    public void setSceneSn(String sceneSn) {
+        this.sceneSn = sceneSn == null ? null : sceneSn.trim();
+    }
+
+    public String getNodeSn() {
+        return nodeSn;
+    }
+
+    public void setNodeSn(String nodeSn) {
+        this.nodeSn = nodeSn == null ? null : nodeSn.trim();
     }
 }

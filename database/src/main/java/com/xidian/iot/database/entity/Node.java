@@ -6,7 +6,7 @@ import java.util.Date;
  * 节点表，一个场景下有多个节点。逻辑上可看作一个数据单元；物理上可看作数据采集设备，比如采集卡
  *
  * @author mrl
- * @date   2020/09/10
+ * @date   2020/09/20
  */
 public class Node {
     /**

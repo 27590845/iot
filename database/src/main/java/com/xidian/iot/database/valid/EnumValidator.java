@@ -26,9 +26,8 @@ public class EnumValidator implements ConstraintValidator<EnumValidation, Object
 
     @Override
     public boolean isValid(Object value, ConstraintValidatorContext context) {
-        if (value == null) {
-            return false;
-        }
+        //如果为null就不校验
+        if (value == null) return true;
         boolean flag  =false;
         if(annotation.strings().length>0){
             flag = Stream.of(annotation.strings()).anyMatch(x -> value.equals(x));

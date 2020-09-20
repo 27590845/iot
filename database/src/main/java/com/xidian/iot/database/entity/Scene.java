@@ -6,7 +6,7 @@ import java.util.Date;
  * 场景表，场景是数据上传与命令下发的最基本单位。逻辑上可看作管理着多个数据单元的交互窗口；物理上可看作通信终端，比如dtu
  *
  * @author mrl
- * @date   2020/09/10
+ * @date   2020/09/20
  */
 public class Scene {
     /**

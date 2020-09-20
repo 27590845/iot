@@ -8,6 +8,8 @@
     <result column="na_name" jdbcType="VARCHAR" property="naName" />
     <result column="na_unit" jdbcType="VARCHAR" property="naUnit" />
     <result column="na_sym" jdbcType="VARCHAR" property="naSym" />
+    <result column="scene_sn" jdbcType="VARCHAR" property="sceneSn" />
+    <result column="node_sn" jdbcType="VARCHAR" property="nodeSn" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    na_id, node_id, na_key, na_name, na_unit, na_sym
+    na_id, node_id, na_key, na_name, na_unit, na_sym, scene_sn, node_sn
   </sql>
   <select id="selectByExample" parameterType="com.xidian.iot.database.entity.NodeAttrExample" resultMap="BaseResultMap">
     select
@@ -103,11 +105,11 @@
   </delete>
   <insert id="insert" parameterType="com.xidian.iot.database.entity.NodeAttr">
     insert into node_attr (na_id, node_id, na_key, 
-      na_name, na_unit, na_sym
-      )
+      na_name, na_unit, na_sym, 
+      scene_sn, node_sn)
     values (#{naId,jdbcType=BIGINT}, #{nodeId,jdbcType=BIGINT}, #{naKey,jdbcType=VARCHAR}, 
-      #{naName,jdbcType=VARCHAR}, #{naUnit,jdbcType=VARCHAR}, #{naSym,jdbcType=VARCHAR}
-      )
+      #{naName,jdbcType=VARCHAR}, #{naUnit,jdbcType=VARCHAR}, #{naSym,jdbcType=VARCHAR}, 
+      #{sceneSn,jdbcType=VARCHAR}, #{nodeSn,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.iot.database.entity.NodeAttr">
     insert into node_attr
@@ -130,6 +132,12 @@
       <if test="naSym != null">
         na_sym,
       </if>
+      <if test="sceneSn != null">
+        scene_sn,
+      </if>
+      <if test="nodeSn != null">
+        node_sn,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="naId != null">
@@ -149,6 +157,12 @@
       </if>
       <if test="naSym != null">
         #{naSym,jdbcType=VARCHAR},
+      </if>
+      <if test="sceneSn != null">
+        #{sceneSn,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeSn != null">
+        #{nodeSn,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -179,6 +193,12 @@
       <if test="record.naSym != null">
         na_sym = #{record.naSym,jdbcType=VARCHAR},
       </if>
+      <if test="record.sceneSn != null">
+        scene_sn = #{record.sceneSn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nodeSn != null">
+        node_sn = #{record.nodeSn,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -191,7 +211,9 @@
       na_key = #{record.naKey,jdbcType=VARCHAR},
       na_name = #{record.naName,jdbcType=VARCHAR},
       na_unit = #{record.naUnit,jdbcType=VARCHAR},
-      na_sym = #{record.naSym,jdbcType=VARCHAR}
+      na_sym = #{record.naSym,jdbcType=VARCHAR},
+      scene_sn = #{record.sceneSn,jdbcType=VARCHAR},
+      node_sn = #{record.nodeSn,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -214,6 +236,12 @@
       <if test="naSym != null">
         na_sym = #{naSym,jdbcType=VARCHAR},
       </if>
+      <if test="sceneSn != null">
+        scene_sn = #{sceneSn,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeSn != null">
+        node_sn = #{nodeSn,jdbcType=VARCHAR},
+      </if>
     </set>
     where na_id = #{naId,jdbcType=BIGINT}
   </update>
@@ -223,7 +251,9 @@
       na_key = #{naKey,jdbcType=VARCHAR},
       na_name = #{naName,jdbcType=VARCHAR},
       na_unit = #{naUnit,jdbcType=VARCHAR},
-      na_sym = #{naSym,jdbcType=VARCHAR}
+      na_sym = #{naSym,jdbcType=VARCHAR},
+      scene_sn = #{sceneSn,jdbcType=VARCHAR},
+      node_sn = #{nodeSn,jdbcType=VARCHAR}
     where na_id = #{naId,jdbcType=BIGINT}
   </update>
 </mapper>

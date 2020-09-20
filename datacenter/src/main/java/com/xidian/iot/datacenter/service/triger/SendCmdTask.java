@@ -12,13 +12,10 @@ import com.xidian.iot.databiz.service.NodeCmdGroupService;
 import com.xidian.iot.databiz.service.NodeCmdService;
 import com.xidian.iot.databiz.service.NodeService;
 import com.xidian.iot.datacenter.service.BaseTask;
-import com.xidian.iot.datacenter.service.SceneService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.concurrent.TimeoutException;
 
 /**
  * @author mrl
