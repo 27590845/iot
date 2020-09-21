@@ -33,7 +33,8 @@ public class EnumValidator implements ConstraintValidator<EnumValidation, Object
             flag = Stream.of(annotation.strings()).anyMatch(x -> value.equals(x));
         }else if(annotation.ints().length>0){
 //            elements = Arrays.stream(annotation.ints()).boxed().toArray(Integer[]::new);  //装箱方式会影响效率，弃用
-            flag = IntStream.of(annotation.ints()).anyMatch(x -> (int)value==x);
+            int val = (value instanceof Byte)? Byte.toUnsignedInt((byte) value): (int) value;
+            flag = IntStream.of(annotation.ints()).anyMatch(x -> val==x);
         }else if(annotation.longs().length>0){
             flag = LongStream.of(annotation.longs()).anyMatch(x -> (long)value==x);
         }else if(annotation.doubles().length>0){

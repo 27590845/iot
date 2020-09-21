@@ -28,7 +28,7 @@ public class NodeTrigParam extends NodeTrig {
 
     @ApiModelProperty("触发器名称")
     @NotBlank(groups = {ValidGroup.INSERT.class}, message = "触发器名称不能为空")
-    @Length(min = 1, max = 32, message = "触发器命名长度须为1～32")
+    @Length(groups = {ValidGroup.INSERT.class}, min = 1, max = 32, message = "触发器命名长度须为1～32")
     @Override
     public String getNtName() {
         return super.getNtName();
@@ -42,7 +42,7 @@ public class NodeTrigParam extends NodeTrig {
 
     @ApiModelProperty("触发器触发间隔时间，间隔时间内不会触发")
     @NotNull(groups = {ValidGroup.INSERT.class}, message = "间隔时间不能为Null")
-    @Min(value = 0)
+    @Min(groups = {ValidGroup.INSERT.class}, value = 0)
     @Override
     public Integer getNtInvl() {
         return super.getNtInvl();
@@ -50,7 +50,7 @@ public class NodeTrigParam extends NodeTrig {
 
     @ApiModelProperty("重用标志，代表是否重复执行，0代表重复，1代表不重复(触发一次后失效)")
     @NotNull(groups = {ValidGroup.INSERT.class}, message = "重用标志不能为Null")
-    @EnumValidation(ints = {0, 1}, message = "非法的重用标志")
+    @EnumValidation(groups = {ValidGroup.INSERT.class}, ints = {0, 1}, message = "非法的重用标志")
     @Override
     public Byte getNtRept() {
         return super.getNtRept();
@@ -73,7 +73,7 @@ public class NodeTrigParam extends NodeTrig {
     @Getter
     @Setter
     @NotNull(groups = {ValidGroup.INSERT.class}, message = "触发器条件列表不能为空")
-    @ReptValidation(message = "条件列表中不能有重复")
+    @ReptValidation(groups = {ValidGroup.INSERT.class}, message = "条件列表中不能有重复")
     @Valid
     private List<NodeCondParam> nodeCondParams;
 }
