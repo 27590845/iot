@@ -15,7 +15,7 @@ public class Generator {
         List<String> warnings = new ArrayList<>(2);
         ConfigurationParser cp = new ConfigurationParser(warnings);
 
-        File configFile = new File("/Users/tudou/IdeaProjects/xidianiot/database/src/main/resources/generatorConfig.xml");
+        File configFile = new File("/Users/liuyinggang/IdeaProjects/xidianiot/database/src/main/resources/generatorConfig.xml");
         Configuration config = cp.parseConfiguration(configFile);
 
         DefaultShellCallback callback = new DefaultShellCallback(true);

@@ -37,6 +37,6 @@ public class RuleEngineController {
             @ApiParam("要添加的规则，规则应该包含基本规则信息，规则条件列表，规则触发动作列表，规则触发报警列表")
             @RequestBody @Validated(ValidGroup.INSERT.class) NodeTrigParam nodeTrigParam
     ){
-        return HttpResult.responseOK(nodeTrigService.addNodeTrig(nodeTrigParam));
+        return HttpResult.responseOK(nodeTrigService.addRuleEngine(nodeTrigParam));
     }
 }
