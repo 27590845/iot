@@ -17,6 +17,10 @@ import java.util.concurrent.ConcurrentHashMap;
  * @Title: KafkaSubscriber
  * @Package
  * @Description: 动态订阅 每开启一个container就会启动一个线程，另外kafka可以实现多个主题通过一个container监听，因此建议将相关的主题交由一个container监听
+ *  使用Consumer high level API时，同一Topic的一条消息只能被同一个Consumer Group内的一个Consumer消费，但多个Consumer Group可同时消费这一消息。
+ *  这是Kafka用来实现一个Topic消息的广播（发给所有的Consumer）和单播（发给某一个Consumer）的手段。一个Topic可以对应多个Consumer Group。
+ *  如果需要实现广播，只要每个Consumer有一个独立的Group就可以了。要实现单播只要所有的Consumer在同一个Group里。用Consumer Group还可以将Consumer进行自由的分组而不需要多次发送消息到不同的Topic。
+ *  具体介绍连接: https://www.cnblogs.com/liuwei6/p/6900686.html
  * @date 2020/9/9 12:31 上午
  */
 public class KafkaSubscriber implements MqSubscriber {

@@ -1,8 +1,8 @@
 package com.xidian.iot.dataapi.exception.handler;
 
-import com.xidian.iot.common.constants.ExceptionEnum;
+import com.xidian.iot.common.util.constants.ExceptionEnum;
 import com.xidian.iot.dataapi.controller.res.HttpResult;
-import com.xidian.iot.common.exception.BusinessException;
+import com.xidian.iot.common.util.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.util.CollectionUtils;
@@ -49,9 +49,9 @@ public class GlobalExceptionHandler {
                                                      BusinessException e) {
         response.setStatus(200);// 总是返回200
         setResponse(response);
-        log.info("业务异常: code: {}, message: {}", e.getCode(), e.getMessage(), e);
+        log.error("业务异常: code: {}, message: {}", e.getCode(), e.getMessage(), e);
         String paramStr = parameterMap2String(request.getParameterMap());
-        log.info(FORMAT, request.getRequestURI(), request.getMethod(), paramStr, e.getBody());
+        log.error(FORMAT, request.getRequestURI(), request.getMethod(), paramStr, e.getBody());
         return build(e.getCode(), e.getMessage());
     }
 
@@ -66,7 +66,7 @@ public class GlobalExceptionHandler {
 
         String errorMessage = String.format(STR_FORMAT, request.getRequestURI(), request.getMethod(),
                 request.getRemoteHost(), e);
-        log.info(errorMessage, e);
+        log.error(errorMessage, e);
         return build(SYSTEM_ERROR, "系统错误");
     }
 
@@ -77,7 +77,7 @@ public class GlobalExceptionHandler {
     public HttpResult<String> handlerHttpMessageNotReadableException(HttpServletRequest request, HttpServletResponse response, Exception e) {
         response.setStatus(200);
         setResponse(response);
-        log.info("HttpMessageNotReadableException异常产生! URI: {}, Method: {}, RemoteHost: {}",
+        log.error("HttpMessageNotReadableException异常产生! URI: {}, Method: {}, RemoteHost: {}",
                 request.getRequestURI(),
                 request.getMethod(), request.getRemoteHost(), e);
         return build(PARAM_ERROR, "参数错误,请检查");
@@ -97,7 +97,7 @@ public class GlobalExceptionHandler {
         setResponse(response);
         String message = "参数异常" + getBindResultFirstErrorMessage(e.getBindingResult());
 
-        log.info("MethodArgumentNotValidException异常! URI: {}, Method: {}, RemoteHost: {}  ",
+        log.error("MethodArgumentNotValidException异常! URI: {}, Method: {}, RemoteHost: {}  ",
                 request.getRequestURI(),
                 request.getMethod(), request.getRemoteHost());
 
@@ -117,7 +117,7 @@ public class GlobalExceptionHandler {
         response.setStatus(200);
         setResponse(response);
         String message = "参数异常" + getBindResultFirstErrorMessage(e.getBindingResult());
-        log.info("BindException异常! URI: {}, Method: {}, RemoteHost: {}", request.getRequestURI(),
+        log.error("BindException异常! URI: {}, Method: {}, RemoteHost: {}", request.getRequestURI(),
                 request.getMethod(), request.getRemoteHost(), e);
         return build(PARAM_ERROR, message);
     }
@@ -140,7 +140,7 @@ public class GlobalExceptionHandler {
                 .append("[" + violation.getPropertyPath().toString() + "]" + violation.getMessage()));
 
         String message = "参数异常" + strBuilder.toString();
-        log.info("ConstraintViolationException异常! URI: {}, Method: {}, RemoteHost: {}", request.getRequestURI(),
+        log.error("ConstraintViolationException异常! URI: {}, Method: {}, RemoteHost: {}", request.getRequestURI(),
                 request.getMethod(), request.getRemoteHost(), e);
 
         return build(PARAM_ERROR, message);

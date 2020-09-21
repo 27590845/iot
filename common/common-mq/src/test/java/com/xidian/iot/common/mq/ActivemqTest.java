@@ -73,7 +73,7 @@ public class ActivemqTest
             }
         }, topic);
         latch.await();
-        log.info("####close connection###");
+        log.debug("####close connection###");
         if(clientId!=null){
             Connection connection = ActivemqSubscriber.getConnection(clientId);
             if(connection!=null){

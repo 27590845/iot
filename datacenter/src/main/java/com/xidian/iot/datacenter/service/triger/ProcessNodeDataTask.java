@@ -2,8 +2,8 @@ package com.xidian.iot.datacenter.service.triger;
 
 import com.xidian.iot.database.entity.custom.NodeCondExt;
 import com.xidian.iot.database.entity.mongo.NodeData;
-import com.xidian.iot.databiz.service.NodeCondService;
 import com.xidian.iot.datacenter.service.BaseTask;
+import com.xidian.iot.datacenter.service.CommonService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -28,15 +28,10 @@ public class ProcessNodeDataTask extends BaseTask implements Runnable {
     @Setter
     private List<NodeData> nodeDataList;
     /**
-     * 此次上数的场景Sn
-     */
-    @Setter
-    private String sceneSn;
-    /**
      * 触发器条件数据访问接口。
      */
     @Resource
-    private NodeCondService nodeCondService;
+    private CommonService commonService;
 
     /**
      * 任务从这里开始。
@@ -47,7 +42,6 @@ public class ProcessNodeDataTask extends BaseTask implements Runnable {
         // 处理节点数据
         processNodeData();
         log.debug("processNodeData:{}ms",System.currentTimeMillis() - ss);
-        log.debug("------process completed-------");
     }
 
     /**
@@ -57,9 +51,9 @@ public class ProcessNodeDataTask extends BaseTask implements Runnable {
     private void processNodeData() {
         // 逐个处理上行数据
         for (NodeData nodeData : nodeDataList) {
-            log.info("nodeData({})", nodeData);
+            log.debug("nodeData({})", nodeData);
             //只获取条件所关联的触发器未失效的节点条件
-            List<NodeCondExt> nodeCondExtListResult = nodeCondService.getNodeCondExtBySnAvl(sceneSn, nodeData.getNodeSn());
+            List<NodeCondExt> nodeCondExtListResult = commonService.getNodeCondExts(nodeData.getSceneSn(), nodeData.getNodeSn(), nodeData.getData().keySet());
             //执行条件比较任务
             doCompareNodeCondTask(nodeData, nodeCondExtListResult);
         }
@@ -76,8 +70,8 @@ public class ProcessNodeDataTask extends BaseTask implements Runnable {
         compareNodeCondTask.setData(nodeData.getData());
         // 设置条件列表
         compareNodeCondTask.setNodeCondExtList(nodeCondExtList);
-//        compareNodeCondTask.run();
-		taskExecutor.execute(compareNodeCondTask);
+        compareNodeCondTask.run();
+//		taskExecutor.execute(compareNodeCondTask);
     }
 
     /**

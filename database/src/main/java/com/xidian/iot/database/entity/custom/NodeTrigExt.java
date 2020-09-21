@@ -20,11 +20,12 @@ import java.util.List;
 @Data
 public class NodeTrigExt extends NodeTrig {
 
+    public NodeTrigExt(){}
+
     public NodeTrigExt(NodeTrig nodeTrig){
         if(nodeTrig == null) return;
         setNtId(nodeTrig.getNtId());
         setNtName(nodeTrig.getNtName());
-        setNodeId(nodeTrig.getNodeId());
         setNtDesc(nodeTrig.getNtDesc());
         setNtExec(nodeTrig.getNtExec());
         setNtExpr(nodeTrig.getNtExpr());

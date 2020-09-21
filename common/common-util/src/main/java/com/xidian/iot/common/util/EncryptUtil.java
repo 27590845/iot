@@ -1,7 +1,7 @@
 package com.xidian.iot.common.util;
 
-import com.xidian.iot.common.codec.Base64;
-import com.xidian.iot.common.codec.DES;
+import com.xidian.iot.common.util.codec.Base64;
+import com.xidian.iot.common.util.codec.DES;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

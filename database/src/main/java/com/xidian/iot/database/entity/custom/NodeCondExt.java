@@ -1,5 +1,6 @@
 package com.xidian.iot.database.entity.custom;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.xidian.iot.database.entity.Node;
 import com.xidian.iot.database.entity.NodeAttr;
 import com.xidian.iot.database.entity.NodeCond;
@@ -27,14 +28,18 @@ public class NodeCondExt extends NodeCond {
         if (nodeCond == null) return;
         setNcId(nodeCond.getNcId());
         setNaId(nodeCond.getNaId());
-        setSceneId(nodeCond.getSceneId());
+        setNtId(nodeCond.getNtId());
         setSceneSn(nodeCond.getSceneSn());
-        setNodeId(nodeCond.getNodeId());
         setNodeSn(nodeCond.getNodeSn());
         setNcOp(nodeCond.getNcOp());
         setNcVal(nodeCond.getNcVal());
         setNcFitTime(nodeCond.getNcFitTime());
     }
+
+    /**
+     * 关联的NodeAttr.naKey
+     */
+    private String naKey;
 
     /**
      * 此条件是否被满足，根据这个值决定是否检查触发器。
@@ -76,9 +81,9 @@ public class NodeCondExt extends NodeCond {
      *
      * @return 节点属性key。
      */
-    public String getNodeAttrKey() {
-        return nodeAttribute.getNaKey();
-    }
+//    public String getNodeAttrKey() {
+//        return nodeAttribute.getNaKey();
+//    }
 
     /**
      * 判断一个值，是否满足这个节点条件。
@@ -128,6 +133,7 @@ public class NodeCondExt extends NodeCond {
      *
      * @return 操作字符串
      */
+    @JsonIgnore
     public String getOperatorCharStr() {
         int operatorChar = getNcOp();
         if (operatorChar == 1) {
@@ -156,6 +162,7 @@ public class NodeCondExt extends NodeCond {
      *
      * @return 操作字符串
      */
+    @JsonIgnore
     public String getOperatorCN() {
         int operatorChar = getNcOp();
         if (operatorChar == 1) {

@@ -5,7 +5,6 @@
     <id column="nt_id" jdbcType="BIGINT" property="ntId" />
     <result column="nt_name" jdbcType="VARCHAR" property="ntName" />
     <result column="nt_desc" jdbcType="VARCHAR" property="ntDesc" />
-    <result column="node_id" jdbcType="BIGINT" property="nodeId" />
     <result column="nt_invl" jdbcType="INTEGER" property="ntInvl" />
     <result column="nt_rept" jdbcType="TINYINT" property="ntRept" />
     <result column="nt_exec" jdbcType="TINYINT" property="ntExec" />
@@ -70,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    nt_id, nt_name, nt_desc, node_id, nt_invl, nt_rept, nt_exec, nt_expr
+    nt_id, nt_name, nt_desc, nt_invl, nt_rept, nt_exec, nt_expr
   </sql>
   <select id="selectByExample" parameterType="com.xidian.iot.database.entity.NodeTrigExample" resultMap="BaseResultMap">
     select
@@ -105,11 +104,11 @@
   </delete>
   <insert id="insert" parameterType="com.xidian.iot.database.entity.NodeTrig">
     insert into node_trig (nt_id, nt_name, nt_desc, 
-      node_id, nt_invl, nt_rept, 
-      nt_exec, nt_expr)
+      nt_invl, nt_rept, nt_exec, 
+      nt_expr)
     values (#{ntId,jdbcType=BIGINT}, #{ntName,jdbcType=VARCHAR}, #{ntDesc,jdbcType=VARCHAR}, 
-      #{nodeId,jdbcType=BIGINT}, #{ntInvl,jdbcType=INTEGER}, #{ntRept,jdbcType=TINYINT}, 
-      #{ntExec,jdbcType=TINYINT}, #{ntExpr,jdbcType=TIMESTAMP})
+      #{ntInvl,jdbcType=INTEGER}, #{ntRept,jdbcType=TINYINT}, #{ntExec,jdbcType=TINYINT}, 
+      #{ntExpr,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.iot.database.entity.NodeTrig">
     insert into node_trig
@@ -122,9 +121,6 @@
       </if>
       <if test="ntDesc != null">
         nt_desc,
-      </if>
-      <if test="nodeId != null">
-        node_id,
       </if>
       <if test="ntInvl != null">
         nt_invl,
@@ -148,9 +144,6 @@
       </if>
       <if test="ntDesc != null">
         #{ntDesc,jdbcType=VARCHAR},
-      </if>
-      <if test="nodeId != null">
-        #{nodeId,jdbcType=BIGINT},
       </if>
       <if test="ntInvl != null">
         #{ntInvl,jdbcType=INTEGER},
@@ -184,9 +177,6 @@
       <if test="record.ntDesc != null">
         nt_desc = #{record.ntDesc,jdbcType=VARCHAR},
       </if>
-      <if test="record.nodeId != null">
-        node_id = #{record.nodeId,jdbcType=BIGINT},
-      </if>
       <if test="record.ntInvl != null">
         nt_invl = #{record.ntInvl,jdbcType=INTEGER},
       </if>
@@ -209,7 +199,6 @@
     set nt_id = #{record.ntId,jdbcType=BIGINT},
       nt_name = #{record.ntName,jdbcType=VARCHAR},
       nt_desc = #{record.ntDesc,jdbcType=VARCHAR},
-      node_id = #{record.nodeId,jdbcType=BIGINT},
       nt_invl = #{record.ntInvl,jdbcType=INTEGER},
       nt_rept = #{record.ntRept,jdbcType=TINYINT},
       nt_exec = #{record.ntExec,jdbcType=TINYINT},
@@ -226,9 +215,6 @@
       </if>
       <if test="ntDesc != null">
         nt_desc = #{ntDesc,jdbcType=VARCHAR},
-      </if>
-      <if test="nodeId != null">
-        node_id = #{nodeId,jdbcType=BIGINT},
       </if>
       <if test="ntInvl != null">
         nt_invl = #{ntInvl,jdbcType=INTEGER},
@@ -249,7 +235,6 @@
     update node_trig
     set nt_name = #{ntName,jdbcType=VARCHAR},
       nt_desc = #{ntDesc,jdbcType=VARCHAR},
-      node_id = #{nodeId,jdbcType=BIGINT},
       nt_invl = #{ntInvl,jdbcType=INTEGER},
       nt_rept = #{ntRept,jdbcType=TINYINT},
       nt_exec = #{ntExec,jdbcType=TINYINT},

@@ -4,7 +4,7 @@ package com.xidian.iot.database.entity;
  * 一旦一个节点触发器被触发，可能会执行多个命令
  *
  * @author mrl
- * @date   2020/09/10
+ * @date   2020/09/21
  */
 public class NodeActCmd {
     /**
@@ -13,34 +13,14 @@ public class NodeActCmd {
     private Long nacId;
 
     /**
-     * 
+     * 关联的命令，node_cmd.nc_id
      */
     private Long ncId;
 
     /**
      * 
      */
-    private Long nodeId;
-
-    /**
-     * 
-     */
-    private Long sceneId;
-
-    /**
-     * 
-     */
     private Long ntId;
-
-    /**
-     * 节点SN
-     */
-    private String nodeSn;
-
-    /**
-     * 场景SN
-     */
-    private String sceneSn;
 
     public Long getNacId() {
         return nacId;
@@ -58,43 +38,11 @@ public class NodeActCmd {
         this.ncId = ncId;
     }
 
-    public Long getNodeId() {
-        return nodeId;
-    }
-
-    public void setNodeId(Long nodeId) {
-        this.nodeId = nodeId;
-    }
-
-    public Long getSceneId() {
-        return sceneId;
-    }
-
-    public void setSceneId(Long sceneId) {
-        this.sceneId = sceneId;
-    }
-
     public Long getNtId() {
         return ntId;
     }
 
     public void setNtId(Long ntId) {
         this.ntId = ntId;
-    }
-
-    public String getNodeSn() {
-        return nodeSn;
-    }
-
-    public void setNodeSn(String nodeSn) {
-        this.nodeSn = nodeSn == null ? null : nodeSn.trim();
-    }
-
-    public String getSceneSn() {
-        return sceneSn;
-    }
-
-    public void setSceneSn(String sceneSn) {
-        this.sceneSn = sceneSn == null ? null : sceneSn.trim();
     }
 }

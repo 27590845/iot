@@ -7,9 +7,6 @@
 
     <context:property-placeholder location="classpath:conf/jdbc-def.properties" ignore-unresolvable="true" />
 
-    <!-- Spring annotation扫描 -->
-<!--    <context:component-scan base-package="com.baidu.fsg.uid" />-->
-
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
         <property name="driverClassName" value="${jdbc.driverClassName}"/>
         <property name="url" value="${jdbc.url}"/>
@@ -51,7 +48,7 @@
         <property name="dataSource" ref="dataSource"/>
         <!-- 指定sqlMapConfig总配置文件，订制的environment在spring容器中不在生效 -->
         <property name="configLocation" value="classpath:/mybatis/mybatis-config-def.xml"/>
-<!--        <property name="mapperLocations" value="classpath:/META-INF/mybatis/mapper/WORKER_NODE.xml" />-->
+<!--        <property name="mapperLocations" value="classpath:/META-INF/mybatis/mapper/WorkerNodeMapper.xml" />-->
         <!-- 注意其他配置 -->
         <property name="plugins">
             <array>
@@ -79,25 +76,10 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
     <!-- 事务相关配置 -->
-<!--    <tx:annotation-driven transaction-manager="transactionManager" order="1" />-->
-<!--    <bean id="batchSqlSession" class="org.mybatis.spring.SqlSessionTemplate">-->
-<!--        <constructor-arg index="0" ref="sqlSessionFactory" />-->
-<!--        <constructor-arg index="1" value="BATCH" />-->
-<!--    </bean>-->
-    <tx:annotation-driven/>
-
-    <!-- UidGenerator start -->
-    <bean id="uidGenerator" scope="singleton" class="com.xidian.iot.common.uid.UidGeneratorImpl">
-        <constructor-arg index="0">
-            <bean class="java.util.concurrent.locks.ReentrantLock"/>
-        </constructor-arg>
-        <constructor-arg index="1">
-            <bean id="uidPrefixFactory" class="com.xidian.iot.common.uid.UidPrefixFactoryImpl">
-                <property name="prefixSource" value="http://master:port/uid/prefix"/>
-            </bean>
-        </constructor-arg>
+    <tx:annotation-driven transaction-manager="transactionManager" order="1" />
+    <bean id="batchSqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory" />
+        <constructor-arg index="1" value="BATCH" />
     </bean>
-    <!-- UidGenerator end -->
-
-<!--    <import resource="cached-uid-spring.xml"/>-->
+<!--    <tx:annotation-driven/>-->
 </beans>

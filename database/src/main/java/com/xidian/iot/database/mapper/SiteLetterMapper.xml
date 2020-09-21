@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xidian.iot.database.mapper.SiteLetterMapper">
+  <resultMap id="BaseResultMap" type="com.xidian.iot.database.entity.SiteLetter">
+    <id column="sl_id" jdbcType="BIGINT" property="slId" />
+    <result column="is_read" jdbcType="SMALLINT" property="isRead" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="current_value" jdbcType="VARCHAR" property="currentValue" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    sl_id, is_read, create_time, current_value
+  </sql>
+  <select id="selectByExample" parameterType="com.xidian.iot.database.entity.SiteLetterExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from site_letter
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from site_letter
+    where sl_id = #{slId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from site_letter
+    where sl_id = #{slId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xidian.iot.database.entity.SiteLetterExample">
+    delete from site_letter
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xidian.iot.database.entity.SiteLetter">
+    insert into site_letter (sl_id, is_read, create_time, 
+      current_value)
+    values (#{slId,jdbcType=BIGINT}, #{isRead,jdbcType=SMALLINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{currentValue,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xidian.iot.database.entity.SiteLetter">
+    insert into site_letter
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="slId != null">
+        sl_id,
+      </if>
+      <if test="isRead != null">
+        is_read,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="currentValue != null">
+        current_value,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="slId != null">
+        #{slId,jdbcType=BIGINT},
+      </if>
+      <if test="isRead != null">
+        #{isRead,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="currentValue != null">
+        #{currentValue,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xidian.iot.database.entity.SiteLetterExample" resultType="java.lang.Long">
+    select count(*) from site_letter
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update site_letter
+    <set>
+      <if test="record.slId != null">
+        sl_id = #{record.slId,jdbcType=BIGINT},
+      </if>
+      <if test="record.isRead != null">
+        is_read = #{record.isRead,jdbcType=SMALLINT},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.currentValue != null">
+        current_value = #{record.currentValue,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update site_letter
+    set sl_id = #{record.slId,jdbcType=BIGINT},
+      is_read = #{record.isRead,jdbcType=SMALLINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      current_value = #{record.currentValue,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xidian.iot.database.entity.SiteLetter">
+    update site_letter
+    <set>
+      <if test="isRead != null">
+        is_read = #{isRead,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="currentValue != null">
+        current_value = #{currentValue,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sl_id = #{slId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xidian.iot.database.entity.SiteLetter">
+    update site_letter
+    set is_read = #{isRead,jdbcType=SMALLINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      current_value = #{currentValue,jdbcType=VARCHAR}
+    where sl_id = #{slId,jdbcType=BIGINT}
+  </update>
+</mapper>

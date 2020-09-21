@@ -7,7 +7,8 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-    <context:component-scan base-package="com.xidian.iot.dataapi.controller"/>
+    <!-- 组建扫描工作已经在application-context.xml中包含了 -->
+<!--    <context:component-scan base-package="com.xidian.iot.dataapi.controller"/>-->
     <mvc:default-servlet-handler/>
 
     <mvc:annotation-driven>

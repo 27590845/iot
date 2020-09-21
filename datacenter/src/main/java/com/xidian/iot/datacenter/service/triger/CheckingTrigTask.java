@@ -2,9 +2,8 @@ package com.xidian.iot.datacenter.service.triger;
 
 import com.xidian.iot.database.entity.custom.NodeCondExt;
 import com.xidian.iot.database.entity.custom.NodeTrigExt;
-import com.xidian.iot.databiz.service.NodeCondService;
-import com.xidian.iot.databiz.service.NodeTrigService;
 import com.xidian.iot.datacenter.service.BaseTask;
+import com.xidian.iot.datacenter.service.CommonService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -30,16 +29,9 @@ public class CheckingTrigTask extends BaseTask implements Runnable {
      */
     @Setter
     private Long ntId;
-    /**
-     * 节点触发器条件数据访问接口。
-     */
+
     @Resource
-    private NodeCondService nodeCondService;
-    /**
-     * 节点触发器访问接口
-     */
-    @Resource
-    private NodeTrigService nodeTrigService;
+    private CommonService commonService;
 
     /**
      * 任务从这里开始。
@@ -48,10 +40,10 @@ public class CheckingTrigTask extends BaseTask implements Runnable {
     public void run() {
 
         // 获得触发器条件
-        List<NodeCondExt> nodeCondExtList = nodeCondService.getNodeCondExtByNtId(ntId);
+        List<NodeCondExt> nodeCondExtList = commonService.getNodeCondExts(ntId);
 
-        log.info("doing CheckingTrigTask ntId=[{}]", ntId);
-        log.info("Node trig have condition [{}]", nodeCondExtList);
+        log.debug("doing CheckingTrigTask ntId=[{}]", ntId);
+        log.debug("Node trig have condition [{}]", nodeCondExtList);
 
         // 判断是否出发这个触发器
         if (isTrig(nodeCondExtList)) {
@@ -63,19 +55,21 @@ public class CheckingTrigTask extends BaseTask implements Runnable {
             updateLastRunTime();
             // 复位触发器条件
             reset(nodeCondExtList);
+            log.debug("-----触发报警-----");
         }
+        log.debug("------process completed-------");
     }
 
     /**
      * 更新触发器最后运行时间及是否需要继续执行
      */
     private void updateLastRunTime() {
-        NodeTrigExt nodeTrigExt = nodeTrigService.getNodeTrigExtById(ntId);
+        NodeTrigExt nodeTrigExt = commonService.getNodeTrigExt(ntId);
         nodeTrigExt.setLastRunTime(new Date());
         if(nodeTrigExt.getNtRept()==1){		//如触发器不重复执行则将executed置为1（不再执行）
             nodeTrigExt.setNtExec((byte) 1);
         }
-        nodeTrigService.updateNodeTrigExt(nodeTrigExt);
+        commonService.updateNodeTrigExtById(nodeTrigExt);
     }
 
     /**
@@ -85,8 +79,8 @@ public class CheckingTrigTask extends BaseTask implements Runnable {
         SendCmdTask sendCmdTask = (SendCmdTask) applicationContext.getBean("sendCmdTask");
         // 设置触发器ID
         sendCmdTask.setNtId(ntId);
-//        sendCmdTask.run();
-		taskExecutor.execute(sendCmdTask);
+        sendCmdTask.run();
+//		taskExecutor.execute(sendCmdTask);
     }
 
     /**
@@ -98,8 +92,8 @@ public class CheckingTrigTask extends BaseTask implements Runnable {
 //        sendMessageTask.setNtId(ntId);
 //        // 设置触发条件
 //        sendMessageTask.setNodeCondExtList(nodeCondExtList);
-////        sendMessageTask.run();
-//		taskExecutor.execute(sendMessageTask);
+//        sendMessageTask.run();
+////		taskExecutor.execute(sendMessageTask);
 //    }
 
     /**
@@ -108,7 +102,7 @@ public class CheckingTrigTask extends BaseTask implements Runnable {
     private void reset(List<NodeCondExt> nodeCondExtList) {
         for (NodeCondExt nodeCondExt : nodeCondExtList) {
             nodeCondExt.reset();
-            nodeCondService.changeNodeCondExt(nodeCondExt);
+            commonService.changeNodeCondExt(nodeCondExt);
         }
     }
 
@@ -125,14 +119,14 @@ public class CheckingTrigTask extends BaseTask implements Runnable {
         }
         for (NodeCondExt nodeCondExt : nodeCondExtList) {
             if (nodeCondExt.isFit()) {
-                log.info("nodeCondExt is meet,id is ({})", nodeCondExt.getNcId());
+                log.debug("nodeCondExt is meet,id is ({})", nodeCondExt.getNcId());
                 continue;
             }
-            log.info("nodeCondExt is not meet,id is ({})", nodeCondExt.getNcId());
+            log.debug("nodeCondExt is not meet,id is ({})", nodeCondExt.getNcId());
             // 任何一个条件不满足，不能触发
             return false;
         }
-        log.info("isTrig() return true;this nodeTrig id is ({})", ntId);
+        log.debug("isTrig() return true;this nodeTrig id is ({})", ntId);
         return true;
     }
 }

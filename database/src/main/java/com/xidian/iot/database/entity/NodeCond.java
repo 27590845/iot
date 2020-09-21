@@ -4,7 +4,7 @@ package com.xidian.iot.database.entity;
  * 节点触发器条件，一个节点可配置多个条件，一个条件对应一个触发器；一次“添加关联”操作可添加多个条件以及生成一个触发器(这些条件可能对应到不同节点，甚至不同场景下的不同节点)
  *
  * @author mrl
- * @date   2020/09/10
+ * @date   2020/09/20
  */
 public class NodeCond {
     /**
@@ -16,16 +16,6 @@ public class NodeCond {
      * 节点属性ID，一个条件对应一个节点属性，一个节点属性有多个条件，条件的作用(判断)对象是节点属性
      */
     private Long naId;
-
-    /**
-     * 场景ID
-     */
-    private Long sceneId;
-
-    /**
-     * 节点ID
-     */
-    private Long nodeId;
 
     /**
      * 节点触发器ID，一个条件对应一个节点触发器，一个节点触发器有多个条件
@@ -71,22 +61,6 @@ public class NodeCond {
 
     public void setNaId(Long naId) {
         this.naId = naId;
-    }
-
-    public Long getSceneId() {
-        return sceneId;
-    }
-
-    public void setSceneId(Long sceneId) {
-        this.sceneId = sceneId;
-    }
-
-    public Long getNodeId() {
-        return nodeId;
-    }
-
-    public void setNodeId(Long nodeId) {
-        this.nodeId = nodeId;
     }
 
     public Long getNtId() {

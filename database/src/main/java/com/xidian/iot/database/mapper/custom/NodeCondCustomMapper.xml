@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xidian.iot.database.mapper.custom.NodeCondCustomMapper">
+    <resultMap id="BaseResultMap" type="com.xidian.iot.database.entity.NodeCond">
+        <id column="nc_id" jdbcType="BIGINT" property="ncId"/>
+        <result column="na_id" jdbcType="BIGINT" property="naId"/>
+        <result column="scene_id" jdbcType="BIGINT" property="sceneId"/>
+        <result column="node_id" jdbcType="BIGINT" property="nodeId"/>
+        <result column="nt_id" jdbcType="BIGINT" property="ntId"/>
+        <result column="nc_op" jdbcType="TINYINT" property="ncOp"/>
+        <result column="nc_val" jdbcType="VARCHAR" property="ncVal"/>
+        <result column="node_sn" jdbcType="VARCHAR" property="nodeSn"/>
+        <result column="scene_sn" jdbcType="VARCHAR" property="sceneSn"/>
+        <result column="nc_fit_time" jdbcType="INTEGER" property="ncFitTime"/>
+    </resultMap>
+    <select id="getNcIdsByNtId" parameterType="java.lang.Long" resultType="java.lang.Long">
+        select nc.nc_id from node_cond nc where nc.nt_id=#{ntId,jdbcType=BIGINT};
+    </select>
+    <!-- 连接查询，尽量不用 -->
+    <select id="getNcIdsAvlBySn" parameterType="java.lang.String" resultType="java.lang.Long">
+        select nc.nc_id from node_cond nc left join node_trig nt
+        where nt.nt_exec=0 and nt.nt_expr>now()
+        and nc.scene_sn=#{sceneSn,jdbcType=VARCHAR}
+        and nc.node_sn=#{nodeSn,jdbcType=VARCHAR};
+    </select>
+    <select id="getNcIdsBySn" parameterType="java.lang.String" resultType="java.lang.Long">
+        select nc.nc_id from node_cond nc
+        where nc.scene_sn=#{sceneSn,jdbcType=VARCHAR}
+        and nc.node_sn=#{nodeSn,jdbcType=VARCHAR};
+    </select>
+</mapper>

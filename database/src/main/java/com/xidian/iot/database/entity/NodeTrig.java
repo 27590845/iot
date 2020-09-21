@@ -6,7 +6,7 @@ import java.util.Date;
  * 节点触发器，一个节点可配置多个触发器，一个触发器也可对应多个节点，甚至不同场景下的节点；一个触发器下的全部条件都满足时才会触发
  *
  * @author mrl
- * @date   2020/09/10
+ * @date   2020/09/20
  */
 public class NodeTrig {
     /**
@@ -23,11 +23,6 @@ public class NodeTrig {
      * 节点触发器描述
      */
     private String ntDesc;
-
-    /**
-     * 
-     */
-    private Long nodeId;
 
     /**
      * 间隔时间，单位为秒
@@ -71,14 +66,6 @@ public class NodeTrig {
 
     public void setNtDesc(String ntDesc) {
         this.ntDesc = ntDesc == null ? null : ntDesc.trim();
-    }
-
-    public Long getNodeId() {
-        return nodeId;
-    }
-
-    public void setNodeId(Long nodeId) {
-        this.nodeId = nodeId;
     }
 
     public Integer getNtInvl() {

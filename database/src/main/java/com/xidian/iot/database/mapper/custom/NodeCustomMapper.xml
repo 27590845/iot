@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xidian.iot.database.mapper.custom.NodeCustomMapper">
+    <resultMap id="NodeVoMap" type="com.xidian.iot.database.vo.NodeVo" extends="com.xidian.iot.database.mapper.NodeMapper.BaseResultMap">
+        <collection property="nodeAttrList" javaType="ArrayList"
+                    ofType="com.xidian.iot.database.entity.NodeAttr"
+                    select="com.xidian.iot.database.mapper.custom.NodeAttrCustomMapper.getNodeAttrByNodeId"
+                    column="node_id">
+        </collection>
+    </resultMap>
+    <select id="getNodeVoByNodeId" resultMap="NodeVoMap">
+        select n.* from node n
+        where n.node_id = #{nodeId,jdbcType=BIGINT}
+    </select>
+    <select id="getNodeVosBySceneId" resultMap="NodeVoMap">
+        select n.* from node n
+        where n.scene_id = #{sceneId,jdbcType=BIGINT}
+    </select>
+</mapper>

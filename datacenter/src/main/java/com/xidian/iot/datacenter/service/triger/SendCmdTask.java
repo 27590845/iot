@@ -12,13 +12,10 @@ import com.xidian.iot.databiz.service.NodeCmdGroupService;
 import com.xidian.iot.databiz.service.NodeCmdService;
 import com.xidian.iot.databiz.service.NodeService;
 import com.xidian.iot.datacenter.service.BaseTask;
-import com.xidian.iot.datacenter.service.SceneService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.concurrent.TimeoutException;
 
 /**
  * @author mrl
@@ -99,7 +96,7 @@ public class SendCmdTask extends BaseTask implements Runnable {
         queueCommand.addCommand(cmdKey, cmdStr);
         // 将对队列命令添加到队列中
         try {
-            log.info("Add to queue '[{}]',{}", QueueCommand.QUEUE_NAME,
+            log.debug("Add to queue '[{}]',{}", QueueCommand.QUEUE_NAME,
                     queueCommand);
             // kestrelClient.set(QueueCommand.QUEUE_NAME, 0, queueCommand);
             mqSender.send(QueueCommand.QUEUE_NAME, JsonUtil.toJson(queueCommand));

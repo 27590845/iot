@@ -4,7 +4,7 @@ package com.xidian.iot.database.entity;
  * 节点命令，节点命令的接收者是通信终端，一般通信终端会通过寻址机制将收到的命令作用于某个数据采集设备，命令可分为“收集数据“”调整参数”两类
  *
  * @author mrl
- * @date   2020/09/10
+ * @date   2020/09/21
  */
 public class NodeCmd {
     /**
@@ -31,6 +31,16 @@ public class NodeCmd {
      * 命令中文标题
      */
     private String ncName;
+
+    /**
+     * 场景SN
+     */
+    private String sceneSn;
+
+    /**
+     * 节点SN
+     */
+    private String nodeSn;
 
     public Long getNcId() {
         return ncId;
@@ -70,5 +80,21 @@ public class NodeCmd {
 
     public void setNcName(String ncName) {
         this.ncName = ncName == null ? null : ncName.trim();
+    }
+
+    public String getSceneSn() {
+        return sceneSn;
+    }
+
+    public void setSceneSn(String sceneSn) {
+        this.sceneSn = sceneSn == null ? null : sceneSn.trim();
+    }
+
+    public String getNodeSn() {
+        return nodeSn;
+    }
+
+    public void setNodeSn(String nodeSn) {
+        this.nodeSn = nodeSn == null ? null : nodeSn.trim();
     }
 }

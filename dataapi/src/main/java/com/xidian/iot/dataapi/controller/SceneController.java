@@ -25,36 +25,43 @@ public class SceneController {
     private SceneService sceneService;
 
     @ApiOperation(value = "分页获取当前用户下所有的网关号")
-    @GetMapping("/all")
-    public HttpResult getUserScenes(@ApiParam(name = "page",value = "页号") @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-                                  @ApiParam(name = "limit",value = "页数") @RequestParam(value = "limit", required = false, defaultValue = "5") int limit){
-        return HttpResult.responseOK(sceneService.getAllScenes(page,limit));
+    @GetMapping("/list")
+    public HttpResult getUserScenes(@ApiParam(name = "page", value = "页号") @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                                    @ApiParam(name = "limit", value = "页数") @RequestParam(value = "limit", required = false, defaultValue = "5") int limit) {
+        return HttpResult.responseOK(sceneService.getScenes(page, limit));
     }
 
-    @ApiOperation(value = "根据Sn获取指定场景接口")
+    @ApiOperation(value = "根据Sn获取指定场景及其节点和属性接口")
     @GetMapping("/{sceneSn}")
-    public HttpResult getScene(@ApiParam(name = "sceneSn",value = "场景sn") @PathVariable("sceneSn") String sceneSn){
-        return HttpResult.responseOK(sceneService.getSceneBySn(sceneSn));
+    public HttpResult getScene(@ApiParam(name = "sceneSn", value = "场景sn") @PathVariable("sceneSn") String sceneSn) {
+        return HttpResult.responseOK(sceneService.getSceneVoBySn(sceneSn));
     }
 
     @ApiOperation(value = "添加场景")
     @PostMapping
-    public HttpResult addScene(@ApiParam(name = "SceneAddParam",value = "场景信息") @Valid @RequestBody SceneAddParam param){
+    public HttpResult addScene(@ApiParam(name = "SceneAddParam", value = "场景信息") @Valid @RequestBody SceneAddParam param) {
         return HttpResult.responseOK(sceneService.addScene(param));
     }
 
     @ApiOperation(value = "删除场景")
     @DeleteMapping("/{sceneSn}")
-    public HttpResult delScene(@ApiParam(name = "sceneSn",value = "场景sn") @PathVariable("sceneSn") String sceneSn){
+    public HttpResult delScene(@ApiParam(name = "sceneSn", value = "场景sn") @PathVariable("sceneSn") String sceneSn) {
         sceneService.delScene(sceneSn);
         return HttpResult.oK().message("删除场景成功");
     }
 
-    @ApiOperation(value = "更新场景")
+    @ApiOperation(value = "更新场景(支持部分更新)")
     @PutMapping("/{sceneSn}")
-    public HttpResult updateScene(@ApiParam(name = "sceneSn",value = "场景sn") @PathVariable("sceneSn") String sceneSn,
-                                  @ApiParam(name = "SceneUpdateParam",value = "场景更新信息") @Valid @RequestBody SceneUpdateParam param){
+    public HttpResult updateScene(@ApiParam(name = "sceneSn", value = "场景sn") @PathVariable("sceneSn") String sceneSn,
+                                  @ApiParam(name = "SceneUpdateParam", value = "场景更新信息") @Valid @RequestBody SceneUpdateParam param) {
         sceneService.updateScene(sceneSn, param);
         return HttpResult.oK().message("更新场景成功");
+    }
+
+    @ApiOperation(value = "查看一个节点的数据")
+    @GetMapping("/{sceneSn}/node/{nodeSn}")
+    public HttpResult getScene(@ApiParam(name = "sceneSn", value = "场景sn") @PathVariable("sceneSn") String sceneSn
+            , @ApiParam(name = "nodeSn", value = "节点sn") @PathVariable("nodeSn") String nodeSn) {
+        return HttpResult.responseOK(sceneService.getSceneBySn(sceneSn));
     }
 }
