@@ -25,20 +25,4 @@ public class NodeActCmdParam extends NodeActCmd {
     public Long getNcId() {
         return super.getNcId();
     }
-
-    @ApiModelProperty("节点标识")
-    @NotNull(groups = {ValidGroup.INSERT.class}, message = "节点标识不能为空")
-    @Pattern(groups = {ValidGroup.INSERT.class}, regexp = "/[0-9a-zA-Z]{1,6}/", message = "非法的节点标识")
-    @Override
-    public String getNodeSn() {
-        return super.getNodeSn();
-    }
-
-    @ApiModelProperty("场景标识")
-    @NotNull(groups = {ValidGroup.INSERT.class}, message = "场景标识不能为空")
-    @Pattern(groups = {ValidGroup.INSERT.class}, regexp = "/[0-9a-zA-Z]{1,6}/", message = "非法的场景标识")
-    @Override
-    public String getSceneSn() {
-        return super.getSceneSn();
-    }
 }

@@ -76,4 +76,11 @@ public class NodeTrigParam extends NodeTrig {
     @ReptValidation(groups = {ValidGroup.INSERT.class}, message = "条件列表中不能有重复")
     @Valid
     private List<NodeCondParam> nodeCondParams;
+
+    @Getter
+    @Setter
+    @NotNull(groups = {ValidGroup.INSERT.class}, message = "触发器联动命令列表不能为空")
+    @ReptValidation(groups = {ValidGroup.INSERT.class}, message = "联动命令列表中不能有重复")
+    @Valid
+    private List<NodeActCmdParam> nodeActCmdParams;
 }

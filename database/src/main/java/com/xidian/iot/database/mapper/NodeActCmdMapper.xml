@@ -5,8 +5,6 @@
     <id column="nac_id" jdbcType="BIGINT" property="nacId" />
     <result column="nc_id" jdbcType="BIGINT" property="ncId" />
     <result column="nt_id" jdbcType="BIGINT" property="ntId" />
-    <result column="node_sn" jdbcType="VARCHAR" property="nodeSn" />
-    <result column="scene_sn" jdbcType="VARCHAR" property="sceneSn" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -67,7 +65,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    nac_id, nc_id, nt_id, node_sn, scene_sn
+    nac_id, nc_id, nt_id
   </sql>
   <select id="selectByExample" parameterType="com.xidian.iot.database.entity.NodeActCmdExample" resultMap="BaseResultMap">
     select
@@ -101,10 +99,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xidian.iot.database.entity.NodeActCmd">
-    insert into node_act_cmd (nac_id, nc_id, nt_id, 
-      node_sn, scene_sn)
-    values (#{nacId,jdbcType=BIGINT}, #{ncId,jdbcType=BIGINT}, #{ntId,jdbcType=BIGINT}, 
-      #{nodeSn,jdbcType=VARCHAR}, #{sceneSn,jdbcType=VARCHAR})
+    insert into node_act_cmd (nac_id, nc_id, nt_id
+      )
+    values (#{nacId,jdbcType=BIGINT}, #{ncId,jdbcType=BIGINT}, #{ntId,jdbcType=BIGINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.iot.database.entity.NodeActCmd">
     insert into node_act_cmd
@@ -118,12 +116,6 @@
       <if test="ntId != null">
         nt_id,
       </if>
-      <if test="nodeSn != null">
-        node_sn,
-      </if>
-      <if test="sceneSn != null">
-        scene_sn,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="nacId != null">
@@ -134,12 +126,6 @@
       </if>
       <if test="ntId != null">
         #{ntId,jdbcType=BIGINT},
-      </if>
-      <if test="nodeSn != null">
-        #{nodeSn,jdbcType=VARCHAR},
-      </if>
-      <if test="sceneSn != null">
-        #{sceneSn,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -161,12 +147,6 @@
       <if test="record.ntId != null">
         nt_id = #{record.ntId,jdbcType=BIGINT},
       </if>
-      <if test="record.nodeSn != null">
-        node_sn = #{record.nodeSn,jdbcType=VARCHAR},
-      </if>
-      <if test="record.sceneSn != null">
-        scene_sn = #{record.sceneSn,jdbcType=VARCHAR},
-      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -176,9 +156,7 @@
     update node_act_cmd
     set nac_id = #{record.nacId,jdbcType=BIGINT},
       nc_id = #{record.ncId,jdbcType=BIGINT},
-      nt_id = #{record.ntId,jdbcType=BIGINT},
-      node_sn = #{record.nodeSn,jdbcType=VARCHAR},
-      scene_sn = #{record.sceneSn,jdbcType=VARCHAR}
+      nt_id = #{record.ntId,jdbcType=BIGINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -192,21 +170,13 @@
       <if test="ntId != null">
         nt_id = #{ntId,jdbcType=BIGINT},
       </if>
-      <if test="nodeSn != null">
-        node_sn = #{nodeSn,jdbcType=VARCHAR},
-      </if>
-      <if test="sceneSn != null">
-        scene_sn = #{sceneSn,jdbcType=VARCHAR},
-      </if>
     </set>
     where nac_id = #{nacId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xidian.iot.database.entity.NodeActCmd">
     update node_act_cmd
     set nc_id = #{ncId,jdbcType=BIGINT},
-      nt_id = #{ntId,jdbcType=BIGINT},
-      node_sn = #{nodeSn,jdbcType=VARCHAR},
-      scene_sn = #{sceneSn,jdbcType=VARCHAR}
+      nt_id = #{ntId,jdbcType=BIGINT}
     where nac_id = #{nacId,jdbcType=BIGINT}
   </update>
 </mapper>

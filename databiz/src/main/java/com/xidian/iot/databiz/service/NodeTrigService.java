@@ -2,6 +2,7 @@ package com.xidian.iot.databiz.service;
 
 import com.xidian.iot.database.entity.NodeTrig;
 import com.xidian.iot.database.entity.custom.NodeTrigExt;
+import com.xidian.iot.database.param.NodeTrigParam;
 
 /**
  * @author mrl
@@ -27,9 +28,9 @@ public interface NodeTrigService {
     NodeTrigExt updateNodeTrigExtById(NodeTrigExt nodeTrigExt);
 
     /**
-     * 添加一条触发器数据
-     * @param nodeTrig
+     * 添加一套规则引擎，包含nodeActCmd的添加，nodeCond的添加，nodeTrig的添加，以及一些逻辑校验
+     * @param nodeTrigParam
      * @return
      */
-    NodeTrigExt addNodeTrig(NodeTrig nodeTrig);
+    int addRuleEngine(NodeTrigParam nodeTrigParam);
 }
