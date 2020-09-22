@@ -2,33 +2,22 @@ package com.xidian.iot.common.alert.email;
 
 import com.xidian.iot.common.alert.AlertClient;
 import com.xidian.iot.common.alert.AlertVo;
-import freemarker.template.Configuration;
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
+
 import lombok.Setter;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
-import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import javax.mail.internet.MimeMessage;
-import java.io.IOException;
 import java.util.List;
 
 /**
  * 邮件客户端
  */
+@Slf4j
 public class EmailAlertClient implements AlertClient {
 
-	private static Logger log = Logger.getLogger(EmailAlertClient.class);
 
-	//模板位置
-	@Setter
-	private String templatePath;
-	//模板编码
-	@Setter
-	private String templateEncoding;
 	//邮件编码
 	@Setter
 	private String mailEncoding;
@@ -39,24 +28,6 @@ public class EmailAlertClient implements AlertClient {
 	@Setter
 	private JavaMailSender mailSender;
 
-	//freemarker模板配置
-	private Configuration config = null;
-
-	/**
-	 * 初始化方法
-	 */
-	public void init() {
-		// 实例化模板配置
-		FreeMarkerConfigurationFactoryBean bean = new FreeMarkerConfigurationFactoryBean();
-		bean.setTemplateLoaderPath(templatePath);
-		try {
-			config = bean.createConfiguration();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (TemplateException e) {
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * 发送单个邮件。
@@ -65,8 +36,8 @@ public class EmailAlertClient implements AlertClient {
 	 */
 	public boolean send(AlertVo vo) {
 
-		// 转换为抽象邮件
-		EmailAlertVo emailAlertVo = (EmailAlertVo) vo;
+		// 转换为邮件
+		SimpleEmailAlertVo emailAlertVo = (SimpleEmailAlertVo) vo;
 
 		try {
 			// 创建邮件消息体
@@ -79,7 +50,7 @@ public class EmailAlertClient implements AlertClient {
 			// 设置主题
 			helper.setSubject(emailAlertVo.getTitle());
 			// 设置发送内容
-			helper.setText(getContent(vo), true);
+			helper.setText(emailAlertVo.getContent(), true);
 			// 发送邮件
 			mailSender.send(msg);
 			log.info("邮件发送成功 :" + emailAlertVo.getEmails());
@@ -90,34 +61,6 @@ public class EmailAlertClient implements AlertClient {
 		return true;
 	}
 
-	/**
-	 * 获得邮件内容
-	 * 
-	 * @param vo  邮件
-	 * @return 邮件内容
-	 */
-	private String getContent(AlertVo vo) {
-
-		if (vo instanceof SimpleEmailAlertVo) {
-			// 简单邮件
-			SimpleEmailAlertVo simpleVo = (SimpleEmailAlertVo) vo;
-			return simpleVo.getContent();
-		} else if (vo instanceof TemplateEmailAlertVo) {
-			// 模板邮件
-			TemplateEmailAlertVo templateVo = (TemplateEmailAlertVo) vo;
-			try {
-				// 获取模板
-				Template template = config.getTemplate(templateVo.getTemplateName(), templateEncoding);
-				// 编译模板内容
-				return FreeMarkerTemplateUtils.processTemplateIntoString(template, templateVo.getTemplateParams());
-			} catch (IOException e) {
-				log.error("read template error.", e);
-			} catch (TemplateException e) {
-				log.error("read template error.", e);
-			}
-		}
-		return null;
-	}
 
 	/**
 	 * 发送多个邮件。

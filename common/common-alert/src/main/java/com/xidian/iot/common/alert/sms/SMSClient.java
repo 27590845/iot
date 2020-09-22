@@ -1,100 +1,101 @@
 package com.xidian.iot.common.alert.sms;
 
-
+import com.aliyuncs.CommonRequest;
+import com.aliyuncs.CommonResponse;
+import com.aliyuncs.DefaultAcsClient;
+import com.aliyuncs.IAcsClient;
+import com.aliyuncs.exceptions.ClientException;
+import com.aliyuncs.exceptions.ServerException;
+import com.aliyuncs.http.MethodType;
+import com.aliyuncs.profile.DefaultProfile;
 import com.xidian.iot.common.alert.AlertClient;
 import com.xidian.iot.common.alert.AlertVo;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.List;
 
 /**
- * 短信客户端。此类需要注入短信数据源。
- * 
- * @author zhengrunjin
+ * 短信客户端
+ *
+ * @author wmr
  */
+@Slf4j
 public class SMSClient implements AlertClient {
+    //地域ID
+    @Setter
+    private String regionId;
+    //阿里云账号的ID
+    @Setter
+    private String accessKeyId;
+    //阿里云账号的密码
+    @Setter
+    private String accessSecret;
+    //阿里云api域
+    @Setter
+    private String sysDomain;
+    //阿里云api版本
+    @Setter
+    private String sysVersion;
+    //阿里云api操作
+    @Setter
+    private String sysAction;
+    //短信签名名称
+    @Setter
+    private String signName;
+    //短信模板ID
+    @Setter
+    private String templateCode;
 
-	/**
-	 * 短信数据源
-	 */
-	@Setter
-	private DataSource dataSource;
+    /**
+     * 发送一条短信
+     *
+     * @param vo 短信
+     *
+     */
+    @Override
+    public boolean send(AlertVo vo) {
+        SMSAlertVo smsAlertVo = (SMSAlertVo) vo;
+        //创建DefaulAcsClient实例并初始化
+        DefaultProfile profile = DefaultProfile.getProfile(regionId, accessKeyId, accessSecret);
+        IAcsClient client = new DefaultAcsClient(profile);
 
-	/**
-	 * 发送一条短信。
-	 * 
-	 * @param vo
-	 *            短信。
-	 */
-	public boolean send(AlertVo vo) {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		try {
-			SMSAlertVo messageVo = (SMSAlertVo) vo;
-			if (null != messageVo.getPhoneNumber() || null != messageVo.getContent()) {
-				String sql = "INSERT INTO OutBox(username,Mbno,Msg)VALUES(?,?,?)";
-				String sqlt = "INSERT INTO OutBox(username,Mbno,Msg,SendTime)VALUES(?,?,?,?)";
-				connection = getconn();
-				preparedStatement = connection.prepareStatement(null == messageVo.getSendTime() ? sql : sqlt);
-				preparedStatement.setString(1, messageVo.getUserName());
-				preparedStatement.setString(2, messageVo.getPhoneNumber());
-				preparedStatement.setString(3, messageVo.getContent());
-				if (null != messageVo.getSendTime()) {
-					preparedStatement.setDate(4, (Date) messageVo.getSendTime());
-				}
-				preparedStatement.execute();
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-				if (connection != null)
-					connection.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return true;
-	}
+        //设置短信参数
+        CommonRequest request = new CommonRequest();
+        request.setSysMethod(MethodType.POST);
+        request.setSysDomain(sysDomain);
+        request.setSysVersion(sysVersion);
+        request.setSysAction(sysAction);
+        request.putQueryParameter("RegionId", regionId);
+        request.putQueryParameter("PhoneNumbers",smsAlertVo.getPhoneNumber());
+        request.putQueryParameter("SignName",signName);
+        request.putQueryParameter("TemplateCode",templateCode);
+        request.putQueryParameter("TemplateParam","{\"code\":\""+smsAlertVo.getContent()+"\"}");
+        try {
+            CommonResponse response = client.getCommonResponse(request);  //发送短信
+            log.info(response.getData());
+        } catch (ServerException e) {
+            e.printStackTrace();
+            return false;
+        } catch (ClientException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 
-	/**
-	 * 发送多条短信。
-	 * 
-	 * @param list
-	 *            短信列表。
-	 */
-	public void send(List<AlertVo> list) {
-		if (null != list && list.size() > 0) {
-			for (AlertVo alertVo : list) {
-				send(alertVo);
-			}
-		}
-	}
-
-	/**
-	 * 获得连接。
-	 * 
-	 * @return 返回一个JDBC连接。
-	 * @throws SQLException
-	 *             获得连接异常。
-	 */
-	private Connection getconn() throws SQLException {
-		return dataSource.getConnection();
-	}
-
-	public static void main(String[] args) {
-		SMSAlertVo vo = new SMSAlertVo();
-		vo.setUserName("tester");
-		vo.setPhoneNumber("13910612064");
-		vo.setContent("this is a test message");
-		new SMSClient().send(vo);
-	}
+    /**
+     * 发送多条短信
+     *
+     * @param list 短信列表
+     *
+     */
+    @Override
+    public void send(List<AlertVo> list) {
+        if (null != list && list.size() > 0) {
+            for (AlertVo alertVo : list) {
+                send(alertVo);
+            }
+        }
+    }
 }

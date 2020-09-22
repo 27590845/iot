@@ -30,6 +30,8 @@
     <import resource="application-kafka-producer-def.xml"/>
     <import resource="application-chain.xml"/>
 
+    <import resource="application-activemq-def.xml"/>
+
     <task:executor id="taskExecutor"
                    pool-size="${thread.pool.corePoolSize}-${thread.pool.maxPoolSize}"
                    queue-capacity="${thread.pool.queueCapacity}" />
@@ -45,4 +47,18 @@
             </list>
         </constructor-arg>
     </bean>
+
+    <!-- 站内信主题监听Topic-->
+        <bean id="dataTopic" class="org.apache.activemq.command.ActiveMQTopic">
+            <constructor-arg>
+                <value>SiteLetter</value>
+            </constructor-arg>
+        </bean>
+    <!-- 站内信监听类 -->
+        <bean id="receive" class="com.xidian.iot.datacenter.listener.SiteLetterListener"/>
+        <bean id="dataListener" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+            <property name="connectionFactory" ref="jmsFactory" />
+            <property name="destination" ref="dataTopic" />
+            <property name="messageListener" ref="receive" />
+        </bean>
 </beans>

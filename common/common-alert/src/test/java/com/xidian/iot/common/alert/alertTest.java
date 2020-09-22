@@ -10,7 +10,7 @@ import java.io.IOException;
 @Component
 public class alertTest {
 
-    @SendAlert(alertType = AlertType.EMAIL, destination = "123456@qq.com", content = "报警信息")
+    @SendAlert(alertType = 2, destination = "654353294", content = "报警信息alert")
     public void alert1(){
 
         System.out.println(1 / 0);

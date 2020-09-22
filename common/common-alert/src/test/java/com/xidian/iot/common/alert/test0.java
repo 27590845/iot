@@ -11,6 +11,11 @@ public class test0 {
         ApplicationContext ac = new ClassPathXmlApplicationContext("spring/application.xml");
         alertTest at = (alertTest) ac.getBean("alertTest");
 
-        at.alert1();
+        try{
+            at.alert1();
+        }
+        catch (Exception e){
+            System.out.println("dddd");
+        }
     }
 }

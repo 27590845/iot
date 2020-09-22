@@ -12,7 +12,8 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited()
 public @interface SendAlert {
-    AlertType alertType() default AlertType.SITE;
+    byte alertType();
+    //AlertType alertType() default AlertType.SITE;
     String destination();
     String content();
 }
