@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xidian.iot.database.mapper.custom.NodeCondCustomMapper">
-    <resultMap id="BaseResultMap" type="com.xidian.iot.database.entity.NodeCond">
-        <id column="nc_id" jdbcType="BIGINT" property="ncId"/>
-        <result column="na_id" jdbcType="BIGINT" property="naId"/>
-        <result column="scene_id" jdbcType="BIGINT" property="sceneId"/>
-        <result column="node_id" jdbcType="BIGINT" property="nodeId"/>
-        <result column="nt_id" jdbcType="BIGINT" property="ntId"/>
-        <result column="nc_op" jdbcType="TINYINT" property="ncOp"/>
-        <result column="nc_val" jdbcType="VARCHAR" property="ncVal"/>
-        <result column="node_sn" jdbcType="VARCHAR" property="nodeSn"/>
-        <result column="scene_sn" jdbcType="VARCHAR" property="sceneSn"/>
-        <result column="nc_fit_time" jdbcType="INTEGER" property="ncFitTime"/>
-    </resultMap>
     <select id="getNcIdsByNtId" parameterType="java.lang.Long" resultType="java.lang.Long">
         select nc.nc_id from node_cond nc where nc.nt_id=#{ntId,jdbcType=BIGINT};
     </select>
@@ -28,4 +16,13 @@
         where nc.scene_sn=#{sceneSn,jdbcType=VARCHAR}
         and nc.node_sn=#{nodeSn,jdbcType=VARCHAR};
     </select>
+    <insert id="addBatch" parameterType="java.util.List">
+        insert into node_cond (nc_id, na_id, nt_id, nc_op, nc_val, node_sn, scene_sn, nc_fit_time)
+        values
+        <foreach collection="ncs" item="nc" separator=",">
+            (#{nc.ncId,jdbcType=BIGINT}, #{nc.naId,jdbcType=BIGINT}, #{nc.ntId,jdbcType=BIGINT},
+            #{nc.ncOp,jdbcType=TINYINT}, #{nc.ncVal,jdbcType=VARCHAR}, #{nc.nodeSn,jdbcType=VARCHAR},
+            #{nc.sceneSn,jdbcType=VARCHAR}, #{nc.ncFitTime,jdbcType=INTEGER})
+        </foreach>
+    </insert>
 </mapper>

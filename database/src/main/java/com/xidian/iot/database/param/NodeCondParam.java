@@ -2,6 +2,7 @@ package com.xidian.iot.database.param;
 
 import com.xidian.iot.database.entity.NodeCond;
 import com.xidian.iot.database.valid.EnumValidation;
+import com.xidian.iot.database.valid.NumLenValidation;
 import com.xidian.iot.database.valid.ValidGroup;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -22,7 +23,7 @@ public class NodeCondParam extends NodeCond {
 
     @ApiModelProperty("节点标识")
     @NotNull(groups = {ValidGroup.INSERT.class}, message = "节点标识不能为空")
-    @Pattern(groups = {ValidGroup.INSERT.class}, regexp = "/[0-9a-zA-Z]{1,6}/", message = "非法的节点标识")
+    @Pattern(groups = {ValidGroup.INSERT.class}, regexp = "[0-9a-zA-Z]{1,6}", message = "非法的节点标识")
     @Override
     public String getNodeSn() {
         return super.getNodeSn();
@@ -30,7 +31,7 @@ public class NodeCondParam extends NodeCond {
 
     @ApiModelProperty("场景标识")
     @NotNull(groups = {ValidGroup.INSERT.class}, message = "场景标识不能为空")
-    @Pattern(groups = {ValidGroup.INSERT.class}, regexp = "/[0-9a-zA-Z]{1,6}/", message = "非法的场景标识")
+    @Pattern(groups = {ValidGroup.INSERT.class}, regexp = "[0-9a-zA-Z]{1,6}", message = "非法的场景标识")
     @Override
     public String getSceneSn() {
         return super.getSceneSn();
@@ -38,7 +39,7 @@ public class NodeCondParam extends NodeCond {
 
     @ApiModelProperty("关联节点属性的ID")
     @NotNull(groups = {ValidGroup.INSERT.class}, message = "节点属性ID不能为空")
-    @Pattern(groups = {ValidGroup.INSERT.class}, regexp = "/^\\d{6}|\\d{19}$/", message = "非法的节点属性ID")
+    @NumLenValidation(lens = {18,19}, binary = false, message = "非法的节点属性ID")
     @Override
     public Long getNaId() {
         return super.getNaId();
@@ -54,7 +55,7 @@ public class NodeCondParam extends NodeCond {
 
     @ApiModelProperty("触发器条件的操作数")
     @NotNull(groups = {ValidGroup.INSERT.class}, message = "操作数不能为空")
-    @Pattern(groups = {ValidGroup.INSERT.class}, regexp = "/^(-?\\d+)(\\.\\d+)?$/", message = "操作数必须是合法有理数")
+    @Pattern(groups = {ValidGroup.INSERT.class}, regexp = "^(-?\\d+)(\\.\\d+)?$", message = "操作数必须是合法有理数")
     @Override
     public String getNcVal() {
         return super.getNcVal();

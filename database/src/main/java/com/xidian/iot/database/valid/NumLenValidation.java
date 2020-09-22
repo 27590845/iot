@@ -13,17 +13,17 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * @author mrl
- * @Title: ReptValidation
+ * @Title: NumLenValidation
  * @Package
- * @Description: 校验传来的数组或List是否有重复的元素(通过equal函数)
- * @date 2020/9/20 5:42 下午
+ * @Description: 整数长度校验
+ * @date 2020/9/22 10:50 上午
  */
 @Documented
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RUNTIME)
-@Repeatable(ReptValidation.List.class)
-@Constraint(validatedBy = {ReptValidator.class})
-public @interface ReptValidation {
+@Repeatable(NumLenValidation.List.class)
+@Constraint(validatedBy = {NumLenValidator.class})
+public @interface NumLenValidation {
 
     String message() default "{*.validation.constraint.Enum.message}";
 
@@ -31,10 +31,28 @@ public @interface ReptValidation {
 
     Class<? extends Payload>[] payload() default {};
 
+    /**
+     * 待验证参数的长度值域
+     * @return
+     */
+    int[] lens();
+
+    /**
+     * lens()指的是否是二进制下的长度，默认为false，即十进制下的长度
+     * @return
+     */
+    boolean binary() default false;
+
+    /**
+     * 枚举类的类名，该枚举类内存储了指定的集合
+     * @return Class
+     */
+    Class<?> clazz() default Object.class;
+
     @Documented
     @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
     @Retention(RUNTIME)
     @interface List {
-        ReptValidation[] value();
+        NumLenValidation[] value();
     }
 }

@@ -4,6 +4,8 @@ import com.xidian.iot.database.entity.NodeTrig;
 import com.xidian.iot.database.entity.custom.NodeTrigExt;
 import com.xidian.iot.database.param.NodeTrigParam;
 
+import java.util.List;
+
 /**
  * @author mrl
  * @Title: NodeTrigService
@@ -12,6 +14,13 @@ import com.xidian.iot.database.param.NodeTrigParam;
  * @date 2020/9/10 9:52 下午
  */
 public interface NodeTrigService {
+
+    /**
+     * 通过{@link com.xidian.iot.database.entity.NodeActCmd}.ncId列表获取NodeTrig.ntId列表
+     * @param ncIds
+     * @return
+     */
+    List<Long> getNtIdsByNcIds(List<Long> ncIds);
 
     /**
      * 根据NodeTrig.ntId获取NodeTrig的拓展类
@@ -28,9 +37,9 @@ public interface NodeTrigService {
     NodeTrigExt updateNodeTrigExtById(NodeTrigExt nodeTrigExt);
 
     /**
-     * 添加一套规则引擎，包含nodeActCmd的添加，nodeCond的添加，nodeTrig的添加，以及一些逻辑校验
-     * @param nodeTrigParam
+     * 添加一条触发器数据
+     * @param nodeTrig
      * @return
      */
-    int addRuleEngine(NodeTrigParam nodeTrigParam);
+    int addNodeTrig(NodeTrig nodeTrig);
 }
