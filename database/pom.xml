@@ -137,7 +137,7 @@
           <!--jdbc url-->
           <jdbcUrl>jdbc:mysql://test.public.mysql:3306/iotdata?characterEncoding=UTF-8</jdbcUrl>
           <!--生成文件类型-->
-          <fileType>Markdown</fileType>
+          <fileType>HTML</fileType>
           <!--打开文件输出目录-->
           <openOutputDir>false</openOutputDir>
           <!--生成模板-->

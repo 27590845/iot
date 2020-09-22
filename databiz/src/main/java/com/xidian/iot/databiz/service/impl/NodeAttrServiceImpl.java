@@ -9,7 +9,6 @@ import com.xidian.iot.database.entity.NodeAttrExample;
 import com.xidian.iot.database.mapper.NodeAttrMapper;
 import com.xidian.iot.database.mapper.custom.NodeAttrCustomMapper;
 import com.xidian.iot.database.param.NodeAttrParam;
-import com.xidian.iot.database.param.NodeAttrUpdateParam;
 import com.xidian.iot.databiz.service.NodeAttrService;
 import com.xidian.iot.databiz.service.NodeService;
 import com.xidian.iot.databiz.service.UidGenerator;
@@ -74,7 +73,7 @@ public class NodeAttrServiceImpl implements NodeAttrService {
             } else {
                 List<NodeAttr> list = nodeAttrs.stream().map(nodeAttrParam -> {
                     Long naId = uidGenerator.getUID();
-                    return nodeAttrParam.build(naId, node.getNodeId());
+                    return nodeAttrParam.build(sceneSn, nodeSn,naId, node.getNodeId());
                 }).collect(Collectors.toList());
                 nodeAttrCustomMapper.insertBatch(list);
                 return list;
@@ -84,6 +83,7 @@ public class NodeAttrServiceImpl implements NodeAttrService {
 
     @Override
     public void delNodeAttrs(String sceneSn, String nodeSn, List<String> naKeyLists) {
+        //判断是否存在此节点
         Node node = nodeService.getNodeBySn(sceneSn, nodeSn);
         NodeAttrExample attrExample = new NodeAttrExample();
         NodeAttrExample.Criteria criteria = attrExample.createCriteria().andNodeIdEqualTo(node.getNodeId());
@@ -119,7 +119,7 @@ public class NodeAttrServiceImpl implements NodeAttrService {
     }
 
     @Override
-    public void updateNodeAttr(Long naId, NodeAttrUpdateParam param) {
+    public void updateNodeAttr(Long naId, NodeAttrParam param) {
         //查看是否存在此节点属性naId
         NodeAttr nodeAttr = getNodeAttrById(naId);
         //如果更新的是naKey查看该节点下是否已经存在此节点属性naKey

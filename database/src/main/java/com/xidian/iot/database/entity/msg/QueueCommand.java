@@ -49,14 +49,13 @@ public class QueueCommand implements Serializable {
     /**
      * 添加一组命令。
      *
-     * @param key 命令组key。
-     * @param value 命令组value。
+     * @param value 命令value。
      */
-    public void addCommand(String key, String value) {
+    public void addCommand(String value) {
         if (commands == null) {
             commands = new HashMap<String, String>();
         }
-        commands.put(key, value);
+        commands.put("cmd", value);
     }
 
     /**

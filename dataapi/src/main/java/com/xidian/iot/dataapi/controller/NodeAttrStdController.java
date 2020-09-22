@@ -1,6 +1,8 @@
 package com.xidian.iot.dataapi.controller;
 
 import com.xidian.iot.dataapi.controller.res.HttpResult;
+import com.xidian.iot.dataapi.controller.res.Page;
+import com.xidian.iot.database.entity.NodeAttrStd;
 import com.xidian.iot.database.param.NodeAttrStdParam;
 import com.xidian.iot.databiz.service.NodeAttrStdService;
 import io.swagger.annotations.Api;
@@ -27,7 +29,10 @@ public class NodeAttrStdController {
     @GetMapping("/list")
     public HttpResult getNodeAttrStds(@ApiParam(name = "page",value = "页号") @RequestParam(value = "page", required = false, defaultValue = "1") int page,
                                     @ApiParam(name = "limit",value = "页数") @RequestParam(value = "limit", required = false, defaultValue = "5") int limit){
-        return HttpResult.responseOK(nodeAttrStdService.getNodeAttrStds(page,limit));
+        int total = nodeAttrStdService.getCount();
+        Page<NodeAttrStd> nodeAttrStdPage = new Page<NodeAttrStd>(total,page,limit);
+        nodeAttrStdPage.setData(nodeAttrStdService.getNodeAttrStds(page,limit));
+        return HttpResult.responseOK(nodeAttrStdPage);
     }
 
     @ApiOperation(value = "根据nasId获取指定节点属性模版")

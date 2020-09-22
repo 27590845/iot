@@ -65,6 +65,7 @@ public class NodeTrigParam extends NodeTrig {
     }
 
     @ApiModelProperty("失效时间，当前时间超过该时间则触发器失效，默认永不失效")
+    @Future
     @Override
     public Date getNtExpr() {
         return super.getNtExpr();
