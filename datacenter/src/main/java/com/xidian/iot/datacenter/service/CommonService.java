@@ -63,8 +63,8 @@ public class CommonService {
         List<NodeCondExt> nodeCondExts = getNodeCondExts(sceneSn, nodeSn);
         Map<String, String> naMap = nodeAttrService.getNaMapBySn(sceneSn, nodeSn);
         nodeCondExts = nodeCondExts.stream()
-                .filter(nodeCondExt -> naKeys.contains(naMap.get(String.valueOf(nodeCondExt.getNcId())))).collect(Collectors.toList());
-        nodeCondExts.forEach(nodeCondExt -> nodeCondExt.setNaKey(naMap.get(String.valueOf(nodeCondExt.getNcId()))));
+                .filter(nodeCondExt -> naKeys.contains(naMap.get(String.valueOf(nodeCondExt.getNaId())))).collect(Collectors.toList());
+        nodeCondExts.forEach(nodeCondExt -> nodeCondExt.setNaKey(naMap.get(String.valueOf(nodeCondExt.getNaId()))));
         return nodeCondExts;
     }
 

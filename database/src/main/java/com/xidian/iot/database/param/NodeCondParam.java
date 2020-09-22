@@ -31,7 +31,7 @@ public class NodeCondParam extends NodeCond {
 
     @ApiModelProperty("场景标识")
     @NotNull(groups = {ValidGroup.INSERT.class}, message = "场景标识不能为空")
-    @Pattern(groups = {ValidGroup.INSERT.class}, regexp = "[0-9a-zA-Z]{1,6}", message = "非法的场景标识")
+    @Pattern(groups = {ValidGroup.INSERT.class}, regexp = "[0-9a-zA-Z]{1,20}", message = "非法的场景标识")
     @Override
     public String getSceneSn() {
         return super.getSceneSn();

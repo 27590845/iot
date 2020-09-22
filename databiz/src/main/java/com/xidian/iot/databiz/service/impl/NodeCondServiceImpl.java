@@ -59,9 +59,9 @@ public class NodeCondServiceImpl implements NodeCondService {
         return nodeCondExt;
     }
 
-    @CacheEvict(value = "NodeCondExt", key = "'getNodeCondExtById:'+#nodeCondExt.ncId")
+    @CacheEvict(value = "NodeCondExt", key = "'getNodeCondExtById:'+#ncId")
     @Override
-    public void cleanNodeCondById(Long ncId) {}
+    public void cleanNodeCondById(Long ncId) { }
 
     @Override
     public List<NodeCond> getNodeCondsByNtId(Long ntId) {
@@ -80,6 +80,6 @@ public class NodeCondServiceImpl implements NodeCondService {
     public int delNodeCondByNtId(Long ntId) {
         NodeCondExample nodeCondExample = new NodeCondExample();
         nodeCondExample.createCriteria().andNtIdEqualTo(ntId);
-        return nodeCondMapper.deleteByPrimaryKey(ntId);
+        return nodeCondMapper.deleteByExample(nodeCondExample);
     }
 }

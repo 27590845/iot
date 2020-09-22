@@ -53,11 +53,11 @@ public class RuleEngineServiceImpl implements RuleEngineService {
     public int delRuleEngine(Long ntId) {
         //删除触发器关联的nodeActCmd
         int success = nodeActCmdService.delNodeActCmdByNtId(ntId);
-        //删除触发器关联的nodeCond
-        success += nodeCondService.delNodeCondByNtId(ntId);
         //获取触发器关联的nodeCond.ncId，然后手动清理缓存中的nodeCondExt
         List<Long> ncIds = nodeCondService.getNcIdsByNtId(ntId);
         ncIds.stream().forEach(ncId -> nodeCondService.cleanNodeCondById(ncId));
+        //删除触发器关联的nodeCond
+        success += nodeCondService.delNodeCondByNtId(ntId);
         //删除触发器
         success += nodeTrigService.delNodeTrigByNtId(ntId);
         return success;

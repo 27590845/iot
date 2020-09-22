@@ -41,7 +41,7 @@
         <constructor-arg index="1" ref="messageListener"/>
         <constructor-arg index="2">
             <list>
-                <value>hello_topic.A18600</value>
+                <value>hello_topic.186610102211000001</value>
             </list>
         </constructor-arg>
     </bean>

@@ -29,8 +29,8 @@ import java.util.stream.Collectors;
 @ContextConfiguration(locations = {"classpath:spring/application-context.xml"})
 public class AppTest {
 
-    final static String sceneSn = "A18600";
-    final static String nodeSn = "K99990";
+    final static String sceneSn = "186610102211000001";
+    final static String nodeSn = "000001";
     final static String topic = "hello_topic."+sceneSn;
 
     @Resource
