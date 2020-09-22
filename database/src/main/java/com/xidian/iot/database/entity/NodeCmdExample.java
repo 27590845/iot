@@ -224,66 +224,6 @@ public class NodeCmdExample {
             return (Criteria) this;
         }
 
-        public Criteria andNcgIdIsNull() {
-            addCriterion("ncg_id is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andNcgIdIsNotNull() {
-            addCriterion("ncg_id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andNcgIdEqualTo(Long value) {
-            addCriterion("ncg_id =", value, "ncgId");
-            return (Criteria) this;
-        }
-
-        public Criteria andNcgIdNotEqualTo(Long value) {
-            addCriterion("ncg_id <>", value, "ncgId");
-            return (Criteria) this;
-        }
-
-        public Criteria andNcgIdGreaterThan(Long value) {
-            addCriterion("ncg_id >", value, "ncgId");
-            return (Criteria) this;
-        }
-
-        public Criteria andNcgIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("ncg_id >=", value, "ncgId");
-            return (Criteria) this;
-        }
-
-        public Criteria andNcgIdLessThan(Long value) {
-            addCriterion("ncg_id <", value, "ncgId");
-            return (Criteria) this;
-        }
-
-        public Criteria andNcgIdLessThanOrEqualTo(Long value) {
-            addCriterion("ncg_id <=", value, "ncgId");
-            return (Criteria) this;
-        }
-
-        public Criteria andNcgIdIn(List<Long> values) {
-            addCriterion("ncg_id in", values, "ncgId");
-            return (Criteria) this;
-        }
-
-        public Criteria andNcgIdNotIn(List<Long> values) {
-            addCriterion("ncg_id not in", values, "ncgId");
-            return (Criteria) this;
-        }
-
-        public Criteria andNcgIdBetween(Long value1, Long value2) {
-            addCriterion("ncg_id between", value1, value2, "ncgId");
-            return (Criteria) this;
-        }
-
-        public Criteria andNcgIdNotBetween(Long value1, Long value2) {
-            addCriterion("ncg_id not between", value1, value2, "ncgId");
-            return (Criteria) this;
-        }
-
         public Criteria andNcContentIsNull() {
             addCriterion("nc_content is null");
             return (Criteria) this;
