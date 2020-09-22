@@ -73,6 +73,7 @@ public class NodeTrigParam extends NodeTrig {
     @Getter
     @Setter
     @NotNull(groups = {ValidGroup.INSERT.class}, message = "触发器条件列表不能为空")
+    @Size(min = 1, message = "触发器至少包含一个条件")
     @ReptValidation(groups = {ValidGroup.INSERT.class}, message = "条件列表中不能有重复")
     @Valid
     private List<NodeCondParam> nodeCondParams;

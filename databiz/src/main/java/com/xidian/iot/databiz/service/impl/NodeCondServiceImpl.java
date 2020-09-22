@@ -2,21 +2,18 @@ package com.xidian.iot.databiz.service.impl;
 
 import com.xidian.iot.database.entity.NodeCond;
 import com.xidian.iot.database.entity.NodeCondExample;
-import com.xidian.iot.database.entity.NodeTrig;
 import com.xidian.iot.database.entity.custom.NodeCondExt;
 import com.xidian.iot.database.mapper.NodeCondMapper;
 import com.xidian.iot.database.mapper.custom.NodeCondCustomMapper;
 import com.xidian.iot.databiz.service.NodeCondService;
-import com.xidian.iot.databiz.service.NodeTrigService;
 import com.xidian.iot.databiz.service.UidGenerator;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author mrl
@@ -48,6 +45,13 @@ public class NodeCondServiceImpl implements NodeCondService {
     }
 
     @Override
+    public List<NodeCond> getNodeCondsByNtId(Long ntId) {
+        NodeCondExample nodeCondExample = new NodeCondExample();
+        nodeCondExample.createCriteria().andNtIdEqualTo(ntId);
+        return nodeCondMapper.selectByExample(nodeCondExample);
+    }
+
+    @Override
     @Cacheable(value = "NodeCondExt", key = "'getNodeCondExtById:'+#ncId")
     public NodeCondExt getNodeCondExtById(Long ncId) {
         NodeCond nodeCond = nodeCondMapper.selectByPrimaryKey(ncId);
@@ -61,7 +65,8 @@ public class NodeCondServiceImpl implements NodeCondService {
     }
 
     @Override
-    public NodeCond addNodeCond(NodeCond nodeCond) {
-        return null;
+    public int addNodeConds(List<NodeCond> nodeConds) {
+        nodeConds.stream().forEach(nc -> nc.setNcId(uidGenerator.getUID()));
+        return nodeCondCustomMapper.addBatch(nodeConds);
     }
 }

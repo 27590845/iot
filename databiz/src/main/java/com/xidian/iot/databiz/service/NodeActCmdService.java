@@ -19,4 +19,11 @@ public interface NodeActCmdService {
      * @return
      */
     List<NodeActCmd> getNodeActCmdByNtId(Long ntId);
+
+    /**
+     * 批量添加nodeActCmd 应保证nodeActCmd.ncId非空
+     * @param nodeActCmds
+     * @return
+     */
+    int addNodeActCmds(List<NodeActCmd> nodeActCmds);
 }

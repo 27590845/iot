@@ -67,13 +67,12 @@ public class SendCmdTask extends BaseTask implements Runnable {
     public void run() {
         // 查询触发器的命令列表
         for(NodeActCmd nodeActCmd : nodeActCmdService.getNodeActCmdByNtId(ntId)){
-            Node node = nodeService.getNodeBySn(nodeActCmd.getSceneSn(), nodeActCmd.getNodeSn());
             NodeCmd nodeCmd = nodeCmdService.getNodeCmdById(nodeActCmd.getNcId());
             if(nodeCmd != null){
                 NodeCmdGroup nodeCmdGroup = nodeCmdGroupService.getNodeCmdGroupById(nodeCmd.getNcgId());
                 // 发送命令
-                sendCommand(nodeActCmd.getSceneSn(),
-                        nodeActCmd.getNodeSn(),
+                sendCommand(nodeCmd.getSceneSn(),
+                        nodeCmd.getNodeSn(),
                         nodeCmdGroup.getNcgKey(),
                         nodeCmd.getNcContent());
             }

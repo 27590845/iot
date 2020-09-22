@@ -1,9 +1,14 @@
 package com.xidian.iot.databiz.service.impl;
 
 import com.xidian.iot.database.entity.NodeActCmd;
+import com.xidian.iot.database.entity.NodeActCmdExample;
+import com.xidian.iot.database.mapper.NodeActCmdMapper;
+import com.xidian.iot.database.mapper.custom.NodeActCmdCustomMapper;
 import com.xidian.iot.databiz.service.NodeActCmdService;
+import com.xidian.iot.databiz.service.UidGenerator;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -15,8 +20,24 @@ import java.util.List;
  */
 @Service
 public class NodeActCmdServiceImpl implements NodeActCmdService {
+
+    @Resource
+    private UidGenerator uidGenerator;
+    @Resource
+    NodeActCmdMapper nodeActCmdMapper;
+    @Resource
+    private NodeActCmdCustomMapper nodeActCmdCustomMapper;
+
     @Override
     public List<NodeActCmd> getNodeActCmdByNtId(Long ntId) {
-        return null;
+        NodeActCmdExample nodeActCmdExample = new NodeActCmdExample();
+        nodeActCmdExample.createCriteria().andNtIdEqualTo(ntId);
+        return nodeActCmdMapper.selectByExample(nodeActCmdExample);
+    }
+
+    @Override
+    public int addNodeActCmds(List<NodeActCmd> nodeActCmds) {
+        nodeActCmds.stream().forEach(nac -> nac.setNacId(uidGenerator.getUID()));
+        return nodeActCmdCustomMapper.addBatch(nodeActCmds);
     }
 }

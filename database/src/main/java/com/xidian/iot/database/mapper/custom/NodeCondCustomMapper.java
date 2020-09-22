@@ -19,4 +19,6 @@ public interface NodeCondCustomMapper {
     List<Long> getNcIdsBySn(@Param("sceneSn") String sceneSn, @Param("nodeSn") String nodeSn);
 
     List<Long> getNcIdsByNtId(@Param("ntId") Long ntId);
+
+    int addBatch(@Param("ncs") List<NodeCond> nodeConds);
 }

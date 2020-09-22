@@ -30,6 +30,13 @@ public interface NodeCondService {
     List<Long> getNcIdsByNtId(Long ntId);
 
     /**
+     * 通过NodeTrig.ntId获取nodeCond列表
+     * @param ntId
+     * @return
+     */
+    List<NodeCond> getNodeCondsByNtId(Long ntId);
+
+    /**
      * 通过nodeCond.ncId获取NodeCondExt
      * @param ncId
      * @return
@@ -43,9 +50,9 @@ public interface NodeCondService {
     NodeCondExt changeNodeCondExt(NodeCondExt nodeCondExt);
 
     /**
-     * 添加一个NodeCond
-     * @param nodeCond
+     * 批量添加NodeCond 应保证除nodeCond.ncId，其他字段非空，否则以后会出问题
+     * @param nodeConds
      * @return
      */
-    NodeCond addNodeCond(NodeCond nodeCond);
+    int addNodeConds(List<NodeCond> nodeConds);
 }

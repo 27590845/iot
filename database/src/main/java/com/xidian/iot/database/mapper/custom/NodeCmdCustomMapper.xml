@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xidian.iot.database.mapper.custom.NodeActCmdCustomMapper">
+    <insert id="addBatch" parameterType="java.util.List">
+        insert into node_cmd (nc_id, node_id, ncg_id, nc_content, nc_name, scene_sn,node_sn)
+        values
+        <foreach collection="ncs" item="nc" separator=",">
+            (#{nc.ncId,jdbcType=BIGINT}, #{nc.nodeId,jdbcType=BIGINT}, #{nc.ncgId,jdbcType=BIGINT},
+            #{nc.ncContent,jdbcType=VARCHAR}, #{nc.ncName,jdbcType=VARCHAR}, #{nc.sceneSn,jdbcType=VARCHAR},
+            #{nc.nodeSn,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+</mapper>

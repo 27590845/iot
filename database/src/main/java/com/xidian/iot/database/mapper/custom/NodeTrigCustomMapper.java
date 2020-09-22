@@ -1,5 +1,7 @@
 package com.xidian.iot.database.mapper.custom;
 
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -16,5 +18,5 @@ public interface NodeTrigCustomMapper {
      * @param ncIds
      * @return
      */
-    List<Long> getNtIdsByNcIds(List<Long> ncIds);
+    List<Long> getNtIdsByNcIds(@Param("ncIds") List<Long> ncIds);
 }

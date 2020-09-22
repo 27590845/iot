@@ -20,7 +20,7 @@ public class NodeActCmdParam extends NodeActCmd {
 
     @ApiModelProperty("动作关联的具体命令")
     @NotNull(groups = {ValidGroup.INSERT.class}, message = "关联的具体命令不能为空")
-    @Pattern(groups = {ValidGroup.INSERT.class}, regexp = "/^\\d{6}|\\d{19}$/", message = "非法的命令ID")
+//    @Pattern(groups = {ValidGroup.INSERT.class}, regexp = "/^\\d{6}|\\d{19}$/", message = "非法的命令ID")
     @Override
     public Long getNcId() {
         return super.getNcId();

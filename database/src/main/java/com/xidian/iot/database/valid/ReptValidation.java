@@ -22,7 +22,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RUNTIME)
 @Repeatable(ReptValidation.List.class)
-@Constraint(validatedBy = {EnumValidator.class})
+@Constraint(validatedBy = {ReptValidator.class})
 public @interface ReptValidation {
 
     String message() default "{*.validation.constraint.Enum.message}";

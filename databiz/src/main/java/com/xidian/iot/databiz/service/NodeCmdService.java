@@ -2,6 +2,8 @@ package com.xidian.iot.databiz.service;
 
 import com.xidian.iot.database.entity.NodeCmd;
 
+import java.util.List;
+
 /**
  * @author mrl
  * @Title: NodeCmdService
@@ -17,4 +19,11 @@ public interface NodeCmdService {
      * @return
      */
     NodeCmd getNodeCmdById(Long ncId);
+
+    /**
+     * 批量添加NodeCmd, 应保证所有字段非空
+     * @param nodeCmds
+     * @return
+     */
+    int addNodeCmds(List<NodeCmd> nodeCmds);
 }

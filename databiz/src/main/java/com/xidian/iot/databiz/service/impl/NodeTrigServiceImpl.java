@@ -1,12 +1,19 @@
 package com.xidian.iot.databiz.service.impl;
 
+import com.xidian.iot.common.util.exception.BusinessException;
+import com.xidian.iot.database.entity.NodeActCmd;
+import com.xidian.iot.database.entity.NodeCond;
 import com.xidian.iot.database.entity.NodeTrig;
 import com.xidian.iot.database.entity.custom.NodeTrigExt;
 import com.xidian.iot.database.mapper.NodeTrigMapper;
 import com.xidian.iot.database.mapper.custom.NodeTrigCustomMapper;
 import com.xidian.iot.database.param.NodeActCmdParam;
+import com.xidian.iot.database.param.NodeCondParam;
 import com.xidian.iot.database.param.NodeTrigParam;
+import com.xidian.iot.databiz.service.NodeActCmdService;
+import com.xidian.iot.databiz.service.NodeCondService;
 import com.xidian.iot.databiz.service.NodeTrigService;
+import com.xidian.iot.databiz.service.UidGenerator;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -26,9 +33,16 @@ import java.util.stream.Collectors;
 public class NodeTrigServiceImpl implements NodeTrigService {
 
     @Resource
+    private UidGenerator uidGenerator;
+    @Resource
     private NodeTrigMapper nodeTrigMapper;
     @Resource
     private NodeTrigCustomMapper nodeTrigCustomMapper;
+
+    @Override
+    public List<Long> getNtIdsByNcIds(List<Long> ncIds) {
+        return nodeTrigCustomMapper.getNtIdsByNcIds(ncIds);
+    }
 
     @Cacheable(value = "NodeTrigExt", key = "'getNodeTrigExtById:'+#ntId")
     @Override
@@ -45,14 +59,8 @@ public class NodeTrigServiceImpl implements NodeTrigService {
     }
 
     @Override
-    public int addRuleEngine(NodeTrigParam nodeTrigParam) {
-        List<Long> ntIds = nodeTrigCustomMapper.getNtIdsByNcIds(
-                nodeTrigParam.getNodeActCmdParams().stream().map(nac -> nac.getNcId()).collect(Collectors.toList()));
-        if(ntIds!=null && ntIds.size()>0){
-
-        }
-        return 0;
+    public int addNodeTrig(NodeTrig nodeTrig) {
+        nodeTrig.setNtId(uidGenerator.getUID());
+        return nodeTrigMapper.insert(nodeTrig);
     }
-
-
 }
