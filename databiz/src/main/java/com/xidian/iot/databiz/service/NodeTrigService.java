@@ -37,6 +37,13 @@ public interface NodeTrigService {
     NodeTrigExt updateNodeTrigExtById(NodeTrigExt nodeTrigExt);
 
     /**
+     * 删除一条触发器
+     * @param ntId
+     * @return
+     */
+    int delNodeTrigByNtId(Long ntId);
+
+    /**
      * 添加一条触发器数据
      * @param nodeTrig
      * @return

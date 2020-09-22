@@ -1,26 +1,19 @@
 package com.xidian.iot.databiz.service.impl;
 
 import com.xidian.iot.common.util.exception.BusinessException;
-import com.xidian.iot.database.entity.NodeActCmd;
-import com.xidian.iot.database.entity.NodeCond;
 import com.xidian.iot.database.entity.NodeTrig;
 import com.xidian.iot.database.entity.custom.NodeTrigExt;
 import com.xidian.iot.database.mapper.NodeTrigMapper;
 import com.xidian.iot.database.mapper.custom.NodeTrigCustomMapper;
-import com.xidian.iot.database.param.NodeActCmdParam;
-import com.xidian.iot.database.param.NodeCondParam;
-import com.xidian.iot.database.param.NodeTrigParam;
-import com.xidian.iot.databiz.service.NodeActCmdService;
-import com.xidian.iot.databiz.service.NodeCondService;
 import com.xidian.iot.databiz.service.NodeTrigService;
 import com.xidian.iot.databiz.service.UidGenerator;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author mrl
@@ -56,6 +49,12 @@ public class NodeTrigServiceImpl implements NodeTrigService {
     public NodeTrigExt updateNodeTrigExtById(NodeTrigExt nodeTrigExt) {
 //        nodeTrigMapper.updateByExample();
         return nodeTrigExt;
+    }
+
+    @CacheEvict(value = "NodeTrigExt", key = "'getNodeTrigExtById:'+#ntId")
+    @Override
+    public int delNodeTrigByNtId(Long ntId) {
+        return nodeTrigMapper.deleteByPrimaryKey(ntId);
     }
 
     @Override

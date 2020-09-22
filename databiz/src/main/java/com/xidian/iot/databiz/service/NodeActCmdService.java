@@ -21,6 +21,13 @@ public interface NodeActCmdService {
     List<NodeActCmd> getNodeActCmdByNtId(Long ntId);
 
     /**
+     * 根据nodeActCmd.ntId删除nodeActCmd，(无清缓存操作)
+     * @param ntId
+     * @return
+     */
+    int delNodeActCmdByNtId(Long ntId);
+
+    /**
      * 批量添加nodeActCmd 应保证nodeActCmd.ncId非空
      * @param nodeActCmds
      * @return
