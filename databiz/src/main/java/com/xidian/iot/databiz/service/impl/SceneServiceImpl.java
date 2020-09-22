@@ -118,13 +118,13 @@ public class SceneServiceImpl implements SceneService {
 
     @Override
     public SceneVo getSceneVoBySn(String sceneSn) {
-        log.info(String.valueOf(System.currentTimeMillis()));
+//        log.info(String.valueOf(System.currentTimeMillis()));
         //考虑到之后分表分库所有的查询不使用联合查询
         SceneVo sceneVo1 = sceneCustomMapper.getSceneVoBySn(sceneSn);
-        log.info(String.valueOf(System.currentTimeMillis()));
-        SceneVo sceneVo2 = sceneCustomMapper.getSceneVoBySnJoin(sceneSn);
-        log.info(String.valueOf(System.currentTimeMillis()));
-        return sceneVo2;
+//        log.info(String.valueOf(System.currentTimeMillis()));
+//        SceneVo sceneVo2 = sceneCustomMapper.getSceneVoBySnJoin(sceneSn);
+//        log.info(String.valueOf(System.currentTimeMillis()));
+        return sceneVo1;
     }
 
     @Override

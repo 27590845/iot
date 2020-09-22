@@ -48,4 +48,11 @@ public interface NodeAttrStdService {
      * @return void
      * */
     void updateNodeAttrStd(NodeAttrStd param);
+
+    /**
+     * 获取节点属性模版的数量
+     * @param
+     * @return int
+     * */
+    int getCount();
 }

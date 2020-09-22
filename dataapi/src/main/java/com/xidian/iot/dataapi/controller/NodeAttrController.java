@@ -2,13 +2,14 @@ package com.xidian.iot.dataapi.controller;
 
 import com.xidian.iot.dataapi.controller.res.HttpResult;
 import com.xidian.iot.database.param.NodeAttrParam;
-import com.xidian.iot.database.param.NodeAttrUpdateParam;
 import com.xidian.iot.database.param.ValidList;
+import com.xidian.iot.database.valid.ValidGroup;
 import com.xidian.iot.databiz.service.NodeAttrService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -32,7 +33,7 @@ public class NodeAttrController {
     @PostMapping("/{sceneSn}/{nodeSn}")
     public HttpResult addNodeAttrs(@ApiParam(name = "sceneSn", value = "场景sn") @PathVariable("sceneSn") String sceneSn,
                                    @ApiParam(name = "nodeSn", value = "节点sn") @PathVariable("nodeSn") String nodeSn,
-                                   @ApiParam(name = "nodeAttrs", value = "节点属性列表") @Valid @RequestBody() ValidList<NodeAttrParam> nodeAttrs) {
+                                   @ApiParam(name = "nodeAttrs", value = "节点属性列表") @Validated(ValidGroup.INSERT.class) @RequestBody() ValidList<NodeAttrParam> nodeAttrs) {
         return HttpResult.responseOK(nodeAttrService.addNodeAttr(sceneSn, nodeSn, nodeAttrs));
     }
 
@@ -58,7 +59,7 @@ public class NodeAttrController {
     @ApiOperation(value = "根据naId更新节点属性")
     @PutMapping("/{naId}")
     public HttpResult updateNodeAttr(@ApiParam(name = "naId", value = "节点属性Id") @PathVariable("naId") Long naId,
-                                  @ApiParam(name = "NodeAttrParam", value = "节点属性更新信息") @Valid @RequestBody NodeAttrUpdateParam param) {
+                                  @ApiParam(name = "NodeAttrParam", value = "节点属性更新信息") @Valid @RequestBody NodeAttrParam param) {
         nodeAttrService.updateNodeAttr(naId,param);
         return HttpResult.oK().message("更新成功");
     }

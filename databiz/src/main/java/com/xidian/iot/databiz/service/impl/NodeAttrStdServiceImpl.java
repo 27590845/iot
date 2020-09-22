@@ -73,4 +73,9 @@ public class NodeAttrStdServiceImpl implements NodeAttrStdService {
         }
         nodeAttrStdMapper.updateByPrimaryKeySelective(nodeAttrStd);
     }
+
+    @Override
+    public int getCount() {
+        return (int) nodeAttrStdMapper.countByExample(new NodeAttrStdExample());
+    }
 }

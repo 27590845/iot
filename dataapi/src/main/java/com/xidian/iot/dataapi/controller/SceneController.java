@@ -3,6 +3,8 @@ package com.xidian.iot.dataapi.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.xidian.iot.common.util.exception.BusinessException;
 import com.xidian.iot.dataapi.controller.res.HttpResult;
+import com.xidian.iot.dataapi.controller.res.Page;
+import com.xidian.iot.database.entity.Scene;
 import com.xidian.iot.database.param.SceneAddParam;
 import com.xidian.iot.database.param.SceneUpdateParam;
 import com.xidian.iot.databiz.service.NodeService;
@@ -32,14 +34,18 @@ public class SceneController {
     @Autowired
     private NodeService nodeService;
 
-    @ApiOperation(value = "分页获取当前用户下所有的网关号")
+    @ApiOperation(value = "分页获取当前用户下所有的网关号、不输入page和limit默认就是获取前五条数据")
     @GetMapping("/list")
     public HttpResult getUserScenes(@ApiParam(name = "page", value = "页号") @RequestParam(value = "page", required = false, defaultValue = "1") int page,
                                     @ApiParam(name = "limit", value = "页数") @RequestParam(value = "limit", required = false, defaultValue = "5") int limit) {
-        return HttpResult.responseOK(sceneService.getScenes(page, limit));
+        //分页一方面获取总条数、一方面获取数据、如果可以把page和limit也可以带着
+        int total = sceneService.countScene();
+        Page<Scene> scenePage = new Page<Scene>(total,page,limit);
+        scenePage.setData(sceneService.getScenes(page,limit));
+        return HttpResult.responseOK(scenePage);
     }
 
-    @ApiOperation(value = "根据Sn获取指定场景及其节点和属性接口")
+    @ApiOperation(value = "根据Sn获取指定场景及其场景下所有节点和属性")
     @GetMapping("/{sceneSn}")
     public HttpResult getScene(@ApiParam(name = "sceneSn", value = "场景sn") @PathVariable("sceneSn") String sceneSn) {
         return HttpResult.responseOK(sceneService.getSceneVoBySn(sceneSn));
