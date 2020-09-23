@@ -1,9 +1,12 @@
 package com.xidian.iot.databiz.service.impl;
 
+import com.xidian.iot.database.entity.Node;
 import com.xidian.iot.database.entity.NodeCmd;
 import com.xidian.iot.database.mapper.NodeCmdMapper;
 import com.xidian.iot.database.mapper.custom.NodeCmdCustomMapper;
+import com.xidian.iot.database.param.NodeCmdParam;
 import com.xidian.iot.databiz.service.NodeCmdService;
+import com.xidian.iot.databiz.service.NodeService;
 import com.xidian.iot.databiz.service.UidGenerator;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +29,8 @@ public class NodeCmdServiceImpl implements NodeCmdService {
     private NodeCmdMapper nodeCmdMapper;
     @Resource
     private NodeCmdCustomMapper nodeCmdCustomMapper;
+    @Resource
+    private NodeService nodeService;
 
     @Override
     public NodeCmd getNodeCmdById(Long ncId) {
@@ -36,5 +41,13 @@ public class NodeCmdServiceImpl implements NodeCmdService {
     public int addNodeCmds(List<NodeCmd> nodeCmds) {
         nodeCmds.forEach(nc -> nc.setNcId(uidGenerator.getUID()));
         return nodeCmdCustomMapper.addBatch(nodeCmds);
+    }
+
+    @Override
+    public void addNodeCmds(String sceneSn, String nodeSn, List<NodeCmdParam> nodeCmdParams) {
+        //检查该节点是否存在
+        Node node = nodeService.getNodeBySn(sceneSn, nodeSn);
+
+
     }
 }

@@ -1,6 +1,7 @@
 package com.xidian.iot.databiz.service;
 
 import com.xidian.iot.database.entity.NodeCmd;
+import com.xidian.iot.database.param.NodeCmdParam;
 
 import java.util.List;
 
@@ -26,4 +27,15 @@ public interface NodeCmdService {
      * @return
      */
     int addNodeCmds(List<NodeCmd> nodeCmds);
+
+    /**
+     * 批量添加 NodeCmd、保证所有字段非空、
+     * 保证命令描述字段不重复，如果重复不便于后续添加触发命令
+     * @param sceneSn
+     * @param nodeSn
+     * @param nodeCmdParams
+     * @return void
+     * */
+    void addNodeCmds(String sceneSn, String nodeSn, List<NodeCmdParam> nodeCmdParams);
+
 }
