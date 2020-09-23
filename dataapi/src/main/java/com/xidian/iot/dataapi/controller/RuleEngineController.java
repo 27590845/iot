@@ -38,7 +38,7 @@ public class RuleEngineController {
 
     @ApiOperation("删除一条规则，会级联删除相关触发器条件，触发器动作，触发器报警")
     @DeleteMapping("/{ntId}")
-    public HttpResult del(@ApiParam(name = "ntId", value = "") @PathVariable("ntId") String ntId){
-        return null;
+    public HttpResult del(@ApiParam(name = "ntId", value = "") @PathVariable("ntId") Long ntId){
+        return HttpResult.responseOK(ruleEngineService.delRuleEngine(ntId));
     }
 }

@@ -36,6 +36,13 @@ public class NodeActCmdServiceImpl implements NodeActCmdService {
     }
 
     @Override
+    public int delNodeActCmdByNtId(Long ntId) {
+        NodeActCmdExample nodeActCmdExample = new NodeActCmdExample();
+        nodeActCmdExample.createCriteria().andNtIdEqualTo(ntId);
+        return nodeActCmdMapper.deleteByExample(nodeActCmdExample);
+    }
+
+    @Override
     public int addNodeActCmds(List<NodeActCmd> nodeActCmds) {
         nodeActCmds.stream().forEach(nac -> nac.setNacId(uidGenerator.getUID()));
         return nodeActCmdCustomMapper.addBatch(nodeActCmds);
