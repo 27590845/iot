@@ -15,6 +15,7 @@ public interface NodeActCmdService {
 
     /**
      * 根据nodeTrig.ntId获取NodeActCmd
+     *
      * @param ntId
      * @return
      */
@@ -22,6 +23,7 @@ public interface NodeActCmdService {
 
     /**
      * 根据nodeActCmd.ntId删除nodeActCmd，(无清缓存操作)
+     *
      * @param ntId
      * @return
      */
@@ -29,8 +31,23 @@ public interface NodeActCmdService {
 
     /**
      * 批量添加nodeActCmd 应保证nodeActCmd.ncId非空
+     *
      * @param nodeActCmds
      * @return
      */
     int addNodeActCmds(List<NodeActCmd> nodeActCmds);
+
+    /**
+     * 根据节点命令Id删除 在NodeActCmd关联的相关命令
+     * @param ncId 节点命令Id
+     * @return int
+     * */
+    int delNodeActCmdByNcId(Long ncId);
+
+    /**
+     * 根据节点命令Id 批量删除NodeActCmd关联的相关命令
+     * @param ncIds 节点命令Id
+     * @return int 删除的数量
+     * */
+    int delNodeActCmdByNtIds(List<Long> ncIds);
 }

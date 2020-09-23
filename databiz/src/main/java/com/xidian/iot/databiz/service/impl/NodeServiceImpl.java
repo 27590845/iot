@@ -3,18 +3,16 @@ package com.xidian.iot.databiz.service.impl;
 import com.xidian.iot.common.util.TimeUtil;
 import com.xidian.iot.common.util.constants.ExceptionEnum;
 import com.xidian.iot.common.util.Assert;
-import com.xidian.iot.database.entity.Node;
-import com.xidian.iot.database.entity.NodeExample;
-import com.xidian.iot.database.entity.Scene;
+import com.xidian.iot.database.entity.*;
 import com.xidian.iot.database.entity.mongo.NodeData;
 import com.xidian.iot.database.mapper.NodeMapper;
 import com.xidian.iot.database.mapper.custom.NodeCustomMapper;
 import com.xidian.iot.database.param.NodeAddParam;
+import com.xidian.iot.database.param.NodeAttrParam;
+import com.xidian.iot.database.param.NodeCmdParam;
 import com.xidian.iot.database.param.NodeUpdateParam;
 import com.xidian.iot.database.vo.NodeVo;
-import com.xidian.iot.databiz.service.NodeService;
-import com.xidian.iot.databiz.service.SceneService;
-import com.xidian.iot.databiz.service.UidGenerator;
+import com.xidian.iot.databiz.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -49,6 +47,10 @@ public class NodeServiceImpl implements NodeService {
     @Autowired
     private SceneService sceneService;
     @Autowired
+    private NodeAttrService nodeAttrService;
+    @Autowired
+    private NodeCmdService nodeCmdService;
+    @Autowired
     private UidGenerator uidGenerator;
 
     @Override
@@ -61,7 +63,22 @@ public class NodeServiceImpl implements NodeService {
         nodeExample.createCriteria().andSceneIdEqualTo(scene.getSceneId());
         node.setNodeSn(String.format("%06d", nodeMapper.countByExample(nodeExample) + 1));
         //设置nodeSn
-        nodeMapper.insertSelective(node);
+        if(nodeMapper.insertSelective(node)>0){
+            //添加节点属性
+            List<NodeAttrParam> nodeAttrParams = param.getNodeAttrParams();
+            if(nodeAttrParams.size()>0) {
+                //验证输入的节点属性是否有重复
+                nodeAttrService.checkReptAttrKeys(param.getNodeAttrParams());
+                nodeAttrService.addNodeAttr(node.getSceneSn(),node.getNodeSn(),node.getNodeId(),nodeAttrParams);
+            }
+            //添加节点命令
+            List<NodeCmdParam> nodeCmdParams = param.getNodeCmdParams();
+            if(nodeCmdParams.size()>0){
+                //验证添加的节点命令是否存在重复命令内容/命令名称
+                nodeCmdService.checkReptCmds(nodeCmdParams);
+                nodeCmdService.addNodeCmds(node.getSceneSn(),node.getNodeSn(),node.getNodeId(),nodeCmdParams);
+            }
+        }
         return node;
     }
 
@@ -161,4 +178,6 @@ public class NodeServiceImpl implements NodeService {
         }
         return nodeData;
     }
+
+
 }

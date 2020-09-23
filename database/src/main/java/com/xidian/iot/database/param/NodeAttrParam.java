@@ -33,10 +33,10 @@ public class NodeAttrParam {
     @NotBlank(groups = {ValidGroup.INSERT.class}, message = "属性符号不能为为空")
     private String naSym;
 
-    public NodeAttr build(String sceneSn, String nodeSn, Long naId, Long nodeId) {
+    public NodeAttr build(Long naId, String sceneSn, String nodeSn, Long nodeId) {
         NodeAttr nodeAttr = new NodeAttr();
-        nodeAttr.setNaId(naId);
         nodeAttr.setNodeId(nodeId);
+        nodeAttr.setNaId(naId);
         nodeAttr.setNaKey(naKey);
         nodeAttr.setNaName(naName);
         nodeAttr.setNaSym(naSym);
@@ -48,15 +48,16 @@ public class NodeAttrParam {
 
     /**
      * 由 NodeAttrUpdateParam转化为NodeAttr，同时过滤空字符
+     *
      * @param naId
      * @return com.xidian.iot.database.entity.NodeAttr
-     * */
+     */
     public NodeAttr build(Long naId) {
         NodeAttr nodeAttr = new NodeAttr();
         nodeAttr.setNaId(naId);
-        nodeAttr.setNaKey(StringUtils.isNotBlank(naKey)?naKey:null);
-        nodeAttr.setNaName(StringUtils.isNotBlank(naName)?naName:null);
-        nodeAttr.setNaSym(StringUtils.isNotBlank(naName)?naName:null);
+        nodeAttr.setNaKey(StringUtils.isNotBlank(naKey) ? naKey : null);
+        nodeAttr.setNaName(StringUtils.isNotBlank(naName) ? naName : null);
+        nodeAttr.setNaSym(StringUtils.isNotBlank(naName) ? naName : null);
         nodeAttr.setNaUnit(naUnit);
         return nodeAttr;
     }

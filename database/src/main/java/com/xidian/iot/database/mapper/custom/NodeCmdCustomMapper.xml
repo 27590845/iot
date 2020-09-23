@@ -9,4 +9,32 @@
             #{nc.ncName,jdbcType=VARCHAR}, #{nc.sceneSn,jdbcType=VARCHAR}, #{nc.nodeSn,jdbcType=VARCHAR})
         </foreach>
     </insert>
+
+    <select id="getExistedNCN" resultType="java.lang.String">
+        select nc_name from node_cmd nc
+        where
+        nc.node_id = #{nodeId,jdbcType=BIGINT}
+        and nc.nc_name in
+        <foreach collection="collect" item="ncName" index="index" open="(" separator="," close=")">
+            #{ncName}
+        </foreach>
+    </select>
+
+    <select id="getExistedNCC" resultType="java.lang.String">
+        select nc_content
+        from node_cmd nc
+        where
+        nc.node_id = #{nodeId,jdbcType=BIGINT}
+        and nc.nc_content in
+        <foreach collection="collect" item="ncContent" index="index" open="(" separator="," close=")">
+            #{ncContent}
+        </foreach>
+    </select>
+
+    <select id="getNcIdsByNodeId" resultType="java.lang.Long">
+        select nc_id
+        from node_cmd nc
+        wherenc.node_id = #{nodeId,jdbcType=BIGINT}
+    </select>
+
 </mapper>
