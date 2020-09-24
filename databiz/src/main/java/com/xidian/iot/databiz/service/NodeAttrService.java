@@ -86,4 +86,11 @@ public interface NodeAttrService {
      * @return
      */
     Map<String, String> getNaMapBySn(String sceneSn, String nodeSn);
+
+    /**
+     * 根据节点Id删除节点下所有的属性
+     * @param nodeId 节点Id
+     * @return void
+     * */
+    void deleteByNodeId(Long nodeId);
 }

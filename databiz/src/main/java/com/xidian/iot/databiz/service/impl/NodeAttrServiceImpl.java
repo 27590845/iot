@@ -150,4 +150,11 @@ public class NodeAttrServiceImpl implements NodeAttrService {
         Map<String, String> naMap = naSimples.stream().collect(Collectors.toMap(m -> String.valueOf(m.get("na_id")), m -> (String) m.get("na_key")));
         return naMap;
     }
+
+    @Override
+    public void deleteByNodeId(Long nodeId) {
+        NodeAttrExample nodeAttrExample = new NodeAttrExample();
+        nodeAttrExample.createCriteria().andNodeIdEqualTo(nodeId);
+        nodeAttrMapper.deleteByExample(nodeAttrExample);
+    }
 }

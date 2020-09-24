@@ -84,10 +84,13 @@ public class NodeServiceImpl implements NodeService {
 
     @Override
     public void delNode(String sceneSn, String nodeSn) {
-        nodeMapper.deleteByPrimaryKey(getNodeBySn(sceneSn, nodeSn).getNodeId());
-        NodeExample nodeExample = new NodeExample();
-        nodeExample.createCriteria().andSceneSnEqualTo(sceneSn).andNodeSnEqualTo(sceneSn);
-        Assert.isTrue(nodeMapper.deleteByExample(nodeExample) > 0, ExceptionEnum.NODE_NOT_EXIST);
+        Node node = getNodeBySn(sceneSn,nodeSn);
+        nodeMapper.deleteByPrimaryKey(node.getNodeId());
+        nodeCmdService.deleteByNodeId(node.getNodeId());
+        nodeAttrService.deleteByNodeId(node.getNodeId());
+//        NodeExample nodeExample = new NodeExample();
+//        nodeExample.createCriteria().andSceneSnEqualTo(sceneSn).andNodeSnEqualTo(sceneSn);
+//        Assert.isTrue(nodeMapper.deleteByExample(nodeExample) > 0, ExceptionEnum.NODE_NOT_EXIST);
     }
 
     @Override
@@ -178,6 +181,7 @@ public class NodeServiceImpl implements NodeService {
         }
         return nodeData;
     }
+
 
 
 }
