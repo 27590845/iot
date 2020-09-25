@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -37,11 +35,16 @@ public class KafkaTest {
 
     final static String topic = "hello_topic";
 
+    final static String sceneSn = "186610102211000001";
+    final static String nodeSn = "000001";
+    final static String topicIot = "node.updata."+sceneSn;
+
     @Test
     public void send1() throws JsonProcessingException, InterruptedException {
-        for(int i=0; i< 1000; i++){
-            mqSender.send(topic, "👋"+System.nanoTime());
-            Thread.sleep(1000);
+        String msg = "{\"datastreams\":[{\"tem1\":110,\"tem2\":44.0,\"at\":1600570048,\"sn\":\""+nodeSn+"\"}]}";
+        for (int i = 0; i < 100; i++) {
+            mqSender.send(topicIot, msg);
+            Thread.sleep(5000);
         }
     }
 

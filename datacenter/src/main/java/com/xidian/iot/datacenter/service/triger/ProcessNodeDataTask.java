@@ -41,7 +41,7 @@ public class ProcessNodeDataTask extends BaseTask implements Runnable {
         long ss = System.currentTimeMillis();
         // 处理节点数据
         processNodeData();
-        log.debug("processNodeData:{}ms",System.currentTimeMillis() - ss);
+        log.info("processNodeData:{}ms",System.currentTimeMillis() - ss);
     }
 
     /**

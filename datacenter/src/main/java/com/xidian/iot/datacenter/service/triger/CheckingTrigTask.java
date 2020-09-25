@@ -55,7 +55,7 @@ public class CheckingTrigTask extends BaseTask implements Runnable {
             updateLastRunTime();
             // 复位触发器条件
             reset(nodeCondExtList);
-            log.debug("-----触发报警-----");
+            log.info("\t====>>触发报警  ntId={}", ntId);
         }
         log.debug("------process completed-------");
     }

@@ -113,7 +113,7 @@ public class CompareNodeCondTask extends BaseTask implements Runnable {
     private void compareCondition(NodeCondExt nodeCondExt) {
         // 判断这个条件是否满足
         boolean fit = isFitCondition(nodeCondExt);
-        log.debug("compareCondition() fit={}", fit);
+        log.info("compareCondition() ntId={}, ncId={} fit={}", nodeCondExt.getNtId(), nodeCondExt.getNcId(), fit);
         // 判断如果发生了变化，才执行更新、检查触发器操作z
         if (fit != nodeCondExt.isFit()) {
             // 更新变化后的fit值，并更新到缓存

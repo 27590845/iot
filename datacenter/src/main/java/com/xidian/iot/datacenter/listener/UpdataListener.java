@@ -1,5 +1,6 @@
 package com.xidian.iot.datacenter.listener;
 
+import com.xidian.iot.common.mq.activemq.listener.JmsConsumerListener;
 import com.xidian.iot.common.mq.kafka.listener.KafkaConsumerListener;
 import com.xidian.iot.common.util.JsonUtil;
 import com.xidian.iot.common.util.StringUtil;
@@ -17,11 +18,13 @@ import javax.annotation.Resource;
  * @author mrl
  * @Title: UpdataListener
  * @Package
- * @Description: 监听mq上传数据
+ * @Description: 监听mq上传数据 用kafka时需要继承{@link com.xidian.iot.common.mq.kafka.listener.KafkaConsumerListener}
+ *  选用activemq时需要继承{@link com.xidian.iot.common.mq.activemq.listener.JmsConsumerListener}
+ *  两者区别主要是消息解析模块不同，其他地方不需要改动
  * @date 2020/9/10 11:42 上午
  */
 @Slf4j
-public class UpdataListener extends KafkaConsumerListener {
+public class UpdataListener extends JmsConsumerListener {
 
     //json处理链
     @Resource
