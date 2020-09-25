@@ -61,7 +61,8 @@ public class NodeCondServiceImpl implements NodeCondService {
 
     @CacheEvict(value = "NodeCondExt", key = "'getNodeCondExtById:'+#ncId")
     @Override
-    public void cleanNodeCondById(Long ncId) { }
+    public void cleanNodeCondById(Long ncId) {
+    }
 
     @Override
     public List<NodeCond> getNodeCondsByNtId(Long ntId) {
@@ -80,6 +81,26 @@ public class NodeCondServiceImpl implements NodeCondService {
     public int delNodeCondByNtId(Long ntId) {
         NodeCondExample nodeCondExample = new NodeCondExample();
         nodeCondExample.createCriteria().andNtIdEqualTo(ntId);
+        return nodeCondMapper.deleteByExample(nodeCondExample);
+    }
+
+    @Override
+    public void delNodeCondByNaIds(List<Long> naIds) {
+        List<Long> ncIds = nodeCondCustomMapper.getNcIdsByNaIds(naIds);
+        if (ncIds.size() > 0) {
+            //清除缓存中的节点条件----但是节点触发器中所有节点触发条件被删除应当把节点触发器也删除 采用定时清除机制
+            ncIds.stream().forEach(ncId -> cleanNodeCondById(ncId));
+            //根据节点触发条件批量删除
+            nodeCondCustomMapper.delBatchsByNcIds(ncIds);
+        }
+    }
+
+    @Override
+    public int delNodeCondBySceneSn(String sceneSn) {
+        List<Long> ncIds = nodeCondCustomMapper.getNcIdsBySceneSn(sceneSn);
+        NodeCondExample nodeCondExample = new NodeCondExample();
+        nodeCondExample.createCriteria().andSceneSnEqualTo(sceneSn);
+        ncIds.stream().forEach(ncId -> cleanNodeCondById(ncId));
         return nodeCondMapper.deleteByExample(nodeCondExample);
     }
 }

@@ -16,6 +16,10 @@
         where nc.scene_sn=#{sceneSn,jdbcType=VARCHAR}
         and nc.node_sn=#{nodeSn,jdbcType=VARCHAR};
     </select>
+    <select id="getNcIdsBySceneSn" parameterType="java.lang.String" resultType="java.lang.Long">
+        select nc.nc_id from node_cond nc
+        where nc.scene_sn=#{sceneSn,jdbcType=VARCHAR}
+    </select>
     <insert id="addBatch" parameterType="java.util.List">
         insert into node_cond (nc_id, na_id, nt_id, nc_op, nc_val, node_sn, scene_sn, nc_fit_time)
         values
@@ -25,4 +29,18 @@
             #{nc.sceneSn,jdbcType=VARCHAR}, #{nc.ncFitTime,jdbcType=INTEGER})
         </foreach>
     </insert>
+    <select id="getNcIdsByNaIds" parameterType="java.util.List" resultType="java.lang.Long">
+        select nc.nc_id from node_cond nc
+        where nc.na_id in
+        <foreach collection="naIds" item="naId" index="index" open="(" separator="," close=")">
+            #{naId,jdbcType=BIGINT}
+        </foreach>
+    </select>
+    <delete id="delBatchsByNcIds">
+        delete from node_cond nc
+        where nc.nc_id in
+        <foreach collection="ncIds" item="ncId" index="index" open="(" separator="," close=")">
+            #{ncId,jdbcType=BIGINT}
+        </foreach>
+    </delete>
 </mapper>

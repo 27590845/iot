@@ -52,7 +52,7 @@ public class NodeAttrController {
     @DeleteMapping("/{sceneSn}/{nodeSn}/{naKeys}")
     public HttpResult delNodeAttr(@ApiParam(name = "sceneSn", value = "场景sn") @PathVariable("sceneSn") String sceneSn,
                                   @ApiParam(name = "nodeSn", value = "节点sn") @PathVariable(value = "nodeSn") String nodeSn,
-                                  @ApiParam(name = "naKeys", value = "节点属性列表") @PathVariable(value = "naKeys") String naKeys) {
+                                  @ApiParam(name = "naKeys", value = "节点属性列表 例如tem1,tem2,tem3,tem4这种格式") @PathVariable(value = "naKeys") String naKeys) {
         List<String> naKeyLists = Arrays.asList(naKeys.split(","));
         nodeAttrService.delNodeAttrs(sceneSn, nodeSn, naKeyLists);
         return HttpResult.oK().message("删除场景成功");

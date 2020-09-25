@@ -1,8 +1,8 @@
 package com.xidian.iot.databiz.service.impl;
 
-import com.xidian.iot.common.util.TimeUtil;
 import com.xidian.iot.common.util.constants.ExceptionEnum;
 import com.xidian.iot.common.util.Assert;
+import com.xidian.iot.common.util.exception.BusinessException;
 import com.xidian.iot.database.entity.*;
 import com.xidian.iot.database.entity.mongo.NodeData;
 import com.xidian.iot.database.mapper.NodeMapper;
@@ -20,17 +20,13 @@ import org.springframework.data.mongodb.core.WriteResultChecking;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.NodeList;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static org.springframework.data.mongodb.core.query.Criteria.byExample;
-import static org.springframework.data.mongodb.core.query.Criteria.where;
 
 /**
  * @author: Hansey
@@ -51,46 +47,60 @@ public class NodeServiceImpl implements NodeService {
     @Autowired
     private NodeCmdService nodeCmdService;
     @Autowired
+    private NodeActCmdService nodeActCmdService;
+    @Autowired
     private UidGenerator uidGenerator;
 
     @Override
-    public Node addNode(NodeAddParam param) {
+    public NodeVo addNode(NodeAddParam param) {
+        //返回结果
+        NodeVo nodeVo = null;
         //查询scene是否存在
         Scene scene = sceneService.getSceneBySn(param.getSceneSn());
         Node node = param.buildNode(scene.getSceneId());
         node.setNodeId(uidGenerator.getUID());
         NodeExample nodeExample = new NodeExample();
         nodeExample.createCriteria().andSceneIdEqualTo(scene.getSceneId());
-        node.setNodeSn(String.format("%06d", nodeMapper.countByExample(nodeExample) + 1));
+        String lastNodeSn = nodeCustomMapper.getSceneLastNodeSn(scene.getSceneId());
+        //如果网关不存在节点则从1开始
+        lastNodeSn = Objects.isNull(lastNodeSn) ? "0" : lastNodeSn;
+        node.setNodeSn(String.format("%06d", Integer.valueOf(lastNodeSn) + 1));
         //设置nodeSn
-        if(nodeMapper.insertSelective(node)>0){
+        if (nodeMapper.insertSelective(node) > 0) {
+            //将返回结果转化为NodeVo
+            nodeVo = new NodeVo(node);
             //添加节点属性
             List<NodeAttrParam> nodeAttrParams = param.getNodeAttrParams();
-            if(nodeAttrParams.size()>0) {
+            if (!Objects.isNull(nodeAttrParams) && nodeAttrParams.size() > 0) {
                 //验证输入的节点属性是否有重复
                 nodeAttrService.checkReptAttrKeys(param.getNodeAttrParams());
-                nodeAttrService.addNodeAttr(node.getSceneSn(),node.getNodeSn(),node.getNodeId(),nodeAttrParams);
+                List<NodeAttr> nodeAttrs = nodeAttrService.addNodeAttr(node.getSceneSn(), node.getNodeSn(), node.getNodeId(), nodeAttrParams);
+                nodeVo.setNodeAttrList(nodeAttrs);
             }
             //添加节点命令
             List<NodeCmdParam> nodeCmdParams = param.getNodeCmdParams();
-            if(nodeCmdParams.size()>0){
+            if (!Objects.isNull(nodeCmdParams) && nodeCmdParams.size() > 0) {
                 //验证添加的节点命令是否存在重复命令内容/命令名称
                 nodeCmdService.checkReptCmds(nodeCmdParams);
-                nodeCmdService.addNodeCmds(node.getSceneSn(),node.getNodeSn(),node.getNodeId(),nodeCmdParams);
+                List<NodeCmd> nodeCmds = nodeCmdService.addNodeCmds(node.getSceneSn(), node.getNodeSn(), node.getNodeId(), nodeCmdParams);
+                nodeVo.setNodeCmdList(nodeCmds);
             }
         }
-        return node;
+        return nodeVo;
     }
 
     @Override
     public void delNode(String sceneSn, String nodeSn) {
-        Node node = getNodeBySn(sceneSn,nodeSn);
+        //检查是否存在此节点
+        Node node = getNodeBySn(sceneSn, nodeSn);
         nodeMapper.deleteByPrimaryKey(node.getNodeId());
-        nodeCmdService.deleteByNodeId(node.getNodeId());
         nodeAttrService.deleteByNodeId(node.getNodeId());
-//        NodeExample nodeExample = new NodeExample();
-//        nodeExample.createCriteria().andSceneSnEqualTo(sceneSn).andNodeSnEqualTo(sceneSn);
-//        Assert.isTrue(nodeMapper.deleteByExample(nodeExample) > 0, ExceptionEnum.NODE_NOT_EXIST);
+        List<Long> ncIds = nodeCmdService.getNcIdsByNodeId(node.getNodeId());
+        nodeCmdService.deleteByNodeId(node.getNodeId());
+        //级联删除nodeActCmd
+        if (!Objects.isNull(ncIds) && ncIds.size() > 0) {
+            nodeActCmdService.delNodeActCmdByNtIds(ncIds);
+        }
     }
 
     @Override
@@ -144,7 +154,7 @@ public class NodeServiceImpl implements NodeService {
     public NodeData getMongoLD(String sceneSn, String nodeSn) {
         NodeData nodeData = null;
         //判断是否存在该节点
-        getNodeBySn(sceneSn,nodeSn);
+        getNodeBySn(sceneSn, nodeSn);
         try {
             mongoTemplate.setWriteResultChecking(WriteResultChecking.EXCEPTION);
             Query query = null;
@@ -165,7 +175,7 @@ public class NodeServiceImpl implements NodeService {
     public List<NodeData> getMongoData(String sceneSn, String nodeSn, Long st, Long et) {
         List<NodeData> nodeData = new ArrayList<>();
         //首先判断该节点是否存在
-        getNodeBySn(sceneSn,nodeSn);
+        getNodeBySn(sceneSn, nodeSn);
         try {
             mongoTemplate.setWriteResultChecking(WriteResultChecking.EXCEPTION);
             Query query = null;
@@ -182,6 +192,17 @@ public class NodeServiceImpl implements NodeService {
         return nodeData;
     }
 
+    @Override
+    public Node getNodeByNodeId(Long nodeId) {
+        Node node = nodeMapper.selectByPrimaryKey(nodeId);
+        if (Objects.isNull(node)) throw new BusinessException(-1, "不存在节点Id为" + nodeId + "的节点");
+        return node;
+    }
 
-
+    @Override
+    public int delNodesBySceneSn(String sceneSn) {
+        NodeExample nodeExample = new NodeExample();
+        nodeExample.createCriteria().andSceneSnEqualTo(sceneSn);
+        return nodeMapper.deleteByExample(nodeExample);
+    }
 }

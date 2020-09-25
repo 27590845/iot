@@ -1,6 +1,5 @@
 package com.xidian.iot.dataapi.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.xidian.iot.common.util.exception.BusinessException;
 import com.xidian.iot.dataapi.controller.res.HttpResult;
 import com.xidian.iot.dataapi.controller.res.Page;
@@ -14,7 +13,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -45,7 +43,7 @@ public class SceneController {
         return HttpResult.responseOK(scenePage);
     }
 
-    @ApiOperation(value = "根据Sn获取指定场景及其场景下所有节点和属性")
+    @ApiOperation(value = "根据Sn获取指定场景及其场景下所有节点、属性、节点命令")
     @GetMapping("/{sceneSn}")
     public HttpResult getScene(@ApiParam(name = "sceneSn", value = "场景sn") @PathVariable("sceneSn") String sceneSn) {
         return HttpResult.responseOK(sceneService.getSceneVoBySn(sceneSn));
@@ -54,7 +52,7 @@ public class SceneController {
     @ApiOperation(value = "添加场景")
     @PostMapping
     public HttpResult addScene(@ApiParam(name = "SceneAddParam", value = "场景信息") @Valid @RequestBody SceneAddParam param) {
-        return HttpResult.responseOK(sceneService.addScene(param));
+        return HttpResult.oK().message("场景添加成功").data(sceneService.addScene(param));
     }
 
     @ApiOperation(value = "删除场景")
@@ -76,8 +74,8 @@ public class SceneController {
     @GetMapping("/{sceneSn}/node/{nodeSn}")
     public HttpResult getNodeData(@ApiParam(name = "sceneSn", value = "场景sn") @PathVariable("sceneSn") String sceneSn,
                                   @ApiParam(name = "nodeSn", value = "节点sn") @PathVariable("nodeSn") String nodeSn,
-                                  @ApiParam(name = "st", value = "开始时间st、et的格式为yyyy-MM-dd HH:mm:ss") @RequestParam("st") String st,
-                                  @ApiParam(name = "et", value = "结束时间同st的时间格式et的格式") @RequestParam("et") String et) {
+                                  @ApiParam(name = "st", value = "开始时间st、et的格式为yyyy-MM-dd HH:mm:ss") @RequestParam(value = "st",required = false) String st,
+                                  @ApiParam(name = "et", value = "结束时间同st的时间格式et的格式") @RequestParam(value = "et",required = false) String et) {
         //如果上传的st和et不为空说明查询的是历史时间
         if(StringUtils.isNotBlank(st)&&StringUtils.isNotBlank(et)){
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

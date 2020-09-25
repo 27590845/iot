@@ -21,4 +21,15 @@ public interface NodeCondCustomMapper {
     List<Long> getNcIdsByNtId(@Param("ntId") Long ntId);
 
     int addBatch(@Param("ncs") List<NodeCond> nodeConds);
+
+    List<Long> getNcIdsByNaIds(@Param("naIds")List<Long> naIds);
+
+    int delBatchsByNcIds(@Param("ncIds")List<Long> ncIds);
+
+    /**
+     * 获取网关下所有的节点命令触发器
+     * @param sceneSn
+     * @return java.util.List<java.lang.Long>
+     * */
+    List<Long> getNcIdsBySceneSn(@Param("sceneSn") String sceneSn);
 }

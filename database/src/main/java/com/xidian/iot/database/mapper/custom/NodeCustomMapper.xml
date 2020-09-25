@@ -7,6 +7,11 @@
                     select="com.xidian.iot.database.mapper.custom.NodeAttrCustomMapper.getNodeAttrByNodeId"
                     column="node_id">
         </collection>
+        <collection property="nodeCmdList" javaType="ArrayList"
+                    ofType="com.xidian.iot.database.entity.NodeCmd"
+                    select="com.xidian.iot.database.mapper.custom.NodeCmdCustomMapper.getNcsByNodeId"
+                    column="node_id">
+        </collection>
     </resultMap>
     <select id="getNodeVoByNodeId" resultMap="NodeVoMap">
         select n.* from node n
@@ -16,4 +21,9 @@
         select n.* from node n
         where n.scene_id = #{sceneId,jdbcType=BIGINT}
     </select>
+    <select id="getSceneLastNodeSn" parameterType="java.lang.Long" resultType="java.lang.String">
+        select MAX(n.node_sn) from node n
+        where n.scene_id = #{sceneId, jdbcType=BIGINT}
+    </select>
+
 </mapper>

@@ -4,11 +4,11 @@
     <resultMap id="BaseResultMap" type="com.xidian.iot.database.entity.NodeAttr" extends="com.xidian.iot.database.mapper.NodeAttrMapper.BaseResultMap">
     </resultMap>
     <sql id="Base_Column_List">
-    na_id, node_id, na_key, na_name, na_unit, na_sym
+    na_id, node_id, na_key, na_name, na_unit, na_sym, scene_sn, node_sn
     </sql>
     <insert id="insertBatch" parameterType="java.util.List">
         insert into node_attr (na_id, node_id, na_key,
-        na_name, na_unit, na_sym
+        na_name, na_unit, na_sym, scene_sn, node_sn
         )
         values
         <foreach collection="nodeAttrs" item="nodeAttr" index="index" separator=",">
@@ -17,7 +17,9 @@
             #{nodeAttr.naKey,jdbcType=VARCHAR},
             #{nodeAttr.naName,jdbcType=VARCHAR},
             #{nodeAttr.naUnit,jdbcType=VARCHAR},
-            #{nodeAttr.naSym,jdbcType=VARCHAR}
+            #{nodeAttr.naSym,jdbcType=VARCHAR},
+            #{nodeAttr.sceneSn,jdbcType=VARCHAR},
+            #{nodeAttr.nodeSn,jdbcType=VARCHAR}
             )
         </foreach>
     </insert>
@@ -31,5 +33,10 @@
         select na.na_id, na.na_key from node_attr na
         where na.scene_sn=#{sceneSn,jdbcType=VARCHAR}
         and na.node_sn=#{nodeSn,jdbcType=VARCHAR};
+    </select>
+    <select id="getNAIdsByNodeId" resultType="java.lang.Long">
+        select na_id
+        from node_attr
+        where node_id =  #{nodeId,jdbcType=BIGINT}
     </select>
 </mapper>

@@ -69,4 +69,19 @@ public interface NodeCondService {
      * @return
      */
     int delNodeCondByNtId(Long ntId);
+
+    /**
+     * 根据节点属性Ids删除节点触发器条件、同时清除缓存中的节点触发器
+     * @param naIds 节点属性Ids
+     * @return void
+     * */
+    void delNodeCondByNaIds(List<Long> naIds);
+
+    /**
+     * 根据sceneSn删除网关下所有
+     * 的节点命令
+     * @param sceneSn 节点网关
+     * @return void
+     * */
+    int delNodeCondBySceneSn(String sceneSn);
 }

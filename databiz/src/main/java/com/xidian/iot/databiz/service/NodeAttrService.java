@@ -89,8 +89,17 @@ public interface NodeAttrService {
 
     /**
      * 根据节点Id删除节点下所有的属性
+     * 删除节点属性同时级联删除节点触发器条件
+     * (在调用之后级联删除根据node_sn、scene_sn删除)
      * @param nodeId 节点Id
      * @return void
      * */
     void deleteByNodeId(Long nodeId);
+
+    /**
+     * 根据网关Sn级联删除网关下拥有的节点属性
+     * @param sceneSn
+     * @return int
+     * */
+    int delBySceneSn(String sceneSn);
 }

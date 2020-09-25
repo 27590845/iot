@@ -52,7 +52,7 @@ public interface SceneService {
     /**
      * 根据sceneSn删除场景、
      * 级联删除node、node_attr、
-     * node_
+     * node_cmd、node_cond
      * *
      */
     void delScene(String sceneSn);
