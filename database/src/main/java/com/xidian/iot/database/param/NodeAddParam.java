@@ -1,6 +1,7 @@
 package com.xidian.iot.database.param;
 
 import com.xidian.iot.database.entity.Node;
+import com.xidian.iot.database.entity.NodeCmd;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -33,8 +34,12 @@ public class NodeAddParam {
     private String nodeDesc;
 
     @Valid
-    @ApiModelProperty(value = "节点属性列表")
-    private List<NodeAttrParam> nodeAttrParamList;
+    @ApiModelProperty(value = "节点属性")
+    private List<NodeAttrParam> nodeAttrParams;
+
+    @Valid
+    @ApiModelProperty(value = "节点命令")
+    private List<NodeCmdParam> nodeCmdParams;
 
     /**
      * 由 NodeAddParam转化为Node 同时添加从数据库取出的sceneId
