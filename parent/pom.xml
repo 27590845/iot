@@ -20,6 +20,7 @@
 <!--    <swagger.jersey.version>1.5.23</swagger.jersey.version>-->
     <slf4j.version>1.7.30</slf4j.version>
     <logback.version>1.2.3</logback.version>
+    <logstash-logback-encoder.version>4.11</logstash-logback-encoder.version>
     <activemq.core.version>5.7.0</activemq.core.version>
     <activemq.version>5.15.10</activemq.version>
     <spring.kafka.version>2.3.10.RELEASE</spring.kafka.version>

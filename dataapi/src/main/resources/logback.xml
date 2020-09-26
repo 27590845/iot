@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- logback in product env -->
+<configuration>
+
+    <property name="LOG_HOME" value="/var/log"/>
+    <property name="LOG_PREFIX" value="dataapi"/>
+    <property name="LOG.LEVEL" value="DEBUG" />
+    <property name="LOG.MAXHISTORY" value="30" />
+    <property name="LOG.PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n" />
+    <!-- TRACE < DEBUG < INFO < WARN < ERROR -->
+
+    <!-- 控制台设置 -->
+    <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder charset="UTF-8">
+            <Pattern>${LOG.PATTERN}</Pattern>
+        </encoder>
+    </appender>
+
+    <!-- DEBUG -->
+    <appender name="debugAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_HOME}/${LOG_PREFIX}-debug.log</File>
+        <encoder>
+            <pattern>${LOG.PATTERN}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/debug/${LOG_PREFIX}-debug-%d{yyyy-MM-dd}.log.%i.gz</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <!-- 归档文件的最大数量-->
+            <maxHistory>${LOG.MAXHISTORY}</maxHistory>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- INFO -->
+    <appender name="infoAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_HOME}/${LOG_PREFIX}-info.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/info/${LOG_PREFIX}-info-%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+            <maxHistory>${LOG.MAXHISTORY}</maxHistory>
+        </rollingPolicy>
+        <encoder charset="UTF-8">
+            <Pattern>${LOG.PATTERN}</Pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- ERROR -->
+    <appender name="errorAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_HOME}/${LOG_PREFIX}-error.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/error/${LOG_PREFIX}-error-%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+            <maxHistory>${LOG.MAXHISTORY}</maxHistory>
+        </rollingPolicy>
+        <encoder charset="UTF-8">
+            <Pattern>${LOG.PATTERN}</Pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <logger name="org.apache.kafka" level="OFF"/>
+    <logger name="com.mongodb" level="OFF" />
+    <logger name="com.mysql" level="OFF" />
+
+    <logger name="com.xidian.iot" level="${LOG.LEVEL}" additivity="true">
+        <appender-ref ref="debugAppender"/>
+        <appender-ref ref="infoAppender"/>
+        <appender-ref ref="errorAppender"/>
+    </logger>
+
+    <root level="${LOG.LEVEL}">
+        <appender-ref ref="consoleAppender"/>
+    </root>
+</configuration>
