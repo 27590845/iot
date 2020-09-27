@@ -48,7 +48,7 @@ public class UidGenImpl implements UidGen {
     }
 
     public long getDefaultPrefix(){
-        return System.currentTimeMillis()/1000;
+        return System.currentTimeMillis()>>16; //大概除以了一分钟的时间
     }
 
     @Override

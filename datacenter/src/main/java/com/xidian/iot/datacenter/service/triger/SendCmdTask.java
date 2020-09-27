@@ -2,13 +2,10 @@ package com.xidian.iot.datacenter.service.triger;
 
 import com.xidian.iot.common.mq.MqSender;
 import com.xidian.iot.common.util.JsonUtil;
-import com.xidian.iot.database.entity.Node;
 import com.xidian.iot.database.entity.NodeActCmd;
 import com.xidian.iot.database.entity.NodeCmd;
-import com.xidian.iot.database.entity.NodeCmdGroup;
 import com.xidian.iot.database.entity.msg.QueueCommand;
 import com.xidian.iot.databiz.service.NodeActCmdService;
-import com.xidian.iot.databiz.service.NodeCmdGroupService;
 import com.xidian.iot.databiz.service.NodeCmdService;
 import com.xidian.iot.databiz.service.NodeService;
 import com.xidian.iot.datacenter.service.BaseTask;
@@ -44,11 +41,6 @@ public class SendCmdTask extends BaseTask implements Runnable {
     @Resource
     private NodeCmdService nodeCmdService;
     /**
-     * 命令组数据访问接口。
-     */
-    @Resource
-    private NodeCmdGroupService nodeCmdGroupService;
-    /**
      * 命令数据访问接口。
      */
     @Resource
@@ -67,14 +59,11 @@ public class SendCmdTask extends BaseTask implements Runnable {
     public void run() {
         // 查询触发器的命令列表
         for(NodeActCmd nodeActCmd : nodeActCmdService.getNodeActCmdByNtId(ntId)){
-            Node node = nodeService.getNodeBySn(nodeActCmd.getSceneSn(), nodeActCmd.getNodeSn());
             NodeCmd nodeCmd = nodeCmdService.getNodeCmdById(nodeActCmd.getNcId());
             if(nodeCmd != null){
-                NodeCmdGroup nodeCmdGroup = nodeCmdGroupService.getNodeCmdGroupById(nodeCmd.getNcgId());
                 // 发送命令
-                sendCommand(nodeActCmd.getSceneSn(),
-                        nodeActCmd.getNodeSn(),
-                        nodeCmdGroup.getNcgKey(),
+                sendCommand(nodeCmd.getSceneSn(),
+                        nodeCmd.getNodeSn(),
                         nodeCmd.getNcContent());
             }
         }
@@ -84,16 +73,15 @@ public class SendCmdTask extends BaseTask implements Runnable {
      * 执行触发器中的下行的命令，将命令组封装成对象放入队列中等待被处理
      * @param sceneSn
      * @param nodeSn
-     * @param cmdKey
      * @param cmdStr
      */
-    private void sendCommand(String sceneSn, String nodeSn, String cmdKey, String cmdStr) {
+    private void sendCommand(String sceneSn, String nodeSn, String cmdStr) {
         // 创建一条队列命令。
         QueueCommand queueCommand = new QueueCommand();
         queueCommand.setSceneSn(sceneSn);
         queueCommand.setNodeSn(nodeSn);
         // 添加下发命令
-        queueCommand.addCommand(cmdKey, cmdStr);
+        queueCommand.addCommand(cmdStr);
         // 将对队列命令添加到队列中
         try {
             log.debug("Add to queue '[{}]',{}", QueueCommand.QUEUE_NAME,

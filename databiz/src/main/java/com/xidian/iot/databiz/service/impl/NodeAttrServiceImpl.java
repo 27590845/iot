@@ -9,7 +9,6 @@ import com.xidian.iot.database.entity.NodeAttrExample;
 import com.xidian.iot.database.mapper.NodeAttrMapper;
 import com.xidian.iot.database.mapper.custom.NodeAttrCustomMapper;
 import com.xidian.iot.database.param.NodeAttrParam;
-import com.xidian.iot.database.param.NodeAttrUpdateParam;
 import com.xidian.iot.databiz.service.NodeAttrService;
 import com.xidian.iot.databiz.service.NodeService;
 import com.xidian.iot.databiz.service.UidGenerator;
@@ -48,9 +47,9 @@ public class NodeAttrServiceImpl implements NodeAttrService {
         return nodeAttrs.get(0);
     }
 
+
     @Override
-    public List<NodeAttr> addNodeAttr(String sceneSn, String nodeSn, List<NodeAttrParam> nodeAttrs) {
-        Node node = nodeService.getNodeBySn(sceneSn, nodeSn);
+    public void checkReptAttrKeys(List<NodeAttrParam> nodeAttrs) {
         //先检查批量插入的是否有重复、先检查添加的属性是否存在
         List<String> repeNodeAttrs = nodeAttrs.stream()
                 .map(e -> e.getNaKey()).collect(Collectors.toMap(e -> e, e -> 1, (a, b) -> a + b)) // 获得元素出现频率的 Map，键为元素，值为元素出现的次数
@@ -60,30 +59,36 @@ public class NodeAttrServiceImpl implements NodeAttrService {
                 .collect(Collectors.toList()); // 转化为 List
         if (repeNodeAttrs.size() > 0) {
             throw new BusinessException(-1, "传入的" + repeNodeAttrs.toString() + "，这些传感器属性重复、请确认后重新添加");
-        } else {
-            //批量插入属性没有重复，检查添加的属性是否存在。
-            List<String> nodeAttrKeys = nodeAttrs.stream()
-                    .map(e -> e.getNaKey()).collect(Collectors.toList());
-            NodeAttrExample attrExample = new NodeAttrExample();
-            attrExample.createCriteria().andNodeIdEqualTo(node.getNodeId()).andNaKeyIn(nodeAttrKeys);
-            List<NodeAttr> alreadyExisted = nodeAttrMapper.selectByExample(attrExample);
-            if (alreadyExisted.size() > 0) {
-                throw new BusinessException(-1, alreadyExisted.stream()
-                        .map(e -> e.getNaKey())
-                        .collect(Collectors.toList()).toString() + "传感器属性在该节点已存在、请确认后重新添加");
-            } else {
-                List<NodeAttr> list = nodeAttrs.stream().map(nodeAttrParam -> {
-                    Long naId = uidGenerator.getUID();
-                    return nodeAttrParam.build(naId, node.getNodeId());
-                }).collect(Collectors.toList());
-                nodeAttrCustomMapper.insertBatch(list);
-                return list;
-            }
         }
     }
 
     @Override
+    public void checkExistAttrKeys(Long nodeId, List<NodeAttrParam> nodeAttrParams) {
+        //批量插入属性没有重复，检查添加的属性是否存在。
+        List<String> nodeAttrKeys = nodeAttrParams.stream()
+                .map(e -> e.getNaKey()).collect(Collectors.toList());
+        NodeAttrExample attrExample = new NodeAttrExample();
+        attrExample.createCriteria().andNodeIdEqualTo(nodeId).andNaKeyIn(nodeAttrKeys);
+        List<NodeAttr> alreadyExisted = nodeAttrMapper.selectByExample(attrExample);
+        if (alreadyExisted.size() > 0) {
+            throw new BusinessException(-1, alreadyExisted.stream()
+                    .map(e -> e.getNaKey())
+                    .collect(Collectors.toList()).toString() + "传感器属性在该节点已存在、请确认后重新添加");
+        }
+    }
+
+    @Override
+    public List<NodeAttr> addNodeAttr(String sceneSn, String nodeSn, Long nodeId, List<NodeAttrParam> nodeAttrParamss) {
+        List<NodeAttr> nodeAttrs = nodeAttrParamss.stream()
+                .map(nodeAttrParam -> nodeAttrParam.build(uidGenerator.getUID(), sceneSn, nodeSn, nodeId)
+                ).collect(Collectors.toList());
+        nodeAttrCustomMapper.insertBatch(nodeAttrs);
+        return nodeAttrs;
+    }
+
+    @Override
     public void delNodeAttrs(String sceneSn, String nodeSn, List<String> naKeyLists) {
+        //判断是否存在此节点
         Node node = nodeService.getNodeBySn(sceneSn, nodeSn);
         NodeAttrExample attrExample = new NodeAttrExample();
         NodeAttrExample.Criteria criteria = attrExample.createCriteria().andNodeIdEqualTo(node.getNodeId());
@@ -119,7 +124,7 @@ public class NodeAttrServiceImpl implements NodeAttrService {
     }
 
     @Override
-    public void updateNodeAttr(Long naId, NodeAttrUpdateParam param) {
+    public void updateNodeAttr(Long naId, NodeAttrParam param) {
         //查看是否存在此节点属性naId
         NodeAttr nodeAttr = getNodeAttrById(naId);
         //如果更新的是naKey查看该节点下是否已经存在此节点属性naKey
@@ -144,5 +149,12 @@ public class NodeAttrServiceImpl implements NodeAttrService {
         //reids存储Map时，key只能反序列化为String，暂时无更好的决方案
         Map<String, String> naMap = naSimples.stream().collect(Collectors.toMap(m -> String.valueOf(m.get("na_id")), m -> (String) m.get("na_key")));
         return naMap;
+    }
+
+    @Override
+    public void deleteByNodeId(Long nodeId) {
+        NodeAttrExample nodeAttrExample = new NodeAttrExample();
+        nodeAttrExample.createCriteria().andNodeIdEqualTo(nodeId);
+        nodeAttrMapper.deleteByExample(nodeAttrExample);
     }
 }

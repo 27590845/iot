@@ -43,9 +43,17 @@ public class ActivemqTest
 
     final static String topic = "hello_topic";
 
+    final static String sceneSn = "186610102211000001";
+    final static String nodeSn = "000001";
+    final static String topicIot = "node.updata."+sceneSn;
+
     @Test
-    public void send1() throws JsonProcessingException {
-        mqSender.send(topic, "hello word");
+    public void send1() throws JsonProcessingException, InterruptedException {
+        String msg = "{\"datastreams\":[{\"tem1\":110,\"tem2\":44.0,\"at\":1600570048,\"sn\":\""+nodeSn+"\"}]}";
+        for (int i = 0; i < 100; i++) {
+            mqSender.send(topicIot, msg);
+            Thread.sleep(5000);
+        }
     }
 
     @Test
@@ -71,7 +79,7 @@ public class ActivemqTest
                 System.out.printf("topicName = %s, message = %s\n", topicName, message);
                 latch.countDown();
             }
-        }, topic);
+        }, topicIot);
         latch.await();
         log.debug("####close connection###");
         if(clientId!=null){

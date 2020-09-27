@@ -1,6 +1,8 @@
 package com.xidian.iot.database.entity.mongo;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -14,6 +16,8 @@ import java.util.Map;
  * @date 2020/9/9 10:17 下午
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class NodeData implements Serializable {
 
     /**

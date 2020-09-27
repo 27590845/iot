@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class UidPrefixFactoryImpl implements UidPrefixFactory {
 
-    private volatile AtomicLong start = new AtomicLong(System.currentTimeMillis()/1000);
+    private volatile AtomicLong start = new AtomicLong(System.currentTimeMillis()>>16);//大概除以了一分钟的时间
 
     //uid前缀资源定位符
     @Setter

@@ -1,7 +1,7 @@
 //package com.xidian.iot.datacenter.service.triger;
 //
 //import com.xidian.iot.database.entity.*;
-//import com.xidian.iot.database.entity.custom.NodeCondExt;
+//import com.xidian.iot.database.entity.annotation.NodeCondExt;
 //import com.xidian.iot.datacenter.service.BaseTask;
 //import lombok.Setter;
 //import lombok.extern.slf4j.Slf4j;

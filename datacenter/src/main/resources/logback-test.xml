@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- logback 学习、测试 -->
+<!-- logback 学习、测试 生产环境下需要删掉本文件 -->
 <!--
 logback按如下顺序寻找配置文件:
     1) Logback tries to find a file called logback.groovy in the classpath.
@@ -113,16 +113,16 @@ logback按如下顺序寻找配置文件:
     <logger name="org.apache.kafka" level="OFF"/>
     <logger name="com.mongodb" level="OFF" />
     <logger name="com.mysql" level="OFF" />
-    <logger name="com.xidian.iot.database.mapper" level="DEBUG" >
+    <logger name="com.xidian.iot.database.mapper" level="INFO" >
         <appender-ref ref="mybatis-log-file" />
     </logger>
-    <logger name="com.xidian.iot.database.mapper.custom" level="DEBUG" >
+    <logger name="com.xidian.iot.database.mapper.custom" level="INFO" >
         <appender-ref ref="mybatis-log-file" />
     </logger>
     <!--root是默认的logger 这里设定输出级别是info-->
-    <root level="DEBUG">
+    <root level="INFO">
         <!--定义了两个appender，日志会通过往这两个appender里面写-->
-        <appender-ref ref="def-log-stdout"/>
-<!--        <appender-ref ref="FILE"/>-->
+<!--        <appender-ref ref="def-log-stdout"/>-->
+        <appender-ref ref="def-log-file"/>
     </root>
 </configuration>
