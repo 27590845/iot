@@ -1,0 +1,29 @@
+apiVersion: apps/v1               #接口版本
+kind: Deployment                  #接口类型
+metadata:
+  name: datacenter-deploy         #deployment名称
+  namespace: xidianiot            #命名空间
+  labels:
+    app: datacenter
+spec:
+#  replicas: 3
+#    strategy:
+#      rollingUpdate:              #由于rep为3 则整个升级 pod个数在2-4个之间
+#        maxSurge: 1               #滚动升级时会先启动1个pod
+#        maxUnavailable: 1         #滚动升级时允许的最大Unavailable的pod个数
+  replicas: 1
+  selector:
+    matchLabels:
+      app: datacenter
+  template:
+    metadata:
+      labels:
+        app: datacenter           #模版名称
+    spec:                         #定义容器模版 该模版可以包含多个容器
+      containers:
+      - name: datacenter
+        image: xidianiot/datacenter:v0.0.1
+        imagePullPolicy: IfNotPresent   #如果不存在则拉取
+        ports:
+        - containerPort: 9999
+

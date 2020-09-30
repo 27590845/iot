@@ -18,7 +18,7 @@ public interface MqSender {
     /*
      * 消息体是一个对象，把可序列化对象转化为消息体
      */
-    void sendSeriObj(String topicName, final Serializable serializedObj) throws JsonProcessingException;
+//    void sendSeriObj(String topicName, final Serializable serializedObj) throws JsonProcessingException;
 
     /**
      * 发送activemq byte message
@@ -26,12 +26,21 @@ public interface MqSender {
      * @param jsonStr
      * @throws JMSException
      */
-    void sendSeriObjByte(String topicName, final String jsonStr) throws JsonProcessingException;
+//    void sendSeriObjByte(String topicName, final String jsonStr) throws JsonProcessingException;
 
     /**
-     * 发送一条消息到指定的队列（目标）
+     * 发送一条消息到指定的主题（目标）
      * @param topicName 队列名称
      * @param message 消息内容
+     * @throws JsonProcessingException
      */
-    void send(String topicName, final String message) throws JsonProcessingException;
+    void sendTopic(String topicName, final String message) throws JsonProcessingException;
+
+    /**
+     * 发送一条消息到指定队列
+     * @param topicName
+     * @param message
+     * @throws JsonProcessingException
+     */
+    void sendQueue(String topicName, final String message) throws JsonProcessingException;
 }

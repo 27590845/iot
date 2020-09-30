@@ -3,9 +3,6 @@ package com.xidian.iot.datacenter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.xidian.iot.common.mq.MqSender;
 import com.xidian.iot.database.entity.custom.NodeCondExt;
-import com.xidian.iot.database.entity.mongo.NodeData;
-import com.xidian.iot.databiz.service.NodeAttrService;
-import com.xidian.iot.databiz.service.NodeCondService;
 import com.xidian.iot.datacenter.service.CommonService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -18,7 +15,6 @@ import javax.annotation.Resource;
 import java.io.*;
 import java.net.Socket;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author mrl
@@ -44,7 +40,7 @@ public class AppTest {
 //        String msg = "{\"datastreams\":[{\"TVOC\":69,\"hum\":54.0,\"at\":1597737850021,\"pm2p5\":33,\"co2\":509,\"pm10\":59,\"sn\":\""+nodeSn+"\",\"ch20\":19,\"tem\":32.0}]}";
         String msg = "{\"datastreams\":[{\"tem1\":110,\"tem2\":44.0,\"at\":1600570048,\"sn\":\""+nodeSn+"\"}]}";
         for(int i=0; i< 1000; i++){
-            mqSender.send(topic, msg);
+            mqSender.sendTopic(topic, msg);
             Thread.sleep(10000);
         }
     }

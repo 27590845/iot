@@ -43,25 +43,25 @@ public class KafkaTest {
     public void send1() throws JsonProcessingException, InterruptedException {
         String msg = "{\"datastreams\":[{\"tem1\":110,\"tem2\":44.0,\"at\":1600570048,\"sn\":\""+nodeSn+"\"}]}";
         for (int i = 0; i < 100; i++) {
-            mqSender.send(topicIot, msg);
+            mqSender.sendTopic(topicIot, msg);
             Thread.sleep(5000);
         }
     }
 
-    @Test
-    public void send2() throws Exception {
-        mqSender.sendSeriObjByte(topic, JsonUtil.toJson(new User("hansey", "niupi", 9999)));
-    }
+//    @Test
+//    public void send2() throws Exception {
+//        mqSender.sendSeriObjByte(topic, JsonUtil.toJson(new User("hansey", "niupi", 9999)));
+//    }
 
-    @Test
-    public void send3() throws JsonProcessingException {
-        mqSender.sendSeriObj(topic, new User("hansey", "niupi", 9999));
-    }
+//    @Test
+//    public void send3() throws JsonProcessingException {
+//        mqSender.sendSeriObj(topic, new User("hansey", "niupi", 9999));
+//    }
 
     @Test
     public void subscribe1() throws Exception {
         final CountDownLatch latch = new CountDownLatch(1000);
-        String consumerId = mqSubscriber.subscribe(new MqMessageListener() {
+        String consumerId = mqSubscriber.subscribeTopic(new MqMessageListener() {
             @Override
             public void onMessage(Object topicName, Object message) {
                 System.out.printf("topicName = %s, message = %s\n", topicName, message);

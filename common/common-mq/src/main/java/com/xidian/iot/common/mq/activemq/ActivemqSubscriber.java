@@ -4,6 +4,8 @@ import com.xidian.iot.common.mq.MqMessageListener;
 import com.xidian.iot.common.mq.MqSubscriber;
 import com.xidian.iot.common.mq.activemq.parser.JmsMessageParser;
 import lombok.Setter;
+import org.apache.activemq.command.ActiveMQDestination;
+import org.apache.activemq.command.ActiveMQQueue;
 import org.apache.activemq.command.ActiveMQTopic;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.jms.core.JmsTemplate;
@@ -36,27 +38,15 @@ public class ActivemqSubscriber implements MqSubscriber {
     /**
      *activemq一次只订阅一个主题，有多个主题时取第一个
      */
-    public String subscribe(final MqMessageListener listener, final String ... topics) throws JMSException {
-        if(topics == null && topics.length<=0) return null;
-        MessageConsumer consumer;
-        Connection connection;
-        Session session;
-        connection = jmsTemplate.getConnectionFactory().createConnection();
-        connection.start();
-        session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-        consumer = session.createConsumer(new ActiveMQTopic(topics[0]));
-        consumer.setMessageListener(new MessageListener() {
-            @Override
-            public void onMessage(Message message) {
-                Map<Integer, Object> res = JmsMessageParser.parse(message);
-                if(res==null || res.size()<=0) return;
-                listener.onMessage(res.get(JmsMessageParser.MSG_TOPIC), res.get(JmsMessageParser.MSG_CONTENT));
-            }
-        });
-        //将connection的clientId作为consumerId
-        String consumerId = connection.getClientID();
-        connections.put(consumerId, connection);
-        return consumerId;
+    public String subscribeTopic(final MqMessageListener listener, final String ... topics) throws JMSException {
+        if(topics==null || topics.length<=0) return null;
+        return subscribe(listener, new ActiveMQTopic(topics[0]));
+    }
+
+    @Override
+    public String subscribeQueue(MqMessageListener listener, String... topics) throws JMSException {
+        if(topics==null || topics.length<=0) return null;
+        return subscribe(listener, new ActiveMQQueue(topics[0]));
     }
 
     public boolean unSubscribe(String consumerId) throws JMSException {
@@ -69,5 +59,27 @@ public class ActivemqSubscriber implements MqSubscriber {
             }
         }
         return false;
+    }
+
+    private String subscribe(final MqMessageListener listener, ActiveMQDestination destination) throws JMSException{
+        MessageConsumer consumer;
+        Connection connection;
+        Session session;
+        connection = jmsTemplate.getConnectionFactory().createConnection();
+        connection.start();
+        session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+        consumer = session.createConsumer(destination);
+        consumer.setMessageListener(new MessageListener() {
+            @Override
+            public void onMessage(Message message) {
+                Map<Integer, Object> res = JmsMessageParser.parse(message);
+                if(res==null || res.size()<=0) return;
+                listener.onMessage(res.get(JmsMessageParser.MSG_TOPIC), res.get(JmsMessageParser.MSG_CONTENT));
+            }
+        });
+        //将connection的clientId作为consumerId
+        String consumerId = connection.getClientID();
+        connections.put(consumerId, connection);
+        return consumerId;
     }
 }

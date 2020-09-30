@@ -1,6 +1,6 @@
 FROM openjdk:8-jre-slim
 MAINTAINER mrl
-LABEL version="1.0" \
+LABEL version="1" \
       description="datacenter in docker"
 
 ENV TZ=Asia/Shanghai

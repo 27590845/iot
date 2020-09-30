@@ -12,11 +12,20 @@ import javax.jms.JMSException;
 public interface MqSubscriber {
 
     /**
-     * 动态生成一个消费者
+     * 动态生成一个消费者，订阅者模式
      * @param topics
      * @param listener
+     * @throws Exception
      */
-    String subscribe(MqMessageListener listener, String ... topics) throws Exception;
+    String subscribeTopic(MqMessageListener listener, String ... topics) throws Exception;
+
+    /**
+     * 动态生成一个消费者，点对点模式
+     * @param listener
+     * @param topics
+     * @throws Exception
+     */
+    String subscribeQueue(MqMessageListener listener, String ... topics) throws Exception;
 
     /**
      * 根据subscribe生成的consumerId，关闭一个消费者连接

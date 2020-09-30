@@ -46,7 +46,7 @@
 <!--        </constructor-arg>-->
 <!--    </bean>-->
     <!-- 主题监听Topic-->
-    <bean id="dataTopic" class="org.apache.activemq.command.ActiveMQTopic">
+    <bean id="dataTopic" class="org.apache.activemq.command.ActiveMQQueue">
         <constructor-arg>
             <value>node.updata.*</value>
         </constructor-arg>
