@@ -20,10 +20,27 @@ spec:
       labels:
         app: datacenter           #模版名称
     spec:                         #定义容器模版 该模版可以包含多个容器
+      hostAliases:
+      - ip: "114.116.228.59"
+        hostnames:
+        - "test.public.mongodb"
+        - "test.public.redis"
+        - "test.public.activemq"
+      - ip: "114.115.240.14"
+        hostnames:
+        - "test.public.mysql"
       containers:
       - name: datacenter
         image: xidianiot/datacenter:v0.0.1
-        imagePullPolicy: IfNotPresent   #如果不存在则拉取
+#        imagePullPolicy: IfNotPresent   #如果不存在则拉取
         ports:
         - containerPort: 9999
+        volumeMounts:
+        - name: app-log
+          mountPath: /var/log    # pod中docker容器目录
+      volumes:
+      - name: app-log
+        hostPath:
+          path: /var/log/k8s/    # 要挂载到的容器宿主机目录
+
 

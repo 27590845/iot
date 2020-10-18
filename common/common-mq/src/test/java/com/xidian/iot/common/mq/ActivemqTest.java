@@ -47,8 +47,8 @@ public class ActivemqTest
     @Test
     public void send1() throws JsonProcessingException, InterruptedException {
         String msg = "{\"datastreams\":[{\"tem1\":110,\"tem2\":44.0,\"at\":1600570048,\"sn\":\""+nodeSn+"\"}]}";
-        for (int i = 0; i < 100; i++) {
-            mqSender.sendQueue(topic, String.valueOf(i));
+        for (int i = 0; i < 1000; i++) {
+            mqSender.sendQueue(topicIot, msg);
             Thread.sleep(1000);
         }
     }
