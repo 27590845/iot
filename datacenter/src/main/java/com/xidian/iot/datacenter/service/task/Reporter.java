@@ -1,11 +1,7 @@
 package com.xidian.iot.datacenter.service.task;
 
-import com.xidian.iot.common.cache.RedisUtil;
 import com.xidian.iot.common.mq.MqSender;
-import com.xidian.iot.database.entity.NodeCond;
-import com.xidian.iot.database.entity.mongo.NodeData;
 import com.xidian.iot.databiz.service.NodeCondService;
-import com.xidian.iot.databiz.service.NodeDataService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
@@ -14,8 +10,6 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author mrl
@@ -54,7 +48,7 @@ public class Reporter {
             log.info("======> 检测mysql <======");
             log.info("NodeCondService.getNcIdsBySn: "+nodeCondService.getNcIdsBySn(sceneSn, nodeSn).toString());
             log.info("======> 检测消息队列 <======");
-            mqSender.send("datacenter.check", "check the connection");
+            mqSender.sendTopic("datacenter.check", "check the connection");
             log.info("======> 定时检测完成 <======");
         }catch(Exception ex){
             ex.printStackTrace();

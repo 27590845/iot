@@ -3,15 +3,12 @@ package com.xidian.iot.common.mq;
 import static org.junit.Assert.assertTrue;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.xidian.iot.common.mq.activemq.ActivemqSender;
 import com.xidian.iot.common.mq.activemq.ActivemqSubscriber;
 import com.xidian.iot.common.util.JsonUtil;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -50,21 +47,21 @@ public class ActivemqTest
     @Test
     public void send1() throws JsonProcessingException, InterruptedException {
         String msg = "{\"datastreams\":[{\"tem1\":110,\"tem2\":44.0,\"at\":1600570048,\"sn\":\""+nodeSn+"\"}]}";
-        for (int i = 0; i < 100; i++) {
-            mqSender.send(topicIot, msg);
-            Thread.sleep(5000);
+        for (int i = 0; i < 1000; i++) {
+            mqSender.sendQueue(topicIot, msg);
+            Thread.sleep(1000);
         }
     }
 
-    @Test
-    public void send2() throws JsonProcessingException {
-        mqSender.sendSeriObjByte(topic, JsonUtil.toJson(new User("hansey", "niupi", 9999)));
-    }
+//    @Test
+//    public void send2() throws JsonProcessingException {
+//        mqSender.sendSeriObjByte(topic, JsonUtil.toJson(new User("hansey", "niupi", 9999)));
+//    }
 
-    @Test
-    public void send3() throws JsonProcessingException {
-        mqSender.sendSeriObj(topic, new User("hansey", "niupi", 9999));
-    }
+//    @Test
+//    public void send3() throws JsonProcessingException {
+//        mqSender.sendSeriObj(topic, new User("hansey", "niupi", 9999));
+//    }
 
     @Resource
     ActivemqSubscriber mqSubscriber;
@@ -73,21 +70,21 @@ public class ActivemqTest
     public void subscribe() throws JMSException, InterruptedException {
         //消费1000个消息后关闭
         final CountDownLatch latch = new CountDownLatch(1000);
-        String clientId = mqSubscriber.subscribe(new MqMessageListener() {
+        String clientId1 = mqSubscriber.subscribeQueue(new MqMessageListener() {
             @Override
             public void onMessage(Object topicName, Object message) {
-                System.out.printf("topicName = %s, message = %s\n", topicName, message);
+                System.out.printf("client = %s, message = %s\n", 1, message);
                 latch.countDown();
             }
-        }, topicIot);
-        latch.await();
-        log.debug("####close connection###");
-        if(clientId!=null){
-            Connection connection = ActivemqSubscriber.getConnection(clientId);
-            if(connection!=null){
-                connection.close();
+        }, topic);
+        String clientId2 = mqSubscriber.subscribeQueue(new MqMessageListener() {
+            @Override
+            public void onMessage(Object topicName, Object message) {
+                System.out.printf("client = %s, message = %s\n", 2, message);
+                latch.countDown();
             }
-        }
+        }, topic);
+        latch.await();
     }
 
     @Data

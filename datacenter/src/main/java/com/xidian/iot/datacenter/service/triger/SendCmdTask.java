@@ -87,7 +87,7 @@ public class SendCmdTask extends BaseTask implements Runnable {
             log.debug("Add to queue '[{}]',{}", QueueCommand.QUEUE_NAME,
                     queueCommand);
             // kestrelClient.set(QueueCommand.QUEUE_NAME, 0, queueCommand);
-            mqSender.send(QueueCommand.QUEUE_NAME, JsonUtil.toJson(queueCommand));
+            mqSender.sendTopic(QueueCommand.QUEUE_NAME, JsonUtil.toJson(queueCommand));
         } catch (Exception e) {
             log.error("kestrel client set() error.", e);
         }

@@ -46,7 +46,7 @@
 <!--        </constructor-arg>-->
 <!--    </bean>-->
     <!-- 主题监听Topic-->
-    <bean id="dataTopic" class="org.apache.activemq.command.ActiveMQTopic">
+    <bean id="dataTopic" class="org.apache.activemq.command.ActiveMQQueue">
         <constructor-arg>
             <value>node.updata.*</value>
         </constructor-arg>
@@ -66,4 +66,18 @@
     <task:scheduled-tasks>
         <task:scheduled ref="reporter" method="report" cron="*/60 * * * * ?"/>
     </task:scheduled-tasks>
+
+    <!-- 站内信主题监听Topic-->
+    <bean id="dataTopicSL" class="org.apache.activemq.command.ActiveMQTopic">
+        <constructor-arg>
+            <value>SiteLetter</value>
+        </constructor-arg>
+    </bean>
+    <!-- 监听类 -->
+    <bean id="receiveSL" class="com.xidian.iot.datacenter.listener.SiteLetterListener"/>
+    <bean id="dataListenerSL" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="jmsFactory" />
+        <property name="destination" ref="dataTopicSL" />
+        <property name="messageListener" ref="receiveSL" />
+    </bean>
 </beans>

@@ -52,7 +52,7 @@ public class KafkaSubscriber implements MqSubscriber {
     private static final ConcurrentHashMap<String, KafkaMessageListenerContainer> containers = new ConcurrentHashMap<>();
 
     @Override
-    public String subscribe(final MqMessageListener listener, String... topics) {
+    public String subscribeTopic(final MqMessageListener listener, String... topics) {
         KafkaMessageListenerContainer container = containerFactory.getKafkaMessageListenerContainer(MessageListenerContainerFactory.STR_FACTORY, new MessageListener() {
             @Override
             public void onMessage(Object data) {
@@ -66,6 +66,15 @@ public class KafkaSubscriber implements MqSubscriber {
         containers.put(consumerId, container);
         container.start();
         return consumerId;
+    }
+
+    /**
+     * kafka没有点对点模式和订阅者模式的概念，而是用groupId来区分，具体区别见{@link KafkaSubscriber}的注释
+     * 另外，因为配置文件{classpath:/spring/application-kafka-consumer-def.xml}里把groupId固定了，所以相当于点对点模式
+     */
+    @Override
+    public String subscribeQueue(MqMessageListener listener, String... topics){
+        return subscribeTopic(listener, topics);
     }
 
     @Override

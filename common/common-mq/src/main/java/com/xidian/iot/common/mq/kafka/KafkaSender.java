@@ -115,24 +115,30 @@ public class KafkaSender implements MqSender {
         }
     }
 
-    @Override
-    public void sendSeriObj(String topicName, Serializable serializedObj) throws JsonProcessingException {
-        Map<String,Object> res = sndMesForTemplate(topicName, serializedObj, 0, "KafkaSender", objKafkaTemplate);
-        log.debug(res.toString());
-    }
+//    @Override
+//    public void sendSeriObj(String topicName, Serializable serializedObj) throws JsonProcessingException {
+//        Map<String,Object> res = sndMesForTemplate(topicName, serializedObj, 0, "KafkaSender", objKafkaTemplate);
+//        log.debug(res.toString());
+//    }
 
-    @Override
-    public void sendSeriObjByte(String topicName, String jsonStr) throws JsonProcessingException {
-        Map<String,Object> res = sndMesForTemplate(topicName, jsonStr.getBytes(), 0, "KafkaSender", byteKafkaTemplate);
-        log.debug(res.toString());
-    }
+//    @Override
+//    public void sendSeriObjByte(String topicName, String jsonStr) throws JsonProcessingException {
+//        Map<String,Object> res = sndMesForTemplate(topicName, jsonStr.getBytes(), 0, "KafkaSender", byteKafkaTemplate);
+//        log.debug(res.toString());
+//    }
 
     /**
      * 好像kafkaTemplate只能发送string
      */
     @Override
-    public void send(String topicName, String message) throws JsonProcessingException {
+    public void sendTopic(String topicName, String message) throws JsonProcessingException {
         Map<String,Object> res = sndMesForTemplate(topicName, message, 0, "KafkaSender", strKafkaTemplate);
         log.debug(res.toString());
     }
+
+    @Override
+    public void sendQueue(String topicName, String message) throws JsonProcessingException {
+        sendTopic(topicName, message);
+    }
+
 }
