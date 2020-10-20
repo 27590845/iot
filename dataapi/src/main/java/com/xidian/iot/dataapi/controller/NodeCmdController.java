@@ -1,6 +1,5 @@
 package com.xidian.iot.dataapi.controller;
 
-import com.xidian.iot.common.util.exception.BusinessException;
 import com.xidian.iot.dataapi.controller.res.HttpResult;
 import com.xidian.iot.database.entity.Node;
 import com.xidian.iot.database.param.NodeCmdParam;
@@ -26,7 +25,7 @@ import java.util.Objects;
  * @author: Hansey
  * @date: 2020-09-22 20:11
  */
-@Api(tags = "/nodeCmd", description = "提供节点命令操作的相关接口")
+@Api(tags = "节点命令", description = "提供节点命令操作的相关接口")
 @RestController
 @RequestMapping("/nodeCmd")
 public class NodeCmdController {
@@ -45,7 +44,7 @@ public class NodeCmdController {
         //验证是否存在重复的节点命令名称/内容
         nodeCmdService.checkReptCmds(nodeCmdParams);
         //验证该节点是否存在
-        Node node = nodeService.getNodeVoBySn(sceneSn, nodeSn);
+        Node node = nodeService.getNodeBySn(sceneSn, nodeSn);
         //验证该节点是否已经存在该节点命令名称/内容
         nodeCmdService.checkExistCmds(node.getNodeId(), nodeCmdParams);
         return HttpResult.oK().message("批量添加节点命令成功").data(nodeCmdService.addNodeCmds(sceneSn, nodeSn, node.getNodeId(), nodeCmdParams));

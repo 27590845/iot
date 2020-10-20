@@ -19,7 +19,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
 
     private boolean swaggerShow = Boolean.parseBoolean(String.valueOf(true));
     private static final String INDEX_PAGE = "http://localhost:8080/dataapi/swagger-ui.html";
-    private static final String BASE_PACKAGE = "com.xidian.iot.dataapi.controller";
+    private static final String BASE_PACKAGE = "com.xidian.iot";
 
     @Bean
     public Docket createRestApi() {

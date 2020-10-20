@@ -4,7 +4,7 @@
 
     <property name="LOG_HOME" value="/var/log"/>
     <property name="LOG_PREFIX" value="dataapi"/>
-    <property name="LOG.LEVEL" value="DEBUG" />
+    <property name="LOG.LEVEL" value="INFO" />
     <property name="LOG.MAXHISTORY" value="30" />
     <property name="LOG.PATTERN"
               value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n" />

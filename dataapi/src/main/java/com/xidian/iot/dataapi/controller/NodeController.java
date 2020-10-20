@@ -21,7 +21,7 @@ import javax.validation.Valid;
  * @author: Hansey
  * @date: 2020-09-10 21:42
  */
-@Api(tags = "/node", description = "提供节点操作的相关接口")
+@Api(tags = "节点", description = "提供节点操作的相关接口")
 @RestController
 @RequestMapping("/node")
 public class NodeController {

@@ -15,6 +15,7 @@
                 <value>classpath:conf/jdbc-def.properties</value>
                 <value>classpath:conf/mongo-def.properties</value>
                 <value>classpath:conf/application.properties</value>
+                <value>classpath:conf/oauth.properties</value>
             </array>
         </property>
     </bean>

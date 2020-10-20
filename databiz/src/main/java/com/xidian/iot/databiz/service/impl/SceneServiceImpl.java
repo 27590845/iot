@@ -136,6 +136,7 @@ public class SceneServiceImpl implements SceneService {
 //        log.info(String.valueOf(System.currentTimeMillis()));
 //        SceneVo sceneVo2 = sceneCustomMapper.getSceneVoBySnJoin(sceneSn);
 //        log.info(String.valueOf(System.currentTimeMillis()));
+        Assert.isTrue(sceneVo1==null,ExceptionEnum.SCENE_NOT_EXIST );
         return sceneVo1;
     }
 

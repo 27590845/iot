@@ -23,7 +23,7 @@ import java.text.SimpleDateFormat;
  * @author: Hansey
  * @date: 2020-09-06 21:29
  */
-@Api(tags = "/scene", description = "提供场景操作的相关接口")
+@Api(tags = "场景", description = "提供场景操作的相关接口")
 @RestController
 @RequestMapping("/scene")
 public class SceneController {
@@ -76,6 +76,8 @@ public class SceneController {
                                   @ApiParam(name = "nodeSn", value = "节点sn") @PathVariable("nodeSn") String nodeSn,
                                   @ApiParam(name = "st", value = "开始时间st、et的格式为yyyy-MM-dd HH:mm:ss") @RequestParam(value = "st",required = false) String st,
                                   @ApiParam(name = "et", value = "结束时间同st的时间格式et的格式") @RequestParam(value = "et",required = false) String et) {
+        //首先判断该节点是否存在
+        nodeService.getNodeBySn(sceneSn, nodeSn);
         //如果上传的st和et不为空说明查询的是历史时间
         if(StringUtils.isNotBlank(st)&&StringUtils.isNotBlank(et)){
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
