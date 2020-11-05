@@ -100,7 +100,9 @@ public class NodeCondServiceImpl implements NodeCondService {
         List<Long> ncIds = nodeCondCustomMapper.getNcIdsBySceneSn(sceneSn);
         NodeCondExample nodeCondExample = new NodeCondExample();
         nodeCondExample.createCriteria().andSceneSnEqualTo(sceneSn);
-        ncIds.stream().forEach(ncId -> cleanNodeCondById(ncId));
+        if(ncIds.size()>0){
+            ncIds.stream().forEach(ncId -> cleanNodeCondById(ncId));
+        }
         return nodeCondMapper.deleteByExample(nodeCondExample);
     }
 }

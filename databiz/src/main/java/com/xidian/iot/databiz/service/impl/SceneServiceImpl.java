@@ -95,7 +95,9 @@ public class SceneServiceImpl implements SceneService {
         scene.setSceneId(uidGenerator.getUID());
         String sceneSnPre = EncodeType.EncodeGateway.getCode() + "866101022";
         //补零操作、如果是6位也就是最多支持一百台。同一个区域的第几台。
-        String sequence = String.format("%06d", Integer.valueOf(sceneCustomMapper.maxSceneSn(sceneSnPre)) + 1);
+        String lastSceneSn = sceneCustomMapper.maxSceneSn(sceneSnPre);
+        lastSceneSn = Objects.isNull(lastSceneSn)? "0":lastSceneSn;
+        String sequence = String.format("%06d", Integer.valueOf(lastSceneSn) + 1);
         //物联网唯一标示体系
         scene.setSceneSn(sceneSnPre + param.getUsageCode() + param.getCommCode() + sequence);
         sceneMapper.insertSelective(scene);
@@ -136,7 +138,7 @@ public class SceneServiceImpl implements SceneService {
 //        log.info(String.valueOf(System.currentTimeMillis()));
 //        SceneVo sceneVo2 = sceneCustomMapper.getSceneVoBySnJoin(sceneSn);
 //        log.info(String.valueOf(System.currentTimeMillis()));
-        Assert.isTrue(sceneVo1==null,ExceptionEnum.SCENE_NOT_EXIST );
+        Assert.isFalse(sceneVo1==null,ExceptionEnum.SCENE_NOT_EXIST );
         return sceneVo1;
     }
 
