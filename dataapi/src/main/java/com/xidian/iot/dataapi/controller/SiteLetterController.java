@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
  * @date: 2020-09-21 20:38
  */
 
-@Api(tags = "/siteletter",description = "提供站内信查看的接口")
+@Api(tags = "站内信",description = "提供站内信查看的接口")
 @RestController
 @RequestMapping("/siteletter")
 public class SiteLetterController {
     @Autowired
     private SiteLetterService siteLetterService;
 
-    @ApiOperation("分页获取当前用户下的所有站内信")
+    @ApiOperation(value = "分页获取当前用户下的所有站内信")
     @GetMapping("/list")
     public HttpResult getSiteLetters(@ApiParam(name = "page", value = "页号") @RequestParam(value = "page", required = false, defaultValue = "1") int page,
                                      @ApiParam(name = "limit", value = "页数") @RequestParam(value = "limit", required = false, defaultValue = "5") int limit){
