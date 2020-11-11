@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date: 2020-09-21 20:38
  */
 
-@Api(tags = "/siteletter",description = "提供站内信查看的接口")
+@Api(tags = "/站内信",description = "提供站内信查看的接口")
 @RestController
 @RequestMapping("/siteletter")
 public class SiteLetterController {
