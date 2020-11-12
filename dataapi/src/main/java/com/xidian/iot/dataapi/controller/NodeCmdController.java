@@ -77,7 +77,7 @@ public class NodeCmdController {
         }
         nodeCmdService.deleteByNodeId(nodeId);
         //删除触发器触发命令
-        nodeActCmdService.delNodeActCmdByNtIds(ncIds);
+        nodeActCmdService.delNodeActCmdByNcIds(ncIds);
         return HttpResult.responseOK("该节点下的命令已删除成功");
     }
 
