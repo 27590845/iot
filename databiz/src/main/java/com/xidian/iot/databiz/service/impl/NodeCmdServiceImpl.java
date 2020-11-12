@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -38,17 +39,20 @@ public class NodeCmdServiceImpl implements NodeCmdService {
 
     @Override
     public NodeCmd getNodeCmdById(Long ncId) {
-        return nodeCmdMapper.selectByPrimaryKey(ncId);
+        NodeCmd nodeCmd = nodeCmdMapper.selectByPrimaryKey(ncId);
+        if (Objects.isNull(nodeCmd)) throw new BusinessException(-1, "该条节点命令不存在");
+        return nodeCmd;
     }
 
     @Override
-    public int addNodeCmds(String sceneSn, String nodeSn, Long nodeId, List<NodeCmdParam> nodeCmdParams) {
+    public List<NodeCmd> addNodeCmds(String sceneSn, String nodeSn, Long nodeId, List<NodeCmdParam> nodeCmdParams) {
         List<NodeCmd> nodeCmds = nodeCmdParams.stream().map(
                 nodeCmdParam -> {
                     return nodeCmdParam.buildNodeCmd(uidGenerator.getUID(), nodeId, sceneSn, nodeSn);
                 }
         ).collect(Collectors.toList());
-        return nodeCmdCustomMapper.addBatch(nodeCmds);
+        nodeCmdCustomMapper.addBatch(nodeCmds);
+        return nodeCmds;
     }
 
     @Override
@@ -121,10 +125,10 @@ public class NodeCmdServiceImpl implements NodeCmdService {
     }
 
     @Override
-    public void updateByNcId(Long ncId, NodeCmdParam nodeCmdParam) {
+    public NodeCmd updateByNcId(Long ncId, NodeCmdParam nodeCmdParam) {
+        //检查是否存在此节点命令
+        NodeCmd nodeCmd = getNodeCmdById(ncId);
         NodeCmdExample nodeCmdExample = new NodeCmdExample();
-        NodeCmdExample.Criteria criteria = nodeCmdExample.createCriteria();
-        criteria.andNcIdIsNotNull();
         if (StringUtils.isNotBlank(nodeCmdParam.getNcName())) {
             nodeCmdExample.or().andNcContentEqualTo(nodeCmdParam.getNcName());
         }
@@ -135,10 +139,28 @@ public class NodeCmdServiceImpl implements NodeCmdService {
         if (nodeCmds.size() > 0) {
             throw new BusinessException(-1, "该节点命令名称或节点命令内容存在");
         }
-        NodeCmd nodeCmd = new NodeCmd();
         nodeCmd.setNcId(ncId);
         nodeCmd.setNcContent(StringUtils.isNotBlank(nodeCmdParam.getNcContent()) ? nodeCmdParam.getNcContent() : null);
         nodeCmd.setNcName(StringUtils.isNotBlank(nodeCmdParam.getNcName()) ? nodeCmdParam.getNcName() : null);
         nodeCmdMapper.updateByPrimaryKeySelective(nodeCmd);
+        return nodeCmd;
+    }
+
+    @Override
+    public int delBySceneSn(String sceneSn) {
+        int res = 0;
+        //查询该场景所有节点命令Id
+        List<Long> ncIds = nodeCmdCustomMapper.getNcIdsBySceneSn(sceneSn);
+        NodeCmdExample nodeCmdExample = new NodeCmdExample();
+        nodeCmdExample.createCriteria().andSceneSnEqualTo(sceneSn);
+        res = nodeCmdMapper.deleteByExample(nodeCmdExample);
+        nodeActCmdService.delNodeActCmdByNcIds(ncIds);
+        return res;
+
+    }
+
+    @Override
+    public List<Long> getNcIdsByNodeId(Long nodeId) {
+        return nodeCmdCustomMapper.getNcIdsByNodeId(nodeId);
     }
 }
