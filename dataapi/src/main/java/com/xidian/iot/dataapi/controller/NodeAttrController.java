@@ -25,7 +25,7 @@ import java.util.List;
  * @author: Hansey
  * @date: 2020-09-13 11:05
  */
-@Api(tags = "/nodeAttr", description = "提供节点属性操作的相关接口")
+@Api(tags = "节点属性", description = "提供节点属性操作的相关接口")
 @RestControllerAdvice
 @RequestMapping("/nodeAttr")
 public class NodeAttrController {
@@ -42,7 +42,7 @@ public class NodeAttrController {
         //先检查批量添加的是否有重复的keys
         nodeAttrService.checkReptAttrKeys(nodeAttrs);
         //检查是否存在该节点
-        Node node = nodeService.getNodeVoBySn(sceneSn, nodeSn);
+        Node node = nodeService.getNodeBySn(sceneSn, nodeSn);
         //批量添加的传感器属性keys在该节点是否存在
         nodeAttrService.checkExistAttrKeys(node.getNodeId(), nodeAttrs);
         return HttpResult.responseOK(nodeAttrService.addNodeAttr(sceneSn, nodeSn, node.getNodeId(), nodeAttrs));
@@ -52,7 +52,7 @@ public class NodeAttrController {
     @DeleteMapping("/{sceneSn}/{nodeSn}/{naKeys}")
     public HttpResult delNodeAttr(@ApiParam(name = "sceneSn", value = "场景sn") @PathVariable("sceneSn") String sceneSn,
                                   @ApiParam(name = "nodeSn", value = "节点sn") @PathVariable(value = "nodeSn") String nodeSn,
-                                  @ApiParam(name = "naKeys", value = "节点属性列表") @PathVariable(value = "naKeys") String naKeys) {
+                                  @ApiParam(name = "naKeys", value = "节点属性列表 例如tem1,tem2,tem3,tem4这种格式") @PathVariable(value = "naKeys") String naKeys) {
         List<String> naKeyLists = Arrays.asList(naKeys.split(","));
         nodeAttrService.delNodeAttrs(sceneSn, nodeSn, naKeyLists);
         return HttpResult.oK().message("删除场景成功");

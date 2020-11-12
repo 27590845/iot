@@ -18,7 +18,7 @@ import javax.validation.Valid;
  * @author: Hansey
  * @date: 2020-09-13 11:12
  */
-@Api(tags = "/nodeAttrStd", description = "提供节点属性操作的相关接口")
+@Api(tags = "节点属性模版", description = "提供节点属性操作的相关接口")
 @RestControllerAdvice
 @RequestMapping("/nodeAttrStd")
 public class NodeAttrStdController {

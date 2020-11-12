@@ -147,14 +147,14 @@ public class HttpResult<T> {
         return data;
     }
 
-    /**
-      * 使用时   httpResult.getOptionalData().orElse(default);
-      * @return http实际请求的数据的Optional值
-      * @author xuweidong
-      */
-    @JsonIgnore
-    public Optional<T> getDataOptional() {
-        return Optional.ofNullable(data);
-    }
+//    /**
+//      * 使用时   httpResult.getOptionalData().orElse(default);
+//      * @return http实际请求的数据的Optional值
+//      * @author xuweidong
+//      */
+//    @JsonIgnore
+//    public Optional<T> getDataOptional() {
+//        return Optional.ofNullable(data);
+//    }
 
 }

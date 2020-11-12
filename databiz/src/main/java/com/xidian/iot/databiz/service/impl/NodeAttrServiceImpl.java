@@ -11,6 +11,7 @@ import com.xidian.iot.database.mapper.NodeAttrMapper;
 import com.xidian.iot.database.mapper.custom.NodeAttrCustomMapper;
 import com.xidian.iot.database.param.NodeAttrParam;
 import com.xidian.iot.databiz.service.NodeAttrService;
+import com.xidian.iot.databiz.service.NodeCondService;
 import com.xidian.iot.databiz.service.NodeService;
 import com.xidian.iot.databiz.service.UidGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,8 @@ public class NodeAttrServiceImpl implements NodeAttrService {
     private NodeAttrCustomMapper nodeAttrCustomMapper;
     @Autowired
     private NodeService nodeService;
+    @Autowired
+    private NodeCondService nodeCondService;
     @Autowired
     private UidGenerator uidGenerator;
 
@@ -109,6 +112,9 @@ public class NodeAttrServiceImpl implements NodeAttrService {
                 //如果有实际未存在的属性就删除失败，返回错误信息
                 throw new BusinessException(-1, "删除失败，传入的" + notExistedKeys.toString() + "，这些传感器属性不存在，请确认后重新删除");
             } else {
+                //找出节点属性Id级联删除节点属性相关联的节点触发条件
+                List<Long> naIds = alreadyExisted.stream().map(e -> e.getNaId()).collect(Collectors.toList());
+                nodeCondService.delNodeCondByNaIds(naIds);
                 nodeAttrMapper.deleteByExample(attrExample);
             }
         }
@@ -166,8 +172,21 @@ public class NodeAttrServiceImpl implements NodeAttrService {
 
     @Override
     public void deleteByNodeId(Long nodeId) {
+        //获取节点下所有的节点属性Id
+        List<Long> naIds = nodeAttrCustomMapper.getNAIdsByNodeId(nodeId);
+        if (!Objects.isNull(naIds) && naIds.size() > 0) {
+            NodeAttrExample nodeAttrExample = new NodeAttrExample();
+            nodeAttrExample.createCriteria().andNodeIdEqualTo(nodeId);
+            nodeAttrMapper.deleteByExample(nodeAttrExample);
+            //根据节点属性id级联删除相关节点触发条件
+            nodeCondService.delNodeCondByNaIds(naIds);
+        }
+    }
+
+    @Override
+    public int delBySceneSn(String sceneSn) {
         NodeAttrExample nodeAttrExample = new NodeAttrExample();
-        nodeAttrExample.createCriteria().andNodeIdEqualTo(nodeId);
-        nodeAttrMapper.deleteByExample(nodeAttrExample);
+        nodeAttrExample.createCriteria().andSceneSnEqualTo(sceneSn);
+        return nodeAttrMapper.deleteByExample(nodeAttrExample);
     }
 }

@@ -36,8 +36,8 @@ public class NodeCmdParam {
         NodeCmd nodeCmd = new NodeCmd();
         nodeCmd.setNcId(ncId);
         nodeCmd.setNodeId(nodeId);
-        nodeCmd.setNodeSn(sceneSn);
-        nodeCmd.setSceneSn(nodeSn);
+        nodeCmd.setSceneSn(sceneSn);
+        nodeCmd.setNodeSn(nodeSn);
         nodeCmd.setNcContent(ncContent);
         nodeCmd.setNcName(ncName);
         return nodeCmd;

@@ -168,7 +168,7 @@ public class GlobalExceptionHandler {
         HttpResult<String> r = new HttpResult<>();
         r.setCode(code);
         r.setMessage(message);
-        return HttpResult.oK().code(code).message(message);
+        return HttpResult.generateErrorResult(code,message);
     }
 
     /**

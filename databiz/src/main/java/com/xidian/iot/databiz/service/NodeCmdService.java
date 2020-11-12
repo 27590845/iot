@@ -33,7 +33,7 @@ public interface NodeCmdService {
      * @param nodeCmdParams 节点命令参数
      * @return int
      */
-    int addNodeCmds(String sceneSn, String nodeSn, Long nodeId, List<NodeCmdParam> nodeCmdParams);
+    List<NodeCmd> addNodeCmds(String sceneSn, String nodeSn, Long nodeId, List<NodeCmdParam> nodeCmdParams);
 
 
     /**
@@ -61,8 +61,8 @@ public interface NodeCmdService {
     void deleteByNcId(Long ncId);
 
     /**
-     * 删除节点下的
-     *
+     * 删除节点下的所有节点命令
+     * 再调用此方法之前要找出节点下所有的的节点命令并级联删除节点触发命令
      * @param nodeId
      * @return void
      */
@@ -70,12 +70,12 @@ public interface NodeCmdService {
 
     /**
      * 根据节点命令Id主键、更新节点命令
-     *
+     * 节点内容以及节点的名称至少更新一个
      * @param ncId         节点命令Id
      * @param nodeCmdParam 节点命令
-     * @return void
-     */
-    void updateByNcId(Long ncId, NodeCmdParam nodeCmdParam);
+     * @return com.xidian.iot.database.entity.NodeCmd
+     * */
+    NodeCmd updateByNcId(Long ncId, NodeCmdParam nodeCmdParam);
 
     /**
      * 验证该节点是否已经存在该节点命令名称/内容
@@ -84,4 +84,19 @@ public interface NodeCmdService {
      * @return void
      * */
     void checkExistCmds(Long nodeId, ValidList<NodeCmdParam> nodeCmdParams);
+
+    /**
+     * 根据网关Sn删除该网关下所有的的节点命令
+     * 同时级联删除node_act_cmd中的相关数据
+     * @param sceneSn 网关Sn
+     * @return int
+     * */
+    int delBySceneSn(String sceneSn);
+
+    /**
+     * 由节点Id获取该节点下所有的节点命令
+     * @param nodeId
+     * @return java.util.List<java.lang.Long>
+     * */
+    List<Long> getNcIdsByNodeId(Long nodeId);
 }

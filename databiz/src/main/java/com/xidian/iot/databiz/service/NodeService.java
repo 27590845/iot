@@ -15,12 +15,12 @@ import java.util.List;
 public interface NodeService {
 
     /**
-     * 添加节点
-     *
+     * 添加节点及其节点属性和节点命令
+     * 返回所添加的相关信息NodeVo
      * @param param
      * @return com.xidian.iot.database.entity.Node
      */
-    Node addNode(NodeAddParam param);
+    NodeVo addNode(NodeAddParam param);
 
     /**
      * 根据sceneSn和nodeSn删除node
@@ -89,4 +89,18 @@ public interface NodeService {
      * @return java.util.List<com.xidian.iot.database.entity.mongo.NodeData>
      * */
     List<NodeData> getMongoData(String sceneSn, String nodeSn, Long st, Long et);
+
+    /**
+     * 由节点主键获取其节点相关信息
+     * @param nodeId 节点Id
+     * @return com.xidian.iot.database.entity.Node
+     * */
+    Node getNodeByNodeId(Long nodeId);
+
+    /**
+     * 根据节点Sn删除该节点下所有的节点
+     * @param sceneSn 节点Sn
+     * @return int 返回删除的个数
+     * */
+    int delNodesBySceneSn(String sceneSn);
 }

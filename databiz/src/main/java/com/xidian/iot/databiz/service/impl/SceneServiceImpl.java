@@ -14,9 +14,7 @@ import com.xidian.iot.database.param.SceneUpdateParam;
 import com.xidian.iot.database.vo.NodeVo;
 import com.xidian.iot.database.vo.SceneVo;
 import com.xidian.iot.databiz.constants.EncodeType;
-import com.xidian.iot.databiz.service.NodeService;
-import com.xidian.iot.databiz.service.SceneService;
-import com.xidian.iot.databiz.service.UidGenerator;
+import com.xidian.iot.databiz.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,6 +42,12 @@ public class SceneServiceImpl implements SceneService {
     private NodeCustomMapper nodeCustomMapper;
     @Autowired
     private NodeService nodeService;
+    @Autowired
+    private NodeAttrService nodeAttrService;
+    @Autowired
+    private NodeCmdService nodeCmdService;
+    @Autowired
+    private NodeCondService nodeCondService;
     @Autowired
     private UidGenerator uidGenerator;
 
@@ -108,6 +112,14 @@ public class SceneServiceImpl implements SceneService {
         SceneExample example = new SceneExample();
         example.createCriteria().andSceneSnEqualTo(sceneSn);
         Assert.isTrue(sceneMapper.deleteByExample(example) > 0, ExceptionEnum.SCENE_NOT_EXIST);
+        //级联删除node
+        nodeService.delNodesBySceneSn(sceneSn);
+        //级联删除node_attr 节点属性
+        nodeAttrService.delBySceneSn(sceneSn);
+        //级联删除node_cmd、同时删除相关的节点触发相关条件node_atc_cmd
+        nodeCmdService.delBySceneSn(sceneSn);
+        //级联删除node_cond
+        nodeCondService.delNodeCondBySceneSn(sceneSn);
     }
 
     @Override
@@ -124,6 +136,7 @@ public class SceneServiceImpl implements SceneService {
 //        log.info(String.valueOf(System.currentTimeMillis()));
 //        SceneVo sceneVo2 = sceneCustomMapper.getSceneVoBySnJoin(sceneSn);
 //        log.info(String.valueOf(System.currentTimeMillis()));
+        Assert.isTrue(sceneVo1==null,ExceptionEnum.SCENE_NOT_EXIST );
         return sceneVo1;
     }
 

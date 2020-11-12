@@ -26,6 +26,19 @@
             <version>1.2.72</version>
             <scope>compile</scope>
         </dependency>
+        <!-- JWT生成工具 -->
+        <dependency>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>nimbus-jose-jwt</artifactId>
+            <version>${nimbus-jose-jwt.version}</version>
+        </dependency>
+
+        <!--Spring Security RSA工具类-->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-rsa</artifactId>
+            <version>${spring-security-rsa.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

@@ -39,4 +39,18 @@ public interface NodeCmdCustomMapper {
      * @return java.util.List<java.lang.Long>
      * */
     List<Long> getNcIdsByNodeId(Long nodeId);
+
+    /**
+     * 根据节点Id获取该节点下所有的命令
+     * @param nodeId
+     * @return java.util.List<com.xidian.iot.database.entity.NodeCmd>
+     * */
+    List<NodeCmd> getNcsByNodeId(Long nodeId);
+
+    /**
+     * 根绝sceneSn查询该网关下所有的节点命令Id
+     * @param sceneSn 网关Sn
+     * @return java.util.List<java.lang.Long>
+     * */
+    List<Long> getNcIdsBySceneSn(@Param("sceneSn") String sceneSn);
 }

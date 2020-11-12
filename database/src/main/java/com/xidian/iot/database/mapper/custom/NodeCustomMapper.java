@@ -24,4 +24,11 @@ public interface NodeCustomMapper {
      * @return java.util.List<com.xidian.iot.database.vo.NodeVo>
      * */
     List<NodeVo> getNodeVosBySceneId(@Param("sceneId") Long sceneId);
+
+    /**
+     * 得到该网关下最后添加的nodeSn
+     * @param sceneId
+     * @return java.lang.String
+     * */
+    String getSceneLastNodeSn(Long sceneId);
 }

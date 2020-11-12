@@ -19,7 +19,7 @@ import javax.annotation.Resource;
  * @Description: 规则引擎相关接口
  * @date 2020/9/17 9:15 下午
  */
-@Api(tags = "/rule")
+@Api(tags = "规则引擎")
 @RestController
 @RequestMapping("/rule")
 public class RuleEngineController {

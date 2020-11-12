@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xidian.iot.database.mapper.custom.NodeCmdCustomMapper">
+    <resultMap id="BaseResultMap" type="com.xidian.iot.database.entity.NodeCmd">
+        <id column="nc_id" jdbcType="BIGINT" property="ncId"/>
+        <result column="node_id" jdbcType="BIGINT" property="nodeId"/>
+        <result column="nc_content" jdbcType="VARCHAR" property="ncContent"/>
+        <result column="nc_name" jdbcType="VARCHAR" property="ncName"/>
+        <result column="scene_sn" jdbcType="VARCHAR" property="sceneSn"/>
+        <result column="node_sn" jdbcType="VARCHAR" property="nodeSn"/>
+    </resultMap>
     <insert id="addBatch" parameterType="java.util.List">
         insert into node_cmd (nc_id, node_id, nc_content, nc_name, scene_sn,node_sn)
         values
@@ -33,8 +41,19 @@
 
     <select id="getNcIdsByNodeId" resultType="java.lang.Long">
         select nc_id
+        from node_cmd
+        where node_id = #{nodeId,jdbcType=BIGINT}
+    </select>
+
+    <select id="getNcsByNodeId" resultMap="BaseResultMap">
+        select nc.*
         from node_cmd nc
         where nc.node_id = #{nodeId,jdbcType=BIGINT}
     </select>
 
+    <select id="getNcIdsBySceneSn" parameterType="java.lang.String" resultType="java.lang.Long">
+        select nc_id
+        from node_cmd
+        where scene_sn = #{sceneSn,jdbcType=VARCHAR}
+    </select>
 </mapper>
