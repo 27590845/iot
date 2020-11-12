@@ -2,6 +2,7 @@ package com.xidian.iot.datacenter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.xidian.iot.common.mq.MqSender;
+import com.xidian.iot.common.util.TimeUtil;
 import com.xidian.iot.database.entity.custom.NodeCondExt;
 import com.xidian.iot.datacenter.service.CommonService;
 import lombok.extern.slf4j.Slf4j;
@@ -38,10 +39,10 @@ public class AppTest {
     @Test
     public void appTest() throws JsonProcessingException, InterruptedException {
 //        String msg = "{\"datastreams\":[{\"TVOC\":69,\"hum\":54.0,\"at\":1597737850021,\"pm2p5\":33,\"co2\":509,\"pm10\":59,\"sn\":\""+nodeSn+"\",\"ch20\":19,\"tem\":32.0}]}";
-        String msg = "{\"datastreams\":[{\"tem1\":110,\"tem2\":44.0,\"at\":1600570048,\"sn\":\""+nodeSn+"\"}]}";
-        for(int i=0; i< 1000; i++){
-            mqSender.sendTopic(topic, msg);
-            Thread.sleep(10000);
+        String msg = "{\"datastreams\":[{\"tem1\":110,\"tem2\":44.0,\"at\":"+ TimeUtil.getTimeStamp()/1000 +",\"sn\":\""+nodeSn+"\"}]}";
+        for(int i=0; i< 100; i++){
+            mqSender.sendQueue(topic, msg);
+            Thread.sleep(1000);
         }
     }
 

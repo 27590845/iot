@@ -41,10 +41,10 @@ public class ConversionNodeDataCommand implements Command {
      */
     @Override
     public boolean execute(Context context) throws Exception {
-        log.info("================================Start conversion node data.================================");
+        log.debug("================================Start conversion node data.================================");
         // 将json数据转换为NodeData
         conversionNodeData((JsonDataContext) context);
-        log.info("================================Complete conversion node data.================================");
+        log.debug("================================Complete conversion node data.================================");
         return false;
     }
 
@@ -75,7 +75,7 @@ public class ConversionNodeDataCommand implements Command {
             nodeDataList.add(nodeData);
         }
         log.debug("Converion the map list to NodeData list complete.");
-        log.info("\t====>>the NodeData list {}", nodeDataList);
+        log.debug("\t====>>the NodeData list {}", nodeDataList);
         // 将节点数据设置到上数上下文中
         context.setNodeDataList(nodeDataList);
     }

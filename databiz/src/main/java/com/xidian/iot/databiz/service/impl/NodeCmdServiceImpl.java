@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -108,14 +107,17 @@ public class NodeCmdServiceImpl implements NodeCmdService {
     @Override
     public void deleteByNodeId(Long nodeId) {
         List<Long> ncIds = nodeCmdCustomMapper.getNcIdsByNodeId(nodeId);
-        if (Objects.isNull(ncIds) && ncIds.size() == 0) {
-            throw new BusinessException(-1, "该节点下不存在任何命令");
+        //这里不应该抛异常，因为节点下不存在命令是可能存在的现象
+//        if (Objects.isNull(ncIds) && ncIds.size() == 0) {
+//            throw new BusinessException(-1, "该节点下不存在任何命令");
+//        }
+        if(ncIds != null && ncIds.size()>0){
+            //应该先删除触发器触发命令，再删除被关联的节点命令
+            nodeActCmdService.delNodeActCmdByNcIds(ncIds);
         }
         NodeCmdExample nodeCmdExample = new NodeCmdExample();
         nodeCmdExample.createCriteria().andNodeIdEqualTo(nodeId);
         nodeCmdMapper.deleteByExample(nodeCmdExample);
-        //删除触发器触发命令
-        nodeActCmdService.delNodeActCmdByNtIds(ncIds);
     }
 
     @Override

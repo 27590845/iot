@@ -34,7 +34,7 @@
     <select id="getNcIdsByNodeId" resultType="java.lang.Long">
         select nc_id
         from node_cmd nc
-        wherenc.node_id = #{nodeId,jdbcType=BIGINT}
+        where nc.node_id = #{nodeId,jdbcType=BIGINT}
     </select>
 
 </mapper>

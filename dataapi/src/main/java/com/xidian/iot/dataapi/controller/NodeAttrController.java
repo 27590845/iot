@@ -69,9 +69,19 @@ public class NodeAttrController {
     //
     @ApiOperation(value = "根据naId更新节点属性")
     @PutMapping("/{naId}")
-    public HttpResult updateNodeAttr(@ApiParam(name = "naId", value = "节点属性Id") @PathVariable("naId") Long naId,
-                                     @ApiParam(name = "NodeAttrParam", value = "节点属性更新信息") @Valid @RequestBody NodeAttrParam param) {
+    public HttpResult updateNodeAttrById(@ApiParam(name = "naId", value = "节点属性Id") @PathVariable("naId") Long naId,
+                                         @ApiParam(name = "NodeAttrParam", value = "节点属性更新信息") @Valid @RequestBody NodeAttrParam param) {
         nodeAttrService.updateNodeAttr(naId, param);
+        return HttpResult.oK().message("更新成功");
+    }
+
+    @ApiOperation(value = "根据naId更新节点属性")
+    @PutMapping("/{sceneSn}/{nodeSn}/{naKey}")
+    public HttpResult updateNodeAttrBySn(@ApiParam(name = "sceneSn", value = "场景sn") @PathVariable("sceneSn") String sceneSn,
+                                         @ApiParam(name = "nodeSn", value = "节点sn") @PathVariable(value = "nodeSn") String nodeSn,
+                                         @ApiParam(name = "naKey", value = "节点属性key") @PathVariable(value = "naKey") String naKey,
+                                         @ApiParam(name = "NodeAttrParam", value = "节点属性更新信息") @Valid @RequestBody NodeAttrParam param) {
+        nodeAttrService.updateNodeAttr(sceneSn, nodeSn, naKey, param);
         return HttpResult.oK().message("更新成功");
     }
 

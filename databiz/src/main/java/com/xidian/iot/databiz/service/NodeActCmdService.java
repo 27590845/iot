@@ -49,5 +49,5 @@ public interface NodeActCmdService {
      * @param ncIds 节点命令Id
      * @return int 删除的数量
      * */
-    int delNodeActCmdByNtIds(List<Long> ncIds);
+    int delNodeActCmdByNcIds(List<Long> ncIds);
 }

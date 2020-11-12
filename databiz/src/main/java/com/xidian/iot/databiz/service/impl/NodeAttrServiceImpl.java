@@ -1,6 +1,7 @@
 package com.xidian.iot.databiz.service.impl;
 
 import com.xidian.iot.common.util.Assert;
+import com.xidian.iot.common.util.StringUtil;
 import com.xidian.iot.common.util.constants.ExceptionEnum;
 import com.xidian.iot.common.util.exception.BusinessException;
 import com.xidian.iot.database.entity.Node;
@@ -140,6 +141,18 @@ public class NodeAttrServiceImpl implements NodeAttrService {
             }
         }
         nodeAttrMapper.updateByPrimaryKeySelective(nodeAttr1);
+    }
+
+    @Override
+    public void updateNodeAttr(String sceneSn, String nodeSn, String naKey, NodeAttrParam param) {
+        NodeAttrExample example = new NodeAttrExample();
+        example.createCriteria().andSceneSnEqualTo(sceneSn)
+                .andNodeSnEqualTo(nodeSn)
+                .andNaKeyEqualTo(naKey);
+        List<NodeAttr> nodeAttrs = nodeAttrMapper.selectByExample(example);
+        if(nodeAttrs!=null && nodeAttrs.size()>0){
+            updateNodeAttr(nodeAttrs.get(0).getNaId(), param);
+        }
     }
 
     @Cacheable(value = "NaMap", key = "'getNaMapBySn:'+#sceneSn+':'+#nodeSn")

@@ -72,11 +72,20 @@ public interface NodeAttrService {
     NodeAttr getNodeAttr(String sceneSn, String nodeSn, String naKey);
 
     /**
+     * 根据naId查询并修改nodeAttr
      * @param naId  节点属性Id
      * @param param 更新的属性
      * @return void
      */
     void updateNodeAttr(Long naId, NodeAttrParam param);
+
+    /**
+     * 根据sn号+naKey查询并修改nodeAttr
+     * @param sceneSn
+     * @param nodeSn
+     * @param param
+     */
+    void updateNodeAttr(String sceneSn, String nodeSn, String naKey, NodeAttrParam param);
 
     /**
      * 根据sceneSn和nodeSn获取NodeAttr的简要信息，key代表naId，value代表naKey

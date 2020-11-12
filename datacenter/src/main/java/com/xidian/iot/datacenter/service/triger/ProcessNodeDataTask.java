@@ -51,7 +51,7 @@ public class ProcessNodeDataTask extends BaseTask implements Runnable {
     private void processNodeData() {
         // 逐个处理上行数据
         for (NodeData nodeData : nodeDataList) {
-            log.debug("nodeData({})", nodeData);
+            log.info("nodeData({})", nodeData);
             //只获取条件所关联的触发器未失效的节点条件
             List<NodeCondExt> nodeCondExtListResult = commonService.getNodeCondExts(nodeData.getSceneSn(), nodeData.getNodeSn(), nodeData.getData().keySet());
             //执行条件比较任务

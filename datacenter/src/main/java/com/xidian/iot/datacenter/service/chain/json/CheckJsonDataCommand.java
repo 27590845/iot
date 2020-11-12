@@ -32,7 +32,7 @@ public class CheckJsonDataCommand implements Command {
      */
     @Override
     public boolean execute(Context context) throws Exception {
-        log.info("================================Start check JSON data.================================");
+        log.debug("================================Start check JSON data.================================");
         JsonDataContext upContext = (JsonDataContext) context;
         // 获取datastreams字段
         getAndSetDatastreams(upContext);
@@ -40,7 +40,7 @@ public class CheckJsonDataCommand implements Command {
         getAndSetDatastreamsList(upContext);
         // 检查datastreamsList
         checkJsonDatestreamsList(upContext);
-        log.info("================================Complete check JSON data.================================");
+        log.debug("================================Complete check JSON data.================================");
         return false;
     }
 
@@ -112,8 +112,8 @@ public class CheckJsonDataCommand implements Command {
                     JsonDataContext.NODE_SN_KEY, JsonDataContext.NODE_AT_KEY, JsonUtil.toJson(illegalDatastreamsList));
         }
         log.debug("Check the 'datastreams' map list");
-        log.info("\t====>>legal map list {} ", legalDatastreamsList);
-        log.info("\t====>> illegal map list {}", illegalDatastreamsList);
+        log.debug("\t====>>legal map list {} ", legalDatastreamsList);
+        log.debug("\t====>> illegal map list {}", illegalDatastreamsList);
         // 设置到上下文中
         context.setIllegalDatastreamsList(illegalDatastreamsList);
         context.setLegalDatastreamsList(legalDatastreamsList);

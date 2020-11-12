@@ -35,7 +35,7 @@ public class SceneController {
     private NodeService nodeService;
 
     @ApiOperation(value = "分页获取当前用户下所有的网关号、不输入page和limit默认就是获取前五条数据")
-    @GetMapping("/list")
+    @GetMapping()
     public HttpResult getUserScenes(@ApiParam(name = "page", value = "页号") @RequestParam(value = "page", required = false, defaultValue = "1") int page,
                                     @ApiParam(name = "limit", value = "页数") @RequestParam(value = "limit", required = false, defaultValue = "5") int limit) {
         //分页一方面获取总条数、一方面获取数据、如果可以把page和limit也可以带着
@@ -76,8 +76,8 @@ public class SceneController {
     @GetMapping("/{sceneSn}/node/{nodeSn}")
     public HttpResult getNodeData(@ApiParam(name = "sceneSn", value = "场景sn") @PathVariable("sceneSn") String sceneSn,
                                   @ApiParam(name = "nodeSn", value = "节点sn") @PathVariable("nodeSn") String nodeSn,
-                                  @ApiParam(name = "st", value = "开始时间st、et的格式为yyyy-MM-dd HH:mm:ss") @RequestParam("st") String st,
-                                  @ApiParam(name = "et", value = "结束时间同st的时间格式et的格式") @RequestParam("et") String et) {
+                                  @ApiParam(name = "st", value = "开始时间st、et的格式为yyyy-MM-dd HH:mm:ss") @RequestParam(name = "st", required = false) String st,
+                                  @ApiParam(name = "et", value = "结束时间同st的时间格式et的格式") @RequestParam(name = "et", required = false) String et) {
         //如果上传的st和et不为空说明查询的是历史时间
         if(StringUtils.isNotBlank(st)&&StringUtils.isNotBlank(et)){
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

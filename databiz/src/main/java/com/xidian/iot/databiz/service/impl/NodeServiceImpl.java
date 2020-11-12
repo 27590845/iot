@@ -66,14 +66,14 @@ public class NodeServiceImpl implements NodeService {
         if(nodeMapper.insertSelective(node)>0){
             //添加节点属性
             List<NodeAttrParam> nodeAttrParams = param.getNodeAttrParams();
-            if(nodeAttrParams.size()>0) {
+            if(nodeAttrParams!=null && nodeAttrParams.size()>0) {
                 //验证输入的节点属性是否有重复
                 nodeAttrService.checkReptAttrKeys(param.getNodeAttrParams());
                 nodeAttrService.addNodeAttr(node.getSceneSn(),node.getNodeSn(),node.getNodeId(),nodeAttrParams);
             }
             //添加节点命令
             List<NodeCmdParam> nodeCmdParams = param.getNodeCmdParams();
-            if(nodeCmdParams.size()>0){
+            if(nodeCmdParams!=null && nodeCmdParams.size()>0){
                 //验证添加的节点命令是否存在重复命令内容/命令名称
                 nodeCmdService.checkReptCmds(nodeCmdParams);
                 nodeCmdService.addNodeCmds(node.getSceneSn(),node.getNodeSn(),node.getNodeId(),nodeCmdParams);
@@ -129,7 +129,7 @@ public class NodeServiceImpl implements NodeService {
                 query.addCriteria(Criteria.where("nodeSn").is(nodeSn));
             }
             long et = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).getEpochSecond();
-            long st = et - 60 * 15;//15分钟之前的时间戳
+            long st = et - 60 * 1000;//15分钟之前的时间戳
             query.addCriteria(Criteria.where("at").gte(st).lte(et));
             query.with(Sort.by(Sort.Direction.DESC, "at"));
             nodeData = mongoTemplate.findOne(query, NodeData.class, "nodedata");
