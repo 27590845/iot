@@ -1,5 +1,6 @@
 package com.xidian.iot.datacenter;
 
+import com.xidian.iot.datacenter.system.SystemParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -21,6 +22,13 @@ public class Application {
     final static String MSG_NUM = "--msgNum=";
 
     final static String SHUTDOWN = "shutdown";
+    final static String GET_SYS_PARAM = "get-sys-param";
+    final static String MILLI_LEVEL = "time-level-milli";
+    final static String SEC_LEVEL = "time-level-sec";
+    final static String TRIGGER_ON = "trigger-on";
+    final static String TRIGGER_OFF = "trigger-off";
+    final static String REPORT_ON = "report-on";
+    final static String REPORT_OFF = "report-off";
 
     public static void main(String[] args) throws IOException {
 
@@ -36,10 +44,40 @@ public class Application {
             msg = br.readLine();
             log.info("接受到客户端的消息：{}", msg);
             String response;
-            if ("shutdown".equals(msg)) {
-                response = "Shutdown successful. See you next time";
-            } else {
-                response = "Your msg : " + msg;
+            switch (msg){
+                case SHUTDOWN:
+                    response = "Shutdown successful. See you next time";
+                    break;
+                case GET_SYS_PARAM:
+                    response = SystemParam.getDesc();
+                    break;
+                case MILLI_LEVEL:
+                    SystemParam.setTimeStampDiv(1);
+                    response = "set timeStampDiv to 1";
+                    break;
+                case SEC_LEVEL:
+                    SystemParam.setTimeStampDiv(1000);
+                    response = "set timeStampDiv to 1000";
+                    break;
+                case TRIGGER_ON:
+                    SystemParam.setTriggerEnable(true);
+                    response = "set trigger enable";
+                    break;
+                case TRIGGER_OFF:
+                    SystemParam.setTriggerEnable(false);
+                    response = "set trigger disable";
+                    break;
+                case REPORT_ON:
+                    SystemParam.setReportEnable(true);
+                    response = "set report enable";
+                    break;
+                case REPORT_OFF:
+                    SystemParam.setReportEnable(false);
+                    response = "set report disable";
+                    break;
+                default:
+                    response = "Your msg : " + msg + ". do nothing.";
+                    break;
             }
             PrintStream ps = new PrintStream(new BufferedOutputStream(socket.getOutputStream()));
             ps.println(response);

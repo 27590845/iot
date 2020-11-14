@@ -4,6 +4,7 @@ import com.xidian.iot.database.entity.Scene;
 import com.xidian.iot.database.entity.mongo.NodeData;
 import com.xidian.iot.databiz.service.NodeDataService;
 import com.xidian.iot.datacenter.service.triger.ProcessNodeDataTask;
+import com.xidian.iot.datacenter.system.SystemParam;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
@@ -54,8 +55,10 @@ public class SaveNodeDataCommand implements Command, ApplicationContextAware {
         nodeDataService.addNodeData(nodeDataList);
         log.debug("================================Complete Saved Node Data.");
 
-        // 执行触发器
-        doProcessNodeDataTask(upContext.getSceneSn(), nodeDataList);
+        if(SystemParam.isTriggerEnable()){
+            // 执行触发器
+            doProcessNodeDataTask(upContext.getSceneSn(), nodeDataList);
+        }
 
         // 到此责任链完成
         return true;

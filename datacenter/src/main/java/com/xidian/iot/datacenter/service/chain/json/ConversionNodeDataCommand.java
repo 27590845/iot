@@ -2,6 +2,7 @@ package com.xidian.iot.datacenter.service.chain.json;
 
 import com.xidian.iot.common.util.JsonUtil;
 import com.xidian.iot.database.entity.mongo.NodeData;
+import com.xidian.iot.datacenter.system.SystemParam;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
@@ -93,7 +94,7 @@ public class ConversionNodeDataCommand implements Command {
         } else if (origAt instanceof Integer) {
             at = ((Integer) origAt).longValue();
         } else {
-            at = new Long(System.currentTimeMillis() / 1000);
+            at = new Long(System.currentTimeMillis()/ SystemParam.getTimeStampDiv());
         }
         return at;
     }

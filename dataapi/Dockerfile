@@ -1,4 +1,4 @@
-FROM tomcat:8.5
+FROM tomcat:8-jdk8
 MAINTAINER Hansey
 
 LABEL version="1.0" \

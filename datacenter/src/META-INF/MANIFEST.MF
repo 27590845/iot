@@ -34,5 +34,6 @@ Class-Path: byte-buddy-1.6.14.jar springfox-schema-2.7.0.jar springfox-c
  5.2.8.RELEASE.jar swagger-models-1.5.13.jar geronimo-jms_1.1_spec-1.1.1
  .jar jedis-3.3.0.jar commons-pool2-2.8.1.jar commons-logging-1.2.jar lz
  4-java-1.6.0.jar hawtdispatch-1.11.jar pagehelper-5.1.10.jar mybatis-ge
- nerator-core-1.3.7.jar jackson-annotations-2.10.4.jar
+ nerator-core-1.3.7.jar jackson-annotations-2.10.4.jar expiringmap-0.5.9
+ .jar
 

@@ -32,7 +32,7 @@ public class UpdataListener extends JmsConsumerListener {
 
     @Override
     public void onMessage(Object topicName, Object message) {
-        System.out.printf("topicName = %s, message = %s\n", topicName, message);
+        log.info("topicName = {}, message = {}\n", topicName, message);
         String jsonData = (String) message;
         try{
             // 当jsonData为空字符串（）

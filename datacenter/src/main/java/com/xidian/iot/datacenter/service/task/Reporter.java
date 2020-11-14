@@ -2,6 +2,7 @@ package com.xidian.iot.datacenter.service.task;
 
 import com.xidian.iot.common.mq.MqSender;
 import com.xidian.iot.databiz.service.NodeCondService;
+import com.xidian.iot.datacenter.system.SystemParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
@@ -37,7 +38,7 @@ public class Reporter {
     private NodeCondService nodeCondService;
 
     public void report(){
-        System.out.println(11);
+        if(!SystemParam.isReportEnable()) return;
         try{
             long time = new Date().getTime();
             log.info("======> 定时检测组件 <======");

@@ -10,12 +10,12 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
 WORKDIR /app/datacenter
 ADD target/jar/*.jar ./
 
-VOLUME ["/var/log"]
+VOLUME ["/var/log/datacenter"]
 ENTRYPOINT java -jar datacenter.jar
 
 #docker run -d --name datacenter -p 9999:9999 \
 #   -v /Users/liuyinggang/docker/etc/hosts:/etc/hosts \
-#   -v /Users/liuyinggang/docker/var/log:/var/log \
+#   -v /Users/liuyinggang/docker/var/log:/var/log/datacenter \
 #   [imageId]
 
 #/etc/hosts 需要配置的主机名:
