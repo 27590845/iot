@@ -52,12 +52,16 @@ public class SceneAddParam {
     @ApiModelProperty(value = "描述")
     private String sceneDesc;
 
+    @ApiModelProperty(value = "网关Sn")
+    private String sceneSn;
+
     public Scene build(){
         Scene scene = new Scene();
         scene.setSceneName(sceneName);
         scene.setSceneLng(sceneLng);
         scene.setSceneLat(sceneLat);
         scene.setSceneEl(sceneEl);
+        scene.setSceneSn(sceneSn);
         scene.setSceneLoc(StringUtils.isNotBlank(sceneLoc)?sceneLoc:null);
         scene.setSceneDesc(StringUtils.isNotBlank(sceneDesc)?sceneDesc:null);
         scene.setCreateTime(new Date());

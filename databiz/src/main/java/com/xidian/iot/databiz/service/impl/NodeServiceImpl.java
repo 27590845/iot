@@ -13,6 +13,7 @@ import com.xidian.iot.database.param.NodeCmdParam;
 import com.xidian.iot.database.param.NodeUpdateParam;
 import com.xidian.iot.database.vo.NodeVo;
 import com.xidian.iot.databiz.service.*;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -61,14 +62,17 @@ public class NodeServiceImpl implements NodeService {
         //查询scene是否存在
         Scene scene = sceneService.getSceneBySn(param.getSceneSn());
         Node node = param.buildNode(scene.getSceneId());
-        node.setNodeId(uidGenerator.getUID());
         NodeExample nodeExample = new NodeExample();
         nodeExample.createCriteria().andSceneIdEqualTo(scene.getSceneId());
-        String lastNodeSn = nodeCustomMapper.getSceneLastNodeSn(scene.getSceneId());
-        //如果网关不存在节点则从1开始
-        lastNodeSn = Objects.isNull(lastNodeSn) ? "0" : lastNodeSn;
-        node.setNodeSn(String.format("%06d", Integer.valueOf(lastNodeSn) + 1));
         //设置nodeSn
+        if(StringUtils.isBlank(node.getNodeSn())){
+            String lastNodeSn = nodeCustomMapper.getSceneLastNodeSn(scene.getSceneId());
+            //如果网关不存在节点则从1开始
+            lastNodeSn = Objects.isNull(lastNodeSn) ? "0" : lastNodeSn;
+            node.setNodeSn(String.format("%06d", Integer.valueOf(lastNodeSn) + 1));
+        }
+        Assert.isFalse(isNodeExistBySn(node.getSceneSn(), node.getNodeSn()), ExceptionEnum.NODE_ALREADY_EXIST);
+        node.setNodeId(uidGenerator.getUID());
         if (nodeMapper.insertSelective(node) > 0) {
             //将返回结果转化为NodeVo
             nodeVo = new NodeVo(node);
@@ -193,5 +197,12 @@ public class NodeServiceImpl implements NodeService {
         NodeExample nodeExample = new NodeExample();
         nodeExample.createCriteria().andSceneSnEqualTo(sceneSn);
         return nodeMapper.deleteByExample(nodeExample);
+    }
+
+    private boolean isNodeExistBySn(String sceneSn, String nodeSn){
+        NodeExample nodeExample = new NodeExample();
+        nodeExample.createCriteria().andSceneSnEqualTo(sceneSn).andNodeSnEqualTo(nodeSn);
+        List<Node> nodes = nodeMapper.selectByExample(nodeExample);
+        return nodes!=null&&nodes.size()>0;
     }
 }

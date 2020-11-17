@@ -41,6 +41,9 @@ public class NodeAddParam {
     @ApiModelProperty(value = "节点命令")
     private List<NodeCmdParam> nodeCmdParams;
 
+    @ApiModelProperty(value = "节点SN")
+    private String nodeSn;
+
     /**
      * 由 NodeAddParam转化为Node 同时添加从数据库取出的sceneId
      * @param sceneId
@@ -51,6 +54,7 @@ public class NodeAddParam {
         node.setSceneId(sceneId);
         node.setSceneSn(sceneSn);
         node.setNodeName(nodeName);
+        node.setNodeSn(nodeSn);
         node.setNodeDesc(StringUtils.isNotBlank(nodeDesc)?nodeDesc:null);
         node.setCreateTime(new Date());
         return node;

@@ -2,6 +2,7 @@ package com.xidian.iot.datacenter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.xidian.iot.common.mq.MqSender;
+import com.xidian.iot.common.util.RandomUtil;
 import com.xidian.iot.common.util.TimeUtil;
 import com.xidian.iot.database.entity.custom.NodeCondExt;
 import com.xidian.iot.datacenter.service.CommonService;
@@ -29,8 +30,8 @@ import java.util.*;
 @ContextConfiguration(locations = {"classpath:spring/application-context.xml"})
 public class AppTest {
 
-    final static String sceneSn = "186610102211000008";
-    final static String nodeSn = "000004";
+    final static String sceneSn = "186610102211100356";
+    final static String nodeSn = "RD001";
     final static String topic = "node.updata."+sceneSn;
 
     @Resource
@@ -39,7 +40,14 @@ public class AppTest {
     @Test
     public void appTest() throws JsonProcessingException, InterruptedException {
 //        String msg = "{\"datastreams\":[{\"TVOC\":69,\"hum\":54.0,\"at\":1597737850021,\"pm2p5\":33,\"co2\":509,\"pm10\":59,\"sn\":\""+nodeSn+"\",\"ch20\":19,\"tem\":32.0}]}";
-        String msg = "{\"datastreams\":[{\"tem1\":110,\"tem2\":44.0,\"at\":"+ TimeUtil.getTimeStamp()/1000 +",\"sn\":\""+nodeSn+"\"}]}";
+        String msg = "{\"datastreams\":[{"
+                + "\"tem1\":"+ RandomUtil.nextInt(10, 19)
+                +",\"tem2\":"+RandomUtil.nextInt(20, 29)
+                +",\"tem3\":"+RandomUtil.nextInt(30, 39)
+                +",\"tem4\":"+RandomUtil.nextInt(40, 49)
+                +",\"hum\":"+RandomUtil.nextInt(0, 9)
+                +",\"at\":"+ TimeUtil.getTimeStamp()
+                +",\"sn\":\""+nodeSn+"\"}]}";
         for(int i=0; i< 1000; i++){
             mqSender.sendQueue(topic, msg);
             Thread.sleep(1000);
