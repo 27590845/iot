@@ -2,7 +2,7 @@
 <!-- logback in product env -->
 <configuration>
 
-    <property name="LOG_HOME" value="/var/log/datacenter/"/>
+    <property name="LOG_HOME" value="/var/log/xidianiot"/>
     <property name="LOG_PREFIX" value="datacenter"/>
 
     <appender name="def-log-stdout" class="ch.qos.logback.core.ConsoleAppender">
@@ -18,7 +18,7 @@
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${LOG_HOME}/daily/${LOG_PREFIX}-%d{yyyy-MM-dd}.log.%i.gz</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>1MB</maxFileSize>
+                <maxFileSize>50MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
             <maxHistory>1</maxHistory>
         </rollingPolicy>
