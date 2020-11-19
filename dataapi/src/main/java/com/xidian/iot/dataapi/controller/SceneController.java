@@ -25,7 +25,7 @@ import java.text.SimpleDateFormat;
  * @author: Hansey
  * @date: 2020-09-06 21:29
  */
-@Api(tags = "/scene", description = "提供场景操作的相关接口")
+@Api(tags = "场景", description = "提供场景操作的相关接口")
 @RestController
 @RequestMapping("/scene")
 public class SceneController {
@@ -83,8 +83,8 @@ public class SceneController {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             long stL = 0L, etL = 0L;
             try {
-                stL = sdf.parse(st).getTime() / 1000;
-                etL = sdf.parse(et).getTime() / 1000;
+                stL = sdf.parse(st).getTime();
+                etL = sdf.parse(et).getTime();
             } catch (ParseException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

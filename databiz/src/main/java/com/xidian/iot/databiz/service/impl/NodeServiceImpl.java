@@ -145,8 +145,10 @@ public class NodeServiceImpl implements NodeService {
         if (!Objects.isNull(nodeSn)) {
             query.addCriteria(Criteria.where("nodeSn").is(nodeSn));
         }
-        long et = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).getEpochSecond();
-        long st = et - 60 * 15;//15分钟之前的时间戳
+        Long et = System.currentTimeMillis();
+        Long st = et - 60 * 15 * 1000;
+        // long et = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).getEpochSecond();
+        // long st = et - 60 * 15;//15分钟之前的时间戳
         query.addCriteria(Criteria.where("at").gte(st).lte(et));
         query.with(Sort.by(Sort.Direction.DESC, "at"));
         nodeData = mongoTemplate.findOne(query, NodeData.class, "nodedata");
