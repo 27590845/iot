@@ -28,15 +28,9 @@
     <!-- 设置scope="prototype"为的是，一个表操作组(一个组只对一个表有写操作，一般一个service为一个组)拥有一个uidGenerator，这样表内无重复Id，表间可能有重复Id；
         如果设置为scope="singleton"，则全局使用一个uidGenerator，那么所有表间均无重复Id，这样是不必要的 -->
     <bean id="simpleUidGenerator" scope="prototype" class="com.xidian.iot.common.util.uid.UidGenImpl">
-        <constructor-arg index="0">
-            <bean class="java.util.concurrent.locks.ReentrantLock"/>
-        </constructor-arg>
-        <constructor-arg index="1">
-            <bean id="uidPrefixFactory" class="com.xidian.iot.common.util.uid.UidPrefixFactoryImpl">
-                <property name="prefixSourceUri" value="http://master:port/uid/prefix"/>
-            </bean>
-        </constructor-arg>
+        <property name="prefixSourceUri" value="http://iot.pro.dataapi/dataapi/master/idPrefix"/>
     </bean>
+    <bean id="uidPrefixFactory" class="com.xidian.iot.common.util.uid.UidPrefixFactoryImpl"/>
     <!-- simple UidGen end -->
 
 </beans>

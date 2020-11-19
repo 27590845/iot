@@ -1,10 +1,20 @@
 package com.xidian.iot.common.util.uid;
 
+import com.alibaba.fastjson.JSONObject;
+import com.oracle.tools.packager.Log;
+import com.xidian.iot.common.util.HttpUtil;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -18,73 +28,68 @@ import java.util.concurrent.locks.ReentrantLock;
 @Slf4j
 public class UidGenImpl implements UidGen {
 
-    private final Lock lock;
-    private final long prefix;
-    //本地自增变量也可以用AtomicLong替代，AtomicLong不需要锁保护
-    private volatile long start;
-
-    //用于测试的参数
+    //本地自增变量也可以用AtomicLong替代，AtomicLong不需要锁保护，而且性能更高，但是用锁可以干更多事情
+    private Long prefix;
+    private AtomicLong start;
     @Setter
-    private long startTime;
-    public static final int threadNum = 2500;
+    private String prefixSourceUri;
 
     /**
-     * Id生成器应保持全局唯一
-     * @param lock ${@link Lock}的任意实现
-     * @param uidPrefixFactory uid前缀工厂，通过工厂获取前缀，如果工厂为null，则由本地默认算法生成前缀
+     * Id生成器初始化
      */
-    public UidGenImpl(Lock lock, UidPrefixFactory uidPrefixFactory) {
-        if(lock==null){
-            throw new RuntimeException();
-        }
-        this.lock = lock;
-        //前缀由master分配 固定32位二进制
-        if(uidPrefixFactory ==null){
-            prefix = getDefaultPrefix();
+    private synchronized void init() {
+        //双重判断
+        if(prefix != null) return;
+        //prefixSourceUri不为null，则前缀由master分配 固定32位二进制
+        if(prefixSourceUri ==null){
+            prefix = System.currentTimeMillis()>>16;
         }else {
-            prefix = uidPrefixFactory.getPrefix();
+            Long result = tryGetObject(HttpUtil.sendGet(prefixSourceUri));
+            if (result==null) return;
+            prefix = result;
         }
-        this.start = 0;
+        this.start = new AtomicLong(0);
     }
 
-    public long getDefaultPrefix(){
-        return System.currentTimeMillis()>>16; //大概除以了一分钟的时间
+    private Long tryGetObject(String raw) {
+        if (!JSONObject.isValidObject(raw)) return null;
+        JSONObject jsonObject = JSONObject.parseObject(raw);
+        if(jsonObject==null || !jsonObject.containsKey("data")) return null;
+        return jsonObject.getLong("data");
     }
 
     @Override
     public long getUID(long waitMis) throws InterruptedException {
+        while (prefix==null) init();
         long uid = -1;
-        if(lock.tryLock(waitMis, TimeUnit.MILLISECONDS)){
-            try {
-                uid = (prefix<<32) + (++start);
-                System.out.printf("uid-----%08x\n", uid);
-                if(start==threadNum){
-                    System.out.println(System.currentTimeMillis()-startTime);
-                }
-            } catch (Exception e) {
-                System.out.println("exception-----"+e);
-            } finally {
-                lock.unlock();
-            }
-        }
+        uid = (prefix<<32) + (start.addAndGet(1));
+//        System.out.printf("uid-----%08x\n", uid);
+        log.info("genId--------{}", uid);
         return uid;
     }
 
-    public static void main(String[] args) {
-        UidGenImpl uidGeneratorImpl = new UidGenImpl(new ReentrantLock(), new UidPrefixFactoryImpl());
+
+    public static void main(String[] args) throws InterruptedException {
+        int threadNum = 2500;
+        List<Long> idSet = new CopyOnWriteArrayList<>();
+        UidGenImpl uidGeneratorImpl = new UidGenImpl();
         Thread[] threads = new Thread[threadNum];
         for(int i=0;i<threadNum;i++){
             threads[i] = new Thread(new Runnable() {
                 @SneakyThrows
                 @Override
                 public void run() {
-                    uidGeneratorImpl.getUID(1000);
+                    idSet.add(uidGeneratorImpl.getUID(1000));
                 }
             });
         }
-        uidGeneratorImpl.setStartTime(System.currentTimeMillis());
         for(Thread thread : threads){
             thread.start();
         }
+
+        Thread.sleep(5000);
+        System.out.println(idSet.size());
+        //检查是否有重复
+        System.out.println(new HashSet(idSet).size());
     }
 }
