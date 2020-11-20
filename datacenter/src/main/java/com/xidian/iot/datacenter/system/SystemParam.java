@@ -16,7 +16,7 @@ public class SystemParam {
 
     static {
         timeStampLock = new ReentrantReadWriteLock();
-        timeStampDiv = 1000;
+        timeStampDiv = 1;
         triggerEnable = false;
         reportEnable = false;
     }
