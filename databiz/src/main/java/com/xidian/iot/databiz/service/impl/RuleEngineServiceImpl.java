@@ -10,6 +10,8 @@ import com.xidian.iot.databiz.service.NodeCondService;
 import com.xidian.iot.databiz.service.NodeTrigService;
 import com.xidian.iot.databiz.service.RuleEngineService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -32,6 +34,7 @@ public class RuleEngineServiceImpl implements RuleEngineService {
     @Resource
     private NodeActCmdService nodeActCmdService;
 
+    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     @Override
     public int addRuleEngine(NodeTrigParam nodeTrigParam) {
         int success = 0;
