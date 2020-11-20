@@ -33,4 +33,9 @@
         where na.scene_sn=#{sceneSn,jdbcType=VARCHAR}
         and na.node_sn=#{nodeSn,jdbcType=VARCHAR};
     </select>
+    <select id="getNAIdsByNodeId" resultType="java.lang.Long">
+        select na.na_id from node_attr na
+        where na.node_id=#{nodeId,jdbcType=BIGINT}
+    </select>
+
 </mapper>

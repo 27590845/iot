@@ -73,8 +73,9 @@ public class NodeServiceImpl implements NodeService {
             //如果网关不存在节点则从1开始
             lastNodeSn = Objects.isNull(lastNodeSn) ? "0" : lastNodeSn;
             node.setNodeSn(String.format("%06d", Integer.valueOf(lastNodeSn) + 1));
+        }else {
+            Assert.isFalse(isNodeExistBySn(node.getSceneSn(), node.getNodeSn()), ExceptionEnum.NODE_ALREADY_EXIST);
         }
-        Assert.isFalse(isNodeExistBySn(node.getSceneSn(), node.getNodeSn()), ExceptionEnum.NODE_ALREADY_EXIST);
         node.setNodeId(uidGenerator.getUID());
         if (nodeMapper.insertSelective(node) > 0) {
             //将返回结果转化为NodeVo

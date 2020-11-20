@@ -99,8 +99,9 @@ public class SceneServiceImpl implements SceneService {
             //补零操作、如果是6位也就是最多支持一百台。同一个区域的第几台。
             String sequence = String.format("%06d", Integer.valueOf(sceneCustomMapper.maxSceneSn(sceneSnPre)) + 1);
             scene.setSceneSn(sceneSnPre + param.getUsageCode() + param.getCommCode() + sequence);
+        }else {
+            Assert.isFalse(isSceneExistBySn(scene.getSceneSn()), ExceptionEnum.SCENE_ALREADY_EXIST);
         }
-        Assert.isFalse(isSceneExistBySn(param.getSceneSn()), ExceptionEnum.SCENE_ALREADY_EXIST);
         scene.setSceneId(uidGenerator.getUID());
         sceneMapper.insertSelective(scene);
         return scene;

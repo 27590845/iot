@@ -173,7 +173,7 @@ public class NodeAttrServiceImpl implements NodeAttrService {
     @Override
     public void deleteByNodeId(Long nodeId) {
         //获取节点下所有的节点属性Id
-        List<Long> naIds = nodeAttrCustomMapper.getNAIdsByNodeId(nodeId);
+         List<Long> naIds = nodeAttrCustomMapper.getNAIdsByNodeId(nodeId);
         if (!Objects.isNull(naIds) && naIds.size() > 0) {
             NodeAttrExample nodeAttrExample = new NodeAttrExample();
             nodeAttrExample.createCriteria().andNodeIdEqualTo(nodeId);
