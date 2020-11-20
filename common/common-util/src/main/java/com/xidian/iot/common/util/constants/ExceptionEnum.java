@@ -26,6 +26,9 @@ public enum ExceptionEnum implements ExceptionInfo {
     NODE_ATTR_NOT_EXIST(-10010, "该节点属性不存在"),
     NODE_ATTR_STD_NOT_EXIST(-10011, "该节点属性模版不存在"),
 
+    SCENE_ALREADY_EXIST(-10012, "该网关已经存在"),
+    NODE_ALREADY_EXIST(-10013, "该节点已经存在"),
+
 
     ;
 

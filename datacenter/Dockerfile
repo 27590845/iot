@@ -10,16 +10,18 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
 WORKDIR /app/datacenter
 ADD target/jar/*.jar ./
 
-VOLUME ["/var/log/datacenter"]
+EXPOSE 9999
+
+VOLUME ["/var/log/xidianiot"]
 ENTRYPOINT java -jar datacenter.jar
 
 #docker run -d --name datacenter -p 9999:9999 \
-#   -v /Users/liuyinggang/docker/etc/hosts:/etc/hosts \
-#   -v /Users/liuyinggang/docker/var/log:/var/log/datacenter \
+#   -v /etc/hosts:/etc/hosts \
+#   -v /var/log/xidianiot:/var/log/xidianiot \
 #   [imageId]
 
 #/etc/hosts 需要配置的主机名:
-#192.168.124.8	redis1
-#192.168.124.8	mysql1
-#192.168.124.8	mongodb1
-#192.168.124.8	activemq1
+#iot.pro.mysql
+#iot.pro.mongodb
+#iot.pro.activemq
+#iot.pro.redis

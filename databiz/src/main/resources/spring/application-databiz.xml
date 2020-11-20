@@ -22,21 +22,19 @@
     <import resource="application-mybatis-def.xml"/>
     <import resource="application-mongo-def.xml"/>
     <import resource="application-redis-def.xml"/>
-<!--    <import resource="cached-uid-spring.xml"/>-->
+
+    <import resource="cached-uid-spring.xml"/>
 
     <!-- 测试时暂时使用 simple UidGen start -->
     <!-- 设置scope="prototype"为的是，一个表操作组(一个组只对一个表有写操作，一般一个service为一个组)拥有一个uidGenerator，这样表内无重复Id，表间可能有重复Id；
         如果设置为scope="singleton"，则全局使用一个uidGenerator，那么所有表间均无重复Id，这样是不必要的 -->
-    <bean id="simpleUidGenerator" scope="prototype" class="com.xidian.iot.common.util.uid.UidGenImpl">
-        <constructor-arg index="0">
-            <bean class="java.util.concurrent.locks.ReentrantLock"/>
-        </constructor-arg>
-        <constructor-arg index="1">
-            <bean id="uidPrefixFactory" class="com.xidian.iot.common.util.uid.UidPrefixFactoryImpl">
-                <property name="prefixSourceUri" value="http://master:port/uid/prefix"/>
-            </bean>
-        </constructor-arg>
-    </bean>
+<!--    <bean id="uidGen" scope="prototype" class="com.xidian.iot.common.util.uid.UidGenImpl">-->
+<!--        <property name="prefixSourceUri" value="http://iot.pro.dataapi/dataapi/master/idPrefix"/>-->
+<!--    </bean>-->
+<!--    <bean id="uidPrefixFactory" class="com.xidian.iot.common.util.uid.UidPrefixFactoryImpl"/>-->
+<!--    <bean id="uidGenerator" class="com.xidian.iot.databiz.service.impl.SimpleUidGeneratorImpl">-->
+<!--        <property name="uidGen" ref="uidGen"/>-->
+<!--    </bean>-->
     <!-- simple UidGen end -->
 
 </beans>

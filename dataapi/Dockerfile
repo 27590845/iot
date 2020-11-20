@@ -13,15 +13,18 @@ ADD ./target/**.war /usr/local/tomcat/webapps/
 
 #端口
 EXPOSE 8081
-
+VOLUME ["/var/log/xidianiot"]
 #设置启动命令
 ENTRYPOINT ["/usr/local/tomcat/bin/catalina.sh","run"]
 
 #进入到此dockerfile目录然后生成镜像
 #docker build -t hansey97/dataapi .
-#docker run -itd -p 8081:8081 --name dataapi hansey97/dataapi:latest
+#docker run -d --name dataapi -p 8080:8080 \
+#   -v /etc/hosts:/etc/hosts \
+#   -v /var/log/xidianiot:/var/log/xidianiot \
+#   [imageId]
 #需要将/etc/hosts文件修改为以下配置
-#114.116.228.59 test.public.redis
-#114.115.240.14 test.public.mysql
-#114.116.228.59 test.public.mongodb
-#114.116.228.59 test.public.activemq
+#iot.pro.mysql
+#iot.pro.mongodb
+#iot.pro.activemq
+#iot.pro.redis

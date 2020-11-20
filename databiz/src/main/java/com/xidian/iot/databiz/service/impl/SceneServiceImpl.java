@@ -16,6 +16,7 @@ import com.xidian.iot.database.vo.SceneVo;
 import com.xidian.iot.databiz.constants.EncodeType;
 import com.xidian.iot.databiz.service.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -92,12 +93,15 @@ public class SceneServiceImpl implements SceneService {
     @Override
     public Scene addScene(SceneAddParam param) {
         Scene scene = param.build();
-        scene.setSceneId(uidGenerator.getUID());
-        String sceneSnPre = EncodeType.EncodeGateway.getCode() + "866101022";
-        //补零操作、如果是6位也就是最多支持一百台。同一个区域的第几台。
-        String sequence = String.format("%06d", Integer.valueOf(sceneCustomMapper.maxSceneSn(sceneSnPre)) + 1);
         //物联网唯一标示体系
-        scene.setSceneSn(sceneSnPre + param.getUsageCode() + param.getCommCode() + sequence);
+        if(StringUtils.isBlank(scene.getSceneSn())) {
+            String sceneSnPre = EncodeType.EncodeGateway.getCode() + "866101022";
+            //补零操作、如果是6位也就是最多支持一百台。同一个区域的第几台。
+            String sequence = String.format("%06d", Integer.valueOf(sceneCustomMapper.maxSceneSn(sceneSnPre)) + 1);
+            scene.setSceneSn(sceneSnPre + param.getUsageCode() + param.getCommCode() + sequence);
+        }
+        Assert.isFalse(isSceneExistBySn(param.getSceneSn()), ExceptionEnum.SCENE_ALREADY_EXIST);
+        scene.setSceneId(uidGenerator.getUID());
         sceneMapper.insertSelective(scene);
         return scene;
     }
@@ -136,7 +140,7 @@ public class SceneServiceImpl implements SceneService {
 //        log.info(String.valueOf(System.currentTimeMillis()));
 //        SceneVo sceneVo2 = sceneCustomMapper.getSceneVoBySnJoin(sceneSn);
 //        log.info(String.valueOf(System.currentTimeMillis()));
-        Assert.isTrue(!Objects.isNull(sceneVo1),ExceptionEnum.SCENE_NOT_EXIST );
+        Assert.isTrue(sceneVo1!=null,ExceptionEnum.SCENE_NOT_EXIST );
         return sceneVo1;
     }
 
@@ -153,5 +157,12 @@ public class SceneServiceImpl implements SceneService {
             }
         });
         return nodeDataList;
+    }
+
+    private boolean isSceneExistBySn(String sceneSn) {
+        SceneExample sceneExample = new SceneExample();
+        sceneExample.createCriteria().andSceneSnEqualTo(sceneSn);
+        List<Scene> scenes = sceneMapper.selectByExample(sceneExample);
+        return scenes!=null&&scenes.size()>0;
     }
 }
