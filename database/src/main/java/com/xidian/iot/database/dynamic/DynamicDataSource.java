@@ -94,7 +94,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
     public void check(){
         StringBuilder reachableName = new StringBuilder();
         allDataSources.entrySet().stream().forEach(entry -> {
-            if(DataSourceCheckUtil.checkDataSourceAlive((DataSource) entry.getValue())){
+            if(DataSourceCheckUtil.checkDataSourceAlive((DataSource) entry.getValue(), false)){
                 unreachableDatasourceName.remove(entry.getKey());
                 reachableName.append(entry.getKey()).append("\t");
             }else {
