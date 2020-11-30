@@ -26,11 +26,11 @@ public class SceneAddParam {
     private String sceneName;
 
     @ApiModelProperty(value = "通讯协议码、一位")
-    @Pattern(regexp = "^([1-9]|10)$",message = "通讯协议码为一位")
+    @Pattern(regexp = "^([0-9])$",message = "通讯协议码为一位")
     private String commCode;
 
     @ApiModelProperty(value = "使用场景码、一位")
-    @Pattern(regexp = "^([1-9]|10)$",message = "使用场景码仅一位")
+    @Pattern(regexp = "^([0-9])$",message = "使用场景码仅一位")
     private String usageCode;
 
     @ApiModelProperty(value = "地点名称")

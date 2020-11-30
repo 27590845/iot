@@ -133,7 +133,7 @@ public class NodeServiceImpl implements NodeService {
         //原因是Cacheable是使用Aop动态代理实现的，类内部的互相调用是不走代理的，所以并不会调用缓存。
         node.setNodeId(getNodeBySn(sceneSn, nodeSn).getNodeId());
         node.setNodeName(param.getNodeName());
-        node.setNodeDesc(param.getNodeName());
+        node.setNodeDesc(param.getNodeDesc());
         nodeMapper.updateByPrimaryKeySelective(node);
         return node;
     }
