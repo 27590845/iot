@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+
+    <context:property-placeholder location="classpath:conf/jdbc-dynamic.properties" ignore-unresolvable="true" />
+
+    <bean id="abstractDataSource" abstract="true" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="driverClassName" value="${parent.jdbc.driverClassName}"/>
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="10000"/>
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
+        <property name="validationQuery" value="SELECT 'x'"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+        <property name="poolPreparedStatements" value="true"/>
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20"/>
+        <!-- druid的加解密功能。数据库连接密码是通过druid加密的，然后druid解密再访问数据库，decrypt=true会出错  -->
+        <property name="filters" value="config"/>
+        <property name="connectionProperties" value="config.decrypt=false" />
+    </bean>
+    <bean id="dataSource1" parent="abstractDataSource">
+        <property name="url" value="${datasource1.jdbc.url}"/>
+        <property name="username" value="${datasource1.jdbc.username}"/>
+        <property name="password" value="${datasource1.jdbc.password}"/>
+        <property name="initialSize" value="${datasource1.jdbc.poolSize}"/>
+        <property name="minIdle" value="${datasource1.jdbc.minPoolSize}"/>
+        <property name="maxActive" value="${datasource1.jdbc.maxPoolSize}"/>
+    </bean>
+    <bean id="dataSource2" parent="abstractDataSource">
+        <property name="url" value="${datasource2.jdbc.url}"/>
+        <property name="username" value="${datasource2.jdbc.username}"/>
+        <property name="password" value="${datasource2.jdbc.password}"/>
+        <property name="initialSize" value="${datasource2.jdbc.poolSize}"/>
+        <property name="minIdle" value="${datasource2.jdbc.minPoolSize}"/>
+        <property name="maxActive" value="${datasource2.jdbc.maxPoolSize}"/>
+    </bean>
+    <bean id="dataSource3" parent="abstractDataSource">
+        <property name="url" value="${datasource3.jdbc.url}"/>
+        <property name="username" value="${datasource3.jdbc.username}"/>
+        <property name="password" value="${datasource3.jdbc.password}"/>
+        <property name="initialSize" value="${datasource3.jdbc.poolSize}"/>
+        <property name="minIdle" value="${datasource3.jdbc.minPoolSize}"/>
+        <property name="maxActive" value="${datasource3.jdbc.maxPoolSize}"/>
+    </bean>
+    <bean id="dataSource" class="com.xidian.iot.database.dynamic.DynamicDataSource">
+        <!-- 如果这么配置，就是读写分离 -->
+<!--        <property name="writeDataSources">-->
+<!--            <list>-->
+<!--                <ref bean="dataSource3"/>-->
+<!--            </list>-->
+<!--        </property>-->
+<!--        <property name="readDataSources">-->
+<!--            <list>-->
+<!--                <ref bean="dataSource1" />-->
+<!--                <ref bean="dataSource2" />-->
+<!--            </list>-->
+<!--        </property>-->
+        <!-- 如果这么配置，就是三主轮询，因为 readDataSourceSize<=0 时，使用的全是readDataSource -->
+        <property name="writeDataSources">
+            <list>
+                <ref bean="dataSource1" />
+                <ref bean="dataSource2" />
+                <ref bean="dataSource3" />
+            </list>
+        </property>
+        <property name="defaultTargetDataSource" ref="dataSource3"/>
+    </bean>
+    <task:scheduled-tasks>
+        <task:scheduled ref="dataSource" method="check" cron="*/5 * * * * ?"/>
+    </task:scheduled-tasks>
+    <!-- 针对myBatis的配置项 -->
+    <!-- 配置sqlSessionFactory -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!-- 指定sqlMapConfig总配置文件，订制的environment在spring容器中不在生效 -->
+        <property name="configLocation" value="classpath:/mybatis/mybatis-config-def.xml"/>
+        <!--        <property name="mapperLocations" value="classpath:/META-INF/mybatis/mapper/WorkerNodeMapper.xml" />-->
+        <!-- 注意其他配置 -->
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties">
+                        <!--使用下面的方式配置参数，一行配置一个 -->
+                        <value>params=reasonable</value>
+                    </property>
+                </bean>
+                <bean class="com.xidian.iot.database.dynamic.DynamicRWPlugin"/>
+            </array>
+        </property>
+    </bean>
+    <!-- 配置扫描器 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- 扫描包路径，如果需要扫描多个包，中间使用半角逗号隔开 -->
+        <property name="basePackage" value="com.xidian.iot.database.mapper,com.xidian.iot.database.mapper.custom"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+    <!-- 配置数据库注解aop -->
+<!--    <bean id="dynamicDataSourceAspect" class="com.test.api.dao.datasource.DynamicDataSourceAspect" />-->
+<!--    <aop:config>-->
+<!--        <aop:aspect id="c" ref="dynamicDataSourceAspect">-->
+<!--            <aop:pointcut id="tx" expression="execution(* com.test.api.dao.inte..*.*(..))"/>-->
+<!--            <aop:before pointcut-ref="tx" method="before"/>-->
+<!--            <aop:after pointcut-ref="tx" method="after"/>-->
+<!--        </aop:aspect>-->
+<!--    </aop:config>-->
+    <!-- 配置数据库注解aop -->
+</beans>
+
