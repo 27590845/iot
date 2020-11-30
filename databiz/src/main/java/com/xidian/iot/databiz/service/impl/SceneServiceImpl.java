@@ -19,6 +19,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +35,7 @@ import java.util.Objects;
  */
 @Service
 @Slf4j
+@Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
 public class SceneServiceImpl implements SceneService {
 
     @Autowired

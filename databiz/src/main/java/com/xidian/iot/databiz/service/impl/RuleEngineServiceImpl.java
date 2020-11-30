@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
  * @date 2020/9/21 11:25 下午
  */
 @Service
+@Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
 public class RuleEngineServiceImpl implements RuleEngineService {
 
     @Resource
@@ -34,7 +35,6 @@ public class RuleEngineServiceImpl implements RuleEngineService {
     @Resource
     private NodeActCmdService nodeActCmdService;
 
-    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     @Override
     public int addRuleEngine(NodeTrigParam nodeTrigParam) {
         int success = 0;

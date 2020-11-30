@@ -39,6 +39,7 @@ import java.util.Objects;
  * @date: 2020-09-10 21:45
  */
 @Service
+@Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
 public class NodeServiceImpl implements NodeService {
     @Autowired
     private NodeMapper nodeMapper;
@@ -57,7 +58,6 @@ public class NodeServiceImpl implements NodeService {
     @Autowired
     private UidGenerator uidGenerator;
 
-    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     @Override
     public NodeVo addNode(NodeAddParam param) {
         //返回结果
