@@ -7,19 +7,20 @@
 
     <context:component-scan base-package="com.xidian.iot"/>
     <context:annotation-config/>
+    <context:property-placeholder location="classpath:conf/application.properties" ignore-unresolvable="true"/>
 <!--    <context:property-placeholder location="classpath:/conf/*.properties"/>-->
-    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations"> <!-- PropertyPlaceholderConfigurer类中有个locations属性，接收的是一个数组，即我们可以在下面配好多个properties文件 -->
-            <array>
-                <value>classpath:conf/activemq-def.properties</value>
-<!--                <value>classpath:conf/kafka-def.properties</value>-->
-                <value>classpath:conf/redis-def.properties</value>
-                <value>classpath:conf/jdbc-def.properties</value>
-                <value>classpath:conf/mongo-def.properties</value>
-                <value>classpath:conf/application.properties</value>
-            </array>
-        </property>
-    </bean>
+<!--    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">-->
+<!--        <property name="locations"> &lt;!&ndash; PropertyPlaceholderConfigurer类中有个locations属性，接收的是一个数组，即我们可以在下面配好多个properties文件 &ndash;&gt;-->
+<!--            <array>-->
+<!--                <value>classpath:conf/activemq-def.properties</value>-->
+<!--&lt;!&ndash;                <value>classpath:conf/kafka-def.properties</value>&ndash;&gt;-->
+<!--                <value>classpath:conf/redis-def.properties</value>-->
+<!--                <value>classpath:conf/jdbc-def.properties</value>-->
+<!--                <value>classpath:conf/mongo-def.properties</value>-->
+<!--                <value>classpath:conf/application.properties</value>-->
+<!--            </array>-->
+<!--        </property>-->
+<!--    </bean>-->
 
     <import resource="application-databiz.xml"/>
     <!-- mongo、redis已经包含在application-databiz.xml内 -->
