@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.xidian.iot.common.*" />
+    <context:annotation-config/>
+    <aop:aspectj-autoproxy />
+
+    <!-- 这些配置文件只在测试时生效。正式部署时可以删掉，因为配置文件只会被扫描一次，扫描工作由模块调用者负责 -->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property
+                name="locations"> <!-- PropertyPlaceholderConfigurer类中有个locations属性，接收的是一个数组，即我们可以在下面配好多个properties文件 -->
+            <array>
+                <value>classpath:conf/email.properties</value>
+                <value>classpath:conf/sms.properties</value>
+                <value>classpath:conf/activemq-def.properties</value>
+            </array>
+        </property>
+    </bean>
+    <!--context:property-placeholder location="classpath*:/conf/*.properties" />-->
+    <import resource="application-activemq-def.xml"/>
+    <import resource="spring-email.xml"/>
+    <import resource="spring-sms.xml"/>
+</beans>

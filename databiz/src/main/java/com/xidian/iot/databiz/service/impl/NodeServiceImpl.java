@@ -113,7 +113,7 @@ public class NodeServiceImpl implements NodeService {
         nodeCmdService.deleteByNodeId(node.getNodeId());
         //级联删除nodeActCmd
         if (!Objects.isNull(ncIds) && ncIds.size() > 0) {
-            nodeActCmdService.delNodeActCmdByNtIds(ncIds);
+            nodeActCmdService.delNodeActCmdByNcIds(ncIds);
         }
     }
 

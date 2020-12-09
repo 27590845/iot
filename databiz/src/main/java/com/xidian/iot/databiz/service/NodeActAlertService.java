@@ -1,5 +1,11 @@
 package com.xidian.iot.databiz.service;
 
+import com.xidian.iot.database.entity.NodeActAlert;
+import com.xidian.iot.database.param.NodeActAlertParam;
+
+import java.util.List;
+
+
 /**
  * @author mrl
  * @Title: NodeActAlertService
@@ -8,4 +14,56 @@ package com.xidian.iot.databiz.service;
  * @date 2020/9/11 9:28 下午
  */
 public interface NodeActAlertService {
+    /**
+     * 根据naaId获取NodeActAlert
+     *
+     * @param naaId
+     * @return com.xidian.iot.database.entity.NodeActAlert
+     */
+    NodeActAlert getNodeActAlertById(Long naaId);
+
+    /**
+     * 根据ntId获取NodeActAlerts
+     *
+     * @param ntId
+     * @return com.xidian.iot.database.entity.NodeActAlert
+     */
+    List<NodeActAlert> getNodeActAlertsByntId(Long ntId,int page,int limit);
+
+    /**
+     * 根据ntId获取NodeActAlerts
+     *
+     * @param ntId
+     * @return com.xidian.iot.database.entity.NodeActAlert
+     */
+    List<NodeActAlert> getNodeActAlertsByntId(Long ntId);
+
+    /**
+     * 添加关联报警
+     *
+     * @param nodeActAlertParam 新增的关联报警
+     * @return com.xidian.iot.database.entity.NodeActAlert
+     */
+    NodeActAlert addNodeActAlert(NodeActAlertParam nodeActAlertParam);
+
+    /**
+     * 根据警报Id删除关联报警
+     * @param naaId 警报Id
+     * @return void
+     * */
+    void deleteByNodeActAlertId(Long naaId);
+
+    /**
+     * @param naaId  警报Id
+     * @param param 更新的警报
+     * @return void
+     */
+    void updateNodeActAlert(Long naaId, NodeActAlertParam param);
+
+    /**
+     * 查找是否已存在该警报
+     * @param param 警报
+     * @return void
+     */
+    void checkExistNodeActAlert(NodeActAlertParam param);
 }

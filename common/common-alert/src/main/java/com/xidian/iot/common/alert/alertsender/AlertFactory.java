@@ -1,23 +1,34 @@
 package com.xidian.iot.common.alert.alertsender;
 
+import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
+
 /**
  * 警报工厂
  * @author wmr
  */
+@Component
 public class AlertFactory{
-    public static void getAlert(byte alertType,String destination,String content){
+    @Resource
+    EmailAlert emailAlert;
+    @Resource
+    SiteAlert siteAlert;
+    @Resource
+    SMSAlert smsAlert;
+    public void getAlert(byte alertType,String destination,String content){
         Alert alert = null;
         switch(alertType){
             case 1:{
-                alert = new SMSAlert();
+                alert = smsAlert;
                 break;
             }
             case 2:{
-                alert = new EmailAlert();
+                alert = emailAlert;
                 break;
             }
             case 3:{
-                alert = new SiteAlert();
+                alert = siteAlert;
                 break;
             }
         }

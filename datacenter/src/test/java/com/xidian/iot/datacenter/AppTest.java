@@ -28,7 +28,7 @@ import java.util.*;
 @ContextConfiguration(locations = {"classpath:spring/application-context.xml"})
 public class AppTest {
 
-    final static String sceneSn = "186610102211000001";
+    final static String sceneSn = "186610102200000008";
     final static String nodeSn = "000001";
     final static String topic = "node.updata."+sceneSn;
 
@@ -38,11 +38,13 @@ public class AppTest {
     @Test
     public void appTest() throws JsonProcessingException, InterruptedException {
 //        String msg = "{\"datastreams\":[{\"TVOC\":69,\"hum\":54.0,\"at\":1597737850021,\"pm2p5\":33,\"co2\":509,\"pm10\":59,\"sn\":\""+nodeSn+"\",\"ch20\":19,\"tem\":32.0}]}";
-        String msg = "{\"datastreams\":[{\"tem1\":110,\"tem2\":44.0,\"at\":1600570048,\"sn\":\""+nodeSn+"\"}]}";
-        for(int i=0; i< 1000; i++){
-            mqSender.sendTopic(topic, msg);
-            Thread.sleep(10000);
-        }
+        String msg = "{\"datastreams\":[{\"test\":40.0,\"at\":1600570048,\"sn\":\""+nodeSn+"\"}]}";
+        mqSender.sendQueue(topic, msg);
+        Thread.sleep(60000);
+//        for(int i=0; i< 1000; i++){
+//            mqSender.sendTopic(topic, msg);
+//            Thread.sleep(10000);
+//        }
     }
 
     @Resource

@@ -5,6 +5,7 @@ import com.xidian.iot.common.alert.sms.SMSClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
@@ -14,6 +15,7 @@ import javax.annotation.Resource;
  *
  */
 @Slf4j
+@Component
 public class SMSAlert implements Alert {
     /**
      * sms客户端

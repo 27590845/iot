@@ -21,8 +21,8 @@ public class SiteLetterListener extends JmsConsumerListener {
     public void onMessage(Object topicName,Object message){
         System.out.printf("topicName = %s, message = %s\n", topicName, message);
         String content = (String) message;
-        SiteLetter siteLetter = null;
-        siteLetter = (SiteLetter) JsonUtil.toObject(content,siteLetter.getClass());
+        SiteLetter siteLetter = new SiteLetter();
+        siteLetter = JsonUtil.toObject(content,siteLetter.getClass());
         siteLetterService.addSiteLetter(siteLetter);
     }
 }

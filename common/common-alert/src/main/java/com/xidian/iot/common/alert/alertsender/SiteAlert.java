@@ -3,6 +3,7 @@ package com.xidian.iot.common.alert.alertsender;
 import com.xidian.iot.common.alert.site.SiteLetterClient;
 import com.xidian.iot.common.alert.site.SiteLetterVo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -13,6 +14,7 @@ import java.util.Date;
  *
  */
 @Slf4j
+@Component
 public class SiteAlert implements Alert {
     /**
      * 站内信客户端

@@ -5,6 +5,7 @@ import com.xidian.iot.common.alert.email.SimpleEmailAlertVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
@@ -14,6 +15,7 @@ import javax.annotation.Resource;
  *
  */
 @Slf4j
+@Component
 public class EmailAlert implements Alert {
     // 邮件警报标题
     private String nodeAlertTitle = "报警信息";
@@ -46,11 +48,11 @@ public class EmailAlert implements Alert {
      */
     @Override
     public void send(String destination,String content){
-        //ApplicationContext etest = new ClassPathXmlApplicationContext("spring/spring-email.xml");
-        //EmailAlertClient client = (EmailAlertClient) etest.getBean("emailAlertClient");
+//        ApplicationContext etest = new ClassPathXmlApplicationContext("spring/application-alert.xml");
+//        EmailAlertClient client = (EmailAlertClient) etest.getBean("emailAlertClient");
         SimpleEmailAlertVo emailVo = set(destination,content);
         emailAlertClient.send(emailVo);
-        //client.send(emailVo);
+//        client.send(emailVo);
         log.info("send email:"+destination+" "+content);
     }
 

@@ -146,8 +146,8 @@ public class NodeCmdServiceImpl implements NodeCmdService {
         NodeCmdExample nodeCmdExample = new NodeCmdExample();
         nodeCmdExample.createCriteria().andSceneSnEqualTo(sceneSn);
         res = nodeCmdMapper.deleteByExample(nodeCmdExample);
-        if(ncIds.size()>0){
-            nodeActCmdService.delNodeActCmdByNtIds(ncIds);
+        if(!Objects.isNull(ncIds)&&ncIds.size()>0){
+            nodeActCmdService.delNodeActCmdByNcIds(ncIds);
         }
         return res;
 

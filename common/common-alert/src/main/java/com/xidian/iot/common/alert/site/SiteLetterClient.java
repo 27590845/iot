@@ -5,6 +5,7 @@ import com.xidian.iot.common.alert.AlertClient;
 import com.xidian.iot.common.alert.AlertVo;
 import com.xidian.iot.common.alert.util.JsonUtil;
 import com.xidian.iot.common.mq.MqSender;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
  *
  * @author wmr
  */
+@Component
 public class SiteLetterClient implements AlertClient {
 
     /**
@@ -29,7 +31,7 @@ public class SiteLetterClient implements AlertClient {
         SiteLetterVo siteLetterVo = (SiteLetterVo) vo;
         // 添加站内信
         try{
-            mqSender.sendSeriObjByte("SiteLetter", JsonUtil.toJson(siteLetterVo));
+            mqSender.sendTopic("SiteLetter", JsonUtil.toJson(siteLetterVo));
         }
         catch (JsonProcessingException e){
             e.printStackTrace();

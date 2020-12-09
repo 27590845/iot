@@ -17,6 +17,8 @@
                 <value>classpath:conf/jdbc-def.properties</value>
                 <value>classpath:conf/mongo-def.properties</value>
                 <value>classpath:conf/application.properties</value>
+                <value>classpath:conf/email.properties</value>
+                <value>classpath:conf/sms.properties</value>
             </array>
         </property>
     </bean>
@@ -25,7 +27,9 @@
     <!-- mongo、redis已经包含在application-databiz.xml内 -->
     <!--    <import resource="application-mongo-def.xml"/>-->
     <!--    <import resource="application-redis-def.xml"/>-->
-    <import resource="application-activemq-def.xml"/>
+    <import resource="application-alert.xml"/>
+<!--  activemq已经包含在application-alert.xml内  -->
+<!--    <import resource="application-activemq-def.xml"/>-->
 <!--    <import resource="application-kafka-consumer-def.xml"/>-->
 <!--    <import resource="application-kafka-producer-def.xml"/>-->
     <import resource="application-chain.xml"/>

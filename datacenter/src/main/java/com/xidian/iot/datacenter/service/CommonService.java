@@ -1,8 +1,10 @@
 package com.xidian.iot.datacenter.service;
 
+import com.xidian.iot.database.entity.NodeActAlert;
 import com.xidian.iot.database.entity.custom.NodeCondExt;
 import com.xidian.iot.database.entity.custom.NodeTrigExt;
 import com.xidian.iot.database.entity.mongo.NodeData;
+import com.xidian.iot.databiz.service.NodeActAlertService;
 import com.xidian.iot.databiz.service.NodeAttrService;
 import com.xidian.iot.databiz.service.NodeCondService;
 import com.xidian.iot.databiz.service.NodeTrigService;
@@ -34,6 +36,8 @@ public class CommonService {
     private NodeCondService nodeCondService;
     @Resource
     private NodeTrigService nodeTrigService;
+    @Resource
+    private NodeActAlertService nodeActAlertService;
 
     /**
      * 根据sceneSn、nodeSn，获取条件所关联的触发器未失效、且不在时间间隔内的条件
@@ -85,5 +89,9 @@ public class CommonService {
 
     public void updateNodeTrigExtById(NodeTrigExt nodeTrigExt) {
         nodeTrigService.updateNodeTrigExtById(nodeTrigExt);
+    }
+
+    public List<NodeActAlert> getNodeActAlerts(Long ntId){
+        return nodeActAlertService.getNodeActAlertsByntId(ntId);
     }
 }

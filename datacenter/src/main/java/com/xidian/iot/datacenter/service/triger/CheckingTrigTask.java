@@ -1,5 +1,7 @@
 package com.xidian.iot.datacenter.service.triger;
 
+import com.xidian.iot.common.alert.alertsender.AlertFactory;
+import com.xidian.iot.database.entity.NodeActAlert;
 import com.xidian.iot.database.entity.custom.NodeCondExt;
 import com.xidian.iot.database.entity.custom.NodeTrigExt;
 import com.xidian.iot.datacenter.service.BaseTask;
@@ -33,6 +35,9 @@ public class CheckingTrigTask extends BaseTask implements Runnable {
     @Resource
     private CommonService commonService;
 
+    @Resource
+    private AlertFactory alertFactory;
+
     /**
      * 任务从这里开始。
      */
@@ -48,7 +53,7 @@ public class CheckingTrigTask extends BaseTask implements Runnable {
         // 判断是否出发这个触发器
         if (isTrig(nodeCondExtList)) {
             // 执行发送消息的任务
-//            doSendMessageTask(nodeCondExtList);
+            doSendMessageTask(ntId);
             // 执行发送命令的任务
 //            doSendCommandTask();
             // 设置更新最后运行时间及是否需要继续执行
@@ -86,6 +91,13 @@ public class CheckingTrigTask extends BaseTask implements Runnable {
     /**
      * 执行发送消息的任务
      */
+    private void doSendMessageTask(Long ntId){
+        List<NodeActAlert> nodeActAlerts = commonService.getNodeActAlerts(ntId);
+        for (int i = 0; i < nodeActAlerts.size(); i++) {
+            NodeActAlert nodeActAlert = nodeActAlerts.get(i);
+            alertFactory.getAlert(nodeActAlert.getNaaType(),nodeActAlert.getNaaVal(),nodeActAlert.getNaaContent());
+        }
+    }
 //    private void doSendMessageTask(List<NodeCondExt> nodeCondExtList) {
 //        SendMessageTask sendMessageTask = (SendMessageTask) applicationContext.getBean("sendMessageTask");
 //        // 设置触发器ID

@@ -55,7 +55,7 @@ public class NodeActCmdServiceImpl implements NodeActCmdService {
     }
 
     @Override
-    public int delNodeActCmdByNtIds(List<Long> ncIds) {
+    public int delNodeActCmdByNcIds(List<Long> ncIds) {
         NodeActCmdExample nodeActCmdExample = new NodeActCmdExample();
         nodeActCmdExample.createCriteria().andNcIdIn(ncIds);
         return nodeActCmdMapper.deleteByExample(nodeActCmdExample);
