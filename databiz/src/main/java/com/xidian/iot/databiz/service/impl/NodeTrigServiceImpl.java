@@ -58,8 +58,14 @@ public class NodeTrigServiceImpl implements NodeTrigService {
     }
 
     @Override
-    public int addNodeTrig(NodeTrig nodeTrig) {
+    public NodeTrig addNodeTrig(NodeTrig nodeTrig) {
         nodeTrig.setNtId(uidGenerator.getUID());
-        return nodeTrigMapper.insert(nodeTrig);
+        try {
+            nodeTrigMapper.insert(nodeTrig);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BusinessException(-1, "触发器插入失败");
+        }
+        return nodeTrig;
     }
 }

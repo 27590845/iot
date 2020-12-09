@@ -16,7 +16,7 @@ public interface RuleEngineService {
      * @param nodeTrigParam
      * @return
      */
-    int addRuleEngine(NodeTrigParam nodeTrigParam);
+    NodeTrigParam addRuleEngine(NodeTrigParam nodeTrigParam);
 
     /**
      * 根据nodeTrig.ntId删除一条规则，并级联删除触发器关联的nodeCond，nodeActCmd，以及清理缓存

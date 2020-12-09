@@ -81,8 +81,14 @@ public class NodeTrigParam extends NodeTrig {
 
     @Getter
     @Setter
-    @NotNull(groups = {ValidGroup.INSERT.class}, message = "触发器联动命令列表不能为空")
+//    @NotNull(groups = {ValidGroup.INSERT.class}, message = "触发器联动命令列表不能为空")
     @ReptValidation(groups = {ValidGroup.INSERT.class}, message = "联动命令列表中不能有重复")
     @Valid
     private List<NodeActCmdParam> nodeActCmdParams;
+
+    @Getter
+    @Setter
+    @NotNull(groups = {ValidGroup.INSERT.class}, message = "触发报警信息表不能为空")
+    @Valid
+    NodeActAlertParam nodeActAlertParam;
 }

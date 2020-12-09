@@ -1,5 +1,6 @@
 package com.xidian.iot.databiz.service;
 
+import com.xidian.iot.database.entity.NodeActAlert;
 /**
  * @author mrl
  * @Title: NodeActAlertService
@@ -8,4 +9,13 @@ package com.xidian.iot.databiz.service;
  * @date 2020/9/11 9:28 下午
  */
 public interface NodeActAlertService {
+
+    /**
+     * 添加节点触发器关联相关触发报警信息
+     * @param nodeActAlert
+     * @return int
+     * */
+    int addNodeActAlert(NodeActAlert nodeActAlert);
+
+    int delNodeActAlertByNtId(Long ntId);
 }

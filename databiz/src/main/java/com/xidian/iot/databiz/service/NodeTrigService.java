@@ -48,5 +48,5 @@ public interface NodeTrigService {
      * @param nodeTrig
      * @return
      */
-    int addNodeTrig(NodeTrig nodeTrig);
+    NodeTrig addNodeTrig(NodeTrig nodeTrig);
 }
