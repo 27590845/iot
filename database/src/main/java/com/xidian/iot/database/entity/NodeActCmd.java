@@ -4,7 +4,7 @@ package com.xidian.iot.database.entity;
  * 一旦一个节点触发器被触发，可能会执行多个命令
  *
  * @author mrl
- * @date   2020/09/21
+ * @date   2020/12/09
  */
 public class NodeActCmd {
     /**

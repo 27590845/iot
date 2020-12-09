@@ -30,6 +30,7 @@ public class NodeVo extends Node implements Serializable {
         setNodeName(node.getNodeName());
         setCreateTime(node.getCreateTime());
         setNodeSn(node.getNodeSn());
+        setNodeAttrname(node.getNodeAttrname());
     }
 
     public NodeVo(List<NodeAttr> nodeAttrList) {

@@ -11,6 +11,7 @@
     <result column="scene_el" jdbcType="DOUBLE" property="sceneEl" />
     <result column="scene_desc" jdbcType="VARCHAR" property="sceneDesc" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="scene_identifier" jdbcType="VARCHAR" property="sceneIdentifier" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -72,7 +73,7 @@
   </sql>
   <sql id="Base_Column_List">
     scene_id, scene_sn, scene_name, scene_loc, scene_lng, scene_lat, scene_el, scene_desc, 
-    create_time
+    create_time, scene_identifier
   </sql>
   <select id="selectByExample" parameterType="com.xidian.iot.database.entity.SceneExample" resultMap="BaseResultMap">
     select
@@ -108,12 +109,12 @@
   <insert id="insert" parameterType="com.xidian.iot.database.entity.Scene">
     insert into scene (scene_id, scene_sn, scene_name, 
       scene_loc, scene_lng, scene_lat, 
-      scene_el, scene_desc, create_time
-      )
+      scene_el, scene_desc, create_time, 
+      scene_identifier)
     values (#{sceneId,jdbcType=BIGINT}, #{sceneSn,jdbcType=CHAR}, #{sceneName,jdbcType=VARCHAR}, 
       #{sceneLoc,jdbcType=VARCHAR}, #{sceneLng,jdbcType=DOUBLE}, #{sceneLat,jdbcType=DOUBLE}, 
-      #{sceneEl,jdbcType=DOUBLE}, #{sceneDesc,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
-      )
+      #{sceneEl,jdbcType=DOUBLE}, #{sceneDesc,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{sceneIdentifier,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.iot.database.entity.Scene">
     insert into scene
@@ -145,6 +146,9 @@
       <if test="createTime != null">
         create_time,
       </if>
+      <if test="sceneIdentifier != null">
+        scene_identifier,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="sceneId != null">
@@ -173,6 +177,9 @@
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sceneIdentifier != null">
+        #{sceneIdentifier,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -212,6 +219,9 @@
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.sceneIdentifier != null">
+        scene_identifier = #{record.sceneIdentifier,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -227,7 +237,8 @@
       scene_lat = #{record.sceneLat,jdbcType=DOUBLE},
       scene_el = #{record.sceneEl,jdbcType=DOUBLE},
       scene_desc = #{record.sceneDesc,jdbcType=VARCHAR},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      scene_identifier = #{record.sceneIdentifier,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -259,6 +270,9 @@
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="sceneIdentifier != null">
+        scene_identifier = #{sceneIdentifier,jdbcType=VARCHAR},
+      </if>
     </set>
     where scene_id = #{sceneId,jdbcType=BIGINT}
   </update>
@@ -271,7 +285,8 @@
       scene_lat = #{sceneLat,jdbcType=DOUBLE},
       scene_el = #{sceneEl,jdbcType=DOUBLE},
       scene_desc = #{sceneDesc,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      scene_identifier = #{sceneIdentifier,jdbcType=VARCHAR}
     where scene_id = #{sceneId,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -4,7 +4,7 @@ package com.xidian.iot.database.entity;
  * 节点属性模版，记录了一类节点属性的元数据，比如记录了某节点属性的计数单位
  *
  * @author mrl
- * @date   2020/09/20
+ * @date   2020/12/09
  */
 public class NodeAttrStd {
     /**

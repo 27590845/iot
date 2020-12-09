@@ -8,6 +8,8 @@
     <result column="na_name" jdbcType="VARCHAR" property="naName" />
     <result column="na_unit" jdbcType="VARCHAR" property="naUnit" />
     <result column="na_sym" jdbcType="VARCHAR" property="naSym" />
+    <result column="na_form" jdbcType="VARCHAR" property="naForm" />
+    <result column="na_map" jdbcType="VARCHAR" property="naMap" />
     <result column="scene_sn" jdbcType="VARCHAR" property="sceneSn" />
     <result column="node_sn" jdbcType="VARCHAR" property="nodeSn" />
   </resultMap>
@@ -70,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    na_id, node_id, na_key, na_name, na_unit, na_sym, scene_sn, node_sn
+    na_id, node_id, na_key, na_name, na_unit, na_sym, na_form, na_map, scene_sn, node_sn
   </sql>
   <select id="selectByExample" parameterType="com.xidian.iot.database.entity.NodeAttrExample" resultMap="BaseResultMap">
     select
@@ -106,10 +108,12 @@
   <insert id="insert" parameterType="com.xidian.iot.database.entity.NodeAttr">
     insert into node_attr (na_id, node_id, na_key, 
       na_name, na_unit, na_sym, 
-      scene_sn, node_sn)
+      na_form, na_map, scene_sn, 
+      node_sn)
     values (#{naId,jdbcType=BIGINT}, #{nodeId,jdbcType=BIGINT}, #{naKey,jdbcType=VARCHAR}, 
       #{naName,jdbcType=VARCHAR}, #{naUnit,jdbcType=VARCHAR}, #{naSym,jdbcType=VARCHAR}, 
-      #{sceneSn,jdbcType=VARCHAR}, #{nodeSn,jdbcType=VARCHAR})
+      #{naForm,jdbcType=VARCHAR}, #{naMap,jdbcType=VARCHAR}, #{sceneSn,jdbcType=VARCHAR}, 
+      #{nodeSn,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.iot.database.entity.NodeAttr">
     insert into node_attr
@@ -131,6 +135,12 @@
       </if>
       <if test="naSym != null">
         na_sym,
+      </if>
+      <if test="naForm != null">
+        na_form,
+      </if>
+      <if test="naMap != null">
+        na_map,
       </if>
       <if test="sceneSn != null">
         scene_sn,
@@ -157,6 +167,12 @@
       </if>
       <if test="naSym != null">
         #{naSym,jdbcType=VARCHAR},
+      </if>
+      <if test="naForm != null">
+        #{naForm,jdbcType=VARCHAR},
+      </if>
+      <if test="naMap != null">
+        #{naMap,jdbcType=VARCHAR},
       </if>
       <if test="sceneSn != null">
         #{sceneSn,jdbcType=VARCHAR},
@@ -193,6 +209,12 @@
       <if test="record.naSym != null">
         na_sym = #{record.naSym,jdbcType=VARCHAR},
       </if>
+      <if test="record.naForm != null">
+        na_form = #{record.naForm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.naMap != null">
+        na_map = #{record.naMap,jdbcType=VARCHAR},
+      </if>
       <if test="record.sceneSn != null">
         scene_sn = #{record.sceneSn,jdbcType=VARCHAR},
       </if>
@@ -212,6 +234,8 @@
       na_name = #{record.naName,jdbcType=VARCHAR},
       na_unit = #{record.naUnit,jdbcType=VARCHAR},
       na_sym = #{record.naSym,jdbcType=VARCHAR},
+      na_form = #{record.naForm,jdbcType=VARCHAR},
+      na_map = #{record.naMap,jdbcType=VARCHAR},
       scene_sn = #{record.sceneSn,jdbcType=VARCHAR},
       node_sn = #{record.nodeSn,jdbcType=VARCHAR}
     <if test="_parameter != null">
@@ -236,6 +260,12 @@
       <if test="naSym != null">
         na_sym = #{naSym,jdbcType=VARCHAR},
       </if>
+      <if test="naForm != null">
+        na_form = #{naForm,jdbcType=VARCHAR},
+      </if>
+      <if test="naMap != null">
+        na_map = #{naMap,jdbcType=VARCHAR},
+      </if>
       <if test="sceneSn != null">
         scene_sn = #{sceneSn,jdbcType=VARCHAR},
       </if>
@@ -252,6 +282,8 @@
       na_name = #{naName,jdbcType=VARCHAR},
       na_unit = #{naUnit,jdbcType=VARCHAR},
       na_sym = #{naSym,jdbcType=VARCHAR},
+      na_form = #{naForm,jdbcType=VARCHAR},
+      na_map = #{naMap,jdbcType=VARCHAR},
       scene_sn = #{sceneSn,jdbcType=VARCHAR},
       node_sn = #{nodeSn,jdbcType=VARCHAR}
     where na_id = #{naId,jdbcType=BIGINT}

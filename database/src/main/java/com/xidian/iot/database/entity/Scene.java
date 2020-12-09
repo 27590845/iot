@@ -6,7 +6,7 @@ import java.util.Date;
  * 场景表，场景是数据上传与命令下发的最基本单位。逻辑上可看作管理着多个数据单元的交互窗口；物理上可看作通信终端，比如dtu
  *
  * @author mrl
- * @date   2020/09/20
+ * @date   2020/12/09
  */
 public class Scene {
     /**
@@ -53,6 +53,11 @@ public class Scene {
      * 创建时间
      */
     private Date createTime;
+
+    /**
+     * 网关身份标识（选填）
+     */
+    private String sceneIdentifier;
 
     public Long getSceneId() {
         return sceneId;
@@ -124,5 +129,13 @@ public class Scene {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getSceneIdentifier() {
+        return sceneIdentifier;
+    }
+
+    public void setSceneIdentifier(String sceneIdentifier) {
+        this.sceneIdentifier = sceneIdentifier == null ? null : sceneIdentifier.trim();
     }
 }

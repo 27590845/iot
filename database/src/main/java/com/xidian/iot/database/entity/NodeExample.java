@@ -505,6 +505,146 @@ public class NodeExample {
             return (Criteria) this;
         }
 
+        public Criteria andNodeMapIsNull() {
+            addCriterion("node_map is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeMapIsNotNull() {
+            addCriterion("node_map is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeMapEqualTo(String value) {
+            addCriterion("node_map =", value, "nodeMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeMapNotEqualTo(String value) {
+            addCriterion("node_map <>", value, "nodeMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeMapGreaterThan(String value) {
+            addCriterion("node_map >", value, "nodeMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeMapGreaterThanOrEqualTo(String value) {
+            addCriterion("node_map >=", value, "nodeMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeMapLessThan(String value) {
+            addCriterion("node_map <", value, "nodeMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeMapLessThanOrEqualTo(String value) {
+            addCriterion("node_map <=", value, "nodeMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeMapLike(String value) {
+            addCriterion("node_map like", value, "nodeMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeMapNotLike(String value) {
+            addCriterion("node_map not like", value, "nodeMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeMapIn(List<String> values) {
+            addCriterion("node_map in", values, "nodeMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeMapNotIn(List<String> values) {
+            addCriterion("node_map not in", values, "nodeMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeMapBetween(String value1, String value2) {
+            addCriterion("node_map between", value1, value2, "nodeMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeMapNotBetween(String value1, String value2) {
+            addCriterion("node_map not between", value1, value2, "nodeMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeAttrnameIsNull() {
+            addCriterion("node_attrname is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeAttrnameIsNotNull() {
+            addCriterion("node_attrname is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeAttrnameEqualTo(String value) {
+            addCriterion("node_attrname =", value, "nodeAttrname");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeAttrnameNotEqualTo(String value) {
+            addCriterion("node_attrname <>", value, "nodeAttrname");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeAttrnameGreaterThan(String value) {
+            addCriterion("node_attrname >", value, "nodeAttrname");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeAttrnameGreaterThanOrEqualTo(String value) {
+            addCriterion("node_attrname >=", value, "nodeAttrname");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeAttrnameLessThan(String value) {
+            addCriterion("node_attrname <", value, "nodeAttrname");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeAttrnameLessThanOrEqualTo(String value) {
+            addCriterion("node_attrname <=", value, "nodeAttrname");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeAttrnameLike(String value) {
+            addCriterion("node_attrname like", value, "nodeAttrname");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeAttrnameNotLike(String value) {
+            addCriterion("node_attrname not like", value, "nodeAttrname");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeAttrnameIn(List<String> values) {
+            addCriterion("node_attrname in", values, "nodeAttrname");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeAttrnameNotIn(List<String> values) {
+            addCriterion("node_attrname not in", values, "nodeAttrname");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeAttrnameBetween(String value1, String value2) {
+            addCriterion("node_attrname between", value1, value2, "nodeAttrname");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeAttrnameNotBetween(String value1, String value2) {
+            addCriterion("node_attrname not between", value1, value2, "nodeAttrname");
+            return (Criteria) this;
+        }
+
         public Criteria andCreateTimeIsNull() {
             addCriterion("create_time is null");
             return (Criteria) this;

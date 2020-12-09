@@ -6,7 +6,7 @@ import java.util.Date;
  * 节点表，一个场景下有多个节点。逻辑上可看作一个数据单元；物理上可看作数据采集设备，比如采集卡
  *
  * @author mrl
- * @date   2020/09/20
+ * @date   2020/12/09
  */
 public class Node {
     /**
@@ -38,6 +38,16 @@ public class Node {
      * 节点物理节点号
      */
     private String nodeSn;
+
+    /**
+     * 节点映射实际地址
+     */
+    private String nodeMap;
+
+    /**
+     * JSON格式存放节点和属性各值上载名称
+     */
+    private String nodeAttrname;
 
     /**
      * 创建时间
@@ -90,6 +100,22 @@ public class Node {
 
     public void setNodeSn(String nodeSn) {
         this.nodeSn = nodeSn == null ? null : nodeSn.trim();
+    }
+
+    public String getNodeMap() {
+        return nodeMap;
+    }
+
+    public void setNodeMap(String nodeMap) {
+        this.nodeMap = nodeMap == null ? null : nodeMap.trim();
+    }
+
+    public String getNodeAttrname() {
+        return nodeAttrname;
+    }
+
+    public void setNodeAttrname(String nodeAttrname) {
+        this.nodeAttrname = nodeAttrname == null ? null : nodeAttrname.trim();
     }
 
     public Date getCreateTime() {

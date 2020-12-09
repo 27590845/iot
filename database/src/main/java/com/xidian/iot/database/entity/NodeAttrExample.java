@@ -504,6 +504,146 @@ public class NodeAttrExample {
             return (Criteria) this;
         }
 
+        public Criteria andNaFormIsNull() {
+            addCriterion("na_form is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNaFormIsNotNull() {
+            addCriterion("na_form is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNaFormEqualTo(String value) {
+            addCriterion("na_form =", value, "naForm");
+            return (Criteria) this;
+        }
+
+        public Criteria andNaFormNotEqualTo(String value) {
+            addCriterion("na_form <>", value, "naForm");
+            return (Criteria) this;
+        }
+
+        public Criteria andNaFormGreaterThan(String value) {
+            addCriterion("na_form >", value, "naForm");
+            return (Criteria) this;
+        }
+
+        public Criteria andNaFormGreaterThanOrEqualTo(String value) {
+            addCriterion("na_form >=", value, "naForm");
+            return (Criteria) this;
+        }
+
+        public Criteria andNaFormLessThan(String value) {
+            addCriterion("na_form <", value, "naForm");
+            return (Criteria) this;
+        }
+
+        public Criteria andNaFormLessThanOrEqualTo(String value) {
+            addCriterion("na_form <=", value, "naForm");
+            return (Criteria) this;
+        }
+
+        public Criteria andNaFormLike(String value) {
+            addCriterion("na_form like", value, "naForm");
+            return (Criteria) this;
+        }
+
+        public Criteria andNaFormNotLike(String value) {
+            addCriterion("na_form not like", value, "naForm");
+            return (Criteria) this;
+        }
+
+        public Criteria andNaFormIn(List<String> values) {
+            addCriterion("na_form in", values, "naForm");
+            return (Criteria) this;
+        }
+
+        public Criteria andNaFormNotIn(List<String> values) {
+            addCriterion("na_form not in", values, "naForm");
+            return (Criteria) this;
+        }
+
+        public Criteria andNaFormBetween(String value1, String value2) {
+            addCriterion("na_form between", value1, value2, "naForm");
+            return (Criteria) this;
+        }
+
+        public Criteria andNaFormNotBetween(String value1, String value2) {
+            addCriterion("na_form not between", value1, value2, "naForm");
+            return (Criteria) this;
+        }
+
+        public Criteria andNaMapIsNull() {
+            addCriterion("na_map is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNaMapIsNotNull() {
+            addCriterion("na_map is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNaMapEqualTo(String value) {
+            addCriterion("na_map =", value, "naMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andNaMapNotEqualTo(String value) {
+            addCriterion("na_map <>", value, "naMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andNaMapGreaterThan(String value) {
+            addCriterion("na_map >", value, "naMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andNaMapGreaterThanOrEqualTo(String value) {
+            addCriterion("na_map >=", value, "naMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andNaMapLessThan(String value) {
+            addCriterion("na_map <", value, "naMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andNaMapLessThanOrEqualTo(String value) {
+            addCriterion("na_map <=", value, "naMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andNaMapLike(String value) {
+            addCriterion("na_map like", value, "naMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andNaMapNotLike(String value) {
+            addCriterion("na_map not like", value, "naMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andNaMapIn(List<String> values) {
+            addCriterion("na_map in", values, "naMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andNaMapNotIn(List<String> values) {
+            addCriterion("na_map not in", values, "naMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andNaMapBetween(String value1, String value2) {
+            addCriterion("na_map between", value1, value2, "naMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andNaMapNotBetween(String value1, String value2) {
+            addCriterion("na_map not between", value1, value2, "naMap");
+            return (Criteria) this;
+        }
+
         public Criteria andSceneSnIsNull() {
             addCriterion("scene_sn is null");
             return (Criteria) this;
