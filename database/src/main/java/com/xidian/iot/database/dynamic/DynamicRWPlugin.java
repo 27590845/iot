@@ -39,6 +39,7 @@ public class DynamicRWPlugin implements Interceptor {
         boolean synchronizationActive = TransactionSynchronizationManager.isSynchronizationActive();
         if(!synchronizationActive) {
             Object[] objects = invocation.getArgs();
+            //statement 是jdbc原生api中常用工具，通常一个statement对应一个sql语句
             MappedStatement ms = (MappedStatement) objects[0];
             DynamicDataSourceGlobal dynamicDataSourceGlobal = null;
             if((dynamicDataSourceGlobal = cacheMap.get(ms.getId())) == null) {

@@ -64,13 +64,16 @@ public class bizTest {
     public void getNas() throws InterruptedException {
         for (int i = 0; i < 100; i++) {
             List<NodeAttrStd> nodeAttrStds = null;
+            List<Scene> scenes = null;
             try {
                 nodeAttrStds = nodeAttrStdMapper.selectByExample(new NodeAttrStdExample());
+                scenes = sceneMapper.selectByExample(new SceneExample());
             } catch (Exception e) {
                 System.out.println(e);
             }
-            System.out.println(nodeAttrStds==null?"null":nodeAttrStds.size());
-            Thread.sleep(5000);
+            System.out.print(nodeAttrStds==null?"null":nodeAttrStds.size()+"  ");
+            System.out.println(scenes==null?"null":scenes.size());
+            Thread.sleep(10000);
         }
     }
 }
