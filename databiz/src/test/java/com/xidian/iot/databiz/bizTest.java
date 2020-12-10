@@ -1,13 +1,11 @@
 package com.xidian.iot.databiz;
 
-import com.github.pagehelper.PageHelper;
 import com.xidian.iot.database.entity.NodeAttrStd;
 import com.xidian.iot.database.entity.NodeAttrStdExample;
 import com.xidian.iot.database.entity.Scene;
 import com.xidian.iot.database.entity.SceneExample;
 import com.xidian.iot.database.mapper.NodeAttrStdMapper;
 import com.xidian.iot.database.mapper.SceneMapper;
-import com.xidian.iot.databiz.service.NodeAttrStdService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
-import java.sql.SQLSyntaxErrorException;
 import java.util.List;
 
 /**

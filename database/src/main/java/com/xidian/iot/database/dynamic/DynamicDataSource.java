@@ -26,7 +26,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
     private List<Object> writeDataSources; //写数据源
     private List<Object> readDataSources; //多个读数据源
     private final Map<Object, Object> allDataSources = new HashMap<>();
-    private final List<String> unreachableDatasourceName = new CopyOnWriteArrayList<>(); //不可用的datasource的名字集合
+    private final List<String> unreachableDatasourceName = new Vector<>(); //不可用的datasource的名字集合
     private int writeDatasourceSize = 0; //写数据源个数
     private int readDataSourceSize = 0; //读数据源个数
     private AtomicLong counter = new AtomicLong(0);
