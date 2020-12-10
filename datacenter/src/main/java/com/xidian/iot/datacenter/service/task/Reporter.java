@@ -3,6 +3,7 @@ package com.xidian.iot.datacenter.service.task;
 import com.xidian.iot.common.mq.MqSender;
 import com.xidian.iot.databiz.service.NodeCondService;
 import com.xidian.iot.datacenter.system.SystemParam;
+import com.xidian.iot.datacenter.system.SystemParamShared;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
@@ -29,6 +30,8 @@ public class Reporter {
     String msg = "{\"datastreams\":[{\"tem1\":110,\"tem2\":44.0,\"at\":1600570048,\"sn\":\""+nodeSn+"\"}]}";
 
     @Resource
+    private SystemParamShared systemParamShared;
+    @Resource
     private MqSender mqSender;
     @Resource
     private MongoTemplate mongoTemplate;
@@ -38,7 +41,7 @@ public class Reporter {
     private NodeCondService nodeCondService;
 
     public void report(){
-        if(!SystemParam.isReportEnable()) return;
+        if(!systemParamShared.isReportEnable()) return;
         try{
             long time = new Date().getTime();
             log.info("======> 定时检测组件 <======");

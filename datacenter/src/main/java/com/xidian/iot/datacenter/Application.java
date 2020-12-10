@@ -1,6 +1,6 @@
 package com.xidian.iot.datacenter;
 
-import com.xidian.iot.datacenter.system.SystemParam;
+import com.xidian.iot.datacenter.system.SystemParamShared;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -35,6 +35,7 @@ public class Application {
         AbstractApplicationContext context = new ClassPathXmlApplicationContext("classpath:/spring/application-context.xml");
 
         ServerSocket serverSocket = context.getBean(ServerSocket.class);
+        SystemParamShared systemParamShared = context.getBean(SystemParamShared.class);
         log.info("服务器已经启动，等待客户端连接");
 
         String msg;
@@ -49,30 +50,37 @@ public class Application {
                     response = "Shutdown successful. See you next time";
                     break;
                 case GET_SYS_PARAM:
-                    response = SystemParam.getDesc();
+//                    response = SystemParam.getDesc();
+                    response = systemParamShared.getDesc();
                     break;
                 case MILLI_LEVEL:
-                    SystemParam.setTimeStampDiv(1);
+//                    SystemParam.setTimeStampDiv(1);
+                    systemParamShared.setTimeStampDiv(1);
                     response = "set timeStampDiv to 1";
                     break;
                 case SEC_LEVEL:
-                    SystemParam.setTimeStampDiv(1000);
+//                    SystemParam.setTimeStampDiv(1000);
+                    systemParamShared.setTimeStampDiv(1000);
                     response = "set timeStampDiv to 1000";
                     break;
                 case TRIGGER_ON:
-                    SystemParam.setTriggerEnable(true);
+//                    SystemParam.setTriggerEnable(true);
+                    systemParamShared.setTriggerEnable(true);
                     response = "set trigger enable";
                     break;
                 case TRIGGER_OFF:
-                    SystemParam.setTriggerEnable(false);
+//                    SystemParam.setTriggerEnable(false);
+                    systemParamShared.setTriggerEnable(false);
                     response = "set trigger disable";
                     break;
                 case REPORT_ON:
-                    SystemParam.setReportEnable(true);
+//                    SystemParam.setReportEnable(true);
+                    systemParamShared.setReportEnable(true);
                     response = "set report enable";
                     break;
                 case REPORT_OFF:
-                    SystemParam.setReportEnable(false);
+//                    SystemParam.setReportEnable(false);
+                    systemParamShared.setReportEnable(false);
                     response = "set report disable";
                     break;
                 default:
