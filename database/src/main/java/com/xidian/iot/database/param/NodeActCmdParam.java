@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
 public class NodeActCmdParam extends NodeActCmd {
 
     @ApiModelProperty("动作关联的具体命令")
-    @NotNull(groups = {ValidGroup.INSERT.class}, message = "关联的具体命令不能为空")
+    @NotNull(groups = {ValidGroup.INSERT.class,ValidGroup.UPDATE.class}, message = "关联的具体命令不能为空")
     @NumLenValidation(lens = {18,19}, binary = false, message = "非法的命令ID")
     @Override
     public Long getNcId() {

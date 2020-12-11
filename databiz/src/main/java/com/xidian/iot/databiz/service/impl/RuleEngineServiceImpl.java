@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -40,7 +41,7 @@ public class RuleEngineServiceImpl implements RuleEngineService {
         int success = 0;
         nodeTrigService.addNodeTrig(nodeTrigParam);
         // 先判断是否有节点命令 如果有则直接事务回滚
-        if (!Objects.isNull(nodeTrigParam.getNodeActCmdParams())){
+        if (!Objects.isNull(nodeTrigParam.getNodeActCmdParams())) {
             checkReptCondition(nodeTrigParam);
             nodeTrigParam.getNodeActCmdParams().forEach(nac -> nac.setNtId(nodeTrigParam.getNtId()));
             //插入nodeActCmd列表
@@ -85,5 +86,44 @@ public class RuleEngineServiceImpl implements RuleEngineService {
                     throw new BusinessException(-1, "不允许不同规则有相同的条件列表和联动命令条目");
             });
         }
+    }
+
+    @Override
+    public int delNodeCondByNcId(Long ncId) {
+        int res = nodeCondService.delNodeCondByNcId(ncId);
+        //清理缓存 内部调用不走缓存
+        nodeCondService.cleanNodeCondById(ncId);
+        return res;
+    }
+
+    @Override
+    public int delNodeCondByNcIds(List<Long> ncIds) {
+        int res = nodeCondService.delNodeCondByNcIds(ncIds);
+        for (Long ncId : ncIds) {
+            nodeCondService.cleanNodeCondById(ncId);
+        }
+        return res;
+    }
+
+    @Override
+    public void updateRuleEngine(Long ntId, NodeTrigParam nodeTrigParam) {
+        if (Objects.isNull(nodeTrigService.getNodeTrigExtById(ntId))) {
+            throw new BusinessException(-1, "该触发器不存在");
+        }
+        // 更新触发器
+        nodeTrigService.updateNodeTrigById(nodeTrigParam);
+        // 先判断是否有节点命令 如果有则直接事务回滚
+        if (!Objects.isNull(nodeTrigParam.getNodeActCmdParams())) {
+            checkReptCondition(nodeTrigParam);
+            // 更新nodeActCmd列表 也就是更新 ncId命令id
+            nodeActCmdService.updateNodeActCmds(nodeTrigParam.getNodeActCmdParams()
+                    .stream().map(param -> {param.setNtId(ntId);
+                                 return (NodeActCmd) param;}).collect(Collectors.toList()));
+        }
+        // 更新触发报警信息
+        nodeActAlertService.updateNodeActAlert(nodeTrigParam.getNodeActAlertParam());
+        // 更新nodeCond列表 List<Child>不能直接转为List<Parent>
+        nodeCondService.updateNodeConds(nodeTrigParam.getNodeCondParams()
+                .stream().map(param -> (NodeCond) param).collect(Collectors.toList()));
     }
 }

@@ -16,20 +16,20 @@ import javax.validation.constraints.NotNull;
 public class NodeActAlertParam extends NodeActAlert {
 
     @ApiModelProperty("警报类型 1短信 2email")
-    @NotNull(groups = {ValidGroup.INSERT.class}, message = "警报类型不能为空")
+    @NotNull(groups = {ValidGroup.INSERT.class,ValidGroup.UPDATE.class}, message = "警报类型不能为空")
     @EnumValidation(groups = {ValidGroup.INSERT.class}, ints = {1,2}, message = "非法的操作符")
     @Override
     public Byte getNaaType() {
         return super.getNaaType();
     }
     @ApiModelProperty("发送报警对象")
-    @NotNull(groups = {ValidGroup.INSERT.class}, message = "发送报警对象不能为空")
+    @NotNull(groups = {ValidGroup.INSERT.class,ValidGroup.UPDATE.class}, message = "发送报警对象不能为空")
     @Override
     public String getNaaVal() {
         return super.getNaaVal();
     }
     @ApiModelProperty("发送内容")
-    @NotNull(groups = {ValidGroup.INSERT.class}, message = "发送内容不能为空")
+    @NotNull(groups = {ValidGroup.INSERT.class,ValidGroup.UPDATE.class}, message = "发送内容不能为空")
     @Override
     public String getNaaContent() {
         return super.getNaaContent();

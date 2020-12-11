@@ -43,4 +43,19 @@
             #{ncId,jdbcType=BIGINT}
         </foreach>
     </delete>
+    <update id="updateBatch" parameterType="java.util.List">
+        <foreach collection="ncs" item="nc" separator=",">
+            update node_cond
+            set
+            na_id = #{nc.naId,jdbcType=BIGINT},
+            nt_id = #{nc.ntId,jdbcType=BIGINT},
+            nc_op = #{nc.ncOp,jdbcType=TINYINT},
+            nc_val = #{nc.ncVal,jdbcType=VARCHAR},
+            node_sn = #{nc.nodeSn,jdbcType=VARCHAR},
+            scene_sn = #{nc.sceneSn,jdbcType=VARCHAR},
+            nc_fit_time = #{nc.ncFitTime,jdbcType=INTEGER}
+            where nc_id = #{nc.ncId,jdbcType=BIGINT}
+        </foreach>
+    </update>
+
 </mapper>

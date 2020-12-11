@@ -34,4 +34,9 @@ public class NodeActAlertServiceImpl implements NodeActAlertService {
         nodeActAlertExample.createCriteria().andNtIdEqualTo(ntId);
         return nodeActAlertMapper.deleteByExample(nodeActAlertExample);
     }
+
+    @Override
+    public int updateNodeActAlert(NodeActAlert nodeActAlert) {
+       return nodeActAlertMapper.updateByPrimaryKeySelective(nodeActAlert);
+    }
 }

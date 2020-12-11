@@ -1,6 +1,8 @@
 package com.xidian.iot.dataapi.controller;
 
+import com.xidian.iot.common.util.exception.BusinessException;
 import com.xidian.iot.dataapi.controller.res.HttpResult;
+import com.xidian.iot.database.param.NodeCondParam;
 import com.xidian.iot.database.param.NodeTrigParam;
 import com.xidian.iot.database.valid.ValidGroup;
 import com.xidian.iot.databiz.service.RuleEngineService;
@@ -11,6 +13,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @author mrl
@@ -35,9 +40,52 @@ public class RuleEngineController {
         return HttpResult.responseOK(ruleEngineService.addRuleEngine(nodeTrigParam));
     }
 
+//    @ApiOperation("添加单个节点的触发条件")
+//    @PostMapping("/{ntId}")
+//    public HttpResult addNodeCond(
+//            @ApiParam(name = "ntId", value = "") @PathVariable("ntId") Long ntId,
+//            @ApiParam("需要添加的规则条件")
+//            @RequestBody @Validated(ValidGroup.INSERT.class) NodeCondParam nodeCondParam) {
+//        return HttpResult.responseOK(ruleEngineService.addNodeCond(ntId, nodeCondParam));
+//    }
+
     @ApiOperation("删除一条规则，会级联删除相关触发器条件，触发器动作，触发器报警")
     @DeleteMapping("/{ntId}")
     public HttpResult del(@ApiParam(name = "ntId", value = "") @PathVariable("ntId") Long ntId) {
+        return HttpResult.responseOK(ruleEngineService.delRuleEngine(ntId));
+    }
+
+    @ApiOperation("删除单个节点触发条件")
+    @DeleteMapping("/nc/{ncId}")
+    public HttpResult delNodeCond(@ApiParam(name = "ncId", value = "") @PathVariable("ncId") Long ncId) {
+        return HttpResult.responseOK(ruleEngineService.delNodeCondByNcId(ncId));
+    }
+
+    @ApiOperation("删除多个节点触发条件")
+    @DeleteMapping("/ncs/{ncIds}")
+    public HttpResult delNodeConds(@ApiParam(name = "ncIds", value = "") @PathVariable("ncIds") String ncIds) {
+        String[] ids = ncIds.split(",");
+        List<Long> ncIdss = new ArrayList<>();
+        for (String id : ids) {
+            ncIdss.add(Long.valueOf(id));
+        }
+        if (Objects.isNull(ncIdss) || ncIdss.size() < 1) {
+            throw new BusinessException(-1, "至少有一个触发条件");
+        }
+        return HttpResult.responseOK(ruleEngineService.delNodeCondByNcIds(ncIdss));
+    }
+
+    @ApiOperation(value = "更新触发器")
+    @PutMapping("/{ntId}")
+    public HttpResult updateScene(@ApiParam(name = "ntId", value = "") @PathVariable("ntId") Long ntId,
+                                  @ApiParam(name = "NodeTrigParam", value = "触发器更新信息") @Validated(ValidGroup.UPDATE.class) @RequestBody NodeTrigParam nodeTrigParam) {
+        ruleEngineService.updateRuleEngine(ntId, nodeTrigParam);
+        return HttpResult.oK().message("更新成功");
+    }
+
+    @ApiOperation("获取规则、包含规则内容")
+    @GetMapping("/{ntId}")
+    public HttpResult get(@ApiParam(name = "ntId", value = "") @PathVariable("ntId") Long ntId) {
         return HttpResult.responseOK(ruleEngineService.delRuleEngine(ntId));
     }
 }
