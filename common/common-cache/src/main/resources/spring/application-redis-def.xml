@@ -11,58 +11,60 @@
     					http://www.springframework.org/schema/cache/spring-cache.xsd">
 
     <context:property-placeholder location="classpath:conf/redis-def.properties" ignore-unresolvable="true"/>
-    <!-- 缓存注解开启 -->
-    <cache:annotation-driven cache-manager="redisCacheManager" key-generator="keyGenerator"/>
-    <!-- redis连接池 -->
-    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
-        <property name="maxTotal" value="${redis.pool.maxTotal}"/>
-        <property name="maxIdle" value="${redis.pool.maxIdle}"/>
-        <property name="maxWaitMillis" value="${redis.pool.maxWaitMillis}"/>
-        <property name="testOnBorrow" value="${redis.pool.testOnBorrow}"/>
-    </bean>
-
-    <!-- 配置redis连接密码 -->
-    <bean id="redisPassword" class="org.springframework.data.redis.connection.RedisPassword">
-        <constructor-arg name="thePassword" value="${redis.password}"></constructor-arg>
-    </bean>
-
-    <!-- redis单机配置，地址等在这配置 2.0以上的新特性 -->
-    <bean id="redisStandaloneConfiguration"
-          class="org.springframework.data.redis.connection.RedisStandaloneConfiguration">
-        <property name="hostName" value="${redis.hostname}"/>
-        <property name="port" value="${redis.port}"/>
-        <property name="password" ref="redisPassword"/>
-        <property name="database" value="${redis.database}"/>
-    </bean>
+    <!-- 缓存注解开启 没有设置 key-generator ，所以必须在使用时指定key -->
+    <cache:annotation-driven cache-manager="redisCacheManager"/>
+    <!-- redis连接池 如果是redis单机模式，则不需要连接池 -->
+<!--    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">-->
+<!--        <property name="maxTotal" value="${redis.pool.maxTotal}"/>-->
+<!--        <property name="maxIdle" value="${redis.pool.maxIdle}"/>-->
+<!--        <property name="maxWaitMillis" value="${redis.pool.maxWaitMillis}"/>-->
+<!--        <property name="testOnBorrow" value="${redis.pool.testOnBorrow}"/>-->
+<!--    </bean>-->
 
     <!--配置jedis链接工厂 spring-data-redis2.0中
        建议改为构造器传入一个RedisStandaloneConfiguration  单机
                            RedisSentinelConfiguration  主从复制
                            RedisClusterConfiguration  集群-->
     <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
-        <constructor-arg name="standaloneConfig" ref="redisStandaloneConfiguration"></constructor-arg>
+        <constructor-arg name="standaloneConfig">
+            <bean id="redisStandaloneConfiguration" class="org.springframework.data.redis.connection.RedisStandaloneConfiguration">
+                <property name="hostName" value="${redis.hostname}"/>
+                <property name="port" value="${redis.port}"/>
+                <property name="password">
+                    <bean class="org.springframework.data.redis.connection.RedisPassword">
+                        <constructor-arg name="thePassword" value="${redis.password}"/>
+                    </bean>
+                </property>
+                <property name="database" value="${redis.database}"/>
+            </bean>
+        </constructor-arg>
     </bean>
 
     <!-- keySerializer、valueSerializer 配置Redis中的String类型key与value的序列化器 -->
     <!-- HashKeySerializer、HashValueSerializer 配置Redis中的Hash类型key与value的序列化器 -->
     <!--redis操作模版,使用该对象可以操作redis  -->
-    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
-        <property name="connectionFactory" ref="jedisConnectionFactory"/>
-        <!--如果不配置Serializer，那么存储的时候缺省使用String，如果用User类型存储，那么会提示错误User can't cast to String！！  -->
-        <property name="keySerializer">
-            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
-        </property>
-        <property name="valueSerializer">
-            <bean class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"/>
-        </property>
-        <property name="hashKeySerializer">
-            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
-        </property>
-        <property name="hashValueSerializer">
-            <bean class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"/>
-        </property>
-        <!--开启事务  -->
-        <!--        <property name="enableTransactionSupport" value="true"/>-->
+<!--    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">-->
+<!--        <property name="connectionFactory" ref="jedisConnectionFactory"/>-->
+<!--        &lt;!&ndash;如果不配置Serializer，那么存储的时候缺省使用String，如果用User类型存储，那么会提示错误User can't cast to String！！  &ndash;&gt;-->
+<!--        <property name="keySerializer">-->
+<!--            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>-->
+<!--        </property>-->
+<!--        <property name="valueSerializer">-->
+<!--            <bean class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"/>-->
+<!--        </property>-->
+<!--        <property name="hashKeySerializer">-->
+<!--            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>-->
+<!--        </property>-->
+<!--        <property name="hashValueSerializer">-->
+<!--            <bean class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"/>-->
+<!--        </property>-->
+<!--        &lt;!&ndash;开启事务  &ndash;&gt;-->
+<!--        <property name="enableTransactionSupport" value="false"/>-->
+<!--    </bean>-->
+    <!-- 使用工厂模式简化配置 -->
+    <bean id="redisTemplateFactory" class="com.xidian.iot.common.cache.factory.RedisTemplateFactory"/>
+    <bean id="redisTemplate" factory-bean="redisTemplateFactory" factory-method="getRedisTemplate">
+        <constructor-arg ref="jedisConnectionFactory"/>
     </bean>
 
     <!-- 配置RedisCacheManager spring-data-redis:1.x 配置方式 -->
@@ -71,21 +73,22 @@
     <!--        <property name="defaultExpiration" value="${redis.expire}" />-->
     <!--    </bean>-->
     <!-- 配置RedisCacheManager spring-data-redis:2.x 配置方式 通过工厂模式获取 -->
-    <bean id="redisCacheManagerFactory" class="com.xidian.iot.common.cache.RedisCacheManagerFactory"/>
+    <bean id="redisCacheManagerFactory" class="com.xidian.iot.common.cache.factory.RedisCacheManagerFactory"/>
     <bean id="redisCacheManager" factory-bean="redisCacheManagerFactory" factory-method="getRedisCacheManager">
-        <constructor-arg ref="jedisConnectionFactory"/>
         <constructor-arg value="${redis.expire}"/>
+        <constructor-arg>
+            <list>
+                <ref bean="jedisConnectionFactory"/>
+            </list>
+        </constructor-arg>
     </bean>
+
     <!-- 配置RedisCacheConfig -->
-    <bean id="redisCacheConfig" class="com.xidian.iot.common.cache.RedisCacheConfig">
-        <constructor-arg ref="jedisConnectionFactory"/>
-        <constructor-arg ref="redisTemplate"/>
-        <constructor-arg ref="redisCacheManager"/>
-    </bean>
+<!--    <bean id="redisCacheConfig" class="com.xidian.iot.common.cache.RedisCacheConfig"/>-->
 
     <!--自定义redis工具类,在需要缓存的地方注入此类  -->
     <bean id="redisUtil" class="com.xidian.iot.common.cache.RedisUtil">
-        <property name="redisTemplate" ref="redisTemplate"/>
+        <constructor-arg ref="redisTemplate"/>
     </bean>
     <!-- 下面这个是整合Mybatis的二级缓存使用的 -->
     <!--    <bean id="redisCacheTransfer" class="cn.qlq.jedis.RedisCacheTransfer">

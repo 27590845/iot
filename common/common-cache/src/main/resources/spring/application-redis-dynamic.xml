@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    					http://www.springframework.org/schema/beans/spring-beans.xsd
+    					http://www.springframework.org/schema/context
+    					http://www.springframework.org/schema/context/spring-context.xsd
+    					http://www.springframework.org/schema/cache
+    					http://www.springframework.org/schema/cache/spring-cache.xsd">
+
+    <context:property-placeholder location="classpath:conf/redis-dynamic.properties" ignore-unresolvable="true"/>
+    <!-- 缓存注解开启 没有设置 key-generator ，所以必须在使用时指定key -->
+    <cache:annotation-driven cache-manager="redisCacheManager"/>
+
+    <!--配置jedis链接工厂 spring-data-redis2.0中
+       建议改为构造器传入一个RedisStandaloneConfiguration  单机
+                           RedisSentinelConfiguration  主从复制
+                           RedisClusterConfiguration  集群-->
+    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <constructor-arg name="standaloneConfig">
+            <bean id="redisStandaloneConfiguration"
+                  class="org.springframework.data.redis.connection.RedisStandaloneConfiguration">
+                <property name="hostName" value="${redis.hostname}"/>
+                <property name="port" value="${redis.port}"/>
+                <property name="password">
+                    <bean class="org.springframework.data.redis.connection.RedisPassword">
+                        <constructor-arg name="thePassword" value="${redis.password}"/>
+                    </bean>
+                </property>
+                <property name="database" value="${redis.database}"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="jedisConnectionFactorySlave" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <constructor-arg name="standaloneConfig">
+            <bean id="redisStandaloneConfiguration"
+                  class="org.springframework.data.redis.connection.RedisStandaloneConfiguration">
+                <property name="hostName" value="${redis2.hostname}"/>
+                <property name="port" value="${redis2.port}"/>
+                <property name="password">
+                    <bean class="org.springframework.data.redis.connection.RedisPassword">
+                        <constructor-arg name="thePassword" value="${redis2.password}"/>
+                    </bean>
+                </property>
+                <property name="database" value="${redis2.database}"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="redisTemplateFactory" class="com.xidian.iot.common.cache.factory.RedisTemplateFactory"/>
+    <bean id="redisTemplate" factory-bean="redisTemplateFactory" factory-method="getRedisTemplate">
+        <constructor-arg ref="jedisConnectionFactory"/>
+    </bean>
+    <bean id="redisTemplateSlave" factory-bean="redisTemplateFactory" factory-method="getRedisTemplate">
+        <constructor-arg ref="jedisConnectionFactorySlave"/>
+    </bean>
+
+    <bean id="redisCacheManagerFactory" class="com.xidian.iot.common.cache.factory.RedisCacheManagerFactory"/>
+    <bean id="redisCacheManager" factory-bean="redisCacheManagerFactory" factory-method="getRedisCacheManager">
+        <constructor-arg value="${redis.expire}"/>
+        <constructor-arg>
+            <list>
+                <ref bean="jedisConnectionFactory"/>
+                <ref bean="jedisConnectionFactorySlave"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="redisUtil" class="com.xidian.iot.common.cache.RedisUtil">
+        <constructor-arg ref="redisTemplate"/>
+        <constructor-arg ref="redisTemplateSlave"/>
+    </bean>
+
+</beans>

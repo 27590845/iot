@@ -13,7 +13,7 @@
             <array>
                 <value>classpath:conf/activemq-def.properties</value>
 <!--                <value>classpath:conf/kafka-def.properties</value>-->
-                <value>classpath:conf/redis-def.properties</value>
+                <value>classpath:conf/redis-dynamic.properties</value>
                 <value>classpath:conf/jdbc-def.properties</value>
                 <value>classpath:conf/mongo-def.properties</value>
                 <value>classpath:conf/application.properties</value>

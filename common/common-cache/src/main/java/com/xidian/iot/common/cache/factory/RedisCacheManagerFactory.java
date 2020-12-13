@@ -1,5 +1,6 @@
-package com.xidian.iot.common.cache;
+package com.xidian.iot.common.cache.factory;
 
+import com.xidian.iot.common.cache.executer.DynamicRedisCacheWriter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -21,9 +22,21 @@ import java.time.Duration;
  */
 public class RedisCacheManagerFactory {
 
-    public RedisCacheManager getRedisCacheManager(RedisConnectionFactory redisConnectionFactory ,Long expireSeconds) {
-        //初始化一个RedisCacheWriter
-        RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory);
+    /**
+     * 获取RedisCacheManager的工厂类
+     * @param expireSeconds 缓存有效时间
+     * @param redisConnectionFactories redis连接工厂，一个工厂对应一个redis节点。
+     *  当工厂数量为2时，说明启用读写分离，默认第一个工厂绑定到master节点，第二个绑定到slave(readonly)节点；否则使用单节点模式，默认第一个工厂为唯一节点
+     * @return
+     */
+    public RedisCacheManager getRedisCacheManager(Long expireSeconds, RedisConnectionFactory ...redisConnectionFactories) {
+        if(redisConnectionFactories == null || redisConnectionFactories.length==0) return null;
+        RedisCacheWriter redisCacheWriter;
+        if(redisConnectionFactories.length==2){
+            redisCacheWriter = new DynamicRedisCacheWriter(redisConnectionFactories[0], redisConnectionFactories[1]);
+        }else{
+            redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactories[0]);
+        }
         //设置CacheManager的值序列化方式为json序列化
         RedisSerializer<Object> jsonSerializer = new GenericJackson2JsonRedisSerializer();
         RedisSerializationContext.SerializationPair<Object> pair = RedisSerializationContext.SerializationPair.fromSerializer(jsonSerializer);

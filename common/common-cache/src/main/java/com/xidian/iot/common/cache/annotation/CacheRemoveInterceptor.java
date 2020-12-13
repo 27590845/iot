@@ -1,17 +1,16 @@
 package com.xidian.iot.common.cache.annotation;
 
+import com.xidian.iot.common.cache.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.lang.reflect.Method;
-import java.util.Set;
 
 /**
  * @author mrl
@@ -25,8 +24,8 @@ import java.util.Set;
 @Component
 public class CacheRemoveInterceptor {
 
-    @Resource(name = "redisTemplate")
-    RedisTemplate<String, String> redisTemplate;
+    @Resource
+    RedisUtil redisUtil;
 
     //截获标有@CacheRemove的方法
     @Pointcut(value = "(execution(* *.*(..)) && @annotation(CacheRemove))")
@@ -60,21 +59,19 @@ public class CacheRemoveInterceptor {
             String value = cacheRemove.value();
             if (!value.equals("")) {
                 //缓存的项目所有redis业务部缓存
-                cleanRedisCache(value);
+                redisUtil.del(value);
             }
             //需要移除的正则key
             String[] keys = cacheRemove.key();
-            for (String key : keys) {
-                //指定清除的key的缓存
-                cleanRedisCache(key);
+            if(keys!=null && keys.length>0){
+                redisUtil.del(keys);
             }
         }
     }
 
     private void cleanRedisCache(String key) {
         if (key != null) {
-            Set<String> stringSet = redisTemplate.keys(key);
-            redisTemplate.delete(stringSet);//删除缓存
+            redisUtil.del(key);//删除缓存
             log.info("清除 " + key + " 缓存");
         }
     }

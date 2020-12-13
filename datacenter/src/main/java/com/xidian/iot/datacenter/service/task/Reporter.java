@@ -2,12 +2,10 @@ package com.xidian.iot.datacenter.service.task;
 
 import com.xidian.iot.common.mq.MqSender;
 import com.xidian.iot.databiz.service.NodeCondService;
-import com.xidian.iot.datacenter.system.SystemParam;
 import com.xidian.iot.datacenter.system.SystemParamShared;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -36,8 +34,6 @@ public class Reporter {
     @Resource
     private MongoTemplate mongoTemplate;
     @Resource
-    private RedisTemplate redisTemplate;
-    @Resource
     private NodeCondService nodeCondService;
 
     public void report(){
@@ -48,7 +44,7 @@ public class Reporter {
             log.info("======> 检测mongodb <======");
             log.info("mongodb.iotdata.nodedata.count(): "+mongoTemplate.count(new Query(), "nodedata"));
             log.info("======> 检测redis <======");
-            log.info("redis.keys: "+redisTemplate.keys("check.dataceter").toString());
+            log.info("redis.keys: "+systemParamShared.getDesc());
             log.info("======> 检测mysql <======");
             log.info("NodeCondService.getNcIdsBySn: "+nodeCondService.getNcIdsBySn(sceneSn, nodeSn).toString());
             log.info("======> 检测消息队列 <======");
