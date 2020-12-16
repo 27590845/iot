@@ -13,8 +13,8 @@
             <array>
                 <value>classpath:conf/activemq-def.properties</value>
 <!--                <value>classpath:conf/kafka-def.properties</value>-->
-                <value>classpath:conf/redis-dynamic.properties</value>
-                <value>classpath:conf/jdbc-def.properties</value>
+                <value>classpath:conf/redis-def.properties</value>
+                <value>classpath:conf/jdbc-dynamic.properties</value>
                 <value>classpath:conf/mongo-def.properties</value>
                 <value>classpath:conf/application.properties</value>
             </array>
@@ -61,6 +61,16 @@
 
     <bean id="serverScoket" class="java.net.ServerSocket">
         <constructor-arg value="${socket.server.port}"/>
+    </bean>
+
+    <bean id="consoleMonitor" class="com.xidian.iot.common.monitor.catcher.ConsoleCatcher" init-method="startConsoleReaderThread">
+        <property name="catchType" value="2"/><!-- 只监控error级别的输出 -->
+        <property name="listener"><bean class="com.xidian.iot.datacenter.listener.MonitorListener"/></property>
+        <property name="parser">
+            <bean class="com.xidian.iot.common.monitor.parser.LogbackParser">
+                <constructor-arg value="${log.pattern}"/>
+            </bean>
+        </property>
     </bean>
 
     <task:scheduled-tasks>

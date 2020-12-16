@@ -23,16 +23,6 @@
             <maxHistory>1</maxHistory>
         </rollingPolicy>
     </appender>
-    <appender name="mybatis-log-file" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>${LOG_HOME}/${LOG_PREFIX}-mybatis.log</File>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_HOME}/daily/${LOG_PREFIX}-mybatis-%d{yyyy-MM-dd}.log.zip</fileNamePattern>
-            <maxHistory>60</maxHistory>
-        </rollingPolicy>
-        <encoder charset="UTF-8">
-            <Pattern>[%d{HH:mm:ss}] [%thread] |%level| %marker %logger{50} -> %X{rpid} %msg %n%ex</Pattern>
-        </encoder>
-    </appender>
     <appender name="error-log-file" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <File>${LOG_HOME}/${LOG_PREFIX}-error.log</File>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
@@ -52,12 +42,6 @@
     <logger name="org.apache.kafka" level="OFF"/>
     <logger name="com.mongodb" level="OFF" />
     <logger name="com.mysql" level="OFF" />
-    <logger name="com.xidian.iot.database.mapper" level="INFO" >
-        <appender-ref ref="mybatis-log-file" />
-    </logger>
-    <logger name="com.xidian.iot.database.mapper.custom" level="INFO" >
-        <appender-ref ref="mybatis-log-file" />
-    </logger>
     <root level="INFO">
         <appender-ref ref="def-log-file"/>
     </root>
