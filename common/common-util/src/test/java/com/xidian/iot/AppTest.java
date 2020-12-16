@@ -21,6 +21,6 @@ public class AppTest
 
     @Test
     public void testTimeUtil(){
-        System.out.println(TimeUtil.getTimeStamp());
+        System.out.println(TimeUtil.getTimeStamp(null));
     }
 }

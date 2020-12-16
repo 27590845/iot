@@ -47,7 +47,7 @@ public class AppTest {
                     +",\"tem3\":"+RandomUtil.nextInt(30, 39)
                     +",\"tem4\":"+RandomUtil.nextInt(40, 49)
                     +",\"hum\":"+RandomUtil.nextInt(0, 9)
-                    +",\"at\":"+ TimeUtil.getTimeStamp()
+                    +",\"at\":"+ TimeUtil.getTimeStamp(null)
                     +",\"sn\":\""+nodeSn+"\"}]}";
             mqSender.sendQueue(topic, msg);
             Thread.sleep(1000);
