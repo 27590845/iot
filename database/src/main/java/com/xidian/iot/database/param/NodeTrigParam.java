@@ -1,5 +1,6 @@
 package com.xidian.iot.database.param;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.xidian.iot.database.valid.EnumValidation;
 import com.xidian.iot.database.valid.ReptValidation;
 import com.xidian.iot.database.valid.ValidGroup;
@@ -13,6 +14,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +26,8 @@ import java.util.List;
  * @date 2020/9/18 11:20 上午
  */
 @ApiModel("触发器(规则)传输封装类")
-public class NodeTrigParam extends NodeTrig {
+@JsonIgnoreProperties(value = "handler")
+public class NodeTrigParam extends NodeTrig implements Serializable {
 
     @ApiModelProperty("触发器名称")
     @NotBlank(groups = {ValidGroup.INSERT.class,ValidGroup.UPDATE.class}, message = "触发器名称不能为空")

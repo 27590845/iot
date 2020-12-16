@@ -16,5 +16,5 @@ public interface NodeActCmdCustomMapper {
 
     int addBatch(@Param("nacs") List<NodeActCmd> nodeActCmds);
 
-    int updateBatch(@Param("nacs")List<NodeActCmd> nodeActCmds);
+    int updateBatch(@Param("nacs") List<NodeActCmd> nodeActCmds);
 }

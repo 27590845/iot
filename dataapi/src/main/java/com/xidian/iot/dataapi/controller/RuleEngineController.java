@@ -32,6 +32,7 @@ public class RuleEngineController {
     @Resource
     private RuleEngineService ruleEngineService;
 
+
     @ApiOperation("添加一条规则")
     @PostMapping
     public HttpResult add(
@@ -40,14 +41,14 @@ public class RuleEngineController {
         return HttpResult.responseOK(ruleEngineService.addRuleEngine(nodeTrigParam));
     }
 
-//    @ApiOperation("添加单个节点的触发条件")
-//    @PostMapping("/{ntId}")
-//    public HttpResult addNodeCond(
-//            @ApiParam(name = "ntId", value = "") @PathVariable("ntId") Long ntId,
-//            @ApiParam("需要添加的规则条件")
-//            @RequestBody @Validated(ValidGroup.INSERT.class) NodeCondParam nodeCondParam) {
-//        return HttpResult.responseOK(ruleEngineService.addNodeCond(ntId, nodeCondParam));
-//    }
+    @ApiOperation("添加单个节点的触发条件")
+    @PostMapping("/{ntId}")
+    public HttpResult addNodeCond(
+            @ApiParam(name = "ntId", value = "") @PathVariable("ntId") Long ntId,
+            @ApiParam("需要添加的规则条件")
+            @RequestBody @Validated(ValidGroup.INSERT.class) NodeCondParam nodeCondParam) {
+        return HttpResult.responseOK(ruleEngineService.addNodeCond(ntId, nodeCondParam));
+    }
 
     @ApiOperation("删除一条规则，会级联删除相关触发器条件，触发器动作，触发器报警")
     @DeleteMapping("/{ntId}")
@@ -86,6 +87,6 @@ public class RuleEngineController {
     @ApiOperation("获取规则、包含规则内容")
     @GetMapping("/{ntId}")
     public HttpResult get(@ApiParam(name = "ntId", value = "") @PathVariable("ntId") Long ntId) {
-        return HttpResult.responseOK(ruleEngineService.delRuleEngine(ntId));
+        return HttpResult.responseOK(ruleEngineService.getRuleEngine(ntId));
     }
 }

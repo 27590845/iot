@@ -1,5 +1,6 @@
 package com.xidian.iot.database.mapper.custom;
 
+import com.xidian.iot.database.param.NodeTrigParam;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -19,4 +20,11 @@ public interface NodeTrigCustomMapper {
      * @return
      */
     List<Long> getNtIdsByNcIds(@Param("ncIds") List<Long> ncIds);
+
+    /**
+     * 根据ntId获取该联动规则下所有的相关信息
+     * @param ntId
+     * @return com.xidian.iot.database.param.NodeTrigParam
+     * */
+    NodeTrigParam getNodeTrigParamByNtId(@Param("ntId")Long ntId);
 }

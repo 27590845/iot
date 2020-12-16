@@ -5,6 +5,7 @@ import com.xidian.iot.database.entity.NodeCondExample;
 import com.xidian.iot.database.entity.custom.NodeCondExt;
 import com.xidian.iot.database.mapper.NodeCondMapper;
 import com.xidian.iot.database.mapper.custom.NodeCondCustomMapper;
+import com.xidian.iot.database.param.NodeCondParam;
 import com.xidian.iot.databiz.service.NodeCondService;
 import com.xidian.iot.databiz.service.UidGenerator;
 import org.springframework.aop.framework.AopContext;
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -26,7 +28,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @date 2020/9/14 5:47 下午
  */
 @Service
-@EnableAspectJAutoProxy( proxyTargetClass = true , exposeProxy = true )
+@EnableAspectJAutoProxy(proxyTargetClass = true, exposeProxy = true)
 public class NodeCondServiceImpl implements NodeCondService {
 
     @Resource
@@ -136,8 +138,22 @@ public class NodeCondServiceImpl implements NodeCondService {
         NodeCondServiceImpl currentProxy = (NodeCondServiceImpl) AopContext.currentProxy();
         int res = nodeCondCustomMapper.updateBatch(nodeConds);
         for (NodeCond nodeCond : nodeConds) {
+//            res += updateNodeCond(nodeCond);
             currentProxy.changeNodeCondExt(new NodeCondExt(nodeCond));
         }
         return res;
     }
+
+    @Override
+    public int updateNodeCond(NodeCond nodeCond) {
+        return nodeCondMapper.updateByPrimaryKeySelective(nodeCond);
+    }
+
+    @Override
+    public int addNodeCond(NodeCond nodeCondParam) {
+        nodeCondParam.setNcId(uidGenerator.getUID());
+        return nodeCondMapper.insert(nodeCondParam);
+    }
+
+
 }

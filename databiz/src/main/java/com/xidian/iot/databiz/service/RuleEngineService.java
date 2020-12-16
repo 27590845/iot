@@ -1,5 +1,7 @@
 package com.xidian.iot.databiz.service;
 
+import com.xidian.iot.database.entity.NodeCond;
+import com.xidian.iot.database.param.NodeCondParam;
 import com.xidian.iot.database.param.NodeTrigParam;
 
 import java.util.List;
@@ -48,4 +50,19 @@ public interface RuleEngineService {
      * @return void
      * */
     void updateRuleEngine(Long ntId, NodeTrigParam nodeTrigParam);
+
+    /**
+     * 添加单个节点触发规则、首先先判断该触发器是否已经有此节点触发规则
+     * @param ntId
+     * @param nodeCond
+     * @return com.xidian.iot.database.entity.NodeCond
+     * */
+    NodeCond addNodeCond(Long ntId, NodeCond nodeCond);
+
+    /**
+     * 首先看是否存在
+     * @param ntId
+     * @return com.xidian.iot.database.param.NodeTrigParam
+     * */
+    NodeTrigParam getRuleEngine(Long ntId);
 }

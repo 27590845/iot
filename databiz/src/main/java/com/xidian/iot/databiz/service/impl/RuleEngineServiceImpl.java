@@ -3,6 +3,9 @@ package com.xidian.iot.databiz.service.impl;
 import com.xidian.iot.common.util.exception.BusinessException;
 import com.xidian.iot.database.entity.NodeActCmd;
 import com.xidian.iot.database.entity.NodeCond;
+import com.xidian.iot.database.entity.NodeTrig;
+import com.xidian.iot.database.mapper.NodeTrigMapper;
+import com.xidian.iot.database.mapper.custom.NodeTrigCustomMapper;
 import com.xidian.iot.database.param.NodeCondParam;
 import com.xidian.iot.database.param.NodeTrigParam;
 import com.xidian.iot.databiz.service.*;
@@ -35,6 +38,8 @@ public class RuleEngineServiceImpl implements RuleEngineService {
     private NodeActCmdService nodeActCmdService;
     @Resource
     private NodeActAlertService nodeActAlertService;
+    @Resource
+    private NodeTrigCustomMapper nodeTrigCustomMapper;
 
     @Override
     public NodeTrigParam addRuleEngine(NodeTrigParam nodeTrigParam) {
@@ -125,5 +130,29 @@ public class RuleEngineServiceImpl implements RuleEngineService {
         // 更新nodeCond列表 List<Child>不能直接转为List<Parent>
         nodeCondService.updateNodeConds(nodeTrigParam.getNodeCondParams()
                 .stream().map(param -> (NodeCond) param).collect(Collectors.toList()));
+    }
+
+    @Override
+    public NodeCond addNodeCond(Long ntId, NodeCond nodeCondParam) {
+        List<NodeCond> nodeConds = nodeCondService.getNodeCondsByNtId(ntId);
+        // 判断新增触发条件所属的触发器中是否存在此触发条件（或者是同一个传感器而且操作符也相同）
+        List<NodeCond> repeatNodeConds = nodeConds.stream().filter(nodeCond ->
+                        nodeCond.getNaId().equals(nodeCondParam.getNaId())
+                        &&nodeCond.getNcOp().equals(nodeCondParam.getNcOp())).collect(Collectors.toList());
+        if(repeatNodeConds.size()>0){
+            throw new BusinessException(-1,"该触发器已有传感器的触发符号存在，请检查后再添加");
+        }
+        nodeCondParam.setNtId(ntId);
+        nodeCondService.addNodeCond(nodeCondParam);
+        return nodeCondParam;
+    }
+
+    @Override
+    public NodeTrigParam getRuleEngine(Long ntId) {
+        // 先判断此ntId是否存在
+        NodeTrig nodeTrig = nodeTrigService.getNodeTrigExtById(ntId);
+        if(Objects.isNull(nodeTrig))throw new BusinessException(-1,"该触发器不存在");
+        NodeTrigParam nodeTrigParam = nodeTrigCustomMapper.getNodeTrigParamByNtId(ntId);
+        return nodeTrigParam;
     }
 }

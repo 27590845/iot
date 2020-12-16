@@ -1,12 +1,10 @@
 package com.xidian.iot.databiz;
 
 import com.github.pagehelper.PageHelper;
-import com.xidian.iot.database.entity.NodeAttrStd;
-import com.xidian.iot.database.entity.NodeAttrStdExample;
-import com.xidian.iot.database.entity.Scene;
-import com.xidian.iot.database.entity.SceneExample;
+import com.xidian.iot.database.entity.*;
 import com.xidian.iot.database.mapper.NodeAttrStdMapper;
 import com.xidian.iot.database.mapper.SceneMapper;
+import com.xidian.iot.database.mapper.custom.NodeCondCustomMapper;
 import com.xidian.iot.databiz.service.NodeAttrStdService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +21,8 @@ import java.util.List;
  * @date: 2020-09-13 15:00
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:spring/application-mybatis-dynamic.xml"})
+//@ContextConfiguration(locations = {"classpath:spring/application-mybatis-dynamic.xml"})
+@ContextConfiguration(locations = {"classpath:spring/application-mybatis-def.xml"})
 public class bizTest {
 
     @Test
@@ -37,6 +36,9 @@ public class bizTest {
 
     @Resource
     SceneMapper sceneMapper;
+
+    @Resource
+    NodeCondCustomMapper condCustomMapper;
 
     @Test
     public void getScene(){
@@ -72,5 +74,10 @@ public class bizTest {
             System.out.println(nodeAttrStds==null?"null":nodeAttrStds.size());
             Thread.sleep(5000);
         }
+    }
+    @Test
+    public void getNcs() throws InterruptedException {
+        List<NodeCond> nodeConds = condCustomMapper.getNodeCondsByNtId(18722249922134534l);
+        System.out.println(nodeConds);
     }
 }

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xidian.iot.database.mapper.custom.NodeCondCustomMapper">
+    <resultMap id="BaseResultMap" type="com.xidian.iot.database.param.NodeCondParam"
+               extends="com.xidian.iot.database.mapper.NodeCondMapper.BaseResultMap">
+    </resultMap>
     <select id="getNcIdsByNtId" parameterType="java.lang.Long" resultType="java.lang.Long">
         select nc.nc_id from node_cond nc where nc.nt_id=#{ntId,jdbcType=BIGINT};
     </select>
@@ -44,18 +47,33 @@
         </foreach>
     </delete>
     <update id="updateBatch" parameterType="java.util.List">
-        <foreach collection="ncs" item="nc" separator=",">
-            update node_cond
-            set
-            na_id = #{nc.naId,jdbcType=BIGINT},
-            nt_id = #{nc.ntId,jdbcType=BIGINT},
-            nc_op = #{nc.ncOp,jdbcType=TINYINT},
-            nc_val = #{nc.ncVal,jdbcType=VARCHAR},
-            node_sn = #{nc.nodeSn,jdbcType=VARCHAR},
-            scene_sn = #{nc.sceneSn,jdbcType=VARCHAR},
-            nc_fit_time = #{nc.ncFitTime,jdbcType=INTEGER}
-            where nc_id = #{nc.ncId,jdbcType=BIGINT}
+        update node_cond
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="nc_op =case" suffix="end,">
+                <foreach collection="ncs" item="nc" index="index">
+                    when nc_id=#{nc.ncId} then #{nc.ncOp,jdbcType=TINYINT}
+                </foreach>
+            </trim>
+            <trim prefix="nc_val =case" suffix="end,">
+                <foreach collection="ncs" item="nc" index="index">
+                    when nc_id=#{nc.ncId} then #{nc.ncVal,jdbcType=VARCHAR}
+                </foreach>
+            </trim>
+            <trim prefix="nc_fit_time =case" suffix="end,">
+                <foreach collection="ncs" item="nc" index="index">
+                    when nc_id=#{nc.ncId} then #{nc.ncFitTime,jdbcType=INTEGER}
+                </foreach>
+            </trim>
+        </trim>
+        where nc_id in
+        <foreach collection="ncs" item="nc" index="index" open="(" separator="," close=")">
+            #{nc.ncId,jdbcType=BIGINT}
         </foreach>
     </update>
+    <select id="getNodeCondsByNtId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select *
+        from node_cond
+        where nt_id=#{ntId,jdbcType=BIGINT}
+    </select>
 
 </mapper>

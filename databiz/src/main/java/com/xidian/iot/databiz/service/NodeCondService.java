@@ -114,4 +114,18 @@ public interface NodeCondService {
      * @return int
      * */
     int updateNodeConds(List<NodeCond> collect);
+
+    /**
+     * 更新NodeCond
+     * @param nodeCond
+     * @return int
+     * */
+    int updateNodeCond(NodeCond nodeCond);
+
+    /**
+     * 添加一条触发条件NodeCond
+     * @param nodeCondParam
+     * @return int
+     * */
+    int addNodeCond(NodeCond nodeCondParam);
 }
