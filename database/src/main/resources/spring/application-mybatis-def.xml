@@ -5,8 +5,6 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:property-placeholder location="classpath:conf/jdbc-def.properties" ignore-unresolvable="true" />
-
     <!-- DruidDataSource配置详解:
         https://blog.csdn.net/weixin_37645838/article/details/83347421
         https://github.com/alibaba/druid/wiki/常见问题-->
@@ -77,4 +75,13 @@
         <constructor-arg index="1" value="BATCH" />
     </bean>
 <!--    <tx:annotation-driven/>-->
+
+    <!-- 开发环境配置文件 -->
+    <beans profile="development">
+        <context:property-placeholder location="classpath:conf/jdbc-dev.properties" ignore-unresolvable="true"/>
+    </beans>
+    <!-- 生产环境配置文件 -->
+    <beans profile="production">
+        <context:property-placeholder location="classpath:conf/jdbc-prod.properties" ignore-unresolvable="true"/>
+    </beans>
 </beans>

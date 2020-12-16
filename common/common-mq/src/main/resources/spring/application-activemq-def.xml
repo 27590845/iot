@@ -5,8 +5,6 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
     <description>Spring消息队列配置</description>
 
-    <context:property-placeholder location="classpath:conf/activemq-def.properties" ignore-unresolvable="true"/>
-
     <bean id="jmsFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
         <property name="brokerURL">
             <value>${activemq.brokerURL}</value>
@@ -41,10 +39,6 @@
         <property name="jmsTemplate" ref="jmsTemplate"/>
     </bean>
 
-
-
-
-
     <!-- 主题监听Topic-->
 <!--    <bean id="dataTopic" class="org.apache.activemq.command.ActiveMQTopic">-->
 <!--        <constructor-arg>-->
@@ -58,5 +52,14 @@
 <!--        <property name="destination" ref="dataTopic" />-->
 <!--        <property name="messageListener" ref="receive" />-->
 <!--    </bean>-->
+
+    <!-- 开发环境配置文件 -->
+    <beans profile="development">
+        <context:property-placeholder location="classpath:conf/activemq-dev.properties" ignore-unresolvable="true"/>
+    </beans>
+    <!-- 生产环境配置文件 -->
+    <beans profile="production">
+        <context:property-placeholder location="classpath:conf/activemq-prod.properties" ignore-unresolvable="true"/>
+    </beans>
 
 </beans>

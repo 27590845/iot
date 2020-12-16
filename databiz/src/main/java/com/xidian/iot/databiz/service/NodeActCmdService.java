@@ -50,4 +50,11 @@ public interface NodeActCmdService {
      * @return int 删除的数量
      * */
     int delNodeActCmdByNcIds(List<Long> ncIds);
+
+    /**
+     * 批量更新nodeActCmd 保证
+     * @param collect
+     * @return int
+     * */
+    int updateNodeActCmds(List<NodeActCmd> collect);
 }

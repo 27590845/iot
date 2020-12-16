@@ -48,5 +48,12 @@ public interface NodeTrigService {
      * @param nodeTrig
      * @return
      */
-    int addNodeTrig(NodeTrig nodeTrig);
+    NodeTrig addNodeTrig(NodeTrig nodeTrig);
+
+    /**
+     * 更新一条触发器数据
+     * @param nodeTrig
+     * @return com.xidian.iot.database.entity.NodeTrig
+     * */
+    NodeTrig updateNodeTrigById(NodeTrig nodeTrig);
 }

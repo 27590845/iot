@@ -684,6 +684,76 @@ public class SceneExample {
             addCriterion("create_time not between", value1, value2, "createTime");
             return (Criteria) this;
         }
+
+        public Criteria andSceneIdentifierIsNull() {
+            addCriterion("scene_identifier is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneIdentifierIsNotNull() {
+            addCriterion("scene_identifier is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneIdentifierEqualTo(String value) {
+            addCriterion("scene_identifier =", value, "sceneIdentifier");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneIdentifierNotEqualTo(String value) {
+            addCriterion("scene_identifier <>", value, "sceneIdentifier");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneIdentifierGreaterThan(String value) {
+            addCriterion("scene_identifier >", value, "sceneIdentifier");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneIdentifierGreaterThanOrEqualTo(String value) {
+            addCriterion("scene_identifier >=", value, "sceneIdentifier");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneIdentifierLessThan(String value) {
+            addCriterion("scene_identifier <", value, "sceneIdentifier");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneIdentifierLessThanOrEqualTo(String value) {
+            addCriterion("scene_identifier <=", value, "sceneIdentifier");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneIdentifierLike(String value) {
+            addCriterion("scene_identifier like", value, "sceneIdentifier");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneIdentifierNotLike(String value) {
+            addCriterion("scene_identifier not like", value, "sceneIdentifier");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneIdentifierIn(List<String> values) {
+            addCriterion("scene_identifier in", values, "sceneIdentifier");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneIdentifierNotIn(List<String> values) {
+            addCriterion("scene_identifier not in", values, "sceneIdentifier");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneIdentifierBetween(String value1, String value2) {
+            addCriterion("scene_identifier between", value1, value2, "sceneIdentifier");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneIdentifierNotBetween(String value1, String value2) {
+            addCriterion("scene_identifier not between", value1, value2, "sceneIdentifier");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

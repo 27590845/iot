@@ -4,13 +4,16 @@ import com.xidian.iot.common.util.constants.ExceptionEnum;
 import com.xidian.iot.dataapi.controller.res.HttpResult;
 import com.xidian.iot.common.util.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
@@ -22,6 +25,7 @@ import java.util.Set;
 
 /**
  * 自定义全局异常处理器
+ *
  * @author: Hansey
  * @date: 2020-09-06 16:20
  */
@@ -42,8 +46,8 @@ public class GlobalExceptionHandler {
     private static final String STR_FORMAT = "发生未捕获异常! URI: %s, Method: %s, RemoteHost: %s, Error: %s";
 
     /**
-    * 业务异常处理
-    * */
+     * 业务异常处理
+     */
     @ExceptionHandler(BusinessException.class)
     public HttpResult<String> handlerServerException(HttpServletRequest request, HttpServletResponse response,
                                                      BusinessException e) {
@@ -55,6 +59,20 @@ public class GlobalExceptionHandler {
         return build(e.getCode(), e.getMessage());
     }
 
+    /**
+     * 数据库操作异常
+     */
+    @ExceptionHandler(value = DataAccessException.class)
+    @ResponseBody
+    public HttpResult<String> error(HttpServletRequest request, HttpServletResponse response,
+                                    DataAccessException e) {
+        response.setStatus(200);// 总是返回200
+        setResponse(response);
+        log.error("全局异常处理器捕获到 {} 类型的异常，错误信息：{}", e.getClass().getSimpleName(), e.getMessage());
+        String paramStr = parameterMap2String(request.getParameterMap());
+        log.error(FORMAT, request.getRequestURI(), request.getMethod(), paramStr, "");
+        return build(SYSTEM_ERROR, e.getMessage());
+    }
 
     /**
      * 所有未捕获的的异常,一律报系统错误
@@ -85,6 +103,7 @@ public class GlobalExceptionHandler {
 
     /**
      * post请求，传入对象校验失败时的异常
+     *
      * @param request
      * @param response
      * @param e
@@ -106,6 +125,7 @@ public class GlobalExceptionHandler {
 
     /**
      * get请求，接收参数为对象时抛出的异常
+     *
      * @param request
      * @param response
      * @param e
@@ -124,6 +144,7 @@ public class GlobalExceptionHandler {
 
     /**
      * get请求，方法参数直接接收时抛出的异常
+     *
      * @param request
      * @param response
      * @param e
@@ -168,11 +189,12 @@ public class GlobalExceptionHandler {
         HttpResult<String> r = new HttpResult<>();
         r.setCode(code);
         r.setMessage(message);
-        return HttpResult.generateErrorResult(code,message);
+        return HttpResult.generateErrorResult(code, message);
     }
 
     /**
      * 校验错误信息生成
+     *
      * @param bindingResult
      * @return
      */

@@ -1,11 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xidian.iot.database.mapper.custom.NodeTrigCustomMapper">
+    <resultMap id="NodeTrigParamMap" type="com.xidian.iot.database.param.NodeTrigParam" extends="com.xidian.iot.database.mapper.NodeTrigMapper.BaseResultMap">
+        <association property="nodeActAlertParam"
+                     javaType="com.xidian.iot.database.param.NodeActAlertParam"
+                     select="selectNAAByDtId"
+                     column="nt_id">
+        </association>
+        <collection property="nodeCondParams" javaType="ArrayList"
+                    ofType="com.xidian.iot.database.param.NodeCondParam"
+                    select="selectNodeCondsByNtId"
+                    column="nt_id">
+        </collection>
+        <collection property="nodeActCmdParams" javaType="ArrayList"
+                    ofType="com.xidian.iot.database.param.NodeActCmdParam"
+                    select="selectNACByDtId"
+                    column="nt_id">
+        </collection>
+    </resultMap>
+    <resultMap id="NodeActAlertMap" type="com.xidian.iot.database.param.NodeActAlertParam" extends="com.xidian.iot.database.mapper.NodeActAlertMapper.BaseResultMap">
+    </resultMap>
+    <resultMap id="NodeCondParamMap" type="com.xidian.iot.database.param.NodeCondParam" extends="com.xidian.iot.database.mapper.NodeActCmdMapper.BaseResultMap">
+    </resultMap>
+    <resultMap id="NodeActCmdParamMap" type="com.xidian.iot.database.param.NodeActCmdParam" extends="com.xidian.iot.database.mapper.NodeActCmdMapper.BaseResultMap">
+    </resultMap>
     <select id="getNtIdsByNcIds" resultType="java.lang.Long">
         select DISTINCT(nac.nt_id) nt_id from node_act_cmd nac
         where nac.nc_id in
         <foreach collection="ncIds" item="ncId" index="index" open="(" separator="," close=")">
             #{ncId}
         </foreach>
+    </select>
+    <select id="selectNAAByDtId" parameterType="java.lang.Long" resultMap="NodeActAlertMap">
+        select *
+        from node_act_alert
+        where nt_id = #{ntId,jdbcType=BIGINT}
+    </select>
+    <select id="selectNodeCondsByNtId" parameterType="java.lang.Long" resultMap="NodeCondParamMap">
+        select *
+        from node_cond
+        where nt_id=#{ntId,jdbcType=BIGINT}
+    </select>
+    <select id="selectNACByDtId" parameterType="java.lang.Long" resultMap="NodeActCmdParamMap">
+        select *
+        from node_act_cmd
+        where nt_id = #{ntId,jdbcType=BIGINT}
+    </select>
+    <select id="getNodeTrigParamByNtId" parameterType="java.lang.Long" resultMap="NodeTrigParamMap">
+        select *
+        from node_trig
+        where nt_id = #{ntId,jdbcType=BIGINT}
     </select>
 </mapper>

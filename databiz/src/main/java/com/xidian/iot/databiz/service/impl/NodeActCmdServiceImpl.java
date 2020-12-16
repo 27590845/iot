@@ -60,4 +60,9 @@ public class NodeActCmdServiceImpl implements NodeActCmdService {
         nodeActCmdExample.createCriteria().andNcIdIn(ncIds);
         return nodeActCmdMapper.deleteByExample(nodeActCmdExample);
     }
+
+    @Override
+    public int updateNodeActCmds(List<NodeActCmd> nodeActCmds) {
+        return nodeActCmdCustomMapper.updateBatch(nodeActCmds);
+    }
 }

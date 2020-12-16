@@ -1,5 +1,6 @@
 package com.xidian.iot.database.param;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -19,5 +20,10 @@ public class NodeUpdateParam {
      * 描述
      */
     private String nodeDesc;
+
+    /**
+     * JSON格式存放节点和属性各值上载名称
+     */
+    private String nodeAttrname;
 
 }

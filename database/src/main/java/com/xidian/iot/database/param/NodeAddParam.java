@@ -44,6 +44,8 @@ public class NodeAddParam {
     @ApiModelProperty(value = "节点SN")
     private String nodeSn;
 
+    @ApiModelProperty(value = "JSON格式存放节点和属性各值上载名称")
+    private String nodeAttrname;
     /**
      * 由 NodeAddParam转化为Node 同时添加从数据库取出的sceneId
      * @param sceneId
@@ -57,6 +59,7 @@ public class NodeAddParam {
         node.setNodeSn(nodeSn);
         node.setNodeDesc(StringUtils.isNotBlank(nodeDesc)?nodeDesc:null);
         node.setCreateTime(new Date());
+        node.setNodeAttrname(StringUtils.isNotBlank(nodeAttrname)?nodeAttrname:null);
         return node;
     }
 }

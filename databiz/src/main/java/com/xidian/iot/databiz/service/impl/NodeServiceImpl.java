@@ -39,6 +39,7 @@ import java.util.Objects;
  * @date: 2020-09-10 21:45
  */
 @Service
+@Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
 public class NodeServiceImpl implements NodeService {
     @Autowired
     private NodeMapper nodeMapper;
@@ -57,7 +58,6 @@ public class NodeServiceImpl implements NodeService {
     @Autowired
     private UidGenerator uidGenerator;
 
-    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     @Override
     public NodeVo addNode(NodeAddParam param) {
         //返回结果
@@ -133,7 +133,8 @@ public class NodeServiceImpl implements NodeService {
         //原因是Cacheable是使用Aop动态代理实现的，类内部的互相调用是不走代理的，所以并不会调用缓存。
         node.setNodeId(getNodeBySn(sceneSn, nodeSn).getNodeId());
         node.setNodeName(param.getNodeName());
-        node.setNodeDesc(param.getNodeName());
+        node.setNodeDesc(param.getNodeDesc());
+        node.setNodeAttrname(param.getNodeAttrname());
         nodeMapper.updateByPrimaryKeySelective(node);
         return node;
     }

@@ -16,9 +16,10 @@ import com.xidian.iot.database.vo.SceneVo;
 import com.xidian.iot.databiz.constants.EncodeType;
 import com.xidian.iot.databiz.service.*;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,7 @@ import java.util.Objects;
  */
 @Service
 @Slf4j
+@Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
 public class SceneServiceImpl implements SceneService {
 
     @Autowired
@@ -93,16 +95,14 @@ public class SceneServiceImpl implements SceneService {
     @Override
     public Scene addScene(SceneAddParam param) {
         Scene scene = param.build();
-        //物联网唯一标示体系
-        if(StringUtils.isBlank(scene.getSceneSn())) {
-            String sceneSnPre = EncodeType.EncodeGateway.getCode() + "866101022";
-            //补零操作、如果是6位也就是最多支持一百台。同一个区域的第几台。
-            String sequence = String.format("%06d", Integer.valueOf(sceneCustomMapper.maxSceneSn(sceneSnPre)) + 1);
-            scene.setSceneSn(sceneSnPre + param.getUsageCode() + param.getCommCode() + sequence);
-        }else {
-            Assert.isFalse(isSceneExistBySn(scene.getSceneSn()), ExceptionEnum.SCENE_ALREADY_EXIST);
-        }
         scene.setSceneId(uidGenerator.getUID());
+        String sceneSnPre = EncodeType.EncodeGateway.getCode() + "866101022";
+        //补零操作、如果是6位也就是最多支持一百台。同一个区域的第几台。
+        String lastSceneSn = sceneCustomMapper.maxSceneSn(sceneSnPre);
+        lastSceneSn = Objects.isNull(lastSceneSn)? "0":lastSceneSn;
+        String sequence = String.format("%06d", Integer.valueOf(lastSceneSn) + 1);
+        //物联网唯一标示体系
+        scene.setSceneSn(sceneSnPre + param.getUsageCode() + param.getCommCode() + sequence);
         sceneMapper.insertSelective(scene);
         return scene;
     }

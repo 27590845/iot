@@ -13,7 +13,7 @@ public interface SceneCustomMapper {
     /**
      * 找出同一个域下最大的scene
      * @param sceneSnPre sceneSn的前10为标示域
-     * @return int
+     * @return String
      * */
     String maxSceneSn(@Param(value = "sceneSnPre") String sceneSnPre);
 

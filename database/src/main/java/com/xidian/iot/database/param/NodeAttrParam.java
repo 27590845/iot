@@ -33,6 +33,12 @@ public class NodeAttrParam {
     @NotBlank(groups = {ValidGroup.INSERT.class}, message = "属性符号不能为为空")
     private String naSym;
 
+    @ApiModelProperty(value = "属性值格式化公式")
+    private String naForm;
+
+    @ApiModelProperty(value = "属性映射的传感器偏移地址")
+    private String naMap;
+
     public NodeAttr build(Long naId, String sceneSn, String nodeSn, Long nodeId) {
         NodeAttr nodeAttr = new NodeAttr();
         nodeAttr.setNodeId(nodeId);
@@ -43,6 +49,8 @@ public class NodeAttrParam {
         nodeAttr.setNaUnit(naUnit);
         nodeAttr.setSceneSn(sceneSn);
         nodeAttr.setNodeSn(nodeSn);
+        nodeAttr.setNaForm(StringUtils.isNotBlank(naForm)?naForm:null);
+        nodeAttr.setNaMap(StringUtils.isNotBlank(naMap)?naMap:null);
         return nodeAttr;
     }
 
@@ -59,6 +67,8 @@ public class NodeAttrParam {
         nodeAttr.setNaName(StringUtils.isNotBlank(naName) ? naName : null);
         nodeAttr.setNaSym(StringUtils.isNotBlank(naName) ? naName : null);
         nodeAttr.setNaUnit(naUnit);
+        nodeAttr.setNaForm(StringUtils.isNotBlank(naForm)?naForm:null);
+        nodeAttr.setNaMap(StringUtils.isNotBlank(naMap)?naMap:null);
         return nodeAttr;
     }
 }

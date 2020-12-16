@@ -5,14 +5,18 @@ import com.xidian.iot.database.entity.NodeCondExample;
 import com.xidian.iot.database.entity.custom.NodeCondExt;
 import com.xidian.iot.database.mapper.NodeCondMapper;
 import com.xidian.iot.database.mapper.custom.NodeCondCustomMapper;
+import com.xidian.iot.database.param.NodeCondParam;
 import com.xidian.iot.databiz.service.NodeCondService;
 import com.xidian.iot.databiz.service.UidGenerator;
+import org.springframework.aop.framework.AopContext;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,6 +27,7 @@ import java.util.List;
  * @date 2020/9/14 5:47 下午
  */
 @Service
+@EnableAspectJAutoProxy(proxyTargetClass = true, exposeProxy = true)
 public class NodeCondServiceImpl implements NodeCondService {
 
     @Resource
@@ -76,8 +81,13 @@ public class NodeCondServiceImpl implements NodeCondService {
         return nodeCondCustomMapper.addBatch(nodeConds);
     }
 
+    @CacheEvict(value = "NodeCondExt", key = "'getNcIdsByNtId:'+#ntId")
     @Override
     public int delNodeCondByNtId(Long ntId) {
+        List<Long> ncIds = nodeCondCustomMapper.getNcIdsByNtId(ntId);
+        if (ncIds.size() > 0) {
+            ncIds.stream().forEach(ncId -> cleanNodeCondById(ncId));
+        }
         NodeCondExample nodeCondExample = new NodeCondExample();
         nodeCondExample.createCriteria().andNtIdEqualTo(ntId);
         return nodeCondMapper.deleteByExample(nodeCondExample);
@@ -99,7 +109,50 @@ public class NodeCondServiceImpl implements NodeCondService {
         List<Long> ncIds = nodeCondCustomMapper.getNcIdsBySceneSn(sceneSn);
         NodeCondExample nodeCondExample = new NodeCondExample();
         nodeCondExample.createCriteria().andSceneSnEqualTo(sceneSn);
-        ncIds.stream().forEach(ncId -> cleanNodeCondById(ncId));
+        // 内部调用不走代理
+        NodeCondServiceImpl currentProxy = (NodeCondServiceImpl) AopContext.currentProxy();
+        if (ncIds.size() > 0) {
+            ncIds.stream().forEach(ncId -> currentProxy.cleanNodeCondById(ncId));
+        }
         return nodeCondMapper.deleteByExample(nodeCondExample);
     }
+
+    @Override
+    public int delNodeCondByNcId(Long ncId) {
+        NodeCondExample nodeCondExample = new NodeCondExample();
+        nodeCondExample.createCriteria().andNcIdEqualTo(ncId);
+        return nodeCondMapper.deleteByExample(nodeCondExample);
+    }
+
+    @Override
+    public int delNodeCondByNcIds(List<Long> ncIds) {
+        NodeCondExample nodeCondExample = new NodeCondExample();
+        nodeCondExample.createCriteria().andNcIdIn(ncIds);
+        return nodeCondMapper.deleteByExample(nodeCondExample);
+    }
+
+    @Override
+    public int updateNodeConds(List<NodeCond> nodeConds) {
+        // 内部调用不走代理
+        NodeCondServiceImpl currentProxy = (NodeCondServiceImpl) AopContext.currentProxy();
+        int res = nodeCondCustomMapper.updateBatch(nodeConds);
+        for (NodeCond nodeCond : nodeConds) {
+//            res += updateNodeCond(nodeCond);
+            currentProxy.changeNodeCondExt(new NodeCondExt(nodeCond));
+        }
+        return res;
+    }
+
+    @Override
+    public int updateNodeCond(NodeCond nodeCond) {
+        return nodeCondMapper.updateByPrimaryKeySelective(nodeCond);
+    }
+
+    @Override
+    public int addNodeCond(NodeCond nodeCondParam) {
+        nodeCondParam.setNcId(uidGenerator.getUID());
+        return nodeCondMapper.insert(nodeCondParam);
+    }
+
+
 }

@@ -32,4 +32,8 @@ public interface NodeCondCustomMapper {
      * @return java.util.List<java.lang.Long>
      * */
     List<Long> getNcIdsBySceneSn(@Param("sceneSn") String sceneSn);
+
+    int updateBatch(@Param("ncs")List<NodeCond> nodeConds);
+
+    List<NodeCond> getNodeCondsByNtId(@Param("ntId") Long ntId);
 }

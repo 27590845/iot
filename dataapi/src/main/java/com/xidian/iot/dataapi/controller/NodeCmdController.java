@@ -52,7 +52,7 @@ public class NodeCmdController {
 
     @ApiOperation(value = "删除一条节点命令、并且级联删除相关触发器命令表")
     @DeleteMapping("/{ncId}")
-    public HttpResult addNodeCmds(@ApiParam(name = "ncId", value = "节点命令Id") @PathVariable("ncId") Long ncId) {
+    public HttpResult delNodeCmd(@ApiParam(name = "ncId", value = "节点命令Id") @PathVariable("ncId") Long ncId) {
         //检查是否存在此节点命令
         nodeCmdService.getNodeCmdById(ncId);
         nodeCmdService.deleteByNcId(ncId);

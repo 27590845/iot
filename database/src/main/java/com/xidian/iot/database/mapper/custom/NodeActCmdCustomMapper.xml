@@ -8,4 +8,12 @@
             (#{nac.nacId,jdbcType=BIGINT}, #{nac.ncId,jdbcType=BIGINT}, #{nac.ntId,jdbcType=BIGINT})
         </foreach>
     </insert>
+    <update id="updateBatch" parameterType="java.util.List">
+        <foreach collection="nacs" item="nac" separator=",">
+            update node_act_cmd
+            set
+            nc_id = #{nac.ncId,jdbcType=BIGINT}
+            where nac_id = #{nac.nacId,jdbcType=BIGINT}
+        </foreach>
+    </update>
 </mapper>

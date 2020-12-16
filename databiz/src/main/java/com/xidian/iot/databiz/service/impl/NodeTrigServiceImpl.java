@@ -7,9 +7,11 @@ import com.xidian.iot.database.mapper.NodeTrigMapper;
 import com.xidian.iot.database.mapper.custom.NodeTrigCustomMapper;
 import com.xidian.iot.databiz.service.NodeTrigService;
 import com.xidian.iot.databiz.service.UidGenerator;
+import org.springframework.aop.framework.AopContext;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -23,6 +25,7 @@ import java.util.List;
  * @date 2020/9/14 7:18 下午
  */
 @Service
+@EnableAspectJAutoProxy( proxyTargetClass = true , exposeProxy = true )
 public class NodeTrigServiceImpl implements NodeTrigService {
 
     @Resource
@@ -58,8 +61,22 @@ public class NodeTrigServiceImpl implements NodeTrigService {
     }
 
     @Override
-    public int addNodeTrig(NodeTrig nodeTrig) {
+    public NodeTrig addNodeTrig(NodeTrig nodeTrig) {
         nodeTrig.setNtId(uidGenerator.getUID());
-        return nodeTrigMapper.insert(nodeTrig);
+        try {
+            nodeTrigMapper.insert(nodeTrig);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BusinessException(-1, "触发器插入失败");
+        }
+        return nodeTrig;
+    }
+
+    @Override
+    public NodeTrig updateNodeTrigById(NodeTrig nodeTrig) {
+        nodeTrigMapper.updateByPrimaryKeySelective(nodeTrig);
+        NodeTrigServiceImpl currentProxy = (NodeTrigServiceImpl) AopContext.currentProxy();
+        currentProxy.updateNodeTrigExtById(new NodeTrigExt(nodeTrig));
+        return nodeTrig;
     }
 }

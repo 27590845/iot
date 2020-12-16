@@ -26,11 +26,11 @@ public class SceneAddParam {
     private String sceneName;
 
     @ApiModelProperty(value = "通讯协议码、一位")
-    @Pattern(regexp = "^([1-9]|10)$",message = "通讯协议码为一位")
+    @Pattern(regexp = "^([0-9])$",message = "通讯协议码为一位")
     private String commCode;
 
     @ApiModelProperty(value = "使用场景码、一位")
-    @Pattern(regexp = "^([1-9]|10)$",message = "使用场景码仅一位")
+    @Pattern(regexp = "^([0-9])$",message = "使用场景码仅一位")
     private String usageCode;
 
     @ApiModelProperty(value = "地点名称")
@@ -55,6 +55,9 @@ public class SceneAddParam {
     @ApiModelProperty(value = "网关Sn")
     private String sceneSn;
 
+    @ApiModelProperty(value = "网关身份标识")
+    private String sceneIdentifier;
+
     public Scene build(){
         Scene scene = new Scene();
         scene.setSceneName(sceneName);
@@ -65,6 +68,7 @@ public class SceneAddParam {
         scene.setSceneLoc(StringUtils.isNotBlank(sceneLoc)?sceneLoc:null);
         scene.setSceneDesc(StringUtils.isNotBlank(sceneDesc)?sceneDesc:null);
         scene.setCreateTime(new Date());
+        scene.setSceneIdentifier(StringUtils.isNotBlank(sceneIdentifier)?sceneIdentifier:null);
         return scene;
     }
 }
