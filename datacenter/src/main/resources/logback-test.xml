@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- logback 学习、测试 生产环境下需要删掉本文件 -->
+<!-- 参考连接：https://blog.csdn.net/snail_bi/article/details/103496697
+            https://blog.csdn.net/u012129558/article/details/79947477-->
 <!--
 logback按如下顺序寻找配置文件:
     1) Logback tries to find a file called logback.groovy in the classpath.

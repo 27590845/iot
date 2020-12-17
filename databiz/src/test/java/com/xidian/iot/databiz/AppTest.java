@@ -6,7 +6,6 @@ import com.xidian.iot.database.entity.SceneExample;
 import com.xidian.iot.database.entity.custom.NodeCondExt;
 import com.xidian.iot.database.mapper.SceneMapper;
 import com.xidian.iot.database.mapper.custom.NodeAttrCustomMapper;
-import com.xidian.iot.databiz.service.NodeAttrService;
 import com.xidian.iot.databiz.service.NodeCondService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,10 +13,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertTrue;
@@ -45,6 +42,10 @@ public class AppTest
 
     @Resource
     SceneMapper sceneMapper;
+
+    static {
+        System.setProperty("spring.profiles.active","production");
+    }
 
     @Test
     public void getScene(){

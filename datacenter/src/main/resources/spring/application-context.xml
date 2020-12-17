@@ -7,19 +7,7 @@
 
     <context:component-scan base-package="com.xidian.iot"/>
     <context:annotation-config/>
-<!--    <context:property-placeholder location="classpath:/conf/*.properties"/>-->
-    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations"> <!-- PropertyPlaceholderConfigurer类中有个locations属性，接收的是一个数组，即我们可以在下面配好多个properties文件 -->
-            <array>
-                <value>classpath:conf/activemq-def.properties</value>
-<!--                <value>classpath:conf/kafka-def.properties</value>-->
-                <value>classpath:conf/redis-def.properties</value>
-                <value>classpath:conf/jdbc-dynamic.properties</value>
-                <value>classpath:conf/mongo-def.properties</value>
-                <value>classpath:conf/application.properties</value>
-            </array>
-        </property>
-    </bean>
+    <context:property-placeholder location="classpath:conf/application.properties" ignore-unresolvable="true"/>
 
     <import resource="application-databiz.xml"/>
     <!-- mongo、redis已经包含在application-databiz.xml内 -->
@@ -34,17 +22,6 @@
                    pool-size="${thread.pool.corePoolSize}-${thread.pool.maxPoolSize}"
                    queue-capacity="${thread.pool.queueCapacity}" />
 
-<!--    <bean id="messageListener" class="com.xidian.iot.datacenter.listener.UpdataListener"/>-->
-<!--    <bean id="messageListenerContainer" factory-bean="messageListenerContainerFactory"-->
-<!--          factory-method="getKafkaMessageListenerContainer" init-method="doStart">-->
-<!--        <constructor-arg index="0" value="${strMessageFactory.type}"/>-->
-<!--        <constructor-arg index="1" ref="messageListener"/>-->
-<!--        <constructor-arg index="2">-->
-<!--            <list>-->
-<!--                <value>node.updata.186610102211000001</value>-->
-<!--            </list>-->
-<!--        </constructor-arg>-->
-<!--    </bean>-->
     <!-- 主题监听Topic-->
     <bean id="dataTopic" class="org.apache.activemq.command.ActiveMQQueue">
         <constructor-arg>

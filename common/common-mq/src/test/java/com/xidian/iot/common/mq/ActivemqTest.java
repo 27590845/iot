@@ -26,6 +26,11 @@ import java.util.concurrent.CountDownLatch;
 @Slf4j
 public class ActivemqTest
 {
+
+    static {
+        System.setProperty("spring.profiles.active","production");
+    }
+
     /**
      * Rigorous Test :-)
      */

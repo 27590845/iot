@@ -10,7 +10,6 @@
     					http://www.springframework.org/schema/cache
     					http://www.springframework.org/schema/cache/spring-cache.xsd">
 
-    <context:property-placeholder location="classpath:conf/redis-def.properties" ignore-unresolvable="true"/>
     <!-- 缓存注解开启 没有设置 key-generator ，所以必须在使用时指定key -->
     <cache:annotation-driven cache-manager="redisCacheManager"/>
     <!-- redis连接池 如果是redis单机模式，则不需要连接池 -->
@@ -95,5 +94,12 @@
            <property name="jedisConnectionFactory" ref="jedisConnectionFactory" />
        </bean>
    -->
-
+    <!-- 开发环境配置文件 -->
+    <beans profile="development">
+        <context:property-placeholder location="classpath:conf/redis-dev.properties" ignore-unresolvable="true"/>
+    </beans>
+    <!-- 生产环境配置文件 -->
+    <beans profile="production">
+        <context:property-placeholder location="classpath:conf/redis-prod.properties" ignore-unresolvable="true"/>
+    </beans>
 </beans>

@@ -1,5 +1,6 @@
 package com.xidian.iot.datacenter;
 
+import com.xidian.iot.common.util.GetProps;
 import com.xidian.iot.datacenter.system.SystemParamShared;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.AbstractApplicationContext;
@@ -19,6 +20,8 @@ import java.net.Socket;
 @Slf4j
 public class Application {
 
+    public static final GetProps getProps = new GetProps();
+
     final static String MSG_NUM = "--msgNum=";
 
     final static String SHUTDOWN = "shutdown";
@@ -31,7 +34,8 @@ public class Application {
     final static String REPORT_OFF = "report-off";
 
     public static void main(String[] args) throws IOException {
-
+        // 配置环境
+        System.setProperty("spring.profiles.active",getProps.getPropValue("spring.profiles.active"));
         AbstractApplicationContext context = new ClassPathXmlApplicationContext("classpath:/spring/application-context.xml");
 
         ServerSocket serverSocket = context.getBean(ServerSocket.class);
