@@ -8,6 +8,7 @@
         <module>common-mq</module>
         <module>common-cache</module>
         <module>common-uid-generator</module>
+        <module>common-monitor</module>
     </modules>
 
     <parent>

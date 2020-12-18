@@ -1,5 +1,6 @@
 package com.xidian.iot.common.cache;
 
+import lombok.Setter;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.CollectionUtils;
 
@@ -18,10 +19,15 @@ import java.util.concurrent.TimeUnit;
 public class RedisUtil {
 
     private RedisTemplate<String, Object> redisTemplate;
+    private RedisTemplate<String, Object> redisTemplateSlave;
 
-    public void setRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
+    public RedisUtil(RedisTemplate redisTemplate, RedisTemplate redisTemplateSlave){
+        if(redisTemplate == null) return;
         this.redisTemplate = redisTemplate;
+        if(redisTemplateSlave == null) redisTemplateSlave = redisTemplate;
+        this.redisTemplateSlave = redisTemplateSlave;
     }
+
     //=============================common============================
     /**
      * 指定缓存失效时间
@@ -47,7 +53,7 @@ public class RedisUtil {
      * @return 时间(秒) 返回0代表为永久有效
      */
     public long getExpire(String key){
-        return redisTemplate.getExpire(key,TimeUnit.SECONDS);
+        return redisTemplateSlave.getExpire(key,TimeUnit.SECONDS);
     }
 
     /**
@@ -57,7 +63,7 @@ public class RedisUtil {
      */
     public boolean hasKey(String key){
         try {
-            return redisTemplate.hasKey(key);
+            return redisTemplateSlave.hasKey(key);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -79,6 +85,14 @@ public class RedisUtil {
         }
     }
 
+    /**
+     * 清除通过模糊查询获取的cache
+     * @param pattern
+     */
+    public void del(String pattern){
+        redisTemplate.delete(getLikeKey(pattern));
+    }
+
     //============================String=============================
     /**
      * 普通缓存获取
@@ -86,7 +100,7 @@ public class RedisUtil {
      * @return 值
      */
     public Object get(String key){
-        return key==null?null:redisTemplate.opsForValue().get(key);
+        return key==null?null:redisTemplateSlave.opsForValue().get(key);
     }
 
     /**
@@ -94,8 +108,8 @@ public class RedisUtil {
      * @param pattern
      * @return 值
      */
-    public Set<String> getLike(String pattern){
-        return pattern==null?null:redisTemplate.keys(pattern);
+    public Set<String> getLikeKey(String pattern){
+        return pattern==null?null:redisTemplateSlave.keys(pattern);
     }
 
     /**
@@ -170,7 +184,7 @@ public class RedisUtil {
      * @return 值
      */
     public Object hget(String key,String item){
-        return redisTemplate.opsForHash().get(key, item);
+        return redisTemplateSlave.opsForHash().get(key, item);
     }
 
     /**
@@ -179,7 +193,7 @@ public class RedisUtil {
      * @return 对应的多个键值
      */
     public Map<Object,Object> hmget(String key){
-        return redisTemplate.opsForHash().entries(key);
+        return redisTemplateSlave.opsForHash().entries(key);
     }
 
     /**
@@ -272,7 +286,7 @@ public class RedisUtil {
      * @return true 存在 false不存在
      */
     public boolean hHasKey(String key, String item){
-        return redisTemplate.opsForHash().hasKey(key, item);
+        return redisTemplateSlave.opsForHash().hasKey(key, item);
     }
 
     /**
@@ -305,7 +319,7 @@ public class RedisUtil {
      */
     public Set<Object> sGet(String key){
         try {
-            return redisTemplate.opsForSet().members(key);
+            return redisTemplateSlave.opsForSet().members(key);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -320,7 +334,7 @@ public class RedisUtil {
      */
     public boolean sHasKey(String key,Object value){
         try {
-            return redisTemplate.opsForSet().isMember(key, value);
+            return redisTemplateSlave.opsForSet().isMember(key, value);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -367,7 +381,7 @@ public class RedisUtil {
      */
     public long sGetSetSize(String key){
         try {
-            return redisTemplate.opsForSet().size(key);
+            return redisTemplateSlave.opsForSet().size(key);
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
@@ -400,7 +414,7 @@ public class RedisUtil {
      */
     public List<Object> lGet(String key, long start, long end){
         try {
-            return redisTemplate.opsForList().range(key, start, end);
+            return redisTemplateSlave.opsForList().range(key, start, end);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -414,7 +428,7 @@ public class RedisUtil {
      */
     public long lGetListSize(String key){
         try {
-            return redisTemplate.opsForList().size(key);
+            return redisTemplateSlave.opsForList().size(key);
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
@@ -429,7 +443,7 @@ public class RedisUtil {
      */
     public Object lGetIndex(String key,long index){
         try {
-            return redisTemplate.opsForList().index(key, index);
+            return redisTemplateSlave.opsForList().index(key, index);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

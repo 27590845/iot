@@ -1,10 +1,9 @@
 package com.xidian.iot.datacenter.service.chain;
 
-import com.xidian.iot.database.entity.Scene;
 import com.xidian.iot.database.entity.mongo.NodeData;
 import com.xidian.iot.databiz.service.NodeDataService;
 import com.xidian.iot.datacenter.service.triger.ProcessNodeDataTask;
-import com.xidian.iot.datacenter.system.SystemParam;
+import com.xidian.iot.datacenter.system.SystemParamShared;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
@@ -26,6 +25,8 @@ import java.util.List;
 @Slf4j
 public class SaveNodeDataCommand implements Command, ApplicationContextAware {
 
+    @Resource
+    private SystemParamShared systemParamShared;
     /**
      * 节点数据访问接口。
      */
@@ -55,7 +56,7 @@ public class SaveNodeDataCommand implements Command, ApplicationContextAware {
         nodeDataService.addNodeData(nodeDataList);
         log.debug("================================Complete Saved Node Data.");
 
-        if(SystemParam.isTriggerEnable()){
+        if(systemParamShared.isTriggerEnable()){
             // 执行触发器
             doProcessNodeDataTask(upContext.getSceneSn(), nodeDataList);
         }

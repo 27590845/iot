@@ -29,7 +29,7 @@ public class SiteLetterClient implements AlertClient {
         SiteLetterVo siteLetterVo = (SiteLetterVo) vo;
         // 添加站内信
         try{
-            mqSender.sendSeriObjByte("SiteLetter", JsonUtil.toJson(siteLetterVo));
+            mqSender.sendTopic("SiteLetter", JsonUtil.toJson(siteLetterVo));
         }
         catch (JsonProcessingException e){
             e.printStackTrace();

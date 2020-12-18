@@ -1,9 +1,12 @@
 package com.xidian.iot.common.util;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 /**
  * 时间相关的工具类
@@ -11,59 +14,84 @@ import java.util.Date;
  * @date: 2020-09-20 10:10
  */
 public class TimeUtil {
+
     /**
-     * 获取毫秒级别的时间戳
-     * 输出结果:1438692801766
+     * @description 给定日期获取时间戳，若date为null则返回当前日期时间戳
+     * @param date 要操作的日期对象，默认为当前日期
+     * @return
      */
-    public static long getTimeStamp() {
-        Date date = new Date();
+    public static long getTimeStamp(Date date) {
+        if(date == null) date = new Date();
         long times = date.getTime();
         return times;
     }
 
     /**
-     * @Description: 给定时间获取时间戳
-     * @Param: [date]
-     * @return: long
+     * @description 给定日期字符串获取时间戳，若date为null则返回当前日期时间戳
+     * @param dateStr 日期字符串，非空
+     * @param pattern 格式字符串，默认根据time格式而定义，无法根据time格式定义时返回null
+     * @return
      */
-    public static long getTimeStamp(Date date) {
-        long times = date.getTime();
-        return times;
+    public static long getTimeStamp(String dateStr, String pattern){
+        return getTimeStamp(getDate(dateStr, pattern));
     }
+
     /**
-     * @Description: 给定时间获取时间戳
-     * @Param: [date]
-     * @return: long
+     * @description 获取格式化的时间
+     * @param date 要格式化的日期对象，默认为当前日期
+     * @param pattern 格式字符串，默认为"yyyy-MM-dd HH:mm:ss"
+     * @return
      */
-    public static Date stringToDate(String time) {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+    public static String getFormatDate(Date date, String pattern) {
+        if(date == null) date = new Date();
+        if(pattern == null) pattern = "yyyy-MM-dd HH:mm:ss";
+        SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+        String dateStr = formatter.format(date);
+        return dateStr;
+    }
+
+    /**
+     * @description 根据时间戳获取格式化日期字符串
+     * @param timeStamp 要格式化的时间戳，默认为当前日期
+     * @param pattern 格式字符串，默认为"yyyy-MM-dd HH:mm:ss"
+     * @return
+     */
+    public static String getFormatDate(long timeStamp, String pattern){
+        return getFormatDate(new Date(timeStamp), pattern);
+    }
+
+    /**
+     * @description 根据日期字符串获取日期
+     * @param dateStr 日期字符串，非空
+     * @param pattern 格式字符串，默认根据time格式而定义，无法根据time格式定义时返回null
+     * @return
+     */
+    public static Date getDate(String dateStr, String pattern) {
+        if(StringUtils.isBlank(dateStr)) return null;
+        if(StringUtil.isBlank(pattern)) {
+            if (Pattern.matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}", dateStr))
+                pattern = "yyyy-MM-dd HH:mm:ss";
+            else if (Pattern.matches("\\d{4}-\\d{2}-\\d{2}", dateStr))
+                pattern = "yyyy-MM-dd";
+            else
+                return null;
+        }
+        SimpleDateFormat formatter = new SimpleDateFormat(pattern);
         try {
-            return formatter.parse(time);
+            return formatter.parse(dateStr);
         } catch (ParseException e) {
             e.printStackTrace();
             return null;
         }
     }
-    /**
-     * 获取格式化的时间
-     * 输出格式：2015-08-04 20:55:35
-     */
-    public static String getFormatDate() {
-        Date date = new Date();
-        long times = date.getTime();//时间戳
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
-        String dateString = formatter.format(date);
-        return dateString;
-    }
 
     /**
-     * 将时间戳转化为标准时间
-     * 输出：Tue Oct 07 12:04:36 CST 2014
+     * @description 根据时间戳获取日期
+     * @param timeStamp
+     * @return
      */
-    public static Date timestampToDate() {
-        long times = getTimeStamp();
-        Date date = new Date(times);
-        return date;
+    public Date getDate(long timeStamp){
+        return new Date(timeStamp);
     }
 
     /**
@@ -81,6 +109,7 @@ public class TimeUtil {
         calendar.set(Calendar.SECOND, 0);
         return calendar.getTime();
     }
+
     /**
      * 获取未来第几月的1号0点的
      *
@@ -99,8 +128,7 @@ public class TimeUtil {
     }
 
     /**
-     * 获取过去第几月的最后一天
-     *
+     * @description 获取过去第几月的最后一天
      * @param past
      * @return
      */
@@ -115,27 +143,11 @@ public class TimeUtil {
     }
 
     /**
-     * 获取月份
-     *
-     * @param
+     * @description 获取过去几个小时的日期
+     * @param nowDate
+     * @param past
      * @return
      */
-    public static String getMonth(Date data) {
-        SimpleDateFormat formatter = new SimpleDateFormat("MM");
-        return formatter.format(data) + "月";
-    }
-
-    /**
-     * 获取年月份
-     *
-     * @param
-     * @return
-     */
-    public static String getYearMonth(Date data) {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM");
-        return formatter.format(data) + "月";
-    }
-
     public static Date getPastHoursDate(Date nowDate, int past) {
         Calendar calendar = Calendar.getInstance(); //得到日历
         calendar.setTime(nowDate);//把当前时间赋给日历
@@ -167,11 +179,18 @@ public class TimeUtil {
         return calendar.getTime();   //得到前beforeNum小时的时间
     }
 
+    /**
+     * 判断给定时间戳是否在当前时间的i毫秒之前
+     * @param time
+     * @param i
+     * @return
+     */
     public static boolean isExceededInterval(long time, long i) {
-        long now = getTimeStamp();
+        long now = getTimeStamp(null);
         long diff = (now - time);
-        return diff >= (i * 60 * 1000);
+        return diff >= i;
     }
+
     /**
      * @Description: 判断是不是今天
      * @Param: [mbt]
@@ -192,24 +211,7 @@ public class TimeUtil {
         }
 
     }
-    /**
-     * @Description: 主要得到套餐的结束时间 imt为月份 结束时间的格式是23:59:59
-     * @Param: [mbt, imt]
-     * @return: java.util.Date
-     */
-    public static Date getLastMonthDate(Date mbt, Integer imt) {
-        //如果套餐的时间是12月或者24月正好一年直接加上年份然后时间变为23:59:59
-        //如果套餐的时间不是年套餐就是30天为周期 直接加上30天
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(mbt);
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(mbt);
-        calendar.add(Calendar.MONTH, imt);
-        calendar.set(Calendar.HOUR_OF_DAY, 23);
-        calendar.set(Calendar.MINUTE, 59);
-        calendar.set(Calendar.SECOND, 59);
-        return calendar.getTime();
-    }
+
     /**
      * @Description: 判断相对于现在是不是过去
      * @Param: [mbt]

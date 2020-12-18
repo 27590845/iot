@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- logback 学习、测试 生产环境下需要删掉本文件 -->
+<!-- 参考连接：https://blog.csdn.net/snail_bi/article/details/103496697
+            https://blog.csdn.net/u012129558/article/details/79947477-->
 <!--
 logback按如下顺序寻找配置文件:
     1) Logback tries to find a file called logback.groovy in the classpath.
-    2)If no such file is found, logback tries to find a file called logback-tmp.xml in the classpath.
+    2)If no such file is found, logback tries to find a file called logback-test.xml in the classpath.
     3)If no such file is found, it checks for the file logback.xml in the classpath..
     4)If neither file is found, logback configures itself automatically using the BasicConfigurator which will cause logging output to be directed to the console.
 -->
@@ -49,8 +51,18 @@ logback按如下顺序寻找配置文件:
     <!-- 控制台输出日志 -->
     <appender name="def-log-stdout" class="ch.qos.logback.core.ConsoleAppender">
         <encoder charset="UTF-8">
-            <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{26} - %msg%n</Pattern>
+            <Pattern>frameHeader%-20.20d{yyyy-MM-dd HH:mm:ss}%-8.8level%-160.160logger%msg%n</Pattern>
         </encoder>
+    </appender>
+    <appender name="error-log-stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder charset="UTF-8">
+            <Pattern>frameHeader%-20.20d{yyyy-MM-dd HH:mm:ss}%-8.8level%-160.160logger%msg%n</Pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>error</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
     </appender>
     <!-- 文件保存日志，并根据条件压缩日志 -->
     <appender name="def-log-file" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -59,7 +71,7 @@ logback按如下顺序寻找配置文件:
         <!--<encoder>：对记录事件进行格式化。-->
         <encoder>
             <!--格式化输出：%d表示日期,后面跟时间格式，默认%data{yyyy-MM-dd}，%thread表示线程名， %msg：日志消息，%n是换行符-->
-            <pattern>%date [%level] [%thread] %logger{60} [%file : %line] %msg%n</pattern>
+            <pattern>frameHeader%-20.20d{yyyy-MM-dd HH:mm:ss}%-8.8level%-160.160logger%msg%n</pattern>
         </encoder>
         <!--RollingFileAppender:-->
         <!--滚动记录文件，先将日志记录到指定文件，当符合某个条件时，将日志记录到其他文件。-->
@@ -82,17 +94,6 @@ logback按如下顺序寻找配置文件:
             <maxHistory>1</maxHistory>
         </rollingPolicy>
     </appender>
-    <!-- MyBatis日志 -->
-    <appender name="mybatis-log-file" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>${LOG_HOME}/${LOG_PREFIX}-mybatis.log</File>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_HOME}/daily/${LOG_PREFIX}-mybatis-%d{yyyy-MM-dd}.log.zip</fileNamePattern>
-            <maxHistory>60</maxHistory>
-        </rollingPolicy>
-        <encoder charset="UTF-8">
-            <Pattern>[%d{HH:mm:ss}] [%thread] |%level| %marker %logger{50} -> %X{rpid} %msg %n%ex</Pattern>
-        </encoder>
-    </appender>
     <!-- 错误输出日志 -->
     <appender name="error-log-file" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <File>${LOG_HOME}/${LOG_PREFIX}-error.log</File>
@@ -110,19 +111,13 @@ logback按如下顺序寻找配置文件:
         </encoder>
     </appender>
 
-    <logger name="org.apache.kafka" level="OFF"/>
-    <logger name="com.mongodb" level="OFF" />
-    <logger name="com.mysql" level="OFF" />
-    <logger name="com.xidian.iot.database.mapper" level="INFO" >
-        <appender-ref ref="mybatis-log-file" />
-    </logger>
-    <logger name="com.xidian.iot.database.mapper.custom" level="INFO" >
-        <appender-ref ref="mybatis-log-file" />
-    </logger>
+<!--    <logger name="org.apache.kafka" level="OFF"/>-->
+<!--    <logger name="com.mongodb" level="OFF" />-->
+<!--    <logger name="com.mysql" level="OFF" />-->
     <!--root是默认的logger 这里设定输出级别是info-->
     <root level="INFO">
-        <!--定义了两个appender，日志会通过往这两个appender里面写-->
-<!--        <appender-ref ref="def-log-stdout"/>-->
+        <!--定义了appender，日志会通过往这两个appender里面写-->
+        <appender-ref ref="def-log-file"/>
         <appender-ref ref="def-log-stdout"/>
     </root>
 </configuration>

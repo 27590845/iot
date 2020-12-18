@@ -53,25 +53,25 @@
     </bean>
     <bean id="dataSource" class="com.xidian.iot.database.dynamic.DynamicDataSource">
         <!-- 如果这么配置，就是读写分离 -->
-<!--        <property name="writeDataSources">-->
-<!--            <list>-->
-<!--                <ref bean="dataSource3"/>-->
-<!--            </list>-->
-<!--        </property>-->
-<!--        <property name="readDataSources">-->
-<!--            <list>-->
-<!--                <ref bean="dataSource1" />-->
-<!--                <ref bean="dataSource2" />-->
-<!--            </list>-->
-<!--        </property>-->
-        <!-- 如果这么配置，就是三主轮询，因为 readDataSourceSize<=0 时，使用的全是readDataSource -->
         <property name="writeDataSources">
             <list>
-                <ref bean="dataSource1" />
+                <ref bean="dataSource1"/>
+            </list>
+        </property>
+        <property name="readDataSources">
+            <list>
                 <ref bean="dataSource2" />
                 <ref bean="dataSource3" />
             </list>
         </property>
+        <!-- 如果这么配置，就是三主轮询，因为 readDataSourceSize<=0 时，使用的全是readDataSource -->
+<!--        <property name="writeDataSources">-->
+<!--            <list>-->
+<!--                <ref bean="dataSource1" />-->
+<!--                <ref bean="dataSource2" />-->
+<!--                <ref bean="dataSource3" />-->
+<!--            </list>-->
+<!--        </property>-->
         <property name="defaultTargetDataSource" ref="dataSource3"/>
     </bean>
     <task:scheduled-tasks>

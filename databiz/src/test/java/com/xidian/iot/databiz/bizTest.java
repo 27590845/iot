@@ -1,11 +1,11 @@
 package com.xidian.iot.databiz;
 
-import com.github.pagehelper.PageHelper;
-import com.xidian.iot.database.entity.*;
+import com.xidian.iot.database.entity.NodeAttrStd;
+import com.xidian.iot.database.entity.NodeAttrStdExample;
+import com.xidian.iot.database.entity.Scene;
+import com.xidian.iot.database.entity.SceneExample;
 import com.xidian.iot.database.mapper.NodeAttrStdMapper;
 import com.xidian.iot.database.mapper.SceneMapper;
-import com.xidian.iot.database.mapper.custom.NodeCondCustomMapper;
-import com.xidian.iot.databiz.service.NodeAttrStdService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
-import java.sql.SQLSyntaxErrorException;
 import java.util.List;
 
 /**
@@ -21,8 +20,7 @@ import java.util.List;
  * @date: 2020-09-13 15:00
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration(locations = {"classpath:spring/application-mybatis-dynamic.xml"})
-@ContextConfiguration(locations = {"classpath:spring/application-mybatis-def.xml"})
+@ContextConfiguration(locations = {"classpath:spring/application-mybatis-dynamic.xml"})
 public class bizTest {
 
     @Test
@@ -36,9 +34,6 @@ public class bizTest {
 
     @Resource
     SceneMapper sceneMapper;
-
-    @Resource
-    NodeCondCustomMapper condCustomMapper;
 
     @Test
     public void getScene(){
@@ -66,18 +61,16 @@ public class bizTest {
     public void getNas() throws InterruptedException {
         for (int i = 0; i < 100; i++) {
             List<NodeAttrStd> nodeAttrStds = null;
+            List<Scene> scenes = null;
             try {
                 nodeAttrStds = nodeAttrStdMapper.selectByExample(new NodeAttrStdExample());
+                scenes = sceneMapper.selectByExample(new SceneExample());
             } catch (Exception e) {
                 System.out.println(e);
             }
-            System.out.println(nodeAttrStds==null?"null":nodeAttrStds.size());
-            Thread.sleep(5000);
+            System.out.print(nodeAttrStds==null?"null":nodeAttrStds.size()+"  ");
+            System.out.println(scenes==null?"null":scenes.size());
+            Thread.sleep(10000);
         }
-    }
-    @Test
-    public void getNcs() throws InterruptedException {
-        List<NodeCond> nodeConds = condCustomMapper.getNodeCondsByNtId(18722249922134534l);
-        System.out.println(nodeConds);
     }
 }

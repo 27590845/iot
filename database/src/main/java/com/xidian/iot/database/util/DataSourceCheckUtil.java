@@ -18,7 +18,7 @@ public class DataSourceCheckUtil {
     /**
      * 检查datasource是否可用（可以获取connection并且connection未关闭，则可用）
      * @param dataSource 要检测的datasource
-     * @param closeable 检测完后是否关闭连接（存在不需要关闭的场景，比如通过连接池获取的连接）
+     * @param closeable 检测完后是否关闭连接（一般需要关闭，包括连接池）
      * @return
      */
     public static boolean checkDataSourceAlive(DataSource dataSource, boolean closeable) {
@@ -27,7 +27,8 @@ public class DataSourceCheckUtil {
         try {
             cc = dataSource.getConnection();
             if (cc != null && !cc.isClosed()) {
-                result = true;
+                result = cc.createStatement().execute("show tables;");
+                //result = true;
             }
         } catch (Exception e) {
             log.error(e.toString());

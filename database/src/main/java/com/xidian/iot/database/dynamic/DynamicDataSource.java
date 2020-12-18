@@ -8,7 +8,7 @@ import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Vector;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.Lock;
@@ -26,7 +26,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
     private List<Object> writeDataSources; //写数据源
     private List<Object> readDataSources; //多个读数据源
     private final Map<Object, Object> allDataSources = new HashMap<>();
-    private final List<String> unreachableDatasourceName = new CopyOnWriteArrayList<>(); //不可用的datasource的名字集合
+    private final List<String> unreachableDatasourceName = new Vector<>(); //不可用的datasource的名字集合
     private int writeDatasourceSize = 0; //写数据源个数
     private int readDataSourceSize = 0; //读数据源个数
     private AtomicLong counter = new AtomicLong(0);
@@ -94,7 +94,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
     public void check(){
         StringBuilder reachableName = new StringBuilder();
         allDataSources.entrySet().stream().forEach(entry -> {
-            if(DataSourceCheckUtil.checkDataSourceAlive((DataSource) entry.getValue(), false)){
+            if(DataSourceCheckUtil.checkDataSourceAlive((DataSource) entry.getValue(), true)){
                 unreachableDatasourceName.remove(entry.getKey());
                 reachableName.append(entry.getKey()).append("\t");
             }else {

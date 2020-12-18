@@ -1,22 +1,15 @@
 package com.xidian.iot.common.util.uid;
 
 import com.alibaba.fastjson.JSONObject;
-import com.oracle.tools.packager.Log;
 import com.xidian.iot.common.util.HttpUtil;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.TimeUnit;
+import java.util.Vector;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author mrl
@@ -71,7 +64,7 @@ public class UidGenImpl implements UidGen {
 
     public static void main(String[] args) throws InterruptedException {
         int threadNum = 2500;
-        List<Long> idSet = new CopyOnWriteArrayList<>();
+        List<Long> idSet = new Vector<>();
         UidGenImpl uidGeneratorImpl = new UidGenImpl();
         Thread[] threads = new Thread[threadNum];
         for(int i=0;i<threadNum;i++){

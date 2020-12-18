@@ -3,11 +3,13 @@ package com.xidian.iot.datacenter.service.chain.json;
 import com.xidian.iot.common.util.JsonUtil;
 import com.xidian.iot.database.entity.mongo.NodeData;
 import com.xidian.iot.datacenter.system.SystemParam;
+import com.xidian.iot.datacenter.system.SystemParamShared;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
 import org.apache.commons.lang3.math.NumberUtils;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +36,8 @@ import java.util.Map;
 @Slf4j
 public class ConversionNodeDataCommand implements Command {
 
+    @Resource
+    private SystemParamShared systemParamShared;
     /**
      * =====入口======
      * @param context
@@ -94,7 +98,7 @@ public class ConversionNodeDataCommand implements Command {
         } else if (origAt instanceof Integer) {
             at = ((Integer) origAt).longValue();
         } else {
-            at = new Long(System.currentTimeMillis()/ SystemParam.getTimeStampDiv());
+            at = new Long(System.currentTimeMillis()/ systemParamShared.getTimeStampDiv());
         }
         return at;
     }
