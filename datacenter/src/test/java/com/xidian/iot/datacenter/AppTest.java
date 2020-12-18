@@ -87,4 +87,12 @@ public class AppTest {
         ps.close();
         br.close();
     }
+
+    @Resource
+    RedisTemplate redisTemplate;
+
+    @Test
+    public void redisTest(){
+        System.out.println(redisTemplate.getExpire("check.dataceter"));
+    }
 }

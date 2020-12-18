@@ -55,6 +55,12 @@
       <artifactId>spring-test</artifactId>
       <version>${springframework.version}</version>
     </dependency>
+    <dependency>
+      <groupId>com.xidian.iot</groupId>
+      <artifactId>common-alert</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
     <!-- springframework end -->
 
   </dependencies>

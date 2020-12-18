@@ -1,21 +1,23 @@
 package com.xidian.iot.common.alert;
 
-import com.xidian.iot.database.entity.NodeActAlert;
+import com.xidian.iot.common.alert.alertsender.AlertFactory;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.annotation.Resource;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"classpath:spring/application-alert.xml"})
 public class test0 {
+    @Resource
+    AlertFactory alertFactory;
     @Test
     public void test1(){
-        ApplicationContext ac = new ClassPathXmlApplicationContext("spring/application.xml");
-        alertTest at = (alertTest) ac.getBean("alertTest");
+//        ApplicationContext ac = new ClassPathXmlApplicationContext("spring/application-alert.xml");
+//        alertTest at = (alertTest) ac.getBean("alertTest");
 
-        try{
-            at.alert1();
-        }
-        catch (Exception e){
-            System.out.println("dddd");
-        }
+        alertFactory.getAlert((byte)2,"654353294@qq.com","alert");
     }
 }

@@ -9,8 +9,7 @@
 		http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
 		http://www.springframework.org/schema/context 
 		http://www.springframework.org/schema/context/spring-context.xsd
-		http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd"
-	   default-lazy-init="false">
+		http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
 
 	<!-- .properties文件读取 -->
 	<context:property-placeholder location="classpath*:/conf/email.properties" />
