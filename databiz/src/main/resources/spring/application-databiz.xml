@@ -20,7 +20,8 @@
 <!--        </property>-->
 <!--    </bean>-->
 
-    <import resource="application-mybatis-dynamic.xml"/>
+<!--    <import resource="application-mybatis-dynamic.xml"/>-->
+    <import resource="application-mybatis-def.xml"/>
     <import resource="application-mongo-def.xml"/>
     <import resource="application-redis-def.xml"/>
 

@@ -85,8 +85,9 @@ public class NodeCondServiceImpl implements NodeCondService {
     @Override
     public int delNodeCondByNtId(Long ntId) {
         List<Long> ncIds = nodeCondCustomMapper.getNcIdsByNtId(ntId);
+        NodeCondServiceImpl currentProxy = (NodeCondServiceImpl) AopContext.currentProxy();
         if (ncIds.size() > 0) {
-            ncIds.stream().forEach(ncId -> cleanNodeCondById(ncId));
+            ncIds.stream().forEach(ncId -> currentProxy.cleanNodeCondById(ncId));
         }
         NodeCondExample nodeCondExample = new NodeCondExample();
         nodeCondExample.createCriteria().andNtIdEqualTo(ntId);
@@ -96,9 +97,10 @@ public class NodeCondServiceImpl implements NodeCondService {
     @Override
     public void delNodeCondByNaIds(List<Long> naIds) {
         List<Long> ncIds = nodeCondCustomMapper.getNcIdsByNaIds(naIds);
+        NodeCondServiceImpl currentProxy = (NodeCondServiceImpl) AopContext.currentProxy();
         if (ncIds.size() > 0) {
             //清除缓存中的节点条件----但是节点触发器中所有节点触发条件被删除应当把节点触发器也删除 采用定时清除机制
-            ncIds.stream().forEach(ncId -> cleanNodeCondById(ncId));
+            ncIds.stream().forEach(ncId -> currentProxy.cleanNodeCondById(ncId));
             //根据节点触发条件批量删除
             nodeCondCustomMapper.delBatchsByNcIds(ncIds);
         }

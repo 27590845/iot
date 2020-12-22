@@ -79,7 +79,7 @@ public class NodeActAlertServiceImpl implements NodeActAlertService {
     public void checkExistNodeActAlert(NodeActAlertParam param) {
         NodeActAlertExample nodeActAlertExample = new NodeActAlertExample();
         //通过检查同一触发器下是否存在同一接受者的其他警报来判断是否重复
-        nodeActAlertExample.createCriteria().andNtIdEqualTo(param.getNtId()).andNaaTypeEqualTo(param.getNaaTyoe()).andNaaValEqualTo(param.getNaaVal());
+        nodeActAlertExample.createCriteria().andNtIdEqualTo(param.getNtId()).andNaaTypeEqualTo(param.getNaaType()).andNaaValEqualTo(param.getNaaVal());
         List<NodeActAlert> nodeActAlerts = nodeActAlertMapper.selectByExample(nodeActAlertExample);
         if(nodeActAlerts.size()>0){
             throw new BusinessException(-1,"传入的警报已存在");

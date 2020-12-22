@@ -2,7 +2,6 @@ package com.xidian.iot.common.alert.site;
 
 
 import com.xidian.iot.common.alert.AlertVo;
-import com.xidian.iot.database.entity.SiteLetter;
 
 /**
  * 站内信。
