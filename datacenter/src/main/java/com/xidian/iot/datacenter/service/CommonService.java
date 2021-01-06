@@ -52,7 +52,7 @@ public class CommonService {
         //只获取条件所关联的触发器未失效、且不在时间间隔内的条件
         nodeCondExts = nodeCondExts.stream().filter(nodeCondExt -> {
             NodeTrigExt nodeTrigExt = nodeTrigService.getNodeTrigExtById(nodeCondExt.getNtId());
-            return !(nodeTrigExt.getNtExec()==1 || nodeTrigExt.getNtExpr().before(new Date()))
+            return !(nodeTrigExt.getNtExec()==1 || (nodeTrigExt.getNtExpr()!=null && nodeTrigExt.getNtExpr().before(new Date())))
                     && (nodeTrigExt.getLastRunTime()==null || nodeTrigExt.getLastRunTime().getTime()+(nodeTrigExt.getNtInvl()*1000)<=System.currentTimeMillis());
         }).collect(Collectors.toList());
         return nodeCondExts;

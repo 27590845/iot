@@ -1,10 +1,9 @@
 package com.xidian.iot.common.mq;
 
-import static org.junit.Assert.assertTrue;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.xidian.iot.common.mq.activemq.ActivemqSubscriber;
-import com.xidian.iot.common.util.JsonUtil;
+import com.xidian.iot.common.util.RandomUtil;
+import com.xidian.iot.common.util.TimeUtil;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -13,9 +12,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
-import javax.jms.*;
+import javax.jms.JMSException;
 import java.io.Serializable;
 import java.util.concurrent.CountDownLatch;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  * Unit test for simple App.
@@ -45,14 +46,22 @@ public class ActivemqTest
 
     final static String topic = "hello_topic";
 
-    final static String sceneSn = "186610102211000001";
-    final static String nodeSn = "000001";
+    final static String sceneSn = "186610102211100356";
+    final static String nodeSn = "RD001";
     final static String topicIot = "node.updata."+sceneSn;
 
     @Test
-    public void send1() throws JsonProcessingException, InterruptedException {
-        String msg = "{\"datastreams\":[{\"tem1\":110,\"tem2\":44.0,\"at\":1600570048,\"sn\":\""+nodeSn+"\"}]}";
-        for (int i = 0; i < 1000; i++) {
+    public void appTest() throws JsonProcessingException, InterruptedException {
+//        String msg = "{\"datastreams\":[{\"TVOC\":69,\"hum\":54.0,\"at\":1597737850021,\"pm2p5\":33,\"co2\":509,\"pm10\":59,\"sn\":\""+nodeSn+"\",\"ch20\":19,\"tem\":32.0}]}";
+        for(int i=0; i< 1000; i++){
+            String msg = "{\"datastreams\":[{"
+                    + "\"tem1\":"+ RandomUtil.nextInt(10, 19)
+                    +",\"tem2\":"+RandomUtil.nextInt(20, 29)
+                    +",\"tem3\":"+RandomUtil.nextInt(30, 39)
+                    +",\"tem4\":"+RandomUtil.nextInt(40, 49)
+                    +",\"hum\":"+ RandomUtil.nextInt(0, 9)
+                    +",\"at\":"+ TimeUtil.getTimeStamp(null)
+                    +",\"sn\":\""+nodeSn+"\"}]}";
             mqSender.sendQueue(topicIot, msg);
             Thread.sleep(1000);
         }
