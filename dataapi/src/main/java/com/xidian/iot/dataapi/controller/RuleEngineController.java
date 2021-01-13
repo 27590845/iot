@@ -2,6 +2,7 @@ package com.xidian.iot.dataapi.controller;
 
 import com.xidian.iot.common.util.exception.BusinessException;
 import com.xidian.iot.dataapi.controller.res.HttpResult;
+import com.xidian.iot.database.entity.NodeTrig;
 import com.xidian.iot.database.param.NodeCondParam;
 import com.xidian.iot.database.param.NodeTrigParam;
 import com.xidian.iot.database.valid.ValidGroup;
@@ -78,9 +79,17 @@ public class RuleEngineController {
 
     @ApiOperation(value = "更新触发器")
     @PutMapping("/{ntId}")
-    public HttpResult updateScene(@ApiParam(name = "ntId", value = "") @PathVariable("ntId") Long ntId,
+    public HttpResult updateRuleEngine(@ApiParam(name = "ntId", value = "") @PathVariable("ntId") Long ntId,
                                   @ApiParam(name = "NodeTrigParam", value = "触发器更新信息") @Validated(ValidGroup.UPDATE.class) @RequestBody NodeTrigParam nodeTrigParam) {
         ruleEngineService.updateRuleEngine(ntId, nodeTrigParam);
+        return HttpResult.oK().message("更新成功");
+    }
+
+    @ApiOperation(value = "只更新节点触发器")
+    @PatchMapping("/{ntId}")
+    public HttpResult updateNodeTrigger(@ApiParam(name = "ntId", value = "") @PathVariable("ntId") Long ntId,
+                                        @ApiParam(name = "NodeTrig", value = "触发器更新信息") @RequestBody NodeTrig nodeTrig) {
+        ruleEngineService.updateNodeTrig(ntId, nodeTrig);
         return HttpResult.oK().message("更新成功");
     }
 

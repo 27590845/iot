@@ -1,6 +1,7 @@
 package com.xidian.iot.databiz.service;
 
 import com.xidian.iot.database.entity.NodeCond;
+import com.xidian.iot.database.entity.NodeTrig;
 import com.xidian.iot.database.param.NodeCondParam;
 import com.xidian.iot.database.param.NodeTrigParam;
 
@@ -65,4 +66,12 @@ public interface RuleEngineService {
      * @return com.xidian.iot.database.param.NodeTrigParam
      * */
     NodeTrigParam getRuleEngine(Long ntId);
+
+    /**
+     * 仅更新NodeTrig
+     * @param ntId
+     * @param nodeTrig
+     * @return int
+     * */
+    int updateNodeTrig(Long ntId, NodeTrig nodeTrig);
 }

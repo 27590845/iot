@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author mrl
@@ -135,6 +136,7 @@ public class NodeCondServiceImpl implements NodeCondService {
 
     @Override
     public int updateNodeConds(List<NodeCond> nodeConds) {
+        if(Objects.isNull(nodeConds)||nodeConds.size()==0)return 0;
         // 内部调用不走代理
         NodeCondServiceImpl currentProxy = (NodeCondServiceImpl) AopContext.currentProxy();
         int res = nodeCondCustomMapper.updateBatch(nodeConds);

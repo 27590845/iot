@@ -57,7 +57,8 @@ public class NodeActAlertServiceImpl implements NodeActAlertService {
 
     @Override
     public NodeActAlert addNodeActAlert(NodeActAlertParam nodeActAlertParam) {
-        NodeActAlert nodeActAlert = nodeActAlertParam.build(uidGenerator.getUID());
+        nodeActAlertParam.setNaaId(uidGenerator.getUID());
+        NodeActAlert nodeActAlert = nodeActAlertParam.build();
         nodeActAlertMapper.insertSelective(nodeActAlert);
         return nodeActAlert;
     }
@@ -71,7 +72,8 @@ public class NodeActAlertServiceImpl implements NodeActAlertService {
 
     @Override
     public void updateNodeActAlert(Long naaId, NodeActAlertParam param) {
-        NodeActAlert nodeActAlert = param.build(naaId);
+        NodeActAlert nodeActAlert = param.build();
+        nodeActAlert.setNaaId(naaId);
         nodeActAlertMapper.updateByPrimaryKeySelective(nodeActAlert);
     }
 
