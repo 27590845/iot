@@ -2,6 +2,7 @@ package com.xidian.iot.common.util;
 
 import org.apache.commons.lang3.RandomUtils;
 
+import java.text.DecimalFormat;
 import java.util.Random;
 
 /**
@@ -85,6 +86,14 @@ public class RandomUtil {
 		}
 		max++;// 次运算为的是包含max最大数值的范围，例如5-10，即出现5也出现10，若不执行此操作则，随机数总在10以下不包括10出现
 		return (long) (Math.random() * (max - min) + min);
+	}
+
+	public static double nextDouble(double min, double max){
+		if (min > max) {
+			throw new IllegalArgumentException("Prameter 'min' can not > 'max'.");
+		}
+		DecimalFormat df = new DecimalFormat("#.00");
+		return  Double.parseDouble(df.format(min + ((max - min) * new  Random().nextDouble())));
 	}
 
 	/**

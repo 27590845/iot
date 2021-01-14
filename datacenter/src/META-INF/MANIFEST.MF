@@ -1,0 +1,45 @@
+Manifest-Version: 1.0
+Main-Class: com.xidian.iot.datacenter.Application
+Class-Path: asm-5.0.4.jar slf4j-api-1.7.30.jar json-smart-2.3.jar aliyun
+ -java-sdk-core-4.4.6.jar geronimo-jms_1.1_spec-1.1.1.jar spring-test-5.
+ 2.8.RELEASE.jar jackson-core-2.10.4.jar accessors-smart-1.2.jar org.jac
+ oco.agent-0.8.3-runtime.jar commons-pool2-2.8.1.jar hawtbuf-1.9.jar jsq
+ lparser-2.0.jar mybatis-generator-core-1.3.7.jar spring-context-support
+ -5.2.8.RELEASE.jar reactor-core-3.3.0.RELEASE.jar gson-2.8.5.jar common
+ s-collections4-4.1.jar spring-plugin-core-1.2.0.RELEASE.jar zstd-jni-1.
+ 4.0-1.jar activation-1.1.jar activemq-pool-5.15.10.jar javax.activation
+ -api-1.2.0.jar spring-jms-5.2.8.RELEASE.jar spring-data-commons-2.2.9.R
+ ELEASE.jar commons-codec-1.14.jar swagger-annotations-1.5.13.jar mongo-
+ java-driver-3.12.7.jar springfox-spi-2.7.0.jar druid-1.1.23.jar commons
+ -lang3-3.8.1.jar mail-1.4.3.jar reactive-streams-1.0.3.jar bcprov-jdk15
+ on-1.60.jar nimbus-jose-jwt-8.19.jar springfox-swagger-common-2.7.0.jar
+  springfox-core-2.7.0.jar springfox-schema-2.7.0.jar spring-expression-
+ 5.2.8.RELEASE.jar snappy-java-1.1.7.3.jar jboss-logging-3.3.2.Final.jar
+  httpclient-4.5.10.jar spring-context-5.2.8.RELEASE.jar commons-net-3.1
+ .jar swagger-models-1.5.13.jar geronimo-j2ee-management_1.1_spec-1.0.1.
+ jar expiringmap-0.5.9.jar lombok-1.18.12.jar commons-logging-1.2.jar ht
+ tpcore-4.4.12.jar springfox-swagger2-2.7.0.jar hawtdispatch-transport-1
+ .11.jar kafka-clients-2.3.1.jar spring-beans-5.2.8.RELEASE.jar mqtt-cli
+ ent-1.3.jar mysql-connector-java-8.0.17.jar guava-18.0.jar spring-integ
+ ration-kafka-3.2.1.RELEASE.jar spring-jdbc-5.2.8.RELEASE.jar spring-int
+ egration-core-5.2.1.RELEASE.jar fastjson-1.2.62.jar mybatis-3.5.5.jar j
+ ackson-databind-2.10.4.jar logstash-logback-encoder-4.11.jar jackson-an
+ notations-2.10.4.jar commons-io-2.7.jar jakarta.validation-api-2.0.2.ja
+ r logback-core-1.2.3.jar jedis-3.3.0.jar jcip-annotations-1.0-1.jar com
+ mons-chain-1.2.jar spring-security-crypto-3.2.8.RELEASE.jar geronimo-jt
+ a_1.0.1B_spec-1.0.1.jar logback-classic-1.2.3.jar classmate-1.3.4.jar j
+ asypt-1.9.0.jar aspectjrt-1.8.9.jar reflections-0.9.11.jar kahadb-5.7.0
+ .jar protobuf-java-3.6.1.jar activemq-jms-pool-5.15.10.jar mapstruct-1.
+ 1.0.Final.jar spring-data-mongodb-2.2.9.RELEASE.jar aspectjweaver-1.8.9
+ .jar spring-core-5.2.8.RELEASE.jar activemq-client-5.15.10.jar byte-bud
+ dy-1.6.14.jar spring-kafka-2.3.10.RELEASE.jar spring-messaging-5.2.8.RE
+ LEASE.jar spring-retry-1.2.5.RELEASE.jar spring-security-rsa-1.0.7.RELE
+ ASE.jar lz4-java-1.6.0.jar spring-plugin-metadata-1.2.0.RELEASE.jar pag
+ ehelper-5.1.10.jar bcpkix-jdk15on-1.60.jar spring-data-redis-2.3.3.RELE
+ ASE.jar activemq-core-5.7.0.jar spring-oxm-5.2.8.RELEASE.jar hawtdispat
+ ch-1.11.jar javassist-3.21.0-GA.jar ini4j-0.5.4.jar springfox-spring-we
+ b-2.7.0.jar spring-data-keyvalue-2.3.3.RELEASE.jar spring-jcl-5.2.8.REL
+ EASE.jar spring-aop-5.2.8.RELEASE.jar spring-tx-5.2.8.RELEASE.jar hiber
+ nate-validator-6.1.5.Final.jar mybatis-spring-2.0.5.jar jaxb-api-2.3.1.
+ jar activemq-protobuf-1.1.jar
+

@@ -2,7 +2,7 @@
 <!-- logback in product env -->
 <configuration>
 
-    <property name="LOG_HOME" value="/var/log/xidianiot"/>
+    <property name="LOG_HOME" value="/Users/liuyinggang/tmp/log"/>
     <property name="LOG_PREFIX" value="dataapi"/>
     <property name="LOG.LEVEL" value="INFO" />
     <property name="LOG.MAXHISTORY" value="30" />
