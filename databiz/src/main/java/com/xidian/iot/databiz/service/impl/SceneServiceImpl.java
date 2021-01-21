@@ -16,6 +16,7 @@ import com.xidian.iot.database.vo.SceneVo;
 import com.xidian.iot.databiz.constants.EncodeType;
 import com.xidian.iot.databiz.service.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -34,7 +35,7 @@ import java.util.Objects;
  */
 @Service
 @Slf4j
-@Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
+@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 public class SceneServiceImpl implements SceneService {
 
     @Autowired
@@ -73,6 +74,22 @@ public class SceneServiceImpl implements SceneService {
     }
 
     @Override
+    public List<SceneVo> getScenesAndNode(int page, int limit) {
+        if (page >= 0 && limit > 0) {
+            PageHelper.startPage(page, limit);
+        }
+        return sceneCustomMapper.getSceneVos();
+    }
+
+    @Override
+    public List<SceneVo> getScenesAndNodeByCond(int page, int limit, String sceneSn, String sceneName) {
+        if (page >= 0 && limit > 0) {
+            PageHelper.startPage(page, limit);
+        }
+        return sceneCustomMapper.getSceneVosByCond(sceneSn, sceneName);
+    }
+
+    @Override
     public Scene getSceneById(Long sceneId) {
         return sceneMapper.selectByPrimaryKey(sceneId);
     }
@@ -99,7 +116,7 @@ public class SceneServiceImpl implements SceneService {
         String sceneSnPre = EncodeType.EncodeGateway.getCode() + "866101022";
         //补零操作、如果是6位也就是最多支持一百台。同一个区域的第几台。
         String lastSceneSn = sceneCustomMapper.maxSceneSn(sceneSnPre);
-        lastSceneSn = Objects.isNull(lastSceneSn)? "0":lastSceneSn;
+        lastSceneSn = Objects.isNull(lastSceneSn) ? "0" : lastSceneSn;
         String sequence = String.format("%06d", Integer.valueOf(lastSceneSn) + 1);
         //物联网唯一标示体系
         scene.setSceneSn(sceneSnPre + param.getUsageCode() + param.getCommCode() + sequence);
@@ -110,6 +127,11 @@ public class SceneServiceImpl implements SceneService {
     @Override
     public int countScene() {
         return (int) sceneMapper.countByExample(new SceneExample());
+    }
+
+    @Override
+    public int countSceneByCond(String sceneSn, String sceneName) {
+        return sceneCustomMapper.countSceneByCond(sceneSn, sceneName);
     }
 
     @Override
@@ -141,7 +163,7 @@ public class SceneServiceImpl implements SceneService {
 //        log.info(String.valueOf(System.currentTimeMillis()));
 //        SceneVo sceneVo2 = sceneCustomMapper.getSceneVoBySnJoin(sceneSn);
 //        log.info(String.valueOf(System.currentTimeMillis()));
-        Assert.isTrue(sceneVo1!=null,ExceptionEnum.SCENE_NOT_EXIST );
+        Assert.isTrue(sceneVo1 != null, ExceptionEnum.SCENE_NOT_EXIST);
         return sceneVo1;
     }
 
@@ -164,6 +186,15 @@ public class SceneServiceImpl implements SceneService {
         SceneExample sceneExample = new SceneExample();
         sceneExample.createCriteria().andSceneSnEqualTo(sceneSn);
         List<Scene> scenes = sceneMapper.selectByExample(sceneExample);
-        return scenes!=null&&scenes.size()>0;
+        return scenes != null && scenes.size() > 0;
+    }
+
+    @Override
+    public Scene getSceneByIdentif(String identifier) {
+        SceneExample sceneExample = new SceneExample();
+        sceneExample.createCriteria().andSceneIdentifierEqualTo(identifier);
+        List<Scene> scenes = sceneMapper.selectByExample(sceneExample);
+        Assert.isTrue(Objects.nonNull(scenes) && scenes.size() > 0, ExceptionEnum.SCENE_NOT_EXIST);
+        return scenes.get(0);
     }
 }

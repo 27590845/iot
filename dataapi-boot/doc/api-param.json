@@ -1,0 +1,31 @@
+// http://dataapi:8080/dataapi/rule
+{
+  "nodeActAlertParam": {
+    "naaContent": "test alert",
+    "naaType": 1,
+    "naaVal": "17864195170"
+  },
+  "nodeCondParams": [
+    {
+      "naId": 14929542544158032,
+      "ncFitTime": 5,
+      "ncOp": 2,
+      "ncVal": "70",
+      "nodeSn": "RD001",
+      "sceneSn": "186610102211100356"
+    },
+    {
+      "naId": 14929542544158033,
+      "ncFitTime": 10,
+      "ncOp": 2,
+      "ncVal": "90",
+      "nodeSn": "RD001",
+      "sceneSn": "186610102211100356"
+    }
+  ],
+  "ntDesc": "烘干机报警器 测试用 2020-12-17 21:223:00",
+  "ntExec": 0,
+  "ntInvl": 10,
+  "ntName": "烘干机报警器",
+  "ntRept": 0
+}

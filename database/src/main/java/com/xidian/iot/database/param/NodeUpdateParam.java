@@ -22,6 +22,11 @@ public class NodeUpdateParam {
     private String nodeDesc;
 
     /**
+     * 节点映射实际地址
+     */
+    private String nodeMap;
+
+    /**
      * JSON格式存放节点和属性各值上载名称
      */
     private String nodeAttrname;

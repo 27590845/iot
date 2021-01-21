@@ -14,10 +14,12 @@ import com.xidian.iot.database.param.NodeUpdateParam;
 import com.xidian.iot.database.vo.NodeVo;
 import com.xidian.iot.databiz.service.*;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.WriteResultChecking;
@@ -40,6 +42,7 @@ import java.util.Objects;
  */
 @Service
 @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
+@EnableAspectJAutoProxy(proxyTargetClass = true, exposeProxy = true)
 public class NodeServiceImpl implements NodeService {
     @Autowired
     private NodeMapper nodeMapper;
@@ -135,14 +138,16 @@ public class NodeServiceImpl implements NodeService {
         node.setNodeName(param.getNodeName());
         node.setNodeDesc(param.getNodeDesc());
         node.setNodeAttrname(param.getNodeAttrname());
+        node.setNodeMap(param.getNodeMap());
         nodeMapper.updateByPrimaryKeySelective(node);
         return node;
     }
 
     @Override
     public NodeVo getNodeVoBySn(String sceneSn, String nodeSn) {
+        NodeServiceImpl currentProxy = (NodeServiceImpl) AopContext.currentProxy();
         //这里由sceneSn、nodeSn先判断是否存在此节点
-        return nodeCustomMapper.getNodeVoByNodeId(getNodeBySn(sceneSn, nodeSn).getNodeId());
+        return nodeCustomMapper.getNodeVoByNodeId(currentProxy.getNodeBySn(sceneSn, nodeSn).getNodeId());
     }
 
     @Override

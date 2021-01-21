@@ -42,7 +42,7 @@ public class NodeController {
         return HttpResult.oK().message("删除节点成功");
     }
 
-    @ApiOperation(value = "更新节点名称和描述")
+    @ApiOperation(value = "更新节点名称和描述、节点映射实际地址、JSON格式存放节点和属性各值上载名称四个信息")
     @PutMapping("/{sceneSn}/{nodeSn}")
     public HttpResult updateScene(@ApiParam(name = "sceneSn", value = "场景sn") @PathVariable("sceneSn") String sceneSn,
                                   @ApiParam(name = "nodeSn", value = "节点sn") @PathVariable(value = "nodeSn") String nodeSn,

@@ -37,13 +37,13 @@ public class SceneAddParam {
     private String sceneLoc;
 
     @ApiModelProperty(value = "经度")
-    @NotNull(message = "经度不能为空")
-    @Range(min=-180, max=180)
+//    @NotNull(message = "经度不能为空")
+//    @Range(min=-180, max=180)
     private Double sceneLng;
 
     @ApiModelProperty(value = "纬度")
-    @Range(min=-90, max=90)
-    @NotNull(message = "纬度不能为空")
+//    @Range(min=-90, max=90)
+//    @NotNull(message = "纬度不能为空")
     private Double sceneLat;
 
     @ApiModelProperty(value = "海拔")

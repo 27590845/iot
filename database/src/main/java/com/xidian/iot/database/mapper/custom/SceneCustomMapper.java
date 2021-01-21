@@ -3,6 +3,8 @@ package com.xidian.iot.database.mapper.custom;
 import com.xidian.iot.database.vo.SceneVo;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * 自定义scene mapper
  * @author: Hansey
@@ -33,4 +35,27 @@ public interface SceneCustomMapper {
      * @return com.xidian.iot.database.vo.SceneVo
      * */
     SceneVo getSceneVoBySnJoin(@Param(value = "sceneSn")String sceneSn);
+
+    /**
+     * 获取场景及场景下节点
+     * @param
+     * @return java.util.List<com.xidian.iot.database.vo.SceneVo>
+     * */
+    List<SceneVo> getSceneVos();
+
+    /**
+     * 根据条件得到场景匹配数量
+     * @param sceneSn
+     * @param sceneName
+     * @return int
+     * */
+    int countSceneByCond(@Param(value = "sceneSn")String sceneSn, @Param(value = "sceneName")String sceneName);
+
+    /**
+     * 根据条件得到场景及节点
+     * @param sceneSn
+     * @param sceneName
+     * @return int
+     * */
+    List<SceneVo> getSceneVosByCond(@Param(value = "sceneSn")String sceneSn, @Param(value = "sceneName")String sceneName);
 }
