@@ -12,6 +12,8 @@
     <result column="scene_desc" jdbcType="VARCHAR" property="sceneDesc" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="scene_identifier" jdbcType="VARCHAR" property="sceneIdentifier" />
+    <result column="scene_attrname" jdbcType="VARCHAR" property="sceneAttrname" />
+    <result column="scene_map" jdbcType="VARCHAR" property="sceneMap" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -73,7 +75,7 @@
   </sql>
   <sql id="Base_Column_List">
     scene_id, scene_sn, scene_name, scene_loc, scene_lng, scene_lat, scene_el, scene_desc, 
-    create_time, scene_identifier
+    create_time, scene_identifier, scene_attrname, scene_map
   </sql>
   <select id="selectByExample" parameterType="com.xidian.iot.database.entity.SceneExample" resultMap="BaseResultMap">
     select
@@ -110,11 +112,13 @@
     insert into scene (scene_id, scene_sn, scene_name, 
       scene_loc, scene_lng, scene_lat, 
       scene_el, scene_desc, create_time, 
-      scene_identifier)
+      scene_identifier, scene_attrname, scene_map
+      )
     values (#{sceneId,jdbcType=BIGINT}, #{sceneSn,jdbcType=CHAR}, #{sceneName,jdbcType=VARCHAR}, 
       #{sceneLoc,jdbcType=VARCHAR}, #{sceneLng,jdbcType=DOUBLE}, #{sceneLat,jdbcType=DOUBLE}, 
       #{sceneEl,jdbcType=DOUBLE}, #{sceneDesc,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{sceneIdentifier,jdbcType=VARCHAR})
+      #{sceneIdentifier,jdbcType=VARCHAR}, #{sceneAttrname,jdbcType=VARCHAR}, #{sceneMap,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.iot.database.entity.Scene">
     insert into scene
@@ -149,6 +153,12 @@
       <if test="sceneIdentifier != null">
         scene_identifier,
       </if>
+      <if test="sceneAttrname != null">
+        scene_attrname,
+      </if>
+      <if test="sceneMap != null">
+        scene_map,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="sceneId != null">
@@ -180,6 +190,12 @@
       </if>
       <if test="sceneIdentifier != null">
         #{sceneIdentifier,jdbcType=VARCHAR},
+      </if>
+      <if test="sceneAttrname != null">
+        #{sceneAttrname,jdbcType=VARCHAR},
+      </if>
+      <if test="sceneMap != null">
+        #{sceneMap,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -222,6 +238,12 @@
       <if test="record.sceneIdentifier != null">
         scene_identifier = #{record.sceneIdentifier,jdbcType=VARCHAR},
       </if>
+      <if test="record.sceneAttrname != null">
+        scene_attrname = #{record.sceneAttrname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sceneMap != null">
+        scene_map = #{record.sceneMap,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -238,7 +260,9 @@
       scene_el = #{record.sceneEl,jdbcType=DOUBLE},
       scene_desc = #{record.sceneDesc,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      scene_identifier = #{record.sceneIdentifier,jdbcType=VARCHAR}
+      scene_identifier = #{record.sceneIdentifier,jdbcType=VARCHAR},
+      scene_attrname = #{record.sceneAttrname,jdbcType=VARCHAR},
+      scene_map = #{record.sceneMap,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -273,6 +297,12 @@
       <if test="sceneIdentifier != null">
         scene_identifier = #{sceneIdentifier,jdbcType=VARCHAR},
       </if>
+      <if test="sceneAttrname != null">
+        scene_attrname = #{sceneAttrname,jdbcType=VARCHAR},
+      </if>
+      <if test="sceneMap != null">
+        scene_map = #{sceneMap,jdbcType=VARCHAR},
+      </if>
     </set>
     where scene_id = #{sceneId,jdbcType=BIGINT}
   </update>
@@ -286,7 +316,9 @@
       scene_el = #{sceneEl,jdbcType=DOUBLE},
       scene_desc = #{sceneDesc,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      scene_identifier = #{sceneIdentifier,jdbcType=VARCHAR}
+      scene_identifier = #{sceneIdentifier,jdbcType=VARCHAR},
+      scene_attrname = #{sceneAttrname,jdbcType=VARCHAR},
+      scene_map = #{sceneMap,jdbcType=VARCHAR}
     where scene_id = #{sceneId,jdbcType=BIGINT}
   </update>
 </mapper>

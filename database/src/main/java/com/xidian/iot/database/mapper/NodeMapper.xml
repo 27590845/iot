@@ -9,7 +9,6 @@
     <result column="node_desc" jdbcType="VARCHAR" property="nodeDesc" />
     <result column="node_sn" jdbcType="VARCHAR" property="nodeSn" />
     <result column="node_map" jdbcType="VARCHAR" property="nodeMap" />
-    <result column="node_attrname" jdbcType="VARCHAR" property="nodeAttrname" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -71,8 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    node_id, scene_id, scene_sn, node_name, node_desc, node_sn, node_map, node_attrname, 
-    create_time
+    node_id, scene_id, scene_sn, node_name, node_desc, node_sn, node_map, create_time
   </sql>
   <select id="selectByExample" parameterType="com.xidian.iot.database.entity.NodeExample" resultMap="BaseResultMap">
     select
@@ -108,12 +106,10 @@
   <insert id="insert" parameterType="com.xidian.iot.database.entity.Node">
     insert into node (node_id, scene_id, scene_sn, 
       node_name, node_desc, node_sn, 
-      node_map, node_attrname, create_time
-      )
+      node_map, create_time)
     values (#{nodeId,jdbcType=BIGINT}, #{sceneId,jdbcType=BIGINT}, #{sceneSn,jdbcType=CHAR}, 
       #{nodeName,jdbcType=VARCHAR}, #{nodeDesc,jdbcType=VARCHAR}, #{nodeSn,jdbcType=VARCHAR}, 
-      #{nodeMap,jdbcType=VARCHAR}, #{nodeAttrname,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
-      )
+      #{nodeMap,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.xidian.iot.database.entity.Node">
     insert into node
@@ -138,9 +134,6 @@
       </if>
       <if test="nodeMap != null">
         node_map,
-      </if>
-      <if test="nodeAttrname != null">
-        node_attrname,
       </if>
       <if test="createTime != null">
         create_time,
@@ -167,9 +160,6 @@
       </if>
       <if test="nodeMap != null">
         #{nodeMap,jdbcType=VARCHAR},
-      </if>
-      <if test="nodeAttrname != null">
-        #{nodeAttrname,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -206,9 +196,6 @@
       <if test="record.nodeMap != null">
         node_map = #{record.nodeMap,jdbcType=VARCHAR},
       </if>
-      <if test="record.nodeAttrname != null">
-        node_attrname = #{record.nodeAttrname,jdbcType=VARCHAR},
-      </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
@@ -226,7 +213,6 @@
       node_desc = #{record.nodeDesc,jdbcType=VARCHAR},
       node_sn = #{record.nodeSn,jdbcType=VARCHAR},
       node_map = #{record.nodeMap,jdbcType=VARCHAR},
-      node_attrname = #{record.nodeAttrname,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -253,9 +239,6 @@
       <if test="nodeMap != null">
         node_map = #{nodeMap,jdbcType=VARCHAR},
       </if>
-      <if test="nodeAttrname != null">
-        node_attrname = #{nodeAttrname,jdbcType=VARCHAR},
-      </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -270,7 +253,6 @@
       node_desc = #{nodeDesc,jdbcType=VARCHAR},
       node_sn = #{nodeSn,jdbcType=VARCHAR},
       node_map = #{nodeMap,jdbcType=VARCHAR},
-      node_attrname = #{nodeAttrname,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where node_id = #{nodeId,jdbcType=BIGINT}
   </update>

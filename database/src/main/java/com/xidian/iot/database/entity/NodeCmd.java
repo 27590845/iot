@@ -3,8 +3,8 @@ package com.xidian.iot.database.entity;
 /**
  * 节点命令，节点命令的接收者是通信终端，一般通信终端会通过寻址机制将收到的命令作用于某个数据采集设备，命令可分为“收集数据“”调整参数”两类
  *
- * @author mrl
- * @date   2020/12/09
+ * @author xidianiot
+ * @date   2021/01/21
  */
 public class NodeCmd {
     /**

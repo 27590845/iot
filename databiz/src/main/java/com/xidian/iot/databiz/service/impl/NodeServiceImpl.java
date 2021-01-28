@@ -137,7 +137,6 @@ public class NodeServiceImpl implements NodeService {
         node.setNodeId(getNodeBySn(sceneSn, nodeSn).getNodeId());
         node.setNodeName(param.getNodeName());
         node.setNodeDesc(param.getNodeDesc());
-        node.setNodeAttrname(param.getNodeAttrname());
         node.setNodeMap(param.getNodeMap());
         nodeMapper.updateByPrimaryKeySelective(node);
         return node;

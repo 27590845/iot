@@ -27,11 +27,10 @@ public class NodeAttrStdController {
 
     @ApiOperation(value = "分页获取所有的节点属性模版")
     @GetMapping("/list")
-    public HttpResult getNodeAttrStds(@ApiParam(name = "page",value = "页号") @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-                                    @ApiParam(name = "limit",value = "页数") @RequestParam(value = "limit", required = false, defaultValue = "5") int limit){
+    public HttpResult getNodeAttrStds(){
         int total = nodeAttrStdService.getCount();
-        Page<NodeAttrStd> nodeAttrStdPage = new Page<NodeAttrStd>(total,page,limit);
-        nodeAttrStdPage.setData(nodeAttrStdService.getNodeAttrStds(page,limit));
+        Page<NodeAttrStd> nodeAttrStdPage = new Page<NodeAttrStd>(total,1,10);
+        nodeAttrStdPage.setData(nodeAttrStdService.getNodeAttrStds(-1,-1));
         return HttpResult.responseOK(nodeAttrStdPage);
     }
 

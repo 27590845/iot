@@ -58,6 +58,12 @@ public class SceneAddParam {
     @ApiModelProperty(value = "网关身份标识")
     private String sceneIdentifier;
 
+    @ApiModelProperty(value = "梓恒专用")
+    private String sceneAttrname;
+
+    @ApiModelProperty(value = "梓恒专用")
+    private String sceneMap;
+
     public Scene build(){
         Scene scene = new Scene();
         scene.setSceneName(sceneName);
@@ -69,6 +75,8 @@ public class SceneAddParam {
         scene.setSceneDesc(StringUtils.isNotBlank(sceneDesc)?sceneDesc:null);
         scene.setCreateTime(new Date());
         scene.setSceneIdentifier(StringUtils.isNotBlank(sceneIdentifier)?sceneIdentifier:null);
+        scene.setSceneAttrname(StringUtils.isNotBlank(sceneAttrname)?sceneAttrname:null);
+        scene.setSceneMap(StringUtils.isNotBlank(sceneMap)?sceneMap:null);
         return scene;
     }
 }
