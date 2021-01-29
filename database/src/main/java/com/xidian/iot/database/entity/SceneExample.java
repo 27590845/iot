@@ -754,6 +754,146 @@ public class SceneExample {
             addCriterion("scene_identifier not between", value1, value2, "sceneIdentifier");
             return (Criteria) this;
         }
+
+        public Criteria andSceneAttrnameIsNull() {
+            addCriterion("scene_attrname is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneAttrnameIsNotNull() {
+            addCriterion("scene_attrname is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneAttrnameEqualTo(String value) {
+            addCriterion("scene_attrname =", value, "sceneAttrname");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneAttrnameNotEqualTo(String value) {
+            addCriterion("scene_attrname <>", value, "sceneAttrname");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneAttrnameGreaterThan(String value) {
+            addCriterion("scene_attrname >", value, "sceneAttrname");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneAttrnameGreaterThanOrEqualTo(String value) {
+            addCriterion("scene_attrname >=", value, "sceneAttrname");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneAttrnameLessThan(String value) {
+            addCriterion("scene_attrname <", value, "sceneAttrname");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneAttrnameLessThanOrEqualTo(String value) {
+            addCriterion("scene_attrname <=", value, "sceneAttrname");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneAttrnameLike(String value) {
+            addCriterion("scene_attrname like", value, "sceneAttrname");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneAttrnameNotLike(String value) {
+            addCriterion("scene_attrname not like", value, "sceneAttrname");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneAttrnameIn(List<String> values) {
+            addCriterion("scene_attrname in", values, "sceneAttrname");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneAttrnameNotIn(List<String> values) {
+            addCriterion("scene_attrname not in", values, "sceneAttrname");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneAttrnameBetween(String value1, String value2) {
+            addCriterion("scene_attrname between", value1, value2, "sceneAttrname");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneAttrnameNotBetween(String value1, String value2) {
+            addCriterion("scene_attrname not between", value1, value2, "sceneAttrname");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneMapIsNull() {
+            addCriterion("scene_map is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneMapIsNotNull() {
+            addCriterion("scene_map is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneMapEqualTo(String value) {
+            addCriterion("scene_map =", value, "sceneMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneMapNotEqualTo(String value) {
+            addCriterion("scene_map <>", value, "sceneMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneMapGreaterThan(String value) {
+            addCriterion("scene_map >", value, "sceneMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneMapGreaterThanOrEqualTo(String value) {
+            addCriterion("scene_map >=", value, "sceneMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneMapLessThan(String value) {
+            addCriterion("scene_map <", value, "sceneMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneMapLessThanOrEqualTo(String value) {
+            addCriterion("scene_map <=", value, "sceneMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneMapLike(String value) {
+            addCriterion("scene_map like", value, "sceneMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneMapNotLike(String value) {
+            addCriterion("scene_map not like", value, "sceneMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneMapIn(List<String> values) {
+            addCriterion("scene_map in", values, "sceneMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneMapNotIn(List<String> values) {
+            addCriterion("scene_map not in", values, "sceneMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneMapBetween(String value1, String value2) {
+            addCriterion("scene_map between", value1, value2, "sceneMap");
+            return (Criteria) this;
+        }
+
+        public Criteria andSceneMapNotBetween(String value1, String value2) {
+            addCriterion("scene_map not between", value1, value2, "sceneMap");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

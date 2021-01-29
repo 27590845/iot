@@ -8,7 +8,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
     mkdir -p /app/datacenter
 
 WORKDIR /app/datacenter
-ADD target/jar/*.jar ./
+ADD target/*.jar ./
 
 EXPOSE 9999
 

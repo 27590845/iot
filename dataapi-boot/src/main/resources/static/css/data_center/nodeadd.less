@@ -1,0 +1,123 @@
+body {
+	main {
+		// 必须标记
+		.essential {
+			position: relative;
+		}
+		.essential::after {
+			content: "*";
+			position: absolute;
+			right: 0;
+			top: 0;
+			color: red;
+			font-size: 16px;
+		}
+		.node-container {
+			min-height: calc(100vh - 210px);
+			margin: 0;
+			border: 1px dotted;
+			border-radius: 5px;
+			padding: 0 0 15px;
+			.node-part {
+				position: relative;
+				padding: 0 15px;
+				header {
+					margin: 0 0 20px 0;
+				}
+				.operation-btn {
+					position: absolute;
+					top: 0;
+					right: 40px;
+				}
+				.section-body {
+					margin: 0 15px;
+				}
+			}
+			#node-info {
+				margin: 0 0 20px 0;
+				article {
+					.node-detail {
+						width: 100%;
+						form {
+							.form-group {
+								textarea {
+									resize: none;
+								}
+								.control-label-div {
+									padding: 7px 0;
+								}
+							}
+						}
+					}
+				}
+			}
+			#node-attr {    
+				min-height: calc(100vh - 590px);
+				padding: 0 15px 15px;
+				#node-attr-list {
+					border: 1px solid #ddd;
+					border-radius: 10px;
+					box-shadow: 0 0 5px black;
+					table {
+						margin: 0;
+						tbody, thead {
+							tr {
+								th, td {
+									text-align: center;
+									select {
+										width: 100%;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			#node-command {
+				article {
+					.node-command-list-item {
+						position: relative;
+						padding: 10px;
+						border-radius: 5px;
+						box-shadow: 0 0 10px #000000;
+						.node-command-header {
+							position: relative;
+							display: flex;
+							align-items: center;
+							margin: 0 0 10px 0;
+							font-size: 16px;
+							.item {
+								margin: 0 10px;
+								input, select {
+									min-width: 180px;
+									height: 28px;
+								}
+							}
+							.item-btn {
+								flex: 1;
+								text-align: right;
+								button {
+									margin: 0 10px 0 0;
+								}
+							}
+						}
+						.node-command-body {
+							margin: 0 0 0;
+						}
+					}
+					table {
+						width: 100%;
+					}
+				}
+				.row {
+					.control-label-div {
+						margin: 0 0 5px 0;
+					}
+				}
+			}
+			#node-btn-group {
+				text-align: right;
+			}
+		}
+	}
+}

@@ -74,10 +74,10 @@ public class NodeTrigServiceImpl implements NodeTrigService {
     }
 
     @Override
-    public NodeTrig updateNodeTrigById(NodeTrig nodeTrig) {
-        nodeTrigMapper.updateByPrimaryKeySelective(nodeTrig);
+    public int updateNodeTrigById(NodeTrig nodeTrig) {
+        int res =nodeTrigMapper.updateByPrimaryKeySelective(nodeTrig);
         NodeTrigServiceImpl currentProxy = (NodeTrigServiceImpl) AopContext.currentProxy();
         currentProxy.updateNodeTrigExtById(new NodeTrigExt(nodeTrig));
-        return nodeTrig;
+        return res;
     }
 }

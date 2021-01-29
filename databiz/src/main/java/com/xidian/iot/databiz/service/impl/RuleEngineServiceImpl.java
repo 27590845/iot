@@ -118,7 +118,7 @@ public class RuleEngineServiceImpl implements RuleEngineService {
         // 更新触发器
         nodeTrigService.updateNodeTrigById(nodeTrigParam);
         // 先判断是否有节点命令 如果有则直接事务回滚
-        if (!Objects.isNull(nodeTrigParam.getNodeActCmdParams())) {
+        if (!Objects.isNull(nodeTrigParam.getNodeActCmdParams())&&nodeTrigParam.getNodeActCmdParams().size()>0) {
             checkReptCondition(nodeTrigParam);
             // 更新nodeActCmd列表 也就是更新 ncId命令id
             nodeActCmdService.updateNodeActCmds(nodeTrigParam.getNodeActCmdParams()
@@ -154,5 +154,13 @@ public class RuleEngineServiceImpl implements RuleEngineService {
         if(Objects.isNull(nodeTrig))throw new BusinessException(-1,"该触发器不存在");
         NodeTrigParam nodeTrigParam = nodeTrigCustomMapper.getNodeTrigParamByNtId(ntId);
         return nodeTrigParam;
+    }
+
+    @Override
+    public int updateNodeTrig(Long ntId, NodeTrig nodeTrig) {
+        if (Objects.isNull(nodeTrigService.getNodeTrigExtById(ntId))) {
+            throw new BusinessException(-1, "该触发器不存在");
+        }
+        return nodeTrigService.updateNodeTrigById(nodeTrig);
     }
 }

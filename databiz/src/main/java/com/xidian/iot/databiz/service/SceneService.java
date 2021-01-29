@@ -16,13 +16,29 @@ public interface SceneService {
     public List<Scene> getScene(String sceneSn, int page, int limit);
 
     /**
-     * 分页获取当前所有的场景号
+     * 分页获取当前所有的场景号(仅获取场景号)
      *
      * @param page
      * @param limit
      * @return java.util.List<com.xidian.iot.database.entity.Scene>
      */
     List<Scene> getScenes(int page, int limit);
+
+    /**
+     * 分页获取scene及scene下所有的node
+     * @param page
+     * @param limit
+     * @return java.util.List<com.xidian.iot.database.vo.SceneVo>
+     * */
+    List<SceneVo> getScenesAndNode(int page, int limit);
+
+    /**
+     * 根据条件分页获取scene及scene下所有的node
+     * @param page
+     * @param limit
+     * @return java.util.List<com.xidian.iot.database.vo.SceneVo>
+     * */
+    List<SceneVo> getScenesAndNodeByCond(int page, int limit, String sceneSn, String sceneName);
 
     /**
      * 根据场景ID获取场景
@@ -50,6 +66,14 @@ public interface SceneService {
     int countScene();
 
     /**
+     * 根据条件得到场景匹配数量
+     * @param sceneSn
+     * @param sceneName
+     * @return int
+     * */
+    int countSceneByCond(String sceneSn, String sceneName);
+
+    /**
      * 根据sceneSn删除场景、
      * 级联删除node、node_attr、
      * node_cmd、node_cond
@@ -74,4 +98,11 @@ public interface SceneService {
      * @return java.lang.Object
      */
     List<NodeData> getLatestNodesData(String sceneSn);
+
+    /**
+     * 根据网关身份标示查询对应的网关
+     * @param identifier
+     * @return com.xidian.iot.database.entity.Scene
+     * */
+    Scene getSceneByIdentif(String identifier);
 }

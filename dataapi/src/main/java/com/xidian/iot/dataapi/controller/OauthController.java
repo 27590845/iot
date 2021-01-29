@@ -29,7 +29,7 @@ public class OauthController {
     @Value("${nm}")
     private String nm1;
 
-    @Value("${pwd}")
+    @Value("${pw}")
     private String pwd1;
 
     @Resource

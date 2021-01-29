@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Macro-更新场景</title>
+
+		<link rel="stylesheet" type="text/css" href="../../css/quote/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/quote/bootstrapValidator.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/base.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/data_center/sceneupdate.css" />
+
+		<script type="text/javascript" src="../../js/quote/jquery.min.js"></script>
+		<script type="text/javascript" src="../../js/quote/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../../js/quote/bootstrapValidator.min.js"></script>
+	</head>
+	<body>
+		<!-- 导航条 -->
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container-fluid">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header nav_index">
+					<a class="navbar-brand" href="/html/index/index.html">工业互联网平台</a>
+				</div>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div id="program-nav" class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav" role="tablist">
+						<li role="presentation" class="active"><a href="/html/data_center/index.html">数据中心</a></li>
+						<li role="presentation"><a href="/html/middle_ware/index.html">设备适配</a></li>
+						<li role="presentation"><a href="/html/occupy/index.html">占位符1</a></li>
+					</ul>
+
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">个人中心<span
+								 class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="#">选项一</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a href="/login.html">退出登录</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div><!-- /.navbar-collapse -->
+			</div><!-- /.container-fluid -->
+		</nav>
+
+		<main class="container bs-docs-container">
+			<!-- 导航路径 -->
+			<div class="row">
+				<ol id="nav-path" class="breadcrumb">
+
+				</ol>
+			</div>
+
+			<!-- 编辑场景基本信息的表单 -->
+			<section class="virtualMask">
+				<header class="col-sm-offset-1">
+					<h3>场景基本信息</h3>
+				</header>
+				<form class="form-horizontal" role="form" id="sceneInfo">
+					
+					<div class="form-group">
+						<div class="col-lg-1"></div>
+						<label for="createTime" class="col-sm-2 control-label">创建时间</label>
+						<div class="col-sm-6">
+							<input type="text" class="form-control" id="createTime" disabled name="createTime">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-lg-1"></div>
+						<label for="sceneName" class="col-sm-2 control-label essential">场景名称</label>
+						<div class="col-sm-6">
+							<input type="text" class="form-control" id="sceneName" name="sceneName" placeholder="请输入场景名称">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-lg-1"></div>
+						<label for="sceneSn" class="col-sm-2 control-label essential">场景网关号</label>
+						<div class="col-sm-6">
+							<input type="text" class="form-control" id="sceneSn" disabled name="sceneSn" placeholder="请输入场景网关号">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-lg-1"></div>
+						<label for="sceneMap" class="col-sm-2 control-label">场景映射</label>
+						<div class="col-sm-6">
+							<input type="text" class="form-control" id="sceneMap" name="sceneMap" placeholder="请输入场景映射">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-lg-1"></div>
+						<label for="sceneDesc" class="col-sm-2 control-label">场景描述</label>
+						<div class="col-sm-6">
+							<textarea class="form-control" id="sceneDesc" name="sceneDesc" placeholder="请输入场景描述" style="resize:none;"
+							 rows="3"></textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-lg-1"></div>
+						<label for="commCode" class="col-sm-2 control-label essential">通信协议</label>
+						<div class="col-sm-6">
+							<select class="form-control" disabled id="commCode" name="commCode">
+								<!-- <option></option>
+								<option value="1">TCP</option>
+								<option value="2">MODBUS</option> -->
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-lg-1"></div>
+						<label for="usageCode" class="col-sm-2 control-label essential">使用场景</label>
+						<div class="col-sm-6">
+							<select class="form-control" disabled id="usageCode" name="usageCode">
+								<!-- <option></option>
+								<option value="1">场景一</option>
+								<option value="2">场景二</option>
+								<option value="3">场景三</option>
+								<option value="4">场景四</option> -->
+							</select>
+						</div>
+					</div>
+				</form>
+			</section>
+
+			<!-- 编辑场景位置信息的表单 -->
+			<!-- <section class="virtualMask">
+				<header class="col-sm-offset-1">
+					<h3>场景位置信息</h3>
+				</header>
+				<section>
+					<article></article>
+					<article class="virtualMask">
+						<form class="form-horizontal" role="form" id="sceneInfo">
+							<div class="form-group">
+								<div class="col-lg-1"></div>
+								<label for="inputSceneLocation" class="col-sm-2 control-label">地点名称</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" id="inputSceneLocation" value="12356465" name="inputSceneLocation"
+									 placeholder="请输入地点名称">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-lg-1"></div>
+								<label for="inputSceneLongitude" class="col-sm-2 control-label">经度</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" id="inputSceneLongitude" name="inputSceneLongitude" placeholder="请输入经度">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-lg-1"></div>
+								<label for="inputSceneLatitude " class="col-sm-2 control-label">纬度</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" id="inputSceneLatitude" placeholder="请输入纬度" name="inputSceneLatitude">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-lg-1"></div>
+								<label for="inputSceneDesc" class="col-sm-2 control-label">海拔</label>
+								<div class="col-sm-6">
+										<input type="text" class="form-control" id="inputSceneDesc" placeholder="请输入海拔" name="inputSceneDesc">
+								</div>
+							</div>
+
+						</form>
+
+					</article>
+				</section>
+			</section>
+-->
+			<div class="submit-group">
+				<button id="sceneUpdateBtn" type="submit" class="btn btn-default col-lg-1 col-lg-offset-8">更新</button>
+			</div>
+		</main>
+		
+		<footer>
+			底部标注
+		</footer>
+		
+		<!-- 模态框，用来进行提示 -->
+		<div class="modal fade" id="promptModal" tabindex="-1" role="dialog" aria-labelledby="promptLabel">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		<script type="text/javascript" src="../../js/nav.js"></script>
+		<script type="text/javascript" src="../../js/base.js"></script>
+		<script type="text/javascript" src="../../js/http.js"></script>
+		<script type="text/javascript" src="../../js/data_center/sceneupdate.js"></script>
+
+	</body>
+</html>
