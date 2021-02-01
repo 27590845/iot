@@ -20,9 +20,28 @@
 <!--    <import resource="application-kafka-producer-def.xml"/>-->
     <import resource="application-chain.xml"/>
 
+    <bean id="getProp" class="com.xidian.iot.common.util.GetProps"/>
+
+    <task:scheduled-tasks>
+        <task:scheduled ref="reporter" method="report" cron="*/60 * * * * ?"/>
+    </task:scheduled-tasks>
+
     <task:executor id="taskExecutor"
                    pool-size="${thread.pool.corePoolSize}-${thread.pool.maxPoolSize}"
                    queue-capacity="${thread.pool.queueCapacity}" />
+
+<!--    <bean id="consoleMonitor" class="com.xidian.iot.common.monitor.catcher.ConsoleCatcher"-->
+<!--          init-method="startConsoleReaderThread">-->
+<!--        <property name="catchType" value="2"/>&lt;!&ndash; 只监控error级别的输出 &ndash;&gt;-->
+<!--        <property name="listener">-->
+<!--            <bean class="com.xidian.iot.datacenter.listener.MonitorListener"/>-->
+<!--        </property>-->
+<!--        <property name="parser">-->
+<!--            <bean class="com.xidian.iot.common.monitor.parser.LogbackParser">-->
+<!--                <constructor-arg value="${log.pattern}"/>-->
+<!--            </bean>-->
+<!--        </property>-->
+<!--    </bean>-->
 
 <!--    <bean id="messageListener" class="com.xidian.iot.datacenter.listener.UpdataListener"/>-->
 <!--    <bean id="messageListenerContainer" factory-bean="messageListenerContainerFactory"-->
@@ -35,49 +54,27 @@
 <!--            </list>-->
 <!--        </constructor-arg>-->
 <!--    </bean>-->
-    <!-- 主题监听Topic-->
-    <bean id="dataTopic" class="org.apache.activemq.command.ActiveMQQueue">
-        <constructor-arg>
-            <value>node.updata.*</value>
-        </constructor-arg>
-    </bean>
     <!-- 监听类 -->
     <bean id="receive" class="com.xidian.iot.datacenter.listener.UpdataListener"/>
     <bean id="dataListener" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
         <property name="connectionFactory" ref="jmsFactory" />
-        <property name="destination" ref="dataTopic" />
+        <property name="destination">
+            <bean class="org.apache.activemq.command.ActiveMQQueue">
+                <constructor-arg><value>node.updata.*</value></constructor-arg>
+            </bean>
+        </property>
         <property name="messageListener" ref="receive" />
     </bean>
 
-    <bean id="serverScoket" class="java.net.ServerSocket">
-        <constructor-arg value="${socket.server.port}"/>
-    </bean>
-
-    <bean id="consoleMonitor" class="com.xidian.iot.common.monitor.catcher.ConsoleCatcher" init-method="startConsoleReaderThread">
-        <property name="catchType" value="2"/><!-- 只监控error级别的输出 -->
-        <property name="listener"><bean class="com.xidian.iot.datacenter.listener.MonitorListener"/></property>
-        <property name="parser">
-            <bean class="com.xidian.iot.common.monitor.parser.LogbackParser">
-                <constructor-arg value="${log.pattern}"/>
-            </bean>
-        </property>
-    </bean>
-
-    <task:scheduled-tasks>
-        <task:scheduled ref="reporter" method="report" cron="*/60 * * * * ?"/>
-    </task:scheduled-tasks>
-
-    <!-- 站内信主题监听Topic-->
-    <bean id="dataTopicSL" class="org.apache.activemq.command.ActiveMQTopic">
-        <constructor-arg>
-            <value>SiteLetter</value>
-        </constructor-arg>
-    </bean>
     <!-- 监听类 -->
     <bean id="receiveSL" class="com.xidian.iot.datacenter.listener.SiteLetterListener"/>
     <bean id="dataListenerSL" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
         <property name="connectionFactory" ref="jmsFactory" />
-        <property name="destination" ref="dataTopicSL" />
+        <property name="destination">
+            <bean class="org.apache.activemq.command.ActiveMQTopic">
+                <constructor-arg><value>SiteLetter</value></constructor-arg>
+            </bean>
+        </property>
         <property name="messageListener" ref="receiveSL" />
     </bean>
 </beans>

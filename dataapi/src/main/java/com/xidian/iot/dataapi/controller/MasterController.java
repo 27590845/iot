@@ -1,15 +1,21 @@
 package com.xidian.iot.dataapi.controller;
 
+import com.xidian.iot.common.util.RandomUtil;
+import com.xidian.iot.common.util.compress.Point;
+import com.xidian.iot.common.util.compress.Proc;
+import com.xidian.iot.common.util.compress.sdt.SdtProc;
 import com.xidian.iot.common.util.uid.UidPrefixFactory;
 import com.xidian.iot.database.entity.Scene;
 import com.xidian.iot.dataapi.controller.res.HttpResult;
-import com.xidian.iot.databiz.service.SceneService;
 import com.xidian.iot.databiz.service.UidGenerator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * master 节点特有的接口
@@ -71,5 +77,27 @@ public class MasterController {
                 .success(true);
     }
 
-
+    @ApiOperation(value = "/compress/test", notes = "实时数据压缩、解压缩测试")
+    @GetMapping("/compress/test")
+    public HttpResult getSdtImage(double accuracyE, double mass){
+        Proc sdtProc = new SdtProc();
+        List<Point> originPoints = new ArrayList<>();
+        mass = Math.abs(mass);
+        for(int i=0; i<1000; i++){
+            Point point = new Point();
+            point.setX(i);
+//            point.setY(RandomUtil.nextInt(10, 19));
+            point.setY(Math.sin((double) i / 10));
+            //加入躁点
+            if(i%3 == 0){
+                point.setY(point.getY()+ RandomUtil.nextDouble(-mass, mass));
+            }
+            originPoints.add(point);
+        }
+        List<Point> compressPoints = sdtProc.compress(originPoints, accuracyE);
+        List<Point> uncompressPoints = sdtProc.unCompress(compressPoints, 0, 999, 1);
+        return HttpResult.oK().code(0).message("原点数："+originPoints.size()+"; 压缩后点数："+compressPoints.size()).data(
+                new List[]{originPoints, compressPoints, uncompressPoints}
+        ).success(true);
+    }
 }

@@ -2,6 +2,7 @@ package com.xidian.iot.datacenter.service.task;
 
 import com.xidian.iot.common.mq.MqSender;
 import com.xidian.iot.databiz.service.NodeCondService;
+import com.xidian.iot.databiz.service.SceneService;
 import com.xidian.iot.datacenter.system.SystemParamShared;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -34,19 +35,18 @@ public class Reporter {
     @Resource
     private MongoTemplate mongoTemplate;
     @Resource
-    private NodeCondService nodeCondService;
+    private SceneService sceneService;
 
     public void report(){
         if(!systemParamShared.isReportEnable()) return;
         try{
-            long time = new Date().getTime();
             log.info("======> 定时检测组件 <======");
             log.info("======> 检测mongodb <======");
             log.info("mongodb.iotdata.nodedata.count(): "+mongoTemplate.count(new Query(), "nodedata"));
             log.info("======> 检测redis <======");
-            log.info("redis.keys: "+systemParamShared.getDesc());
+            log.info("get-sys-param: "+systemParamShared.getDesc());
             log.info("======> 检测mysql <======");
-            log.info("NodeCondService.getNcIdsBySn: "+nodeCondService.getNcIdsBySn(sceneSn, nodeSn).toString());
+            log.info("sceneService.countScene(): "+ sceneService.countScene());
             log.info("======> 检测消息队列 <======");
             mqSender.sendTopic("datacenter.check", "check the connection");
             log.info("======> 定时检测完成 <======");

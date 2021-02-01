@@ -32,13 +32,15 @@ public class Application {
     final static String TRIGGER_OFF = "trigger-off";
     final static String REPORT_ON = "report-on";
     final static String REPORT_OFF = "report-off";
+    final static String REFRESH = "refresh";
 
     public static void main(String[] args) throws IOException {
         // 配置环境
         System.setProperty("spring.profiles.active",getProps.getPropValue("spring.profiles.active"));
         AbstractApplicationContext context = new ClassPathXmlApplicationContext("classpath:/spring/application-context.xml");
 
-        ServerSocket serverSocket = context.getBean(ServerSocket.class);
+        GetProps getProps = context.getBean(GetProps.class);
+        ServerSocket serverSocket = new ServerSocket(Integer.valueOf(getProps.getPropValue("socket.server.port")));
         SystemParamShared systemParamShared = context.getBean(SystemParamShared.class);
         log.info("服务器已经启动，等待客户端连接");
 
@@ -52,6 +54,10 @@ public class Application {
             switch (msg){
                 case SHUTDOWN:
                     response = "Shutdown successful. See you next time";
+                    break;
+                case REFRESH:
+                    context.refresh();
+                    response = "refresh complete";
                     break;
                 case GET_SYS_PARAM:
 //                    response = SystemParam.getDesc();
