@@ -1,0 +1,39 @@
+body {
+	main {
+		.row {
+			button{
+				span {
+					margin: 0 0 0 10px;
+				}
+			}
+		}
+		section {
+			header {
+				margin: 20px 0;
+			}
+			form {
+				.form-group {
+					.essential {
+						position: relative;
+					}
+					.essential::after {
+						content: "*";
+						position: absolute;
+						right: 8px;
+						top: 0;
+						color: red;
+						font-size: 16px;
+					}
+					.control-label-div {
+						margin: 0 0 0 5px;
+						padding: 7px;
+						margin-bottom: 0;
+						border: 1px solid #CCCCCC;
+						border-radius: 5px;
+					}
+				}
+			}
+			
+		}
+	}
+}

@@ -1,0 +1,76 @@
+body .alert {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+body main .scene-container {
+  margin: 20px 0 0 0;
+  border-radius: 5px;
+  border: 1px dotted;
+  padding: 0 20px 10px;
+}
+body main .scene-container header {
+  margin: 0 0 20px 0;
+}
+body main .scene-container #scene-list .scene-item {
+  position: relative;
+  border-radius: 5px;
+  padding: 10px 5px;
+  margin: 0 0 20px 0;
+  box-shadow: 0 0 10px var(--color);
+}
+body main .scene-container #scene-list .scene-item .scene-header {
+  margin: 0 0 10px 0;
+}
+body main .scene-container #scene-list .scene-item .scene-body {
+  max-height: 200px;
+  overflow: auto;
+}
+body main .scene-container #scene-list .scene-item .scene-body table {
+  margin: 0;
+}
+body main .scene-container #scene-list .scene-item .scene-body table thead tr th {
+  text-align: center;
+}
+body main .scene-container #scene-list .scene-item .scene-body table thead tr th:last-child {
+  width: 170px;
+}
+body main .scene-container #scene-list .scene-item .scene-body table tbody tr td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+body main .scene-container #scene-list .scene-item .scene-body table tbody tr td:last-child {
+  width: 170px;
+  text-align: center;
+}
+body main .scene-container #scene-list .scene-item [class~="scene-sn"] {
+  user-select: all;
+}
+body main .scene-container #scene-list .scene-item [class^="col-"] {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+body main .scene-container #scene-list .scene-item [class^="col-"] span {
+  margin: 0 0 0 5px;
+  font-weight: 600;
+}
+body main .scene-container #scene-list .scene-item::before {
+  content: var(--content);
+  color: var(--color);
+  letter-spacing: 4px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  position: absolute;
+  transform: translate(-50%, -50%) rotate(-30deg);
+}
+body main .scene-container .page-div {
+  text-align: center;
+}
+body main .scene-container .page-div ul li {
+  cursor: pointer;
+  user-select: none;
+}

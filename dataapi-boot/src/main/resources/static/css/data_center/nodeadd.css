@@ -1,0 +1,109 @@
+body main .essential {
+  position: relative;
+}
+body main .essential::after {
+  content: "*";
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: red;
+  font-size: 16px;
+}
+body main .node-container {
+  min-height: calc(100vh - 210px);
+  margin: 0;
+  border: 1px dotted;
+  border-radius: 5px;
+  padding: 0 0 15px;
+}
+body main .node-container .node-part {
+  position: relative;
+  padding: 0 15px;
+}
+body main .node-container .node-part header {
+  margin: 0 0 20px 0;
+}
+body main .node-container .node-part .operation-btn {
+  position: absolute;
+  top: 0;
+  right: 40px;
+}
+body main .node-container .node-part .section-body {
+  margin: 0 15px;
+}
+body main .node-container #node-info {
+  margin: 0 0 20px 0;
+}
+body main .node-container #node-info article .node-detail {
+  width: 100%;
+}
+body main .node-container #node-info article .node-detail form .form-group textarea {
+  resize: none;
+}
+body main .node-container #node-info article .node-detail form .form-group .control-label-div {
+  padding: 7px 0;
+}
+body main .node-container #node-attr {
+  min-height: calc(100vh - 590px);
+  padding: 0 15px 15px;
+}
+body main .node-container #node-attr #node-attr-list {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 5px black;
+}
+body main .node-container #node-attr #node-attr-list table {
+  margin: 0;
+}
+body main .node-container #node-attr #node-attr-list table tbody tr th,
+body main .node-container #node-attr #node-attr-list table thead tr th,
+body main .node-container #node-attr #node-attr-list table tbody tr td,
+body main .node-container #node-attr #node-attr-list table thead tr td {
+  text-align: center;
+}
+body main .node-container #node-attr #node-attr-list table tbody tr th select,
+body main .node-container #node-attr #node-attr-list table thead tr th select,
+body main .node-container #node-attr #node-attr-list table tbody tr td select,
+body main .node-container #node-attr #node-attr-list table thead tr td select {
+  width: 100%;
+}
+body main .node-container #node-command article .node-command-list-item {
+  position: relative;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px #000000;
+}
+body main .node-container #node-command article .node-command-list-item .node-command-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 0 0 10px 0;
+  font-size: 16px;
+}
+body main .node-container #node-command article .node-command-list-item .node-command-header .item {
+  margin: 0 10px;
+}
+body main .node-container #node-command article .node-command-list-item .node-command-header .item input,
+body main .node-container #node-command article .node-command-list-item .node-command-header .item select {
+  min-width: 180px;
+  height: 28px;
+}
+body main .node-container #node-command article .node-command-list-item .node-command-header .item-btn {
+  flex: 1;
+  text-align: right;
+}
+body main .node-container #node-command article .node-command-list-item .node-command-header .item-btn button {
+  margin: 0 10px 0 0;
+}
+body main .node-container #node-command article .node-command-list-item .node-command-body {
+  margin: 0 0 0;
+}
+body main .node-container #node-command article table {
+  width: 100%;
+}
+body main .node-container #node-command .row .control-label-div {
+  margin: 0 0 5px 0;
+}
+body main .node-container #node-btn-group {
+  text-align: right;
+}
