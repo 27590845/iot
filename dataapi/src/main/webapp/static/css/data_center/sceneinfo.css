@@ -1,0 +1,24 @@
+body main .row button span {
+  margin: 0 0 0 10px;
+}
+body main section header {
+  margin: 20px 0;
+}
+body main section form .form-group .essential {
+  position: relative;
+}
+body main section form .form-group .essential::after {
+  content: "*";
+  position: absolute;
+  right: 8px;
+  top: 0;
+  color: red;
+  font-size: 16px;
+}
+body main section form .form-group .control-label-div {
+  margin: 0 0 0 5px;
+  padding: 7px;
+  margin-bottom: 0;
+  border: 1px solid #CCCCCC;
+  border-radius: 5px;
+}
