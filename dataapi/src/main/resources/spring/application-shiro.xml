@@ -26,7 +26,7 @@
             <value>
                 /shiro-cas = casFilter
                 /logout = logoutFilter
-                /users/** = user
+                /** = user
             </value>
         </property>
     </bean>
@@ -42,7 +42,7 @@
         <property name="redirectUrl" value="${shiro.logoutUrl}"/>
     </bean>
 
-    <bean id="casRealm" class="org.apache.shiro.cas.CasRealm">
+    <bean id="casRealm" class="com.xidian.iot.dataapi.shiro.UserRealm">
         <!-- 认证通过后的默认角色 -->
         <property name="defaultRoles" value="ROLE_USER"/>
         <!-- cas服务端地址前缀 -->
