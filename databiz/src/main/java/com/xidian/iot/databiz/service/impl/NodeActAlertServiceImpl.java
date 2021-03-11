@@ -7,6 +7,7 @@ import com.xidian.iot.common.util.exception.BusinessException;
 import com.xidian.iot.database.entity.NodeActAlert;
 import com.xidian.iot.database.entity.NodeActAlertExample;
 import com.xidian.iot.database.mapper.NodeActAlertMapper;
+import com.xidian.iot.database.mapper.custom.NodeActAlertCustomMapper;
 import com.xidian.iot.database.param.NodeActAlertParam;
 import com.xidian.iot.databiz.service.NodeActAlertService;
 import com.xidian.iot.databiz.service.UidGenerator;
@@ -27,6 +28,8 @@ public class NodeActAlertServiceImpl implements NodeActAlertService {
     private UidGenerator uidGenerator;
     @Resource
     private NodeActAlertMapper nodeActAlertMapper;
+    @Resource
+    private NodeActAlertCustomMapper nodeActAlertCustomMapper;
 
     @Override
     public int addNodeActAlert(NodeActAlert nodeActAlert) {
@@ -101,5 +104,16 @@ public class NodeActAlertServiceImpl implements NodeActAlertService {
         NodeActAlertExample nodeActAlertExample = new NodeActAlertExample();
         nodeActAlertExample.createCriteria().andNtIdEqualTo(ntId);
         return nodeActAlertMapper.selectByExample(nodeActAlertExample);
+    }
+
+    @Override
+    public int addNodeActAlerts(List<NodeActAlert> nodeActAlerts) {
+       nodeActAlerts.forEach(naa -> naa.setNaaId(uidGenerator.getUID()));
+       return nodeActAlertCustomMapper.addBatch(nodeActAlerts);
+    }
+
+    @Override
+    public int updateNodeActAlerts(List<NodeActAlert> nodeActAlerts) {
+        return nodeActAlertCustomMapper.updateBatch(nodeActAlerts);
     }
 }

@@ -41,6 +41,14 @@ public class RuleEngineController {
         return HttpResult.responseOK(ruleEngineService.addRuleEngine(nodeTrigParam));
     }
 
+    @ApiOperation("添加一条规则，可以包含多条报警消息")
+    @PostMapping("/withNaas")
+    public HttpResult addWithNaas(
+            @ApiParam("要添加的规则，规则应该包含基本规则信息，规则条件列表，规则触发动作列表，规则触发报警列表")
+            @RequestBody @Validated(ValidGroup.INSERT.class) NodeTrigParam nodeTrigParam) {
+        return HttpResult.responseOK(ruleEngineService.addRuleEngineAndNaa(nodeTrigParam));
+    }
+
     @ApiOperation("添加单个节点的触发条件")
     @PostMapping("/{ntId}")
     public HttpResult addNodeCond(
@@ -81,6 +89,14 @@ public class RuleEngineController {
     public HttpResult updateScene(@ApiParam(name = "ntId", value = "") @PathVariable("ntId") Long ntId,
                                   @ApiParam(name = "NodeTrigParam", value = "触发器更新信息") @Validated(ValidGroup.UPDATE.class) @RequestBody NodeTrigParam nodeTrigParam) {
         ruleEngineService.updateRuleEngine(ntId, nodeTrigParam);
+        return HttpResult.oK().message("更新成功");
+    }
+
+    @ApiOperation(value = "更新触发器,可以包含多条警报消息")
+    @PutMapping("/withNaas/{ntId}")
+    public HttpResult updateSceneWithNaas(@ApiParam(name = "ntId", value = "") @PathVariable("ntId") Long ntId,
+                                  @ApiParam(name = "NodeTrigParam", value = "触发器更新信息") @Validated(ValidGroup.UPDATE.class) @RequestBody NodeTrigParam nodeTrigParam) {
+        ruleEngineService.updateRuleEngineAndNaa(ntId, nodeTrigParam);
         return HttpResult.oK().message("更新成功");
     }
 

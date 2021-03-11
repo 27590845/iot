@@ -1,11 +1,12 @@
 package com.xidian.iot.databiz.service.impl;
 
 import com.xidian.iot.common.util.exception.BusinessException;
+import com.xidian.iot.database.entity.NodeActAlert;
 import com.xidian.iot.database.entity.NodeActCmd;
 import com.xidian.iot.database.entity.NodeCond;
 import com.xidian.iot.database.entity.NodeTrig;
-import com.xidian.iot.database.mapper.NodeTrigMapper;
 import com.xidian.iot.database.mapper.custom.NodeTrigCustomMapper;
+import com.xidian.iot.database.param.NodeActAlertParam;
 import com.xidian.iot.database.param.NodeCondParam;
 import com.xidian.iot.database.param.NodeTrigParam;
 import com.xidian.iot.databiz.service.*;
@@ -14,7 +15,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -61,6 +61,7 @@ public class RuleEngineServiceImpl implements RuleEngineService {
         success += nodeCondService.addNodeConds(nodeTrigParam.getNodeCondParams()
                 .stream().map(param -> (NodeCond) param).collect(Collectors.toList()));
         return nodeTrigParam;
+
     }
 
     @Override
@@ -155,4 +156,57 @@ public class RuleEngineServiceImpl implements RuleEngineService {
         NodeTrigParam nodeTrigParam = nodeTrigCustomMapper.getNodeTrigParamByNtId(ntId);
         return nodeTrigParam;
     }
+
+    @Override
+    public NodeTrigParam addRuleEngineAndNaa(NodeTrigParam nodeTrigParam) {
+        int success = 0;
+        nodeTrigService.addNodeTrig(nodeTrigParam);
+        // 先判断是否有节点命令 如果有则直接事务回滚
+        if (!Objects.isNull(nodeTrigParam.getNodeActCmdParams())) {
+            checkReptCondition(nodeTrigParam);
+            nodeTrigParam.getNodeActCmdParams().forEach(nac -> nac.setNtId(nodeTrigParam.getNtId()));
+            //插入nodeActCmd列表
+            success += nodeActCmdService.addNodeActCmds(nodeTrigParam.getNodeActCmdParams()
+                    .stream().map(param -> (NodeActCmd) param).collect(Collectors.toList()));
+        }
+
+
+        // 插入nodeCond列表 List<Child>不能直接转为List<Parent>
+        nodeTrigParam.getNodeCondParams().forEach(nc -> nc.setNtId(nodeTrigParam.getNtId()));
+        success += nodeCondService.addNodeConds(nodeTrigParam.getNodeCondParams()
+                .stream().map(param -> (NodeCond) param).collect(Collectors.toList()));
+
+
+        //插入NodeActAlert列表
+        nodeTrigParam.getNodeActAlertParams().forEach(naa -> naa.setNtId(nodeTrigParam.getNtId()));
+        success += nodeActAlertService.addNodeActAlerts(nodeTrigParam.getNodeActAlertParams()
+                .stream().map(param -> (NodeActAlert) param).collect(Collectors.toList()));
+
+
+        return nodeTrigParam;
+    }
+
+    @Override
+    public void updateRuleEngineAndNaa(Long ntId, NodeTrigParam nodeTrigParam) {
+        if (Objects.isNull(nodeTrigService.getNodeTrigExtById(ntId))) {
+            throw new BusinessException(-1, "该触发器不存在");
+        }
+        // 更新触发器
+        nodeTrigService.updateNodeTrigById(nodeTrigParam);
+        // 先判断是否有节点命令 如果有则直接事务回滚
+        if (!Objects.isNull(nodeTrigParam.getNodeActCmdParams())) {
+            checkReptCondition(nodeTrigParam);
+            // 更新nodeActCmd列表 也就是更新 ncId命令id
+            nodeActCmdService.updateNodeActCmds(nodeTrigParam.getNodeActCmdParams()
+                    .stream().map(param -> {param.setNtId(ntId);
+                        return (NodeActCmd) param;}).collect(Collectors.toList()));
+        }
+        //更新NodeActAlert列表
+        nodeActAlertService.updateNodeActAlerts(nodeTrigParam.getNodeActAlertParams()
+                .stream().map(param -> (NodeActAlert) param).collect(Collectors.toList()));
+        // 更新nodeCond列表 List<Child>不能直接转为List<Parent>
+        nodeCondService.updateNodeConds(nodeTrigParam.getNodeCondParams()
+                .stream().map(param -> (NodeCond) param).collect(Collectors.toList()));
+    }
+
 }
