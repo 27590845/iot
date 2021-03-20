@@ -118,6 +118,17 @@
       <version>${shiro.version}</version>
     </dependency>
 
+
+
+    <!-- https://mvnrepository.com/artifact/org.mariuszgromada.math/MathParser.org-mXparser -->
+    <dependency>
+      <groupId>org.mariuszgromada.math</groupId>
+      <artifactId>MathParser.org-mXparser</artifactId>
+      <version>4.4.2</version>
+    </dependency>
+
+
+
   </dependencies>
 
 </project>

@@ -24,8 +24,10 @@
         </property>
         <property name="filterChainDefinitions">
             <value>
-                /shiro-cas = casFilter
+                /cas = casFilter
                 /logout = logoutFilter
+                /static/css/** = anon
+                /static/js/** = anon
                 /** = user
             </value>
         </property>

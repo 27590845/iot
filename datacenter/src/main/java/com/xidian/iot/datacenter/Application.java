@@ -24,15 +24,15 @@ public class Application {
 
     final static String MSG_NUM = "--msgNum=";
 
-    final static String SHUTDOWN = "shutdown";
-    final static String GET_SYS_PARAM = "get-sys-param";
-    final static String MILLI_LEVEL = "time-level-milli";
-    final static String SEC_LEVEL = "time-level-sec";
-    final static String TRIGGER_ON = "trigger-on";
-    final static String TRIGGER_OFF = "trigger-off";
-    final static String REPORT_ON = "report-on";
-    final static String REPORT_OFF = "report-off";
-    final static String REFRESH = "refresh";
+    final static String SHUTDOWN = "shutdown";//关闭datacenter程序
+    final static String GET_SYS_PARAM = "get-sys-param";//获取系统参数
+    final static String MILLI_LEVEL = "time-level-milli";//上传数据存储到mongo的时间粒度，修改为毫秒级别
+    final static String SEC_LEVEL = "time-level-sec";//上传数据存储到mongo的时间粒度，修改为秒级别
+    final static String TRIGGER_ON = "trigger-on";//启用规则引擎
+    final static String TRIGGER_OFF = "trigger-off";//关闭规则引擎
+    final static String REPORT_ON = "report-on";//开启组件定时检测
+    final static String REPORT_OFF = "report-off";//取消组件定时检测
+    final static String REFRESH = "refresh";//刷新当前spring BeanFactory（慎用）
 
     public static void main(String[] args) throws IOException {
         // 配置环境
