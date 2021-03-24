@@ -77,4 +77,13 @@
         </property>
         <property name="messageListener" ref="receiveSL" />
     </bean>
+
+
+    <bean id="influxDBConnection" class="com.xidian.iot.common.influxdb.InfluxDBConnection">
+        <constructor-arg index="0" value=""/>
+        <constructor-arg index="1" value=""/>
+        <constructor-arg index="2" value="http://iot.pro.influxdb:8086"/>
+        <constructor-arg index="3" value="iotdata"/>
+        <constructor-arg index="4" value=""/>
+    </bean>
 </beans>

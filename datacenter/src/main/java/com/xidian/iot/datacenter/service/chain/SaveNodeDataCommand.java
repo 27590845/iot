@@ -1,5 +1,6 @@
 package com.xidian.iot.datacenter.service.chain;
 
+import com.xidian.iot.common.influxdb.InfluxDBConnection;
 import com.xidian.iot.database.entity.mongo.NodeData;
 import com.xidian.iot.databiz.service.NodeDataService;
 import com.xidian.iot.datacenter.service.triger.ProcessNodeDataTask;
@@ -7,13 +8,20 @@ import com.xidian.iot.datacenter.system.SystemParamShared;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
+import org.influxdb.InfluxDB;
+import org.influxdb.dto.BatchPoints;
+import org.influxdb.dto.Point;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.task.TaskExecutor;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author mrl
@@ -32,6 +40,8 @@ public class SaveNodeDataCommand implements Command, ApplicationContextAware {
      */
     @Resource
     private NodeDataService nodeDataService;
+    @Resource
+    private InfluxDBConnection influxDBConnection;
     /**
      * 线程池引用
      */
@@ -54,6 +64,9 @@ public class SaveNodeDataCommand implements Command, ApplicationContextAware {
         // 保存节点数据
         log.debug("================================Start Saving nodeDataList.[{}]", nodeDataList);
         nodeDataService.addNodeData(nodeDataList);
+        if(systemParamShared.isInfluxEnable()) {
+            tmp_nodedata2influx(nodeDataList);
+        }
         log.debug("================================Complete Saved Node Data.");
 
         if(systemParamShared.isTriggerEnable()){
@@ -82,5 +95,19 @@ public class SaveNodeDataCommand implements Command, ApplicationContextAware {
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
+    }
+
+    private void tmp_nodedata2influx(List<NodeData> nodeDataList){
+        List<String> records = new ArrayList<>();
+        for(NodeData nodeData : nodeDataList){
+            Map<String, String> tags = new HashMap<>();
+            Map<String, Object> fields = new HashMap<>();
+            nodeData.getData().entrySet().stream().forEach(e -> fields.put(e.getKey(), Double.parseDouble(String.valueOf(e.getValue()))));
+//            tags.put("sceneSn", nodeData.getSceneSn());
+            tags.put("nodeSn", nodeData.getNodeSn());
+            Point point = influxDBConnection.pointBuilder(nodeData.getSceneSn(), System.currentTimeMillis(), tags, fields);
+            records.add(point.lineProtocol());
+        }
+        influxDBConnection.batchInsert("iotdata", null, InfluxDB.ConsistencyLevel.ALL, records);
     }
 }

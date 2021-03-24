@@ -53,17 +53,17 @@ public class ActivemqTest
     @Test
     public void appTest() throws JsonProcessingException, InterruptedException {
 //        String msg = "{\"datastreams\":[{\"TVOC\":69,\"hum\":54.0,\"at\":1597737850021,\"pm2p5\":33,\"co2\":509,\"pm10\":59,\"sn\":\""+nodeSn+"\",\"ch20\":19,\"tem\":32.0}]}";
-        for(int i=0; i< 1000; i++){
+        for(int i=0; i< 50000; i++){
             String msg = "{\"datastreams\":[{"
-                    + "\"tem1\":"+ RandomUtil.nextInt(10, 19)
-                    +",\"tem2\":"+RandomUtil.nextInt(20, 29)
-                    +",\"tem3\":"+RandomUtil.nextInt(30, 39)
-                    +",\"tem4\":"+RandomUtil.nextInt(40, 49)
-                    +",\"hum\":"+ RandomUtil.nextInt(0, 9)
+                    + "\"tem1\":"+ RandomUtil.NormalDistribution(25, 1)
+                    +",\"tem2\":"+RandomUtil.NormalDistribution(30, 1)
+                    +",\"tem3\":"+RandomUtil.NormalDistribution(500, 10)
+                    +",\"tem4\":"+RandomUtil.NormalDistribution(900, 15)
+                    +",\"hum\":"+ RandomUtil.NormalDistribution(60, 2)
                     +",\"at\":"+ TimeUtil.getTimeStamp(null)
                     +",\"sn\":\""+nodeSn+"\"}]}";
             mqSender.sendQueue(topicIot, msg);
-            Thread.sleep(1000);
+            Thread.sleep(500);
         }
     }
 

@@ -10,6 +10,7 @@
         <module>common-cache</module>
         <module>common-uid-generator</module>
         <module>common-monitor</module>
+        <module>common-nosql</module>
     </modules>
 
     <parent>

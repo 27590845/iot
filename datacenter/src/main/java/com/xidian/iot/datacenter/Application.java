@@ -1,6 +1,7 @@
 package com.xidian.iot.datacenter;
 
 import com.xidian.iot.common.util.GetProps;
+import com.xidian.iot.datacenter.service.task.FakeDataTask;
 import com.xidian.iot.datacenter.system.SystemParamShared;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.AbstractApplicationContext;
@@ -33,6 +34,10 @@ public class Application {
     final static String REPORT_ON = "report-on";//开启组件定时检测
     final static String REPORT_OFF = "report-off";//取消组件定时检测
     final static String REFRESH = "refresh";//刷新当前spring BeanFactory（慎用）
+    final static String INFLUX_ON = "influx-on";//开启influxDB存储
+    final static String INFLUX_OFF = "influx-off";//取消influxDB存储
+    final static String FAKEDATA_ADD = "fakedata-add";//添加一个假数据上传任务 接收三个参数scenSn、period、num
+    final static String FAKEDATA_DEL = "fakedata-del";//删除一个假数据上传任务 接收一个参数scenSn
 
     public static void main(String[] args) throws IOException {
         // 配置环境
@@ -51,7 +56,7 @@ public class Application {
             msg = br.readLine();
             log.info("接受到客户端的消息：{}", msg);
             String response;
-            switch (msg){
+            switch (msg.split(" ")[0]){
                 case SHUTDOWN:
                     response = "Shutdown successful. See you next time";
                     break;
@@ -92,6 +97,34 @@ public class Application {
 //                    SystemParam.setReportEnable(false);
                     systemParamShared.setReportEnable(false);
                     response = "set report disable";
+                    break;
+                case INFLUX_ON:
+//                    SystemParam.setReportEnable(true);
+                    systemParamShared.setInfluxEnable(true);
+                    response = "set influx enable";
+                    break;
+                case INFLUX_OFF:
+//                    SystemParam.setReportEnable(false);
+                    systemParamShared.setInfluxEnable(false);
+                    response = "set influx disable";
+                    break;
+                case FAKEDATA_ADD:
+                    String[] paramsFA = msg.split(" ");
+                    if(paramsFA.length<4){
+                        response = "invalid cmd format! fakedata-add [sceneSn] [period] [num]";
+                        break;
+                    }
+                    context.getBean(FakeDataTask.class).addFakeTask(paramsFA[1], Integer.parseInt(paramsFA[2]), Long.parseLong(paramsFA[3]));
+                    response = "add task '" + msg + "' executed";
+                    break;
+                case FAKEDATA_DEL:
+                    String[] paramsFD = msg.split(" ");
+                    if(paramsFD.length<2){
+                        response = "invalid cmd format! fakedata-del [sceneSn]";
+                        break;
+                    }
+                    context.getBean(FakeDataTask.class).delFakeTask(paramsFD[1]);
+                    response = "del task '" + msg + "' executed";
                     break;
                 default:
                     response = "Your msg : " + msg + ". do nothing.";
