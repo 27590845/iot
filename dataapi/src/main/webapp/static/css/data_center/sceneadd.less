@@ -1,0 +1,35 @@
+body {
+	main {
+		section {
+			header {
+				margin: 20px 0;
+			}
+			form {
+				.form-group {
+					.essential {
+						position: relative;
+					}
+					.essential::after {
+						content: "*";
+						position: absolute;
+						right: 0;
+						top: 0;
+						color: red;
+						font-size: 16px;
+					}
+					textarea {
+						resize: none;
+					}
+				}
+				.submit-group {
+					margin: 30px 0 0 0;
+					button {
+						span {
+							margin: 0 0 0 10px;
+						}
+					}	
+				}
+			}
+		}
+	}
+}

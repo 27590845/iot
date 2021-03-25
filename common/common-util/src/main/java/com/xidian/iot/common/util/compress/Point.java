@@ -10,6 +10,13 @@ public class Point implements Comparable<Point> {
     private long x;     // 时间戳
     private double y; // 测点值
 
+    public Point(){}
+
+    public Point(long x, double y){
+        this.x = x;
+        this.y = y;
+    }
+
     public long getX() {
         return x;
     }
