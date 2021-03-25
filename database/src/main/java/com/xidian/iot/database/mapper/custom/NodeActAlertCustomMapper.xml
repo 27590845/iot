@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xidian.iot.database.mapper.custom.NodeActAlertCustomMapper">
+    <insert id="addBatch" parameterType="java.util.List">
+        insert into node_act_alert (naa_id, nt_id, naa_type,naa_val, naa_content)
+        values
+        <foreach collection="naas" item="naa" separator=",">
+            (#{naa.naaId,jdbcType=BIGINT},
+            #{naa.ntId,jdbcType=BIGINT},
+            #{naa.naaType,jdbcType=TINYINT},
+            #{naa.naaVal,jdbcType=VARCHAR},
+            #{naa.naaContent,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+    <update id="updateBatch" parameterType="java.util.List">
+        <foreach collection="naas" item="naa" separator=",">
+            update node_act_alert
+            set
+            nt_id = #{naa.ntId,jdbcType=BIGINT},
+            naa_type = #{naa.naaType,jdbcType=TINYINT},
+            naa_val = #{naa.naaVal,jdbcType=VARCHAR},
+            naa_content = #{naa.naaContent,jdbcType=VARCHAR}
+            where naa_id = #{naa.naaId,jdbcType=BIGINT}
+        </foreach>
+    </update>
+</mapper>
