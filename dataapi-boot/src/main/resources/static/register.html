@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Marco-注册界面</title>
+		<link rel="stylesheet" href="./css/login/common.css">
+		<link rel="stylesheet" href="./css/login/register.css">				
+	</head>
+
+	<body>
+			<!-- 头部 -->
+			<div class="header">
+				<div class="title">工业互联网平台</div>
+				<div class="list">
+					<ul>
+						<li>
+							<a href="#">首页</a>
+						</li>
+						<li>
+							<a href="login.html">登录</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<!--注册-->
+			<div class="page-heading">
+				<h3>欢迎注册Macro账号</h3>
+			</div>
+
+			<div class="main-form">
+				<div class="main-form-errMsg"></div>
+				<div class="main-form-item">
+					<span class="main-form-label">用户名</span><!--
+    --><input class="main-form-input" type="text" placeholder="输入您的昵称" id="username">
+				</div>
+				
+				<div class="main-form-errMsg"></div>
+				<div class="main-form-item">
+					<span class="main-form-label">邮箱地址</span><!--
+    --><input class="main-form-input" type="text" placeholder="建议使用常用邮箱地址" id="email">
+				</div>
+
+				<div class="main-form-errMsg"></div>
+				<div class="main-form-item">
+					<span class="main-form-label">设置密码</span><!--
+    --><input class="main-form-input" type="password" placeholder="建议使用两种符号组合" id="password">
+				</div>
+
+				<div class="main-form-errMsg"></div>
+				<div class="main-form-item">
+					<span class="main-form-label">确认密码</span><!--
+    --><input class="main-form-input" type="password" placeholder="输入确认密码" id="password-comfirm">
+				</div>
+
+				<div class="main-form-errMsg"></div>
+				<div class="main-form-item" id="captcha-form-item">
+					<span class="main-form-label">验证码</span><!--
+    --><input class="main-form-input" type="text" placeholder="请输入验证码" id="captcha-input">
+				</div><canvas id="canvas"></canvas>
+
+				<button class="main-form-button btn" type="submit">立即注册</button>
+			</div>
+			<div class="correct"></div>
+			
+			<script type="text/javascript" src="./js/quote/jquery.min.js"></script>
+			<script type="text/javascript" src="./js/quote/zxcvbn.js"></script>
+			<script type="text/javascript" src="./js/http.js"></script>
+			<script type="text/javascript" src="./js/login/register.js"></script>
+	</body>
+
+</html>

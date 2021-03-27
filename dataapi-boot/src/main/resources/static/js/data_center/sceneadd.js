@@ -87,7 +87,7 @@ function addScene(data) {
 			body: '添加场景成功'
 		})
 		setTimeout(function() {
-			window.opener=null;
+			window.opener = null;
 			window.close();
 		}, 3000)
 	}).catch(res => {

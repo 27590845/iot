@@ -1,0 +1,98 @@
+*:focus {
+	outline: none;
+}
+
+body {
+	height: 100%;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	background-color: black;
+	font-family: "Hiragino Sans GB", "Microsoft YaHei", Helvetica, Arial, Tahoma, sans-serif;
+	font-size: 14px;
+	background-image: url(../../assets/images/login/bg.jpg);
+	background-repeat: no-repeat;
+	
+	.login-form * {
+		/*设置的边框和内边距的值是包含在width内的*/
+		box-sizing: border-box;
+		display: inline-block;
+	}
+	.login-form {
+		width: 360px;
+		background-color: #f5f4f3;
+		padding: 40px 40px 50px 40px;
+		margin: 280px auto;
+		box-sizing: border-box;
+		
+		.login-logo-wrapper {
+			width: 280px;
+			padding-bottom: 20px;
+			text-align: center;
+			
+			h2 {
+				line-height:18px;
+				font-size: 25px;
+				font-weight: normal;
+				text-align: center;
+			}
+		}
+		
+		.login-form-item {
+			display: block;
+			border: solid 1px #D6D6D6;
+			border-radius: 3px;
+			background-color: #f5f4f3;
+			padding: 10px 14px;
+			margin: 0 auto 30px;
+			
+			.login-form-input {
+				border: none;
+				background-color: #f5f4f3;
+				width: 80%;
+				margin-left: 12px;
+			}
+		}
+		.login-button {
+			text-align: center;
+			width: 100%;
+			font-size: 18px;
+			background: #627E98;
+			border: none;
+			border-radius: 3px;
+			padding: 10px;
+			margin-bottom: 10px;
+		}
+		
+		.login-button:hover {
+			cursor: pointer;
+			background: #1A486A;
+		}
+		
+		.register-link {
+			display: block;
+			
+			a {
+				float: right;
+				margin-bottom: 20px;
+				color:#627E98 ;
+				text-decoration: underline;
+				padding: 7px 2px 0px 3px;
+				text-decoration: none;
+			}
+			
+			a:hover {
+				color:#1A486A;
+			}
+		}
+		
+	}
+}
+
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+	-webkit-box-shadow: 0 0 0 50px #f5f4f3 inset;
+}
+

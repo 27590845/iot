@@ -60,3 +60,6 @@ body main .node-container #node-attr-info .row {
 body main .node-container #node-attr-info .row .control-label-div {
   margin: 0 0 5px 0;
 }
+body main .node-container #node-attr-info #line-chart {
+  height: 300px;
+}

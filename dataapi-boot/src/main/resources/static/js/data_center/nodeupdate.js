@@ -60,16 +60,16 @@ function updateNodeInfo() {
 	// nodeName特殊
 	nodeInfoShow.nodeName = data.get("nodeNames");
 	putHttp({
-		"url" : `/node/${sceneSn}/${nodeSn}`,
+		"url": `/node/${sceneSn}/${nodeSn}`,
 		"data": JSON.stringify(nodeInfoShow)
-	}).then(res=> {
-	$("update-node").attr("disabled", true);
+	}).then(res => {
+		$("update-node").attr("disabled", true);
 		promptModel({
 			type: "modal-header-success",
 			title: '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>节点更新',
 			body: '节点信息更新成功'
 		})
-	}).catch(_=>{
+	}).catch(_ => {
 		promptModel({
 			type: "modal-header-danger",
 			title: '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>节点更新',
@@ -195,8 +195,7 @@ function addNodeAttrHTML() {
 function saveNodeAttr(tr) {
 	// 更新节点属性成功后
 	let nodeAttrs = []
-	let nodeAttrItem = {
-	}
+	let nodeAttrItem = {}
 	let inputs = tr.find("input").toArray();
 	inputs.forEach(function(item) {
 		nodeAttrItem[item.name] = item.value
@@ -205,30 +204,30 @@ function saveNodeAttr(tr) {
 	postHttp({
 		url: `/nodeAttr/${sceneSn}/${nodeSn}`,
 		data: JSON.stringify(nodeAttrs)
-	}).then(res=> {
+	}).then(res => {
 		promptModel({
 			type: "modal-header-success",
 			title: '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>节点信息',
 			body: '节点属性新增成功'
 		})
-		
+
 		// 保存功能之后的内容
 		let btn = $(tr.find("button")[0])
 		btn.html("更新")
 		btn.removeClass("save-node-attr")
 		btn.addClass("update-node-attr")
 		btn.prop("disabled", true)
-		
+
 		tr.data("nakey", nodeAttrItem.naKey);
-		
-	}).catch(_=>{
+
+	}).catch(_ => {
 		promptModel({
 			type: "modal-header-danger",
 			title: '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>节点信息',
 			body: '节点属性新增失败，请稍后再试'
 		})
 	})
-	
+
 }
 /**
  * 删除节点属性
@@ -237,7 +236,7 @@ function saveNodeAttr(tr) {
 function deleteNodeAttr(tr) {
 	// 判断类型，更新请求后台删除节点；否则不需要请求后台删除节点
 	let naKey = tr[0].dataset.hasOwnProperty("nakey") ? tr[0].dataset.nakey : ""
-	if ( "" === naKey ) {
+	if ("" === naKey) {
 		promptModel({
 			type: "modal-header-success",
 			title: '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>节点信息',
@@ -250,10 +249,10 @@ function deleteNodeAttr(tr) {
 		}
 		return;
 	}
-	
+
 	deleteHttp({
 		url: `/nodeAttr/${sceneSn}/${nodeSn}/${naKey}`
-	}).then(res=> {
+	}).then(res => {
 		promptModel({
 			type: "modal-header-success",
 			title: '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>节点信息',
@@ -264,18 +263,18 @@ function deleteNodeAttr(tr) {
 			$("#node-attr-list").hide()
 			$("#node-attr-list-prompt").show()
 		}
-	}).catch(_=>{
+	}).catch(_ => {
 		promptModel({
 			type: "modal-header-danger",
 			title: '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>节点信息',
 			body: '节点属性删除失败，请稍后再试'
 		})
 	})
-	
-	
-	
-	
-	
+
+
+
+
+
 }
 /**
  * 更新节点属性
@@ -284,17 +283,16 @@ function deleteNodeAttr(tr) {
 function updateNodeAttr(tr) {
 	let naKey = tr[0].dataset.hasOwnProperty("nakey") ? tr[0].dataset.nakey : "";
 	// 更新节点属性成功后
-	let nodeAttrItem = {
-	}
+	let nodeAttrItem = {}
 	let inputs = tr.find("input").toArray();
 	inputs.forEach(function(item) {
 		nodeAttrItem[item.name] = item.value
 	})
-	
+
 	putHttp({
 		url: `/nodeAttr/${sceneSn}/${nodeSn}/${naKey}`,
 		data: JSON.stringify(nodeAttrItem)
-	}).then(res=>{
+	}).then(res => {
 		// 同时要更新nakay的值
 		tr[0].dataset.nakey = nodeAttrItem.naKey;
 		promptModel({
@@ -304,14 +302,14 @@ function updateNodeAttr(tr) {
 		})
 		let btn = $(tr.find("button")[0]);
 		btn.prop("disabled", true)
-	}).catch(_=>{
+	}).catch(_ => {
 		promptModel({
 			type: "modal-header-danger",
 			title: '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>节点更新',
 			body: '节点属性更新失败'
 		})
 	})
-	
+
 }
 /**
  * 节点属性中节点类型的选择
@@ -387,12 +385,12 @@ function nodeBtn() {
 		return;
 	} else if (/delete-node-attr/.test(this.className)) { // 删除节点属性
 		promptModel({
-			 type: "modal-header-danger",
-			 title: '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>节点更新',
-			 body: `确定要删除此属性吗?`,
-			 footer: '<button type="button" class="btn btn-primary" data-dismiss="modal">取消</button><button id="deleteNodeAttrCommit" type="button" class="btn btn-danger">删除</button>'
-		 })
-		$("#deleteNodeAttrCommit").click(function(){
+			type: "modal-header-danger",
+			title: '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>节点更新',
+			body: `确定要删除此属性吗?`,
+			footer: '<button type="button" class="btn btn-primary" data-dismiss="modal">取消</button><button id="deleteNodeAttrCommit" type="button" class="btn btn-danger">删除</button>'
+		})
+		$("#deleteNodeAttrCommit").click(function() {
 			deleteNodeAttr(tr)
 		})
 		return;

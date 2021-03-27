@@ -3,12 +3,12 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Macro-更新节点</title>
-		
+
 		<link rel="stylesheet" type="text/css" href="../../css/quote/bootstrap.min.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/quote/bootstrapValidator.min.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/base.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/data_center/nodeupdate.css" />
-		
+
 		<script type="text/javascript" src="../../js/quote/jquery.min.js"></script>
 		<script type="text/javascript" src="../../js/quote/bootstrap.min.js"></script>
 		<script type="text/javascript" src="../../js/quote/bootstrapValidator.min.js"></script>
@@ -24,15 +24,16 @@
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div id="program-nav" class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav" role="tablist">
-						<li role="presentation" class="active"><a href="/html/data_center/index.html">数据中心</a></li>
+						<li role="presentation" class="active"><a
+								href="/html/data_center/index.html">数据中心</a></li>
 						<li role="presentation"><a href="/html/middle_ware/index.html">设备适配</a></li>
 						<li role="presentation"><a href="/html/occupy/index.html">占位符1</a></li>
 					</ul>
-		
+
 					<ul class="nav navbar-nav navbar-right">
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">个人中心<span
-								 class="caret"></span></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+								aria-haspopup="true" aria-expanded="false">个人中心<span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li><a href="#">选项一</a></li>
 								<li role="separator" class="divider"></li>
@@ -43,15 +44,15 @@
 				</div><!-- /.navbar-collapse -->
 			</div><!-- /.container-fluid -->
 		</nav>
-		
+
 		<main class="container bs-docs-container">
 			<!-- 导航路径 -->
 			<div class="row">
 				<ol id="nav-path" class="breadcrumb">
-					
+
 				</ol>
 			</div>
-			
+
 			<div class="node-container">
 				<!-- 节点的详细信息 -->
 				<section id="node-info" class="node-part">
@@ -67,36 +68,41 @@
 									<div class="form-group">
 										<label for="nodeNames" class="col-lg-2 control-label essential">节点名称</label>
 										<div class="col-sm-6">
-											<input type="text" class="form-control" id="nodeNames" name="nodeNames" placeholder="请输入节点名称">
+											<input type="text" class="form-control" id="nodeNames" name="nodeNames"
+												placeholder="请输入节点名称">
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="nodeSn" class="col-lg-2 control-label" />节点标识</label>
 										<div class="col-sm-6">
-											<input type="text" class="form-control" id="nodeSn" name="nodeSn" placeholder="请输入节点标识" readonly="true">
+											<input type="text" class="form-control" id="nodeSn" name="nodeSn"
+												placeholder="请输入节点标识" readonly="true">
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="nodeMap" class="col-lg-2 control-label">节点映射</label>
 										<div class="col-sm-6">
-											<input type="text" class="form-control" id="nodeMap" name="nodeMap" placeholder="请输入节点映射">
+											<input type="text" class="form-control" id="nodeMap" name="nodeMap"
+												placeholder="请输入节点映射">
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="nodeDesc" class="col-lg-2 control-label">节点描述</label>
 										<div class="col-sm-6">
-											<textarea class="form-control" id="nodeDesc" name="nodeDesc" placeholder="节点标识" rows="3"></textarea>
+											<textarea class="form-control" id="nodeDesc" name="nodeDesc"
+												placeholder="节点标识" rows="3"></textarea>
 										</div>
 									</div>
 								</form>
 							</div>
 						</div>
 						<div class="row">
-							<button id="update-nodeinfo" type="button" class="btn col-lg-1 btn-success col-lg-push-7" disabled>更新</button>
+							<button id="update-nodeinfo" type="button" class="btn col-lg-1 btn-success col-lg-push-7"
+								disabled>更新</button>
 						</div>
 					</article>
 				</section>
-						
+
 				<!-- 节点属性列表 -->
 				<section id="node-attr" class="node-part">
 					<!-- 操作按钮 -->
@@ -107,11 +113,11 @@
 					<header>
 						<h3>属性列表</h3>
 					</header>
-					
+
 					<article id="node-attr-list-prompt" class="prompt">
 						<span>暂无节点属性，点击右上方[更新]按钮进行添加</span>
 					</article>
-					
+
 					<article id="node-attr-list">
 						<table class="table table-bordered table-hover">
 							<thead>
@@ -126,20 +132,20 @@
 								</tr>
 							</thead>
 							<tbody>
-								
+
 							</tbody>
 						</table>
 					</article>
 				</section>
-						
+
 				<!-- 节点命令组列表 -->
 				<!-- <section id="node-command" class="node-part"> -->
-					<!-- 操作按钮 -->
-					<!-- <div class="row operation-btn">
+				<!-- 操作按钮 -->
+				<!-- <div class="row operation-btn">
 						<button id="update-node" type="button" class="btn btn-info">添加命令组</button>
 					</div> -->
-					<!-- 标题 -->
-					<!-- <header>
+				<!-- 标题 -->
+				<!-- <header>
 						<h3>节点命令</h3>
 					</header>
 					<article>
@@ -184,22 +190,22 @@
 					</article>
 				</section> -->
 			</div>
-			
+
 		</main>
-		
+
 		<footer>
 			底部标注
 		</footer>
-		
+
 		<!-- 模态框，用来进行提示 -->
 		<div class="modal fade" id="promptModal" tabindex="-1" role="dialog" aria-labelledby="promptLabel">
 			<div class="modal-dialog modal-lg" role="document">
 				<div class="modal-content">
-					
+
 				</div><!-- /.modal-content -->
 			</div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->
-		
+
 		<script type="text/javascript" src="../../js/nav.js"></script>
 		<script type="text/javascript" src="../../js/base.js"></script>
 		<script type="text/javascript" src="../../js/http.js"></script>

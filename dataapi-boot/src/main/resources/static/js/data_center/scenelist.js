@@ -31,7 +31,7 @@ function deleteScene(data) {
 	deleteHttp({
 		url: "/scene/" + data,
 		contentType: "x-www-form-urlencoded"
-	}).then((res)=> {
+	}).then((res) => {
 		location.reload(false)
 	}).catch(res => {
 		promptModel({
@@ -48,14 +48,14 @@ function deleteScene(data) {
 function deleteNodeAttr(url) {
 	deleteHttp({
 		url: url
-	}).then(res=> {
+	}).then(res => {
 		location.reload(false)
-	}).catch(_=>{
+	}).catch(_ => {
 		promptModel({
-			 type: "modal-header-danger",
-			 title: '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>节点删除',
-			 body: `节点删除失败`
-		 })
+			type: "modal-header-danger",
+			title: '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>节点删除',
+			body: `节点删除失败`
+		})
 	})
 }
 /**
@@ -74,7 +74,8 @@ function sceneListBtn() {
 	// 将本页面的状态存入localstorage中【如果是搜索内容和场景列表2选1】
 	let searchObj = getSearchKey("search");
 	let searchObjKey = searchObj ? searchObj.self : "search";
-	let itemKey = new RegExp(searchObjKey).test(location.search) ? searchObjKey : location.pathname.match(/.*\/(.*)\.html/)[1];
+	let itemKey = new RegExp(searchObjKey).test(location.search) ? searchObjKey : location.pathname.match(
+		/.*\/(.*)\.html/)[1];
 	localStorage.setItem(itemKey, location.search)
 
 	// 获取历史路径
@@ -95,12 +96,12 @@ function sceneListBtn() {
 		return;
 	} else if (/delete-scene/.test(this.className)) { // 场景删除按钮
 		promptModel({
-			 type: "modal-header-danger",
-			 title: '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>场景删除提醒',
-			 body: `确定要删除"${scenename}"(${scenesn})此场景吗?`,
-			 footer: '<button type="button" class="btn btn-primary" data-dismiss="modal">取消</button><button id="deleteCommit" type="button" class="btn btn-danger">删除</button>'
-		 })
-		$("#deleteCommit").click(function(){
+			type: "modal-header-danger",
+			title: '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>场景删除提醒',
+			body: `确定要删除"${scenename}"(${scenesn})此场景吗?`,
+			footer: '<button type="button" class="btn btn-primary" data-dismiss="modal">取消</button><button id="deleteCommit" type="button" class="btn btn-danger">删除</button>'
+		})
+		$("#deleteCommit").click(function() {
 			var $btn = $(this).button('loading')
 			$btn.button('reset')
 			deleteScene(scenesn)
@@ -117,12 +118,12 @@ function sceneListBtn() {
 		return;
 	} else if (/delete-node/.test(this.className)) { // 节点删除按钮
 		promptModel({
-			 type: "modal-header-danger",
-			 title: '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>节点删除提醒',
-			 body: `确定要删除"${nodename}"(${scenesn} / ${nodesn})此节点吗?`,
-			 footer: '<button type="button" class="btn btn-primary" data-dismiss="modal">取消</button><button id="deleteNodeAttrCommit" type="button" class="btn btn-danger">删除</button>'
-		 })
-		$("#deleteNodeAttrCommit").click(function(){
+			type: "modal-header-danger",
+			title: '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>节点删除提醒',
+			body: `确定要删除"${nodename}"(${scenesn} / ${nodesn})此节点吗?`,
+			footer: '<button type="button" class="btn btn-primary" data-dismiss="modal">取消</button><button id="deleteNodeAttrCommit" type="button" class="btn btn-danger">删除</button>'
+		})
+		$("#deleteNodeAttrCommit").click(function() {
 			let url = "/node/" + scenesn + "/" + nodesn;
 			deleteNodeAttr(url)
 		})
@@ -138,7 +139,7 @@ function createSceneList(data) {
 	data.forEach(function(sceneItem) {
 		// 展示的HTML
 		let html =
-		`
+			`
 		<div class="scene-item" style="--color: green; --content: '在线' ">
 		`
 		// 头部内容
@@ -173,7 +174,7 @@ function createSceneList(data) {
 		
 		<div class="scene-body">
 		`
-		
+
 		// 主体内容
 		let table = "<div>暂无节点信息</div>"
 		if (0 != sceneItem.nodeVos.length) {
@@ -215,7 +216,7 @@ function createSceneList(data) {
 				`
 		}
 		html += table;
-		
+
 		// 闭合信息
 		html +=
 			`
@@ -297,14 +298,14 @@ function entrance() {
 	 * 进行ajax的数据请求【使用promise与后台进行交互】判断是否搜索或查看所有
 	 */
 	// 发送的参数
-	let data = "page="+currentPage+"&limit=10"
+	let data = "page=" + currentPage + "&limit=10"
 	let httpInfo = {
 		url: "/scene/list?" + data,
 		contentType: "application/x-www-form-urlencoded",
 	}
 	// 获取数据
 	if (searchContent != null) {
-		data += "&sceneSn="+searchContent;
+		data += "&sceneSn=" + searchContent;
 		httpInfo = {
 			url: "/scene/search?" + data,
 			contentType: "application/json",
