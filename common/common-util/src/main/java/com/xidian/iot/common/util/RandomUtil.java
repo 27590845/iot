@@ -2,6 +2,7 @@ package com.xidian.iot.common.util;
 
 import org.apache.commons.lang3.RandomUtils;
 
+import java.text.DecimalFormat;
 import java.util.Random;
 
 /**
@@ -43,8 +44,8 @@ public class RandomUtil {
 
 	/**
 	 * 获得一个随机数值，此数值介于最小数值和最大数值
-	 * @param min 最小数值 
-	 * @param max 最大数值 
+	 * @param min 最小数值
+	 * @param max 最大数值
 	 * @return 返回得到的随机数值。
 	 */
 	public static int nextInt(int min, int max) {
@@ -87,9 +88,17 @@ public class RandomUtil {
 		return (long) (Math.random() * (max - min) + min);
 	}
 
+	public static double nextDouble(double min, double max){
+		if (min > max) {
+			throw new IllegalArgumentException("Prameter 'min' can not > 'max'.");
+		}
+		DecimalFormat df = new DecimalFormat("#.00");
+		return  Double.parseDouble(df.format(min + ((max - min) * new  Random().nextDouble())));
+	}
+
 	/**
-	 * 获得一个指定长度的随机字符串 
-	 * 采用{{@link #ALL_LETTER}作为随机字符串的字符取值范围 
+	 * 获得一个指定长度的随机字符串
+	 * 采用{{@link #ALL_LETTER}作为随机字符串的字符取值范围
 	 * @param length  字符串长度。
 	 * @return 返回得到的随机字符串。
 	 */
@@ -98,8 +107,8 @@ public class RandomUtil {
 	}
 
 	/**
-	 * 获得一个指定长度的随机字符串。 
-	 * 可通过指定chars决定随机字符串的字符取值范围。 
+	 * 获得一个指定长度的随机字符串。
+	 * 可通过指定chars决定随机字符串的字符取值范围。
 	 * @param length 字符串长度，长度若小于0则返回""。
 	 * @param chars  随机字符取值范围。
 	 * @return 返回得到的随机字符串，当chars为null或""是，返回""。
@@ -122,10 +131,10 @@ public class RandomUtil {
 
 		return sb.toString();
 	}
-    
+
 	/**
 	 * 获得指定风格的随机串
-	 * 
+	 *
 	 * @param length 随机串长度
 	 * @param seed 产生的种子
 	 * @return 随机串
@@ -150,7 +159,7 @@ public class RandomUtil {
 
 	/**
 	 * 生成验证码
-	 * 
+	 *
 	 * @param id 待生成用户的唯一标识
 	 * @param minutes 有效时间，输入几分钟
 	 * @return 6位数字验证码
@@ -186,7 +195,7 @@ public class RandomUtil {
 
         return EncryptUtil.md5Hex(code + rand);
 	}
-	
+
 	/**
 	 * 生成验证码
 	 * @param id 待生成用户的唯一标识
@@ -196,7 +205,7 @@ public class RandomUtil {
 	public static String getSignature(String id, String rand){
 		return getSignature(id, 5, rand);
 	}
-	
+
 	/**
 	 * 验证验证码是否正确
 	 * @param id 待生成用户的唯一标识
@@ -219,7 +228,7 @@ public class RandomUtil {
         String gencode = RandomUtil.nextString(6, seed + minuteSeed);
         return gencode.equals(sig)?true: RandomUtil.nextString(6, seed + minuteSeed -1).equals(sig);
 	}
-	
+
 	/**
 	 * 验证验证码是否正确
 	 * @param id 待生成用户的唯一标识
@@ -242,7 +251,7 @@ public class RandomUtil {
         String gencode = RandomUtil.nextString(6, seed + minuteSeed);
         return gencode.equals(sig);
 	}
-	
+
 	/**
 	 * 验证验证码是否正确
 	 * @param id 待生成用户的唯一标识
@@ -264,7 +273,7 @@ public class RandomUtil {
         }
         String gencode = RandomUtil.nextString(6, seed + minuteSeed);
         String realcode = EncryptUtil.md5Hex(gencode + rand);
-        
+
         if(realcode.equals(sig)) {
         	return true;
         } else {
@@ -273,7 +282,7 @@ public class RandomUtil {
         	return realcode.equals(sig);
         }
 	}
-	
+
 	/**
 	 * 验证验证码是否正确
 	 * @param id 待验证用户的ID，或者手机号
@@ -284,10 +293,10 @@ public class RandomUtil {
 	public static boolean verity(String id, String sig, String rand){
 		return verity(id, 5, sig, rand);
 	}
-	
+
 	/**
 	 * 将字符串转换成数字
-	 * 
+	 *
 	 * @param str
 	 * @return
 	 */
@@ -298,4 +307,17 @@ public class RandomUtil {
 		}
 		return num;
 	}
+
+    /**
+     * 普通正态随机分布
+     * @param u 均值
+     * @param v 方差
+     * @return
+     */
+	public static double NormalDistribution(double u,float v){
+		java.util.Random random = new java.util.Random();
+		return Math.sqrt(v)*random.nextGaussian()+u;
+	}
+
+
 }

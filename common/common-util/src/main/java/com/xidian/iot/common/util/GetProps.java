@@ -23,15 +23,10 @@ public class GetProps {
     private String propValue = null;
 
     public GetProps(){
-        super();
         readConfig("/conf/application.properties");
     }
 
-    /**
-     * 暂时禁止调用此构造函数
-     * @param filePath
-     */
-    private GetProps(String filePath) {
+    public GetProps(String filePath) {
         readConfig(filePath);
     }
 

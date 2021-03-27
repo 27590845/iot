@@ -3,8 +3,6 @@ package com.xidian.iot.databiz.service;
 import com.xidian.iot.database.entity.NodeActAlert;
 import com.xidian.iot.database.param.NodeActAlertParam;
 
-import com.xidian.iot.database.entity.NodeActAlert;
-import com.xidian.iot.database.param.NodeActAlertParam;
 
 import java.util.List;
 
@@ -85,4 +83,18 @@ public interface NodeActAlertService {
      * @return void
      */
     void checkExistNodeActAlert(NodeActAlertParam param);
+
+    /**
+     * 一次插入多条警报信息
+     * @param nodeActAlerts
+     * @return
+     */
+    int addNodeActAlerts(List<NodeActAlert> nodeActAlerts);
+
+    /**
+     * 更新多条节点触发器关联相关触发报警
+     * @param nodeActAlerts
+     * @return
+     */
+    int updateNodeActAlerts(List<NodeActAlert> nodeActAlerts);
 }

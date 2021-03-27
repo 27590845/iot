@@ -7,6 +7,7 @@
     <context:component-scan base-package="com.xidian.iot.*"/>
     <context:annotation-config/>
 
+<!--    <import resource="application-shiro.xml"/>-->
     <import resource="application-databiz.xml"/>
     <!-- mongo、redis已经包含在application-databiz.xml内 -->
 <!--    <import resource="application-mongo-def.xml"/>-->

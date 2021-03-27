@@ -4,12 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <modules>
+        <module>common-alert</module>
         <module>common-util</module>
         <module>common-mq</module>
         <module>common-cache</module>
         <module>common-uid-generator</module>
         <module>common-monitor</module>
-        <module>common-alert</module>
+        <module>common-nosql</module>
     </modules>
 
     <parent>
