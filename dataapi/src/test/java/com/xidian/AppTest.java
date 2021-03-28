@@ -22,6 +22,13 @@ public class AppTest
     }
 
     @Test
+    public void show(){
+        String sss = "http://125.46.16.2:10080/hls/jinluzt005/jinluzt005_live.m3u8";
+        String ssss = sss.split("/")[4];
+        System.out.println(ssss);
+    }
+
+    @Test
     public void mathParserTest(){
         Function f = new Function("f(x,y)=sin(x/10)+y");
         double res = f.calculate(new Argument("x=30"), new Argument("y=1"));

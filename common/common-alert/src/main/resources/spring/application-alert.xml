@@ -19,7 +19,8 @@
             <array>
                 <value>classpath:conf/email.properties</value>
                 <value>classpath:conf/sms.properties</value>
-                <value>classpath:conf/activemq-prod.properties</value>
+<!--                <value>classpath:conf/activemq-prod.properties</value>-->
+<!--                <value>classpath:conf/activemq-dev.properties</value>-->
             </array>
         </property>
     </bean>

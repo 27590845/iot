@@ -10,6 +10,7 @@
 
 		<script type="text/javascript" src="../../js/quote/jquery.min.js"></script>
 		<script type="text/javascript" src="../../js/quote/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../../js/quote/echarts.min.js"></script>
 	</head>
 	<body>
 		<!-- 导航条 -->
@@ -22,15 +23,16 @@
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div id="program-nav" class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav" role="tablist">
-						<li role="presentation" class="active"><a href="/html/data_center/index.html">数据中心</a></li>
+						<li role="presentation" class="active"><a
+								href="/html/data_center/index.html">数据中心</a></li>
 						<li role="presentation"><a href="/html/middle_ware/index.html">设备适配</a></li>
 						<li role="presentation"><a href="/html/occupy/index.html">占位符1</a></li>
 					</ul>
 
 					<ul class="nav navbar-nav navbar-right">
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">个人中心<span
-								 class="caret"></span></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+								aria-haspopup="true" aria-expanded="false">个人中心<span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li><a href="#">选项一</a></li>
 								<li role="separator" class="divider"></li>
@@ -68,7 +70,7 @@
 			<div class="row btn-content">
 				<div class="col-lg-2 col-lg-push-10">
 					<button id="add-node" type="button" class="btn btn-success">添加节点
-					<span class="glyphicon glyphicon-plus-sign"></span></button>
+						<span class="glyphicon glyphicon-plus-sign"></span></button>
 				</div>
 			</div>
 			<div class="node-container">
@@ -165,29 +167,30 @@
 								属性标识属性标识属性标识属性标识
 							</div>
 						</article>
-						<!-- 绘制折线图 -->
-						<article class="line-chart" style="height: 300px; border: 1px solid #000000;">
+						<!-- 绘制折线图 style="height: 300px; border: 1px solid #000000;"-->
+						<article id="line-chart">
 						</article>
 					</div>
 				</section>
 			</div>
 		</main>
-		
+
 		<footer>
 			底部标注
 		</footer>
-		
+
 		<!-- 模态框，用来进行提示 -->
 		<div class="modal fade" id="promptModal" tabindex="-1" role="dialog" aria-labelledby="promptLabel">
 			<div class="modal-dialog modal-lg" role="document">
 				<div class="modal-content">
-					
+
 				</div><!-- /.modal-content -->
 			</div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->
 		<script type="text/javascript" src="../../js/nav.js"></script>
 		<script type="text/javascript" src="../../js/base.js"></script>
 		<script type="text/javascript" src="../../js/http.js"></script>
+		<script type="text/javascript" src="../../js/myEcharts.js"></script>
 		<script type="text/javascript" src="../../js/data_center/nodeinfo.js"></script>
 	</body>
 </html>

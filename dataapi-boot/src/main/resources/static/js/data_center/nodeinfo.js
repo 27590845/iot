@@ -25,9 +25,10 @@ function showNodeInfo() {
 		for (let item of Object.entries(nodeInfoShow)) {
 			$("[name=" + item[0] + "Info]").html(nodeInfo[item[0]] || item[1])
 		}
-		// 属性列表展示
-		createNodeAttrList(nodeInfo)
 
+		nodeAttrInfo = nodeInfo.nodeAttrList;
+		// 属性列表展示
+		createNodeAttrList();
 		// 侧边导航栏中样式的选择和点击效果【通用组件的功能，在base.js中进行定义，方便维护】
 		let navinfo = {
 			id: "page-nav",
@@ -41,6 +42,8 @@ function showNodeInfo() {
 		})
 		broadside(navinfo, location)
 
+		// 获取历史数据
+		getHistValue()
 	}).catch(res => {
 		promptModel({
 			type: "modal-header-danger",
@@ -53,10 +56,80 @@ function showNodeInfo() {
  * 查看节点属性的详细信息
  * @param {Object} data 节点的属性信息 
  */
-function nodeAttrInfo(data) {
+function showNodeAttrInfo(data) {
 	$("[name='selectednodename']").html(data.naName)
 	$("[name='selectednodesn']").html(data.naKey)
 	// 绘制折线图
+	if (nodeAttrEcharts) { // 只需要更新对应展示的传感器即可
+		nodeAttrEcharts.changeSensor({
+			name: data.naName,
+			key: data.naKey
+		})
+		return;
+	}
+	let option = {
+		tooltip: {
+			show: true,
+			trigger: "item", // 触发器
+			confine: true, // tooltip限制在图表区域内
+			renderMode: "html", // 渲染模式
+			formatter: function(params) {
+				console.dir(params)
+				return `<span>时间：${params[0].name} <br> 数值：${params[0].value}</span>`
+			}
+		},
+		legend: {
+			show: false
+		},
+		dataZoom: [{ // 鼠标滚轮缩放
+			type: "inside",
+			xAxisIndex: [0],
+			yAxisIndex: [0],
+			filterMode: "none"
+		}],
+		xAxis: {
+			type: 'category',
+			data: [],
+			name: "时间",
+			axisLabel: {
+				show: true,
+				margin: 15
+			},
+			axisLine: { // 坐标轴线的设置
+				show: true,
+				symbol: ["none", "arrow"],
+				symbolOffset: [0, 10]
+			},
+			axisTick: { // 坐标轴刻度
+				alignWithLabel: true
+			},
+			axisPointer: { // 坐标指示器，添加上到，移动鼠标出现提示框tooltip
+				show: true,
+				label: {
+					show: false
+				}
+			}
+		},
+		yAxis: {
+			type: 'value',
+			name: "数值",
+			scale: true, // 设置成 true 后坐标刻度不会强制包含零刻度【只有type='value'的时候有效】
+			axisLine: { // 坐标轴线的设置
+				show: true,
+				symbol: ["none", "arrow"],
+				symbolOffset: [0, 10]
+			},
+		},
+		series: [{
+			name: data.naName,
+			type: 'line',
+			symbol: 'none',
+			connectNulls: true, // 连接空数据
+			data: []
+		}]
+	};
+	nodeAttrEcharts = new Echarts("line-chart", option, data.naKey);
+
 }
 /**
  * 删除节点
@@ -109,7 +182,8 @@ function nodeBtn() {
 	// 将本页面的状态存入localstorage中【如果是搜索内容和场景列表2选1】
 	let searchObj = getSearchKey("search");
 	let searchObjKey = searchObj ? searchObj.self : "search";
-	let itemKey = new RegExp(searchObjKey).test(location.search) ? searchObjKey : location.pathname.match(/.*\/(.*)\.html/)[
+	let itemKey = new RegExp(searchObjKey).test(location.search) ? searchObjKey : location.pathname.match(
+		/.*\/(.*)\.html/)[
 		1];
 	localStorage.setItem(itemKey, location.search)
 
@@ -146,7 +220,7 @@ function nodeBtn() {
 	}
 	// 属性列表中的按钮
 	if (/info-node-attr/.test(this.className)) { // 节点属性信息按钮
-		nodeAttrInfo(info)
+		showNodeAttrInfo(info)
 		return;
 	} else if (/update-node-attr/.test(this.className)) { // 节点属性更新按钮
 		// 进行页面的跳转
@@ -171,13 +245,12 @@ function nodeBtn() {
  * 生成节点属性列表【从后台中获取到相关的nodesn的所有属性的时候，用html进行展示】
  */
 function createNodeAttrList() {
-	let nodeAttr = nodeInfo.nodeAttrList;
-	if (nodeAttr.length <= 0) {
+	if (nodeAttrInfo.length <= 0) {
 		$("#node-attr-list").hide()
 		$("#node-attr-info").hide()
 		$("#node-attr-list-prompt").show()
 		return;
-	} 
+	}
 
 	$("#node-attr-list").html("")
 	$("#node-attr-list").show()
@@ -186,7 +259,7 @@ function createNodeAttrList() {
 	let table = `
 		<div class="node-attr-list-body">
 		</div>`
-	if (nodeAttr.length != 0) {
+	if (nodeAttrInfo.length != 0) {
 		table =
 			`
 			<div class="node-attr-list-body">
@@ -202,9 +275,9 @@ function createNodeAttrList() {
 						</tr>
 					</thead>
 					<tbody>`
-		nodeAttr.forEach(function(item, index) {
+		nodeAttrInfo.forEach(function(item, index) {
 			if (0 === index) {
-				nodeAttrInfo({
+				showNodeAttrInfo({
 					naId: item.naId,
 					naName: item.naName,
 					naKey: item.naKey
@@ -245,6 +318,52 @@ function createNodeAttrList() {
 
 }
 /**
+ * 更新节点属性的echarts
+ */
+function updataNodeAttrValue() {
+
+}
+/**
+ * 获取到历史数据
+ */
+function getHistValue(date) {
+	getHttp({
+		url: `/scene/${sceneSn}/node/${nodeSn}?st=2020-11-22 00:00:00&et=2020-11-23 06:00:00`
+	}).then(res => {
+		let time = [];
+		let sensors = {};
+		nodeAttrInfo.forEach(item => {
+			sensors[item.naKey] = []
+		})
+		console.dir(nodeAttrEcharts)
+		// 获取传感器数据，让echarts直接使用
+		// for (let index = res.length - 1; index >= 0; index--) { // 返回的数据是倒叙
+		for (let index = 0; index < res.length; index++) { // 返回的数据是倒叙
+			let item = res[index]
+			time.push(dateTimeFormat(item.at));
+			for (let [index, value] of Object.entries(item.data)) {
+				sensors[index].push("0");
+			}
+			for (let [index, value] of Object.entries(item.data)) {
+				sensors[index][sensors[index].length - 1] = value;
+			}
+		}
+		// res.forEach(function(item) {
+		// 	time.push(dateTimeFormat(item.at));
+		// 	for (let [index, value] of Object.entries(item.data)) {
+		// 		sensors[index].push(value)
+		// 	}
+		// })
+		if (nodeAttrEcharts) {
+			console.dir(nodeAttrEcharts)
+			nodeAttrEcharts.historyData(time, sensors);
+		}
+
+	}).catch(res => {
+
+	})
+}
+/**
  * 本页面的全局变量
  */
 // sceneSn的获取
@@ -255,6 +374,10 @@ let nodeObj = new RegExp(getSearchKey("nodesn").self + "=(.*)");
 let nodeSn = location.search.match(nodeObj)[1].split("&")[0]
 // nodeInfo的声明
 let nodeInfo = null;
+// nodeAttrInfo的声明
+let nodeAttrInfo = [];
+// 绘制的折线图
+let nodeAttrEcharts = null;
 $(function() {
 	// 路径导航初始化
 	trajectoryUnCode(location.pathname, location.search)

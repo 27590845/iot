@@ -37,10 +37,9 @@ function trajectoryEnCode(pathname, search, side = false) {
 		}
 		return false;
 	})
-	
-	path += "" === path ? historyObjKey + "=" + present : "|" + present;
+	path += "" === path ? historyObjKey + "=" + present : "S" + present;
 	// 路径中的内容进行去重
-	path = Array.from(new Set(path.split("|"))).join("|")
+	path = Array.from(new Set(path.split("S"))).join("S")
 	return path;
 }
 /**
@@ -63,7 +62,7 @@ function trajectoryUnCode(pathname, search) {
 		let searchObjKey = searchObj ? searchObj.self : "search";
 		if (new RegExp(historyObjKey).test(item)) { // 历史路径获取
 			let path = item.match(new RegExp(historyObjKey + "=(.*)"))[1];
-			trajectory = path.split("|");
+			trajectory = path.split("S");
 		} else if (new RegExp(searchObjKey).test(item)) { // 当前位置的精确定位
 			present = searchObjKey;
 		}
