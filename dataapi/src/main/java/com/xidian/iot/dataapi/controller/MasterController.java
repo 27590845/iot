@@ -5,24 +5,25 @@ import com.xidian.iot.common.util.StringUtil;
 import com.xidian.iot.common.util.compress.Point;
 import com.xidian.iot.common.util.compress.Proc;
 import com.xidian.iot.common.util.compress.sdt.SdtProc;
-import com.xidian.iot.common.util.uid.UidPrefixFactory;
-import com.xidian.iot.database.entity.Scene;
 import com.xidian.iot.dataapi.controller.res.HttpResult;
-import com.xidian.iot.databiz.service.UidGenerator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.mariuszgromada.math.mxparser.Argument;
 import org.mariuszgromada.math.mxparser.Function;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * master 节点特有的接口
@@ -68,31 +69,8 @@ public class MasterController {
 
     @ApiOperation(value = "欢迎界面1", notes = "测试带参数的欢迎信息")
     @GetMapping("/{param}")
-    public HttpResult welcome1(@ApiParam(name = "param", value = "测试参数", required = false) @PathVariable String param){
+    public HttpResult welcome1(@ApiParam(name = "param", value = "测试参数") @PathVariable String param){
         return new HttpResult(param);
-    }
-
-    @ApiOperation(value = "欢迎2", notes = "测试参数为json的欢迎信息")
-    @PostMapping("/welcome2")
-    public HttpResult welcome2(@ApiParam(name = "param", value = "测试参数对象", required = false) @RequestBody Scene scene){
-        return HttpResult.oK()
-                .code(1)
-                .message("dddd")
-                .data("sss")
-                .success(false);
-    }
-
-    @Autowired
-    private UidGenerator uidGenerator;
-
-    @ApiOperation(value = "idGen", notes = "Id生成测试")
-    @GetMapping("/idGen")
-    public HttpResult getId(){
-        return HttpResult.oK()
-                .code(0)
-                .message("获取id成功")
-                .data(uidGenerator.getUID())
-                .success(true);
     }
 
     @ApiOperation(value = "/compress/test", notes = "实时数据压缩、解压缩测试")
