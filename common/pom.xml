@@ -11,6 +11,7 @@
         <module>common-uid-generator</module>
         <module>common-monitor</module>
         <module>common-nosql</module>
+        <module>common-acl</module>
     </modules>
 
     <parent>

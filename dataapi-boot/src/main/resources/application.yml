@@ -12,7 +12,7 @@ dataapi-boot:
 # 开发环境配置
 server:
   # 服务器的HTTP端口，默认为8080
-  port: 8080
+  port: 8081
   servlet:
     # 应用的访问路径
     context-path: /
@@ -46,3 +46,20 @@ spring:
       charset: utf-8
       enabled: true
       force: true
+
+grafana-server: http://127.0.0.1:3000
+
+zuul:
+  routes:
+    grafana_dashboard:
+      path: /dashboard/**
+      url: ${grafana-server}/dashboard
+    grafana_public:
+      path: /public/**
+      url: ${grafana-server}/public
+    grafana_api:
+      path: /api/**
+      url: ${grafana-server}/api
+    grafana_d:
+      path: /d/**
+      url: ${grafana-server}/api

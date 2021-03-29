@@ -1,5 +1,10 @@
 package com.xidian.iot.dataapi.controller;
 
+import com.xidian.iot.common.util.RandomUtil;
+import com.xidian.iot.common.util.StringUtil;
+import com.xidian.iot.common.util.compress.Point;
+import com.xidian.iot.common.util.compress.Proc;
+import com.xidian.iot.common.util.compress.sdt.SdtProc;
 import com.xidian.iot.common.util.uid.UidPrefixFactory;
 import com.xidian.iot.database.entity.Scene;
 import com.xidian.iot.dataapi.controller.res.HttpResult;
@@ -10,6 +15,17 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * master 节点特有的接口
@@ -22,54 +38,55 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/master")
 public class MasterController {
 
-    @ApiOperation(value = "欢迎界面1", notes = "测试带参数的欢迎信息")
-    @GetMapping("/{param}")
-    public HttpResult welcome1(@ApiParam(name = "param", value = "测试参数", required = false) @PathVariable String param){
-        return new HttpResult(param);
-    }
+    public static final String MAIN_HTML =
+            "<!DOCTYPE html>\n" +
+                    "<html>\n" +
+                    "<head>\n" +
+                    "    <meta charset=\"utf-8\"/>\n" +
+                    "    <title>Marco-跳转页面</title>\n" +
+                    "</head>\n" +
+                    "<body>\n" +
+                    "<script type=\"application/javascript\">\n" +
+                    "    setTimeout(function () {\n" +
+                    "        window.location = \"/html/data_center/index.html\";\n" +
+                    "    },1500);\n" +
+                    "</script>\n" +
+                    "<b style=\"margin: 20px\">跳转中，请稍等···</b>\n" +
+                    "</body>\n" +
+                    "</html>";
 
-    @ApiOperation(value = "欢迎2", notes = "测试参数为json的欢迎信息")
-    @PostMapping("/welcome2")
-    public HttpResult welcome2(@ApiParam(name = "param", value = "测试参数对象", required = false) @RequestBody Scene scene){
-        return HttpResult.oK()
-                .code(1)
-                .message("dddd")
-                .data("sss")
-                .success(false);
-    }
-
-    @Autowired(required = false)
-    private UidPrefixFactory uidPrefixFactory;
-
-    @ApiOperation(value = "idPrefix", notes = "SimpleIdGenerator测试用，用于获取master的id前缀")
-    @GetMapping("/idPrefix")
-    public HttpResult getIdPrefix(){
-        if(uidPrefixFactory==null){
-            return HttpResult.oK()
-                    .code(-1)
-                    .message("SimpleIdGenerator未启用")
-                    .success(false);
-        }else {
-            return HttpResult.oK()
-                    .code(0)
-                    .message("获取id前缀成功")
-                    .data(uidPrefixFactory.getPrefix())
-                    .success(true);
+    @ApiOperation(value = "返回登录/主页面", notes = "返回登录/主页面")
+    @GetMapping
+    public void main(){
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = attributes.getRequest();
+        HttpServletResponse response = attributes.getResponse();
+        response.setHeader("Content-Type","text/html;charset=UTF-8");
+        try {
+            response.getWriter().write(MAIN_HTML);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    @Autowired
-    private UidGenerator uidGenerator;
-
-    @ApiOperation(value = "idGen", notes = "Id生成测试")
-    @GetMapping("/idGen")
-    public HttpResult getId(){
-        return HttpResult.oK()
-                .code(0)
-                .message("获取id成功")
-                .data(uidGenerator.getUID())
-                .success(true);
+    @ApiOperation(value = "欢迎界面1", notes = "测试带参数的欢迎信息")
+    @GetMapping("/{param}")
+    public HttpResult welcome1(@ApiParam(name = "param", value = "测试参数") @PathVariable String param){
+        return new HttpResult(param);
     }
 
-
+    @ApiOperation(value = "欢迎界面1", notes = "测试带参数的欢迎信息")
+    @GetMapping("/grafana/{sceneSn}")
+    public void grafanaRedirect(@ApiParam(name = "sceneSn", value = "网关号") @PathVariable String sceneSn){
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = attributes.getRequest();
+        HttpServletResponse response = attributes.getResponse();
+        try {
+            request.getRequestDispatcher("/dashboard/db/"+sceneSn+"?orgId=1").forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
