@@ -7,9 +7,7 @@ import com.xidian.iot.common.util.exception.BusinessException;
 import com.xidian.iot.database.entity.Node;
 import com.xidian.iot.database.entity.NodeAttr;
 import com.xidian.iot.database.entity.NodeAttrExample;
-import com.xidian.iot.database.entity.NodeExample;
 import com.xidian.iot.database.mapper.NodeAttrMapper;
-import com.xidian.iot.database.mapper.NodeMapper;
 import com.xidian.iot.database.mapper.custom.NodeAttrCustomMapper;
 import com.xidian.iot.database.param.NodeAttrParam;
 import com.xidian.iot.databiz.service.NodeAttrService;
@@ -37,10 +35,8 @@ public class NodeAttrServiceImpl implements NodeAttrService {
     private NodeAttrMapper nodeAttrMapper;
     @Autowired
     private NodeAttrCustomMapper nodeAttrCustomMapper;
-//    @Autowired
-//    private NodeService nodeService;
     @Autowired
-    private NodeMapper nodeMapper;
+    private NodeService nodeService;
     @Autowired
     private NodeCondService nodeCondService;
     @Autowired
@@ -97,7 +93,7 @@ public class NodeAttrServiceImpl implements NodeAttrService {
     @Override
     public void delNodeAttrs(String sceneSn, String nodeSn, List<String> naKeyLists) {
         //判断是否存在此节点
-        Node node = getNodeBySn(sceneSn, nodeSn);
+        Node node = nodeService.getNodeBySn(sceneSn, nodeSn);
         NodeAttrExample attrExample = new NodeAttrExample();
         NodeAttrExample.Criteria criteria = attrExample.createCriteria().andNodeIdEqualTo(node.getNodeId());
         //如果传入的naKeyLists为空则删除该节点下所有属性
@@ -126,7 +122,7 @@ public class NodeAttrServiceImpl implements NodeAttrService {
 
     @Override
     public NodeAttr getNodeAttr(String sceneSn, String nodeSn, String naKey) {
-        Node node = getNodeBySn(sceneSn, nodeSn);
+        Node node = nodeService.getNodeBySn(sceneSn, nodeSn);
         NodeAttrExample attrExample = new NodeAttrExample();
         attrExample.createCriteria().andNodeIdEqualTo(node.getNodeId()).andNaKeyEqualTo(naKey);
         List<NodeAttr> nodeAttrs = nodeAttrMapper.selectByExample(attrExample);
@@ -192,16 +188,5 @@ public class NodeAttrServiceImpl implements NodeAttrService {
         NodeAttrExample nodeAttrExample = new NodeAttrExample();
         nodeAttrExample.createCriteria().andSceneSnEqualTo(sceneSn);
         return nodeAttrMapper.deleteByExample(nodeAttrExample);
-    }
-
-
-
-
-    public Node getNodeBySn(String sceneSn, String nodeSn) {
-        NodeExample nodeExample = new NodeExample();
-        nodeExample.createCriteria().andSceneSnEqualTo(sceneSn).andNodeSnEqualTo(nodeSn);
-        List<Node> nodes = nodeMapper.selectByExample(nodeExample);
-        Assert.isTrue(nodes.size() > 0, ExceptionEnum.NODE_NOT_EXIST);
-        return nodes.get(0);
     }
 }
