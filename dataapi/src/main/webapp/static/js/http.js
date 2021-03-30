@@ -1,4 +1,4 @@
-var baseurl = location.origin + '/dataapi'
+var baseurl = location.origin
 /**
  * 发送GET网络请求
  * @param {Object} request 发送请求的内容，包含至少包含url
