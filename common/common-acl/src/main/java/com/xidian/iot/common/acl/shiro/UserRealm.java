@@ -1,4 +1,4 @@
-package com.xidian.iot.dataapi.shiro;
+package com.xidian.iot.common.acl.shiro;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -10,24 +10,23 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * 用户授权信息域
- * 
- * @author coderhuang
- * 
+ * @description:
+ * @author: mrl
+ * @date: 2021/3/28 上午9:39
  */
 public class UserRealm extends CasRealm {
-	
+
 //	@Resource
 //	private RoleService roleService;
 
 //	@Resource
 //	private UserService userService;
 
-	protected final Map<String, SimpleAuthorizationInfo> roles = new ConcurrentHashMap<String, SimpleAuthorizationInfo>();
-	
-	/**
-	 * 设置角色和权限信息
-	 */
+    protected final Map<String, SimpleAuthorizationInfo> roles = new ConcurrentHashMap<String, SimpleAuthorizationInfo>();
+
+    /**
+     * 设置角色和权限信息
+     */
 //	@Override
 //	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 //
@@ -42,24 +41,22 @@ public class UserRealm extends CasRealm {
 //
 //		return authorizationInfo;
 //	}
-	
-	
-	/**
-	 * 1、CAS认证 ,验证用户身份
-	 * 2、将用户基本信息设置到会话中
-	 */
-	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) {
 
-		AuthenticationInfo authc = super.doGetAuthenticationInfo(token);
 
-		String account = (String) authc.getPrincipals().getPrimaryPrincipal();
+    /**
+     * 1、CAS认证 ,验证用户身份
+     * 2、将用户基本信息设置到会话中
+     */
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) {
+
+        AuthenticationInfo authc = super.doGetAuthenticationInfo(token);
+
+        String account = (String) authc.getPrincipals().getPrimaryPrincipal();
 
 //		User user = userService.getUserByAccount(account);
 //
-		SecurityUtils.getSubject().getSession().setAttribute("account", account);
+        SecurityUtils.getSubject().getSession().setAttribute("account", account);
 
-		return authc;
-	}
-	
-
+        return authc;
+    }
 }
