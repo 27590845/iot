@@ -6,6 +6,7 @@ import com.xidian.iot.common.util.exception.BusinessException;
 import com.xidian.iot.database.entity.*;
 import com.xidian.iot.database.entity.mongo.NodeData;
 import com.xidian.iot.database.mapper.NodeMapper;
+import com.xidian.iot.database.mapper.SceneMapper;
 import com.xidian.iot.database.mapper.custom.NodeCustomMapper;
 import com.xidian.iot.database.param.NodeAddParam;
 import com.xidian.iot.database.param.NodeAttrParam;
@@ -50,8 +51,10 @@ public class NodeServiceImpl implements NodeService {
     private NodeCustomMapper nodeCustomMapper;
     @Autowired
     private MongoTemplate mongoTemplate;
+//    @Autowired
+//    private SceneService sceneService;
     @Autowired
-    private SceneService sceneService;
+    private SceneMapper sceneMapper;
     @Autowired
     private NodeAttrService nodeAttrService;
     @Autowired
@@ -66,7 +69,7 @@ public class NodeServiceImpl implements NodeService {
         //返回结果
         NodeVo nodeVo = null;
         //查询scene是否存在
-        Scene scene = sceneService.getSceneBySn(param.getSceneSn());
+        Scene scene = getSceneBySn(param.getSceneSn());
         Node node = param.buildNode(scene.getSceneId());
         NodeExample nodeExample = new NodeExample();
         nodeExample.createCriteria().andSceneIdEqualTo(scene.getSceneId());
@@ -215,5 +218,13 @@ public class NodeServiceImpl implements NodeService {
         nodeExample.createCriteria().andSceneSnEqualTo(sceneSn).andNodeSnEqualTo(nodeSn);
         List<Node> nodes = nodeMapper.selectByExample(nodeExample);
         return nodes!=null&&nodes.size()>0;
+    }
+
+    public Scene getSceneBySn(String sceneSn) {
+        SceneExample sceneExample = new SceneExample();
+        sceneExample.createCriteria().andSceneSnEqualTo(sceneSn);
+        List<Scene> scenes = sceneMapper.selectByExample(sceneExample);
+        Assert.isTrue(scenes.size() > 0, ExceptionEnum.SCENE_NOT_EXIST);
+        return scenes.get(0);
     }
 }

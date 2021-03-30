@@ -1,6 +1,6 @@
 package com.xidian.iot.dataapi.config;
 
-import com.xidian.iot.common.acl.shiro.UserRealm;
+//import com.xidian.iot.common.acl.shiro.UserRealm;
 import org.apache.shiro.cas.CasFilter;
 import org.apache.shiro.cas.CasRealm;
 import org.apache.shiro.cas.CasSubjectFactory;
@@ -10,10 +10,9 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.filter.authc.LogoutFilter;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
 import javax.servlet.Filter;
@@ -26,7 +25,7 @@ import java.util.Map;
  * @author: mrl
  * @date: 2021/3/29 下午6:01
  */
-@Configurable
+@Configuration
 public class ShiroConfig {
 
     public static final String casServerUrlPrefix = "http://127.0.0.1:8080/cas";
@@ -93,7 +92,7 @@ public class ShiroConfig {
 
     @Bean(name = "casRealm")
     public CasRealm casRealm() {
-        UserRealm realm = new UserRealm();
+        CasRealm realm = new CasRealm();
         realm.setDefaultRoles("ROLE_USER");
         realm.setCasServerUrlPrefix(casServerUrlPrefix);
         realm.setCasService(casService);
