@@ -10,10 +10,9 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.filter.authc.LogoutFilter;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
 import javax.servlet.Filter;
@@ -26,13 +25,20 @@ import java.util.Map;
  * @author: mrl
  * @date: 2021/3/29 下午6:01
  */
-@Configurable
+@Configuration
 public class ShiroConfig {
 
-    public static final String casServerUrlPrefix = "http://127.0.0.1:8080/cas";
+//    public static final String casServerUrlPrefix = "http://127.0.0.1:8080/cas";
+//    public static final String casService = "http://127.0.0.1:8081/cas";
+//    public static final String casLoginUrl = "http://127.0.0.1:8080/cas/login?service=http://127.0.0.1:8081/cas";
+//    public static final String casLogoutUrl = "http://127.0.0.1:8080/cas/logout?service=http://127.0.0.1:8081/master/reLoginSucc";
+//    public static final String casFailPath = "/master/fail2loginSucc";
+//    public static final String casSuccessPath = "/master/fail2loginSucc";
+
+    public static final String casServerUrlPrefix = "http://106.13.234.131:8081/cas";
     public static final String casService = "http://127.0.0.1:8081/cas";
-    public static final String casLoginUrl = "http://127.0.0.1:8080/cas/login?service=http://127.0.0.1:8081/cas";
-    public static final String casLogoutUrl = "http://127.0.0.1:8080/cas/logout?service=http://127.0.0.1:8081/master/reLoginSucc";
+    public static final String casLoginUrl = "http://106.13.234.131:8081/cas/login?service=http://127.0.0.1:8081/cas";
+    public static final String casLogoutUrl = "http://106.13.234.131:8081/cas/logout?service=http://127.0.0.1:8081/master/reLoginSucc";
     public static final String casFailPath = "/master/fail2loginSucc";
     public static final String casSuccessPath = "/master/fail2loginSucc";
 
@@ -47,7 +53,7 @@ public class ShiroConfig {
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
 
         filterChainDefinitionMap.put("/cas", "casFilter");// shiro集成cas后，首先添加该规则
-        filterChainDefinitionMap.put("/logout", "logoutFilter");
+//        filterChainDefinitionMap.put("/logout", "logoutFilter");
         filterChainDefinitionMap.put("/static/css/**", "anon");
         filterChainDefinitionMap.put("/static/js/**", "anon");
         filterChainDefinitionMap.put("/**", "user");
@@ -56,7 +62,7 @@ public class ShiroConfig {
     }
 
     @Bean(name = "shiroFilter")
-    public ShiroFilterFactoryBean getShiroFilterFactoryBean(DefaultWebSecurityManager securityManager, CasFilter casFilter, LogoutFilter logoutFilter) {
+    public ShiroFilterFactoryBean getShiroFilterFactoryBean(DefaultWebSecurityManager securityManager, CasFilter casFilter) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         shiroFilterFactoryBean.setLoginUrl(casLoginUrl);
@@ -66,7 +72,7 @@ public class ShiroConfig {
         // 添加casFilter到shiroFilter中
         Map<String, Filter> filters = new HashMap<>();
         filters.put("casFilter", casFilter);
-        filters.put("logoutFilter", logoutFilter);
+        filters.put("logoutFilter", logoutFilter());
         shiroFilterFactoryBean.setFilters(filters);
 
         loadShiroFilterChain(shiroFilterFactoryBean);
@@ -84,7 +90,7 @@ public class ShiroConfig {
         return casFilter;
     }
 
-    @Bean(name = "logoutFilter")
+//    @Bean(name = "logoutFilter")
     public LogoutFilter logoutFilter(){
         LogoutFilter logoutFilter = new LogoutFilter();
         logoutFilter.setRedirectUrl(casLogoutUrl);
@@ -137,11 +143,11 @@ public class ShiroConfig {
 
 
 
-    @Bean
-    public DefaultAdvisorAutoProxyCreator getDefaultAdvisorAutoProxyCreator() {
-        DefaultAdvisorAutoProxyCreator daap = new DefaultAdvisorAutoProxyCreator();
-        daap.setProxyTargetClass(true);
-        return daap;
-    }
+//    @Bean
+//    public DefaultAdvisorAutoProxyCreator getDefaultAdvisorAutoProxyCreator() {
+//        DefaultAdvisorAutoProxyCreator daap = new DefaultAdvisorAutoProxyCreator();
+//        daap.setProxyTargetClass(true);
+//        return daap;
+//    }
 
 }

@@ -23,7 +23,8 @@ import javax.servlet.annotation.WebInitParam;
 //@ComponentScan 的作用就是根据定义的扫描路径，把符合扫描规则的类装配到spring容器中
 //@ComponentScan(basePackages={"com.xidian.iot.dataapi.**"})
 //@EntityScan(value = "com.xidian.iot.database.entity")
-@ImportResource({ "/spring/application-databiz.xml", "/spring/application-activemq-def.xml", "/spring/application-shiro.xml" })
+//@ImportResource({ "/spring/application-databiz.xml", "/spring/application-activemq-def.xml", "/spring/application-shiro.xml" })
+@ImportResource({ "/spring/application-databiz.xml", "/spring/application-activemq-def.xml" })
 public class Application implements WebMvcConfigurer {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
