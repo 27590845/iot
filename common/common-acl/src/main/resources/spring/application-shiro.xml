@@ -19,7 +19,11 @@
             <map>
                 <!-- 添加casFilter到shiroFilter -->
                 <entry key="casFilter" value-ref="casFilter"/>
-                <entry key="logoutFilter" value-ref="logoutFilter"/>
+                <entry key="logoutFilter">
+                    <bean class="org.apache.shiro.web.filter.authc.LogoutFilter">
+                        <property name="redirectUrl" value="${shiro.logoutUrl}"/>
+                    </bean>
+                </entry>
             </map>
         </property>
         <property name="filterChainDefinitions">
@@ -37,11 +41,6 @@
         <!-- 配置验证错误时的失败页面 -->
         <property name="failureUrl" value="${shiro.failureUrl}"/>
         <property name="successUrl" value="${shiro.successUrl}"/>
-    </bean>
-
-    <bean id="logoutFilter" class="org.apache.shiro.web.filter.authc.LogoutFilter">
-        <!-- 配置验证错误时的失败页面 -->
-        <property name="redirectUrl" value="${shiro.logoutUrl}"/>
     </bean>
 
     <bean id="casRealm" class="org.apache.shiro.cas.CasRealm">
