@@ -5,8 +5,8 @@ import java.util.Date;
 /**
  * 场景表，场景是数据上传与命令下发的最基本单位。逻辑上可看作管理着多个数据单元的交互窗口；物理上可看作通信终端，比如dtu
  *
- * @author mrl
- * @date   2020/12/09
+ * @author xidianiot
+ * @date   2021/01/21
  */
 public class Scene {
     /**
@@ -58,6 +58,16 @@ public class Scene {
      * 网关身份标识（选填）
      */
     private String sceneIdentifier;
+
+    /**
+     * 
+     */
+    private String sceneAttrname;
+
+    /**
+     * 
+     */
+    private String sceneMap;
 
     public Long getSceneId() {
         return sceneId;
@@ -137,5 +147,21 @@ public class Scene {
 
     public void setSceneIdentifier(String sceneIdentifier) {
         this.sceneIdentifier = sceneIdentifier == null ? null : sceneIdentifier.trim();
+    }
+
+    public String getSceneAttrname() {
+        return sceneAttrname;
+    }
+
+    public void setSceneAttrname(String sceneAttrname) {
+        this.sceneAttrname = sceneAttrname == null ? null : sceneAttrname.trim();
+    }
+
+    public String getSceneMap() {
+        return sceneMap;
+    }
+
+    public void setSceneMap(String sceneMap) {
+        this.sceneMap = sceneMap == null ? null : sceneMap.trim();
     }
 }

@@ -88,6 +88,7 @@
     <!--自定义redis工具类,在需要缓存的地方注入此类  -->
     <bean id="redisUtil" class="com.xidian.iot.common.cache.RedisUtil">
         <constructor-arg ref="redisTemplate"/>
+        <constructor-arg ref="redisTemplate"/>
     </bean>
     <!-- 下面这个是整合Mybatis的二级缓存使用的 -->
     <!--    <bean id="redisCacheTransfer" class="cn.qlq.jedis.RedisCacheTransfer">

@@ -3,8 +3,8 @@ package com.xidian.iot.database.entity;
 /**
  * 节点通信协议，一个节点可以对应一个数据上传协议，和一个命令下发协议
  *
- * @author mrl
- * @date   2020/12/09
+ * @author xidianiot
+ * @date   2021/01/21
  */
 public class NodeCmdProt {
     /**

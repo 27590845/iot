@@ -3,8 +3,8 @@ package com.xidian.iot.database.entity;
 /**
  * 节点属性表，一个节点下有多个属性。逻辑上可看作数据单元里的一个字段；物理上可看作底层感知设备，比如传感器
  *
- * @author mrl
- * @date   2020/12/09
+ * @author xidianiot
+ * @date   2021/01/21
  */
 public class NodeAttr {
     /**

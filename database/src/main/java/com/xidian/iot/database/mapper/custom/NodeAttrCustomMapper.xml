@@ -9,7 +9,7 @@
     <insert id="insertBatch" parameterType="java.util.List">
         insert into node_attr (na_id, node_id, na_key,
         na_name, na_unit, na_sym,
-        scene_sn, node_sn)
+        scene_sn, node_sn, na_form, na_map)
         values
         <foreach collection="nodeAttrs" item="nodeAttr" index="index" separator=",">
             (#{nodeAttr.naId,jdbcType=BIGINT},
@@ -19,7 +19,10 @@
             #{nodeAttr.naUnit,jdbcType=VARCHAR},
             #{nodeAttr.naSym,jdbcType=VARCHAR},
             #{nodeAttr.sceneSn,jdbcType=VARCHAR},
-            #{nodeAttr.nodeSn,jdbcType=VARCHAR})
+            #{nodeAttr.nodeSn,jdbcType=VARCHAR},
+            #{nodeAttr.naForm,jdbcType=VARCHAR},
+            #{nodeAttr.naMap,jdbcType=VARCHAR})
+
         </foreach>
     </insert>
     <select id="getNodeAttrByNodeId" resultMap="BaseResultMap">

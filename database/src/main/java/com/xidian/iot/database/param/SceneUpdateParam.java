@@ -39,6 +39,12 @@ public class SceneUpdateParam {
     @ApiModelProperty(value = "网关身份标识")
     private String sceneIdentifier;
 
+    @ApiModelProperty(value = "梓恒专用")
+    private String sceneAttrname;
+
+    @ApiModelProperty(value = "梓恒专用")
+    private String sceneMap;
+
     //过滤非法场景、地点名称、描述
     public SceneUpdateParam filterBlank(){
         this.sceneName = (StringUtils.isNotBlank(sceneName)?sceneName:null);
@@ -61,6 +67,8 @@ public class SceneUpdateParam {
         scene.setSceneLng(sceneLng);
         scene.setSceneLat(sceneLat);
         scene.setSceneEl(sceneEl);
+        scene.setSceneAttrname(StringUtils.isNotBlank(sceneAttrname)?sceneAttrname:null);
+        scene.setSceneMap(StringUtils.isNotBlank(sceneMap)?sceneMap:null);
         return scene;
     }
 }

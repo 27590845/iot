@@ -151,18 +151,18 @@
     </resources>
 
     <plugins>
-      <plugin>
+<!--      <plugin>
         <groupId>cn.smallbun.screw</groupId>
         <artifactId>screw-maven-plugin</artifactId>
         <version>${screw.version}</version>
         <dependencies>
-          <!-- HikariCP -->
+          &lt;!&ndash; HikariCP &ndash;&gt;
           <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
             <version>${HikariCP.version}</version>
           </dependency>
-          <!--mysql driver-->
+          &lt;!&ndash;mysql driver&ndash;&gt;
           <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -170,27 +170,27 @@
           </dependency>
         </dependencies>
         <configuration>
-          <!--username-->
+          &lt;!&ndash;username&ndash;&gt;
           <username>root</username>
-          <!--password-->
+          &lt;!&ndash;password&ndash;&gt;
           <password>xidian@123</password>
-          <!--driver-->
+          &lt;!&ndash;driver&ndash;&gt;
           <driverClassName>com.mysql.cj.jdbc.Driver</driverClassName>
-          <!--jdbc url-->
+          &lt;!&ndash;jdbc url&ndash;&gt;
           <jdbcUrl>jdbc:mysql://test.public.mysql:3306/iotdata?characterEncoding=UTF-8</jdbcUrl>
-          <!--生成文件类型-->
+          &lt;!&ndash;生成文件类型&ndash;&gt;
           <fileType>HTML</fileType>
-          <!--打开文件输出目录-->
+          &lt;!&ndash;打开文件输出目录&ndash;&gt;
           <openOutputDir>false</openOutputDir>
-          <!--生成模板-->
+          &lt;!&ndash;生成模板&ndash;&gt;
           <produceType>freemarker</produceType>
-          <!--文档名称 为空时:将采用[数据库名称-描述-版本号]作为文档名称-->
-          <!--<docName>测试文档名称</docName>-->
-          <!--描述-->
+          &lt;!&ndash;文档名称 为空时:将采用[数据库名称-描述-版本号]作为文档名称&ndash;&gt;
+          &lt;!&ndash;<docName>测试文档名称</docName>&ndash;&gt;
+          &lt;!&ndash;描述&ndash;&gt;
           <description>数据库文档生成</description>
-          <!--版本-->
+          &lt;!&ndash;版本&ndash;&gt;
           <version>${project.version}</version>
-          <!--标题-->
+          &lt;!&ndash;标题&ndash;&gt;
           <title>fire数据库文档</title>
         </configuration>
         <executions>
@@ -201,7 +201,7 @@
             </goals>
           </execution>
         </executions>
-      </plugin>
+      </plugin>-->
     </plugins>
 
   </build>

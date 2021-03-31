@@ -1,0 +1,105 @@
+body {
+	// 提示信息
+	.alert {
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+	// 侧边导航栏的在base.css
+	// 主体内容
+	main {
+		.scene-container {
+			margin: 20px 0 0 0;
+			border-radius: 5px;
+			border: 1px dotted;
+			padding: 0 20px 10px;
+			header {
+				margin: 0 0 20px 0;
+			}
+			// 场景列表
+			#scene-list {
+				// 场景内容
+				.scene-item {
+					position: relative;
+					border-radius: 5px;
+					padding: 10px 5px;
+					margin: 0 0 20px 0;
+					box-shadow: 0 0 10px var(--color); // 根据在线状态进行调控
+					.scene-header {
+						margin: 0 0 10px 0;
+					}
+					.scene-body {
+						max-height: 200px;
+						overflow: auto;
+						table {
+							margin: 0;
+						}
+						table {
+							thead {
+								tr {
+									th {
+										text-align: center;
+									}
+									th:last-child {
+										width: 170px;
+									}
+								}
+							}
+							tbody {
+								tr {
+									td {
+										white-space: nowrap;
+										overflow: hidden;
+										text-overflow: ellipsis;
+										text-align: center;
+									}
+									td:last-child {
+										width: 170px;
+										text-align: center;
+									}
+								}
+							}
+						}
+					}
+					
+					// 场景sn的div
+					[class~="scene-sn"] {
+						user-select: all;
+					}
+					// 设置每列中的内容不能进行换行等
+					[class^="col-"] {
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						span {
+							margin: 0 0 0 5px;
+							font-weight: 600;
+						}
+					}
+				}
+				// 场景状态
+				.scene-item::before {
+					content: var(--content);
+					color: var(--color);
+					letter-spacing: 4px;
+					font-size: 1.5rem;
+					font-weight: 600;
+					position: absolute;
+					transform: translate(-50%,-50%) rotate(-30deg);
+				}
+			}
+			// 场景分页
+			.page-div {
+				text-align: center;
+				ul {
+					li {
+						cursor: pointer;
+						user-select: none;
+					}
+				}
+			}
+			
+		}
+	}
+}

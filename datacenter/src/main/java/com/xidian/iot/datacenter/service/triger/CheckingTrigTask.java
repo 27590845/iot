@@ -1,6 +1,9 @@
 package com.xidian.iot.datacenter.service.triger;
 
+import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.xidian.iot.common.alert.alertsender.AlertFactory;
+import com.xidian.iot.common.mq.MqSender;
 import com.xidian.iot.database.entity.NodeActAlert;
 import com.xidian.iot.database.entity.custom.NodeCondExt;
 import com.xidian.iot.database.entity.custom.NodeTrigExt;
@@ -37,6 +40,9 @@ public class CheckingTrigTask extends BaseTask implements Runnable {
 
     @Resource
     private AlertFactory alertFactory;
+
+    @Resource
+    private MqSender mqSender;
 
     /**
      * 任务从这里开始。
@@ -96,6 +102,16 @@ public class CheckingTrigTask extends BaseTask implements Runnable {
         for (int i = 0; i < nodeActAlerts.size(); i++) {
             NodeActAlert nodeActAlert = nodeActAlerts.get(i);
             alertFactory.getAlert(nodeActAlert.getNaaType(),nodeActAlert.getNaaVal(),nodeActAlert.getNaaContent());
+        }
+        // 触发一次就发送消息队列、内容有时间、ntId
+        JSONObject alert = new JSONObject();
+        alert.put("ntId",ntId);
+        alert.put("time",new Date());
+        try {
+            mqSender.sendTopic("Alert",alert.toString());
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            log.error("触发发送消息失败");
         }
     }
 //    private void doSendMessageTask(List<NodeCondExt> nodeCondExtList) {

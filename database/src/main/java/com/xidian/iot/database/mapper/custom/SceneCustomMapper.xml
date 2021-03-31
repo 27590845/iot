@@ -2,15 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xidian.iot.database.mapper.custom.SceneCustomMapper">
     <resultMap id="BaseResultMap" type="com.xidian.iot.database.entity.Scene">
-        <id column="scene_id" jdbcType="BIGINT" property="sceneId" />
-        <result column="scene_sn" jdbcType="CHAR" property="sceneSn" />
-        <result column="scene_name" jdbcType="VARCHAR" property="sceneName" />
-        <result column="scene_loc" jdbcType="VARCHAR" property="sceneLoc" />
-        <result column="scene_lng" jdbcType="DOUBLE" property="sceneLng" />
-        <result column="scene_lat" jdbcType="DOUBLE" property="sceneLat" />
-        <result column="scene_el" jdbcType="DOUBLE" property="sceneEl" />
-        <result column="scene_desc" jdbcType="VARCHAR" property="sceneDesc" />
-        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <id column="scene_id" jdbcType="BIGINT" property="sceneId"/>
+        <result column="scene_sn" jdbcType="CHAR" property="sceneSn"/>
+        <result column="scene_name" jdbcType="VARCHAR" property="sceneName"/>
+        <result column="scene_loc" jdbcType="VARCHAR" property="sceneLoc"/>
+        <result column="scene_lng" jdbcType="DOUBLE" property="sceneLng"/>
+        <result column="scene_lat" jdbcType="DOUBLE" property="sceneLat"/>
+        <result column="scene_el" jdbcType="DOUBLE" property="sceneEl"/>
+        <result column="scene_desc" jdbcType="VARCHAR" property="sceneDesc"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
     </resultMap>
     <resultMap id="SceneVoMap" type="com.xidian.iot.database.vo.SceneVo" extends="BaseResultMap">
         <collection property="nodeVos" javaType="ArrayList"
@@ -20,32 +20,32 @@
         </collection>
     </resultMap>
     <resultMap id="SceneVoMapJoin" type="com.xidian.iot.database.vo.SceneVo">
-        <id column="scene_id" jdbcType="BIGINT" property="sceneId" />
-        <result column="scene_sn" jdbcType="CHAR" property="sceneSn" />
-        <result column="scene_name" jdbcType="VARCHAR" property="sceneName" />
-        <result column="scene_loc" jdbcType="VARCHAR" property="sceneLoc" />
-        <result column="scene_lng" jdbcType="DOUBLE" property="sceneLng" />
-        <result column="scene_lat" jdbcType="DOUBLE" property="sceneLat" />
-        <result column="scene_el" jdbcType="DOUBLE" property="sceneEl" />
-        <result column="scene_desc" jdbcType="VARCHAR" property="sceneDesc" />
-        <result column="create_time1" jdbcType="TIMESTAMP" property="createTime" />
+        <id column="scene_id" jdbcType="BIGINT" property="sceneId"/>
+        <result column="scene_sn" jdbcType="CHAR" property="sceneSn"/>
+        <result column="scene_name" jdbcType="VARCHAR" property="sceneName"/>
+        <result column="scene_loc" jdbcType="VARCHAR" property="sceneLoc"/>
+        <result column="scene_lng" jdbcType="DOUBLE" property="sceneLng"/>
+        <result column="scene_lat" jdbcType="DOUBLE" property="sceneLat"/>
+        <result column="scene_el" jdbcType="DOUBLE" property="sceneEl"/>
+        <result column="scene_desc" jdbcType="VARCHAR" property="sceneDesc"/>
+        <result column="create_time1" jdbcType="TIMESTAMP" property="createTime"/>
         <collection property="nodeVos" javaType="ArrayList"
                     ofType="com.xidian.iot.database.vo.NodeVo">
-            <id column="node_id" jdbcType="BIGINT" property="nodeId" />
-            <result column="scene_id" jdbcType="BIGINT" property="sceneId" />
-            <result column="scene_sn" jdbcType="CHAR" property="sceneSn" />
-            <result column="node_name" jdbcType="VARCHAR" property="nodeName" />
-            <result column="node_desc" jdbcType="VARCHAR" property="nodeDesc" />
-            <result column="node_sn" jdbcType="VARCHAR" property="nodeSn" />
-            <result column="create_time2" jdbcType="TIMESTAMP" property="createTime" />
+            <id column="node_id" jdbcType="BIGINT" property="nodeId"/>
+            <result column="scene_id" jdbcType="BIGINT" property="sceneId"/>
+            <result column="scene_sn" jdbcType="CHAR" property="sceneSn"/>
+            <result column="node_name" jdbcType="VARCHAR" property="nodeName"/>
+            <result column="node_desc" jdbcType="VARCHAR" property="nodeDesc"/>
+            <result column="node_sn" jdbcType="VARCHAR" property="nodeSn"/>
+            <result column="create_time2" jdbcType="TIMESTAMP" property="createTime"/>
             <collection property="nodeAttrList" javaType="ArrayList"
                         ofType="com.xidian.iot.database.entity.NodeAttr">
-                <id column="na_id" jdbcType="BIGINT" property="naId" />
-                <result column="node_id" jdbcType="BIGINT" property="nodeId" />
-                <result column="na_key" jdbcType="VARCHAR" property="naKey" />
-                <result column="na_name" jdbcType="VARCHAR" property="naName" />
-                <result column="na_unit" jdbcType="VARCHAR" property="naUnit" />
-                <result column="na_sym" jdbcType="VARCHAR" property="naSym" />
+                <id column="na_id" jdbcType="BIGINT" property="naId"/>
+                <result column="node_id" jdbcType="BIGINT" property="nodeId"/>
+                <result column="na_key" jdbcType="VARCHAR" property="naKey"/>
+                <result column="na_name" jdbcType="VARCHAR" property="naName"/>
+                <result column="na_unit" jdbcType="VARCHAR" property="naUnit"/>
+                <result column="na_sym" jdbcType="VARCHAR" property="naSym"/>
             </collection>
         </collection>
     </resultMap>
@@ -86,4 +86,30 @@
         from (scene s left join node n on s.scene_id = n.scene_id)left join node_attr na on n.node_id = na.node_id
         where s.scene_sn = #{sceneSn, jdbcType=VARCHAR}
     </select>
+    <select id="getSceneVos" resultMap="SceneVoMap">
+        select s.* from scene s
+    </select>
+    <select id="countSceneByCond" resultType="java.lang.Integer">
+        select count(*)
+        from scene
+        where 1=1
+        <if test="sceneSn!=null">
+            and scene_sn like "%"#{sceneSn, jdbcType=VARCHAR}"%"
+        </if>
+        <if test="sceneName!=null">
+            and scene_name like "%"#{sceneName, jdbcType=VARCHAR}"%"
+        </if>
+    </select>
+    <select id="getSceneVosByCond" resultMap="SceneVoMap">
+        select *
+        from scene
+        where 1=1
+        <if test="sceneSn!=null">
+            and scene_sn like "%"#{sceneSn, jdbcType=VARCHAR}"%"
+        </if>
+        <if test="sceneName!=null">
+            and scene_name like "%"#{sceneName, jdbcType=VARCHAR}"%"
+        </if>
+    </select>
+
 </mapper>

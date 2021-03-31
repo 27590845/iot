@@ -1,0 +1,65 @@
+body main .btn-content {
+  margin: 0 0 15px;
+}
+body main .btn-content div {
+  text-align: end;
+}
+body main .node-container .node-part {
+  position: relative;
+  margin: 10px 0 20px 0;
+}
+body main .node-container .node-part .section-body {
+  border-radius: 5px;
+  border: 1px solid #f5f5f5;
+  box-shadow: 0 0 5px black;
+  padding: 15px;
+}
+body main .node-container .node-part .operation-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+body main .node-container .node-part .operation-btn button {
+  margin: 0 10px;
+}
+body main .node-container .node-part article .node-detail {
+  width: 100%;
+}
+body main .node-container .node-part article .node-detail form .form-group {
+  margin-bottom: 0;
+}
+body main .node-container .node-part article .node-detail form .form-group .control-label-div {
+  padding: 7px 0;
+}
+body main .node-container #node-attr #node-attr-list {
+  margin: 0 15px;
+  min-height: 250px;
+}
+body main .node-container #node-attr #node-attr-list .node-attr-list-body {
+  max-height: 273px;
+  overflow: auto;
+}
+body main .node-container #node-attr #node-attr-list .node-attr-list-body table {
+  position: relative;
+  margin: 0;
+}
+body main .node-container #node-attr #node-attr-list .node-attr-list-body table thead {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+}
+body main .node-container #node-attr #node-attr-list .node-attr-list-body table tbody tr th,
+body main .node-container #node-attr #node-attr-list .node-attr-list-body table thead tr th,
+body main .node-container #node-attr #node-attr-list .node-attr-list-body table tbody tr td,
+body main .node-container #node-attr #node-attr-list .node-attr-list-body table thead tr td {
+  text-align: center;
+}
+body main .node-container #node-attr-info .row {
+  margin: 0 0 10px 0;
+}
+body main .node-container #node-attr-info .row .control-label-div {
+  margin: 0 0 5px 0;
+}
+body main .node-container #node-attr-info #line-chart {
+  height: 300px;
+}

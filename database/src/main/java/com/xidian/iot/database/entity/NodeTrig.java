@@ -5,8 +5,8 @@ import java.util.Date;
 /**
  * 节点触发器，一个节点可配置多个触发器，一个触发器也可对应多个节点，甚至不同场景下的节点；一个触发器下的全部条件都满足时才会触发
  *
- * @author mrl
- * @date   2020/12/09
+ * @author xidianiot
+ * @date   2021/01/21
  */
 public class NodeTrig {
     /**

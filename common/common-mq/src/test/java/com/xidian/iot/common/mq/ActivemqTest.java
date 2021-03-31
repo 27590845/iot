@@ -1,7 +1,11 @@
 package com.xidian.iot.common.mq;
 
+import static org.junit.Assert.assertTrue;
+
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.xidian.iot.common.mq.activemq.ActivemqSubscriber;
+import com.xidian.iot.common.util.JsonUtil;
 import com.xidian.iot.common.util.RandomUtil;
 import com.xidian.iot.common.util.TimeUtil;
 import lombok.Data;
@@ -12,11 +16,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
-import javax.jms.JMSException;
+import javax.jms.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.concurrent.CountDownLatch;
-
-import static org.junit.Assert.assertTrue;
 
 /**
  * Unit test for simple App.
@@ -25,20 +28,18 @@ import static org.junit.Assert.assertTrue;
 //@WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:spring/application-activemq-def.xml"})
 @Slf4j
-public class ActivemqTest
-{
+public class ActivemqTest {
 
     static {
-        System.setProperty("spring.profiles.active","production");
+        System.setProperty("spring.profiles.active", "development");
     }
 
     /**
      * Rigorous Test :-)
      */
     @Test
-    public void shouldAnswerWithTrue()
-    {
-        assertTrue( true );
+    public void shouldAnswerWithTrue() {
+        assertTrue(true);
     }
 
     @Resource
@@ -46,8 +47,8 @@ public class ActivemqTest
 
     final static String topic = "hello_topic";
 
-    final static String sceneSn = "186610102211100356";
-    final static String nodeSn = "RD001";
+    final static String sceneSn = "186610102211000001";
+    final static String nodeSn = "000001";
     final static String topicIot = "node.updata."+sceneSn;
 
     @Test
@@ -58,13 +59,21 @@ public class ActivemqTest
                     + "\"tem1\":"+ RandomUtil.nextInt(10, 19)
                     +",\"tem2\":"+RandomUtil.nextInt(20, 29)
                     +",\"tem3\":"+RandomUtil.nextInt(30, 39)
-                    +",\"tem4\":"+RandomUtil.nextInt(40, 49)
+                    +",\"tem4\":"+ RandomUtil.nextInt(40, 49)
                     +",\"hum\":"+ RandomUtil.nextInt(0, 9)
                     +",\"at\":"+ TimeUtil.getTimeStamp(null)
                     +",\"sn\":\""+nodeSn+"\"}]}";
             mqSender.sendQueue(topicIot, msg);
             Thread.sleep(1000);
         }
+    }
+
+    @Test
+    public void send2() throws JsonProcessingException, InterruptedException {
+        JSONObject alert = new JSONObject();
+        alert.put("ntId", 21658431299607040l);
+        alert.put("time", new Date());
+        mqSender.sendQueue("Alert", alert.toString());
     }
 
 //    @Test
@@ -106,8 +115,11 @@ public class ActivemqTest
         String name;
         String gender;
         Integer age;
-        public User(){}
-        public User(String name, String gender, Integer age){
+
+        public User() {
+        }
+
+        public User(String name, String gender, Integer age) {
             this.name = name;
             this.age = age;
             this.gender = gender;

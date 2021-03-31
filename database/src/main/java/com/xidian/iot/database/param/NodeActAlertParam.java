@@ -52,9 +52,9 @@ public class NodeActAlertParam extends NodeActAlert {
         return super.getNaaContent();
     }
 
-    public NodeActAlert build(Long naaId) {
+    public NodeActAlert build() {
         NodeActAlert nodeActAlert = new NodeActAlert();
-        nodeActAlert.setNaaId(naaId);
+        nodeActAlert.setNaaId(this.getNaaId());
         nodeActAlert.setNtId(this.getNtId());
         nodeActAlert.setNaaVal(this.getNaaVal());
         nodeActAlert.setNaaType(this.getNaaType());

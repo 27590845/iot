@@ -17,6 +17,7 @@
         <module>database</module>
         <module>dataapi</module>
         <module>databiz</module>
+        <module>dataapi-boot</module>
         <!--    <module>common/common-util</module>-->
         <!--    <module>common/common-mq</module>-->
     </modules>

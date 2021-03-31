@@ -7,6 +7,7 @@ import com.xidian.iot.dataapi.controller.res.Page;
 import com.xidian.iot.database.entity.Scene;
 import com.xidian.iot.database.param.SceneAddParam;
 import com.xidian.iot.database.param.SceneUpdateParam;
+import com.xidian.iot.database.vo.SceneVo;
 import com.xidian.iot.databiz.service.NodeService;
 import com.xidian.iot.databiz.service.SceneService;
 import io.swagger.annotations.Api;
@@ -37,11 +38,22 @@ public class SceneController {
     @ApiOperation(value = "分页获取当前用户下所有的网关号、不输入page和limit默认就是获取前五条数据")
     @GetMapping()
     public HttpResult getUserScenes(@ApiParam(name = "page", value = "页号") @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-                                    @ApiParam(name = "limit", value = "页数") @RequestParam(value = "limit", required = false, defaultValue = "5") int limit) {
+                                    @ApiParam(name = "limit", value = "页数") @RequestParam(value = "limit", required = false, defaultValue = "10") int limit) {
         //分页一方面获取总条数、一方面获取数据、如果可以把page和limit也可以带着
         int total = sceneService.countScene();
         Page<Scene> scenePage = new Page<Scene>(total,page,limit);
         scenePage.setData(sceneService.getScenes(page,limit));
+        return HttpResult.responseOK(scenePage);
+    }
+
+    @ApiOperation(value = "分页获取当前网关及节点")
+    @GetMapping("/list")
+    public HttpResult getScenes(@ApiParam(name = "page", value = "页号") @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                                    @ApiParam(name = "limit", value = "页数") @RequestParam(value = "limit", required = false, defaultValue = "10") int limit) {
+        //分页一方面获取总条数、一方面获取数据、如果可以把page和limit也可以带着
+        int total = sceneService.countScene();
+        Page<SceneVo> scenePage = new Page<SceneVo>(total,page,limit);
+        scenePage.setData(sceneService.getScenesAndNode(page,limit));
         return HttpResult.responseOK(scenePage);
     }
 
@@ -107,5 +119,23 @@ public class SceneController {
     @GetMapping("/{sceneSn}/nodes/current")
     public HttpResult getLatestNodesData(@ApiParam(name = "sceneSn", value = "场景sn") @PathVariable("sceneSn") String sceneSn) {
         return HttpResult.responseOK(sceneService.getLatestNodesData(sceneSn));
+    }
+
+    @ApiOperation(value = "搜索场景")
+    @GetMapping("/search")
+    public HttpResult search(@ApiParam(name = "page", value = "页号") @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                             @ApiParam(name = "limit", value = "页数") @RequestParam(value = "limit", required = false, defaultValue = "10") int limit,
+                             @ApiParam(name = "sceneSn", value = "场景sn") @RequestParam(name = "sceneSn", required = false) String sceneSn,
+                             @ApiParam(name = "sceneName", value = "场景名称") @RequestParam(name = "sceneName", required = false) String sceneName) {
+        if (StringUtils.isBlank(sceneSn) && StringUtils.isBlank(sceneName))
+            return HttpResult.generateErrorResult(-1, "至少输入一个搜索条件");
+        //空字符转化为空
+        sceneSn = StringUtils.isBlank(sceneSn) ? null : sceneSn;
+        sceneName = StringUtils.isBlank(sceneName) ? null : sceneName;
+        //分页一方面获取总条数、一方面获取数据、如果可以把page和limit也可以带着
+        int total = sceneService.countSceneByCond(sceneSn, sceneName);
+        Page<SceneVo> scenePage = new Page<SceneVo>(total, page, limit);
+        scenePage.setData(sceneService.getScenesAndNodeByCond(page, limit, sceneSn, sceneName));
+        return HttpResult.responseOK(scenePage);
     }
 }
