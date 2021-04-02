@@ -118,12 +118,14 @@ public class RuleEngineServiceImpl implements RuleEngineService {
         // 更新触发器
         nodeTrigService.updateNodeTrigById(nodeTrigParam);
         // 先判断是否有节点命令 如果有则直接事务回滚
-        if (!Objects.isNull(nodeTrigParam.getNodeActCmdParams())&&nodeTrigParam.getNodeActCmdParams().size()>0) {
+        if (!Objects.isNull(nodeTrigParam.getNodeActCmdParams()) && nodeTrigParam.getNodeActCmdParams().size() > 0) {
             checkReptCondition(nodeTrigParam);
             // 更新nodeActCmd列表 也就是更新 ncId命令id
             nodeActCmdService.updateNodeActCmds(nodeTrigParam.getNodeActCmdParams()
-                    .stream().map(param -> {param.setNtId(ntId);
-                                 return (NodeActCmd) param;}).collect(Collectors.toList()));
+                    .stream().map(param -> {
+                        param.setNtId(ntId);
+                        return (NodeActCmd) param;
+                    }).collect(Collectors.toList()));
         }
         // 更新触发报警信息
         nodeActAlertService.updateNodeActAlert(nodeTrigParam.getNodeActAlertParam());
@@ -137,10 +139,10 @@ public class RuleEngineServiceImpl implements RuleEngineService {
         List<NodeCond> nodeConds = nodeCondService.getNodeCondsByNtId(ntId);
         // 判断新增触发条件所属的触发器中是否存在此触发条件（或者是同一个传感器而且操作符也相同）
         List<NodeCond> repeatNodeConds = nodeConds.stream().filter(nodeCond ->
-                        nodeCond.getNaId().equals(nodeCondParam.getNaId())
-                        &&nodeCond.getNcOp().equals(nodeCondParam.getNcOp())).collect(Collectors.toList());
-        if(repeatNodeConds.size()>0){
-            throw new BusinessException(-1,"该触发器已有传感器的触发符号存在，请检查后再添加");
+                nodeCond.getNaId().equals(nodeCondParam.getNaId())
+                        && nodeCond.getNcOp().equals(nodeCondParam.getNcOp())).collect(Collectors.toList());
+        if (repeatNodeConds.size() > 0) {
+            throw new BusinessException(-1, "该触发器已有传感器的触发符号存在，请检查后再添加");
         }
         nodeCondParam.setNtId(ntId);
         nodeCondService.addNodeCond(nodeCondParam);
@@ -151,7 +153,7 @@ public class RuleEngineServiceImpl implements RuleEngineService {
     public NodeTrigParam getRuleEngine(Long ntId) {
         // 先判断此ntId是否存在
         NodeTrig nodeTrig = nodeTrigService.getNodeTrigExtById(ntId);
-        if(Objects.isNull(nodeTrig))throw new BusinessException(-1,"该触发器不存在");
+        if (Objects.isNull(nodeTrig)) throw new BusinessException(-1, "该触发器不存在");
         NodeTrigParam nodeTrigParam = nodeTrigCustomMapper.getNodeTrigParamByNtId(ntId);
         return nodeTrigParam;
     }
