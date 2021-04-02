@@ -74,4 +74,12 @@ public interface RuleEngineService {
      * @return int
      * */
     int updateNodeTrig(Long ntId, NodeTrig nodeTrig);
+
+    /**
+     * 更新节点触发规则,支持新增
+     * @param ntId
+     * @param nodeTrigParam
+     * @return void
+     * */
+    void updateRuleEngine1(Long ntId, NodeTrigParam nodeTrigParam);
 }

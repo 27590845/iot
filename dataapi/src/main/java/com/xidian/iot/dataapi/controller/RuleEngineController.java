@@ -85,6 +85,14 @@ public class RuleEngineController {
         return HttpResult.oK().message("更新成功");
     }
 
+    @ApiOperation(value = "更新触发器,支持新增")
+    @PutMapping("/update/{ntId}")
+    public HttpResult updateRuleEngineAll(@ApiParam(name = "ntId", value = "") @PathVariable("ntId") Long ntId,
+                                       @ApiParam(name = "NodeTrigParam", value = "触发器更新信息") @Validated(ValidGroup.UPDATE.class) @RequestBody NodeTrigParam nodeTrigParam) {
+        ruleEngineService.updateRuleEngine1(ntId, nodeTrigParam);
+        return HttpResult.oK().message("更新成功");
+    }
+
     @ApiOperation(value = "只更新节点触发器")
     @PatchMapping("/{ntId}")
     public HttpResult updateNodeTrigger(@ApiParam(name = "ntId", value = "") @PathVariable("ntId") Long ntId,

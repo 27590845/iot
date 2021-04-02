@@ -6,9 +6,11 @@ import com.xidian.iot.database.entity.NodeCond;
 import com.xidian.iot.database.entity.NodeTrig;
 import com.xidian.iot.database.mapper.NodeTrigMapper;
 import com.xidian.iot.database.mapper.custom.NodeTrigCustomMapper;
+import com.xidian.iot.database.param.NodeActAlertParam;
 import com.xidian.iot.database.param.NodeCondParam;
 import com.xidian.iot.database.param.NodeTrigParam;
 import com.xidian.iot.databiz.service.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -118,12 +120,14 @@ public class RuleEngineServiceImpl implements RuleEngineService {
         // 更新触发器
         nodeTrigService.updateNodeTrigById(nodeTrigParam);
         // 先判断是否有节点命令 如果有则直接事务回滚
-        if (!Objects.isNull(nodeTrigParam.getNodeActCmdParams())&&nodeTrigParam.getNodeActCmdParams().size()>0) {
+        if (!Objects.isNull(nodeTrigParam.getNodeActCmdParams()) && nodeTrigParam.getNodeActCmdParams().size() > 0) {
             checkReptCondition(nodeTrigParam);
             // 更新nodeActCmd列表 也就是更新 ncId命令id
             nodeActCmdService.updateNodeActCmds(nodeTrigParam.getNodeActCmdParams()
-                    .stream().map(param -> {param.setNtId(ntId);
-                                 return (NodeActCmd) param;}).collect(Collectors.toList()));
+                    .stream().map(param -> {
+                        param.setNtId(ntId);
+                        return (NodeActCmd) param;
+                    }).collect(Collectors.toList()));
         }
         // 更新触发报警信息
         nodeActAlertService.updateNodeActAlert(nodeTrigParam.getNodeActAlertParam());
@@ -137,10 +141,10 @@ public class RuleEngineServiceImpl implements RuleEngineService {
         List<NodeCond> nodeConds = nodeCondService.getNodeCondsByNtId(ntId);
         // 判断新增触发条件所属的触发器中是否存在此触发条件（或者是同一个传感器而且操作符也相同）
         List<NodeCond> repeatNodeConds = nodeConds.stream().filter(nodeCond ->
-                        nodeCond.getNaId().equals(nodeCondParam.getNaId())
-                        &&nodeCond.getNcOp().equals(nodeCondParam.getNcOp())).collect(Collectors.toList());
-        if(repeatNodeConds.size()>0){
-            throw new BusinessException(-1,"该触发器已有传感器的触发符号存在，请检查后再添加");
+                nodeCond.getNaId().equals(nodeCondParam.getNaId())
+                        && nodeCond.getNcOp().equals(nodeCondParam.getNcOp())).collect(Collectors.toList());
+        if (repeatNodeConds.size() > 0) {
+            throw new BusinessException(-1, "该触发器已有传感器的触发符号存在，请检查后再添加");
         }
         nodeCondParam.setNtId(ntId);
         nodeCondService.addNodeCond(nodeCondParam);
@@ -151,7 +155,7 @@ public class RuleEngineServiceImpl implements RuleEngineService {
     public NodeTrigParam getRuleEngine(Long ntId) {
         // 先判断此ntId是否存在
         NodeTrig nodeTrig = nodeTrigService.getNodeTrigExtById(ntId);
-        if(Objects.isNull(nodeTrig))throw new BusinessException(-1,"该触发器不存在");
+        if (Objects.isNull(nodeTrig)) throw new BusinessException(-1, "该触发器不存在");
         NodeTrigParam nodeTrigParam = nodeTrigCustomMapper.getNodeTrigParamByNtId(ntId);
         return nodeTrigParam;
     }
@@ -162,5 +166,54 @@ public class RuleEngineServiceImpl implements RuleEngineService {
             throw new BusinessException(-1, "该触发器不存在");
         }
         return nodeTrigService.updateNodeTrigById(nodeTrig);
+    }
+
+
+    public void updateRuleEngine1(Long ntId, NodeTrigParam nodeTrigParam) {
+        if (Objects.isNull(nodeTrigService.getNodeTrigExtById(ntId))) {
+            throw new BusinessException(-1, "该触发器不存在");
+        }
+        // 更新触发器
+        nodeTrigService.updateNodeTrigById(nodeTrigParam);
+        // 先判断是否有节点命令 如果有则直接事务回滚
+        if (!Objects.isNull(nodeTrigParam.getNodeActCmdParams()) && nodeTrigParam.getNodeActCmdParams().size() > 0) {
+            checkReptCondition(nodeTrigParam);
+            // 更新nodeActCmd列表 也就是更新 ncId命令id
+            nodeActCmdService.updateNodeActCmds(nodeTrigParam.getNodeActCmdParams()
+                    .stream().map(param -> {
+                        param.setNtId(ntId);
+                        return (NodeActCmd) param;
+                    }).collect(Collectors.toList()));
+        }
+        // 更新触发报警信息(nodeactalert)
+        nodeActAlertService.updateNodeActAlert(nodeTrigParam.getNodeActAlertParam());
+        //以下操作nodecond表
+        //已有的
+        List<NodeCondParam> existNodeCond = nodeTrigParam.getNodeCondParams().stream().filter(nodeCondParam -> !Objects.isNull(nodeCondParam.getNcId())).collect(Collectors.toList());
+        //新增的
+        List<NodeCondParam> newNodeCond = nodeTrigParam.getNodeCondParams().stream().filter(nodeCondParam -> Objects.isNull(nodeCondParam.getNcId())).collect(Collectors.toList());
+        //1.删除
+        List<Long> delNcIds = nodeCondService.getNcIdsByNtId(nodeTrigParam.getNtId());
+        int count = delNcIds.size();
+        for(NodeCondParam nodeCondParam:existNodeCond){
+            for(int i=0;i<delNcIds.size();i++){
+                if(delNcIds.get(i).equals(nodeCondParam.getNcId()));
+                delNcIds.remove(i);
+            }
+        }
+        if(delNcIds.size()>0){
+            if(count == delNcIds.size() && newNodeCond.size() == 0){
+                throw new BusinessException(-1, "触发条件不可全部删除");
+            }
+            nodeCondService.delNodeCondByNcIds(delNcIds);
+        }
+        //2.新增
+        if(newNodeCond.size()>0) {
+            nodeCondService.addNodeConds(newNodeCond.stream().map(param -> (NodeCond) param).collect(Collectors.toList()));
+        }
+        //3.更新
+        if(existNodeCond.size()>0) {
+            nodeCondService.updateNodeConds(existNodeCond.stream().map(param -> (NodeCond) param).collect(Collectors.toList()));
+        }
     }
 }
