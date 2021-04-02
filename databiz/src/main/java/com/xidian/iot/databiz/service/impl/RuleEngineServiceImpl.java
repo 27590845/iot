@@ -197,8 +197,10 @@ public class RuleEngineServiceImpl implements RuleEngineService {
         int count = delNcIds.size();
         for(NodeCondParam nodeCondParam:existNodeCond){
             for(int i=0;i<delNcIds.size();i++){
-                if(delNcIds.get(i).equals(nodeCondParam.getNcId()));
-                delNcIds.remove(i);
+                if(delNcIds.get(i).equals(nodeCondParam.getNcId())) {
+                    delNcIds.remove(i);
+                    i--;
+                }
             }
         }
         if(delNcIds.size()>0){
@@ -215,5 +217,7 @@ public class RuleEngineServiceImpl implements RuleEngineService {
         if(existNodeCond.size()>0) {
             nodeCondService.updateNodeConds(existNodeCond.stream().map(param -> (NodeCond) param).collect(Collectors.toList()));
         }
+        //删除缓存
+        nodeCondService.cleanNcIdsByNtId(ntId);
     }
 }

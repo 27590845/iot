@@ -91,13 +91,7 @@ public class NodeTrigParam extends NodeTrig implements Serializable {
 
     @Getter
     @Setter
-//    @NotNull(groups = {ValidGroup.INSERT.class,ValidGroup.UPDATE.class}, message = "触发报警信息表不能为空")
+    @NotNull(groups = {ValidGroup.INSERT.class,ValidGroup.UPDATE.class}, message = "触发报警信息表不能为空")
     @Valid
     NodeActAlertParam nodeActAlertParam;
-
-    @Getter
-    @Setter
-//    @NotNull(groups = {ValidGroup.INSERT.class,ValidGroup.UPDATE.class}, message = "触发报警信息表不能为空")
-    @Valid
-    private List<NodeActAlertParam> nodeActAlertParams;
 }
