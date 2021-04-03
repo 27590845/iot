@@ -5,12 +5,12 @@ LABEL version="1" \
 
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
-    mkdir -p /app/datacenter
+    mkdir -p /app/dataapi
 
 WORKDIR /app/dataapi
-ADD target/jar/*.jar ./
+ADD target/dataapi-boot.jar ./
 
-EXPOSE 8081
+EXPOSE 8080
 
 VOLUME ["/var/log/xidianiot"]
 ENTRYPOINT java -jar dataapi-boot.jar

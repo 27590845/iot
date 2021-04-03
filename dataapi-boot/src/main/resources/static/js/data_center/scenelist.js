@@ -88,6 +88,9 @@ function sceneListBtn() {
 	search += "&" + getSearchKey("scenesn").self + "=" + scenesn;
 	if (/add-node/.test(this.className)) { // 添加节点按钮
 		window.open("./nodeadd.html" + search, "_blank")
+	} else if (/view-scene/.test(this.className)) { // 可视化按钮
+		window.open("/master/grafana/" + scenesn, "_blank")
+		return;
 	} else if (/info-scene/.test(this.className)) { // 场景信息按钮
 		window.open("./sceneinfo.html" + search, "_blank")
 		return;
@@ -157,6 +160,9 @@ function createSceneList(data) {
 			</div>
 			
 			<div class="row-btn">
+				<button type="button" class="btn btn-info view-scene" data-scenesn="${sceneItem.sceneSn}">可视化
+					<span class="glyphicon glyphicon-eye-open"></span>
+				</button>
 				<button type="button" class="btn btn-success add-node" data-scenesn="${sceneItem.sceneSn}">添加节点
 					<span class="glyphicon glyphicon-plus-sign"></span>
 				</button>
@@ -227,6 +233,8 @@ function createSceneList(data) {
 	})
 
 	// 场景中的操作
+	//可视化
+	$('.view-scene').on('click', sceneListBtn)
 	// 添加节点
 	$('.add-node').on('click', sceneListBtn)
 	// 查看
