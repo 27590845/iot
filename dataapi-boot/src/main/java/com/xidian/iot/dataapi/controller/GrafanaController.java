@@ -1,9 +1,12 @@
 package com.xidian.iot.dataapi.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.xidian.iot.dataapi.util.GrafanaApiUtil;
 import com.xidian.iot.dataapi.util.GrafanaFormatUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,22 +49,33 @@ public class GrafanaController {
 
     /**
      * 根据基本数据信息生成dashboard
-     * @param DataInfos 基本数据信息，三个字段：sceneSn， nodeSn， attrKey
+     * @param dataInfos 基本数据信息，三个字段：sceneSn， nodeSn， attrKey
+     * @param usePrettyStyle 是否使用好看些的样式
      */
-    public void initDashboard(List<Map<String, String>> DataInfos){
+    public void initDashboard(List<Map<String, String>> dataInfos, boolean usePrettyStyle){
+        if(CollectionUtils.isEmpty(dataInfos) || !dataInfos.get(0).containsKey("sceneSn")) return;
         List<GrafanaFormatUtil.Panel> panels = new ArrayList<>();
-        for (Map<String, String> dataInfo : DataInfos){
-            GrafanaFormatUtil.Panel panel = new GrafanaFormatUtil.Panel(GrafanaFormatUtil.PanelTemp.MAX, 0
-                    , "", "RD001.tem1", "", "", "", ""
-                    ,0,12,0,0);
-            panel.setSceneSn(dataInfo.get("sceneSn"));
-            panel.setNodeSn(dataInfo.get("nodeSn"));
-            panel.setAttrKey(dataInfo.get("attrKey"));
+        String sceneSn = dataInfos.get(0).get("sceneSn");
+        for (Map<String, String> dataInfo : dataInfos){
+            GrafanaFormatUtil.Panel panel = new GrafanaFormatUtil.Panel(null, 0
+                    , "", "", "", "", "", ""
+                    ,0,0,0,0);
+            //只需先设置好以下三个属性
+            panel.setMeasurement(sceneSn);
+            panel.setTag(dataInfo.get("nodeSn"));
+            panel.setColumn(dataInfo.get("attrKey"));
             panels.add(panel);
         }
-    }
-
-    public void createDefaultDashboard(List<GrafanaFormatUtil.Panel> panels){
+        if(usePrettyStyle){
+            panels = GrafanaFormatUtil.prettyDashboardPanels(panels);
+        }else {
+            panels = GrafanaFormatUtil.defaultDashboardPanels(panels, 0, 1);
+        }
+        GrafanaApiUtil.deleteDashboardsBySlug(sceneSn);
+        JSONObject dashboard = GrafanaApiUtil.getOrCreateDashboard(sceneSn);
+        GrafanaFormatUtil.addPanel(dashboard, panels.toArray(new GrafanaFormatUtil.Panel[]{}));
+        JSONObject result = GrafanaApiUtil.updateDashboard(dashboard);
+        System.out.println(result);
     }
 
 }

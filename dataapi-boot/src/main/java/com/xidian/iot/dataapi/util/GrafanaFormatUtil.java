@@ -2,10 +2,13 @@ package com.xidian.iot.dataapi.util;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.xidian.iot.database.vo.SceneVo;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @description:
@@ -74,7 +77,7 @@ public class GrafanaFormatUtil {
             "              \"type\": \"fill\"\n" +
             "            }\n" +
             "          ],\n" +
-            "          \"measurement\": \"#{sceneSn}\",\n" +
+            "          \"measurement\": \"#{measurement}\",\n" +
             "          \"orderByTime\": \"ASC\",\n" +
             "          \"policy\": \"default\",\n" +
             "          \"refId\": \"A\",\n" +
@@ -83,7 +86,7 @@ public class GrafanaFormatUtil {
             "            [\n" +
             "              {\n" +
             "                \"params\": [\n" +
-            "                  \"#{panel_attrKey}\"\n" +
+            "                  \"#{panel_column}\"\n" +
             "                ],\n" +
             "                \"type\": \"field\"\n" +
             "              },\n" +
@@ -97,7 +100,7 @@ public class GrafanaFormatUtil {
             "            {\n" +
             "              \"key\": \"nodeSn\",\n" +
             "              \"operator\": \"=\",\n" +
-            "              \"value\": \"#{panel_nodeSn}\"\n" +
+            "              \"value\": \"#{panel_tag}\"\n" +
             "            }\n" +
             "          ]\n" +
             "        }\n" +
@@ -168,7 +171,7 @@ public class GrafanaFormatUtil {
             "              \"type\": \"fill\"\n" +
             "            }\n" +
             "          ],\n" +
-            "          \"measurement\": \"#{sceneSn}\",\n" +
+            "          \"measurement\": \"#{measurement}\",\n" +
             "          \"orderByTime\": \"ASC\",\n" +
             "          \"policy\": \"default\",\n" +
             "          \"refId\": \"A\",\n" +
@@ -177,7 +180,7 @@ public class GrafanaFormatUtil {
             "            [\n" +
             "              {\n" +
             "                \"params\": [\n" +
-            "                  \"#{panel_attrKey}\"\n" +
+            "                  \"#{panel_column}\"\n" +
             "                ],\n" +
             "                \"type\": \"field\"\n" +
             "              },\n" +
@@ -191,7 +194,7 @@ public class GrafanaFormatUtil {
             "            {\n" +
             "              \"key\": \"nodeSn\",\n" +
             "              \"operator\": \"=\",\n" +
-            "              \"value\": \"#{panel_nodeSn}\"\n" +
+            "              \"value\": \"#{panel_tag}\"\n" +
             "            }\n" +
             "          ]\n" +
             "        }\n" +
@@ -265,7 +268,7 @@ public class GrafanaFormatUtil {
             "              \"type\": \"fill\"\n" +
             "            }\n" +
             "          ],\n" +
-            "          \"measurement\": \"#{sceneSn}\",\n" +
+            "          \"measurement\": \"#{measurement}\",\n" +
             "          \"orderByTime\": \"ASC\",\n" +
             "          \"policy\": \"default\",\n" +
             "          \"refId\": \"A\",\n" +
@@ -274,7 +277,7 @@ public class GrafanaFormatUtil {
             "            [\n" +
             "              {\n" +
             "                \"params\": [\n" +
-            "                  \"#{panel_attrKey}\"\n" +
+            "                  \"#{panel_column}\"\n" +
             "                ],\n" +
             "                \"type\": \"field\"\n" +
             "              },\n" +
@@ -288,7 +291,7 @@ public class GrafanaFormatUtil {
             "            {\n" +
             "              \"key\": \"nodeSn\",\n" +
             "              \"operator\": \"=\",\n" +
-            "              \"value\": \"#{panel_nodeSn}\"\n" +
+            "              \"value\": \"#{panel_tag}\"\n" +
             "            }\n" +
             "          ]\n" +
             "        }\n" +
@@ -352,7 +355,7 @@ public class GrafanaFormatUtil {
             "              \"type\": \"fill\"\n" +
             "            }\n" +
             "          ],\n" +
-            "          \"measurement\": \"#{sceneSn}\",\n" +
+            "          \"measurement\": \"#{measurement}\",\n" +
             "          \"orderByTime\": \"ASC\",\n" +
             "          \"policy\": \"default\",\n" +
             "          \"refId\": \"A\",\n" +
@@ -361,7 +364,7 @@ public class GrafanaFormatUtil {
             "            [\n" +
             "              {\n" +
             "                \"params\": [\n" +
-            "                  \"#{panel_attrKey}\"\n" +
+            "                  \"#{panel_column}\"\n" +
             "                ],\n" +
             "                \"type\": \"field\"\n" +
             "              },\n" +
@@ -375,7 +378,7 @@ public class GrafanaFormatUtil {
             "            {\n" +
             "              \"key\": \"nodeSn\",\n" +
             "              \"operator\": \"=\",\n" +
-            "              \"value\": \"#{panel_nodeSn}\"\n" +
+            "              \"value\": \"#{panel_tag}\"\n" +
             "            }\n" +
             "          ]\n" +
             "        }\n" +
@@ -477,7 +480,7 @@ public class GrafanaFormatUtil {
             "              \"type\": \"fill\"\n" +
             "            }\n" +
             "          ],\n" +
-            "          \"measurement\": \"#{sceneSn}\",\n" +
+            "          \"measurement\": \"#{measurement}\",\n" +
             "          \"orderByTime\": \"ASC\",\n" +
             "          \"policy\": \"default\",\n" +
             "          \"refId\": \"A\",\n" +
@@ -486,7 +489,7 @@ public class GrafanaFormatUtil {
             "            [\n" +
             "              {\n" +
             "                \"params\": [\n" +
-            "                  \"#{panel_attrKey}\"\n" +
+            "                  \"#{panel_column}\"\n" +
             "                ],\n" +
             "                \"type\": \"field\"\n" +
             "              },\n" +
@@ -500,7 +503,7 @@ public class GrafanaFormatUtil {
             "            {\n" +
             "              \"key\": \"nodeSn\",\n" +
             "              \"operator\": \"=\",\n" +
-            "              \"value\": \"#{panel_nodeSn}\"\n" +
+            "              \"value\": \"#{panel_tag}\"\n" +
             "            }\n" +
             "          ]\n" +
             "        }\n" +
@@ -619,7 +622,7 @@ public class GrafanaFormatUtil {
             "              \"type\": \"fill\"\n" +
             "            }\n" +
             "          ],\n" +
-            "          \"measurement\": \"#{sceneSn}\",\n" +
+            "          \"measurement\": \"#{measurement}\",\n" +
             "          \"orderByTime\": \"ASC\",\n" +
             "          \"policy\": \"default\",\n" +
             "          \"refId\": \"A\",\n" +
@@ -628,7 +631,7 @@ public class GrafanaFormatUtil {
             "            [\n" +
             "              {\n" +
             "                \"params\": [\n" +
-            "                  \"#{panel_attrKey}\"\n" +
+            "                  \"#{panel_column}\"\n" +
             "                ],\n" +
             "                \"type\": \"field\"\n" +
             "              },\n" +
@@ -642,7 +645,7 @@ public class GrafanaFormatUtil {
             "            {\n" +
             "              \"key\": \"nodeSn\",\n" +
             "              \"operator\": \"=\",\n" +
-            "              \"value\": \"#{panel_nodeSn}\"\n" +
+            "              \"value\": \"#{panel_tag}\"\n" +
             "            }\n" +
             "          ]\n" +
             "        }\n" +
@@ -760,27 +763,20 @@ public class GrafanaFormatUtil {
     public static final String placeholder_des = "#{panel_des}";
     public static final String placeholder_titlt = "#{panel_title}";
     public static final String placeholder_alias = "#{panel_alias}";
-    public static final String placeholder_nodeSn = "#{panel_nodeSn}";
-    public static final String placeholder_attrKey = "#{panel_attrKey}";
-    public static final String placeholder_sceneSn = "#{sceneSn}";
+    public static final String placeholder_tag = "#{panel_tag}";
+    public static final String placeholder_column = "#{panel_column}";
+    public static final String placeholder_measurement = "#{measurement}";
     public static final String placeholder_height = "#{panel_height}";
     public static final String placeholder_width = "#{panel_width}";
     public static final String placeholder_xAxis = "#{panel_xAxis}";
     public static final String placeholder_yAxis = "#{panel_yAxis}";
     public static final String placeholder_dash_title = "#{dashboard_title}";
 
-//    public static final JSONObject panelMinJson = JSONObject.parseObject(PANEL_MIN);
-//    public static final JSONObject panelMaxJson = JSONObject.parseObject(PANEL_MAX);
-//    public static final JSONObject panelStatJson = JSONObject.parseObject(PANEL_STAT);
-//    public static final JSONObject panelHeatmapJson = JSONObject.parseObject(PANEL_HEATMAP);
-//    public static final JSONObject panelDistributeJson = JSONObject.parseObject(PANEL_DISTRIBUTE);
-//    public static final JSONObject panelLineJson = JSONObject.parseObject(PANEL_LINE);
-//    public static final JSONObject dashboardStander = JSONObject.parseObject(DASHBOARD_STANDER);
-
     public enum PanelTemp{
         MIN, MAX, STAT, HEATMAP, DISTRIBUTE, LINE
     }
 
+    // influx中，每个scene使用一个表，nodeSn作为表中的索引列(influx中tag的概念)
     @Getter
     @Setter
     public static class Panel{
@@ -789,20 +785,20 @@ public class GrafanaFormatUtil {
         private String title;
         private String alias;
         private String description;
-        private String sceneSn;
-        private String nodeSn;
-        private String attrKey;
+        private String measurement;  // 查询表，对应sceneSn
+        private String tag;  // 查询条件，对应nodeSn
+        private String column;  // 查询字段，对应attrKey
         private int height, width, xAxis, yAxis;
         public Panel(){}
-        public Panel(PanelTemp type, int id, String title, String alias, String description, String sceneSn, String nodeSn, String attrKey, int height, int width, int xAxis, int yAxis) {
+        public Panel(PanelTemp type, int id, String title, String alias, String description, String measurement, String tag, String column, int height, int width, int xAxis, int yAxis) {
             this.type = type;
             this.id = id; //必须初始化id，不然前端抛异常
             this.title = title;
             this.alias = alias;
             this.description = description;
-            this.sceneSn = sceneSn;
-            this.nodeSn = nodeSn;
-            this.attrKey = attrKey;
+            this.measurement = measurement;
+            this.tag = tag;
+            this.column = column;
             this.height = height;
             this.width = width;
             this.xAxis = xAxis;
@@ -840,9 +836,9 @@ public class GrafanaFormatUtil {
                 temp = temp.replace(placeholder_des, panel.getDescription())
                         .replace(placeholder_id, String.valueOf(panel.getId()))
                         .replace(placeholder_titlt, panel.getTitle())
-                        .replace(placeholder_sceneSn, panel.getSceneSn())
-                        .replace(placeholder_nodeSn, panel.getNodeSn())
-                        .replace(placeholder_attrKey, panel.getAttrKey())
+                        .replace(placeholder_measurement, panel.getMeasurement())
+                        .replace(placeholder_tag, panel.getTag())
+                        .replace(placeholder_column, panel.getColumn())
                         .replace(placeholder_height, String.valueOf(panel.getHeight()))
                         .replace(placeholder_width, String.valueOf(panel.getWidth()))
                         .replace(placeholder_xAxis, String.valueOf(panel.getXAxis()))
@@ -855,32 +851,85 @@ public class GrafanaFormatUtil {
                     dashboard.put("panels", new JSONArray());
                 }
                 dashboard.getJSONArray("panels").add(jsonObject);
-//                temp.put("description", panel.getDescription());
-//                temp.put("title", panel.getTitle());
-//                JSONObject gridPos = temp.getJSONObject("gridPos");
-//                gridPos.put("h", panel.getHeight());
-//                gridPos.put("w", panel.getWidth());
-//                gridPos.put("x", panel.getXAxis());
-//                gridPos.put("y", panel.getYAxis());
-//                JSONObject target = (JSONObject) temp.getJSONArray("targets").get(0);//targets只有一个元素
-//                target.put("measurement", panel.getSceneSn());
-//                if(StringUtils.isNotBlank(panel.getAlias())){
-//                    target.put("alias", panel.getAlias());
-//                }
-//                JSONArray select = (JSONArray) target.getJSONArray("select").get(0);//select只有一个元素
-//                for(Object selectItem: select){
-//                    JSONObject sij = (JSONObject) selectItem;
-//                    if("field".equals(sij.getString("type"))){
-//                        ((JSONArray)sij.get("params")).add(panel.getAttrKey());
-//                        break;
-//                    }
-//                }
-//                JSONObject tag = (JSONObject) target.getJSONArray("tags").get(0);
-//                tag.put("value", panel.getNodeSn());
-//                dashboard.getJSONArray("panels").add(temp);
-
             }
         }
         return dashboard;
     }
+
+    /**
+     * 根据panel最小集合，生成dashboard的panel冗余集合，dashboard效果见 /static/dashboard_pretty.json
+     * panelsMin中panel的measurement、tag、column字段不能为空
+     * @param panelsMin
+     * @return
+     */
+    public static List<Panel> prettyDashboardPanels(List<Panel> panelsMin){
+        if(CollectionUtils.isEmpty(panelsMin)) return null;
+        List<Panel> panelsPretty = new ArrayList<>();
+        Panel currPanel = null;
+        int panelIdx = 0;
+
+        currPanel = panelsMin.get(panelIdx);
+        Panel maxPanel = new GrafanaFormatUtil.Panel(PanelTemp.MAX, 1
+                , currPanel.getTag()+"."+currPanel.getColumn()+"最大值", currPanel.getTag()+"."+currPanel.getColumn(), ""
+                , currPanel.getMeasurement(), currPanel.getTag(), currPanel.getColumn()
+                ,8,4,0,0);
+        Panel minPanel = new GrafanaFormatUtil.Panel(PanelTemp.MIN, 2
+                , currPanel.getTag()+"."+currPanel.getColumn()+"最小值", currPanel.getTag()+"."+currPanel.getColumn(), ""
+                , currPanel.getMeasurement(), currPanel.getTag(), currPanel.getColumn()
+                ,8,4,4,0);
+        Panel statPanel = new GrafanaFormatUtil.Panel(PanelTemp.STAT, 3
+                , currPanel.getTag()+"."+currPanel.getColumn()+"状态图", currPanel.getTag()+"."+currPanel.getColumn(), ""
+                , currPanel.getMeasurement(), currPanel.getTag(), currPanel.getColumn()
+                ,8,16,8,0);
+
+        if(panelsMin.size()>1) ++ panelIdx;
+        currPanel = panelsMin.get(panelIdx);
+        Panel heatmapPanel = new GrafanaFormatUtil.Panel(PanelTemp.HEATMAP, 4
+                , currPanel.getTag()+"."+currPanel.getColumn()+"热力图", currPanel.getTag()+"."+currPanel.getColumn(), ""
+                , currPanel.getMeasurement(), currPanel.getTag(), currPanel.getColumn()
+                ,8,12,0,8);
+
+        if(panelsMin.size()>2) ++ panelIdx;
+        currPanel = panelsMin.get(panelIdx);
+        Panel distributePanel = new GrafanaFormatUtil.Panel(PanelTemp.DISTRIBUTE, 5
+                , currPanel.getTag()+"."+currPanel.getColumn()+"分布图", currPanel.getTag()+"."+currPanel.getColumn(), ""
+                , currPanel.getMeasurement(), currPanel.getTag(), currPanel.getColumn()
+                ,8,12,12,8);
+
+        panelsPretty.add(maxPanel);
+        panelsPretty.add(minPanel);
+        panelsPretty.add(statPanel);
+        panelsPretty.add(heatmapPanel);
+        panelsPretty.add(distributePanel);
+        if(panelsMin.size()>3){
+            panelsMin.remove(0);
+            panelsMin.remove(0);
+            panelsMin.remove(0);
+        }
+        panelsPretty.addAll(defaultDashboardPanels(panelsMin, 16, 6));
+
+        return panelsPretty;
+    }
+
+    /**
+     * 根据panel最小集合，生成dashboard的panel冗余集合，dashboard效果见 /static/dashboard_default.json
+     * @param panelsMin
+     * @param startY 起始y坐标
+     * @param startId 起始Id
+     * @return
+     */
+    public static List<Panel> defaultDashboardPanels(List<Panel> panelsMin, int startY, int startId){
+        if(CollectionUtils.isEmpty(panelsMin)) return null;
+        List<Panel> panelsDefault = new ArrayList<>();
+        for (int i=0; i< panelsMin.size(); i++){
+            Panel currPanel = panelsMin.get(i);
+            Panel defaultPanel = new GrafanaFormatUtil.Panel(PanelTemp.LINE, ++ startId
+                    , currPanel.getTag()+"."+currPanel.getColumn()+"折线图", currPanel.getTag()+"."+currPanel.getColumn(), ""
+                    , currPanel.getMeasurement(), currPanel.getTag(), currPanel.getColumn()
+                    ,8,12,12*(i%2),startY+8*(i/2));
+            panelsDefault.add(defaultPanel);
+        }
+        return panelsDefault;
+    }
+
 }
