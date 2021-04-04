@@ -20,7 +20,7 @@ public class GrafanaProxyFilter extends ZuulFilter {
             try {
                 String body = StreamUtils.copyToString(stream, Charset.forName("UTF-8"));
                 String newbody = body.substring(0, body.length() - "</html>".length() - 1) +
-                        script("/js/grafana/app.js") +
+                        script("/js/dashboard/app.js") +
                         "</html>";
                 ctx.setResponseBody(newbody);
             } catch (IOException e) {

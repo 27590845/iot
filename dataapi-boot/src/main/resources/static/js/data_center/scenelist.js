@@ -89,7 +89,7 @@ function sceneListBtn() {
 	if (/add-node/.test(this.className)) { // 添加节点按钮
 		window.open("./nodeadd.html" + search, "_blank")
 	} else if (/view-scene/.test(this.className)) { // 可视化按钮
-		window.open("/master/grafana/" + scenesn, "_blank")
+		window.open("/grafana/" + scenesn, "_blank")
 		return;
 	} else if (/info-scene/.test(this.className)) { // 场景信息按钮
 		window.open("./sceneinfo.html" + search, "_blank")

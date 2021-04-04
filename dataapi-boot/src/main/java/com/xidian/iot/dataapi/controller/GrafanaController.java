@@ -1,16 +1,12 @@
 package com.xidian.iot.dataapi.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.xidian.iot.dataapi.controller.res.HttpResult;
 import com.xidian.iot.dataapi.util.GrafanaApiUtil;
-import com.xidian.iot.dataapi.util.GrafanaFormatUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -18,7 +14,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -32,14 +27,19 @@ import java.util.Map;
 @RequestMapping("/grafana")
 public class GrafanaController {
 
-    @ApiOperation(value = "/sceneSn", notes = "根据sceneSn获取dashboard")
+    @ApiOperation(value = "/{sceneSn}", notes = "根据sceneSn获取dashboard")
     @GetMapping("/{sceneSn}")
     public void grafanaRedirect(@ApiParam(name = "sceneSn", value = "网关号") @PathVariable String sceneSn){
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
         HttpServletResponse response = attributes.getResponse();
         try {
-            request.getRequestDispatcher("/dashboard/db/"+sceneSn+"?orgId=1").forward(request, response);
+            if(GrafanaApiUtil.detectDashboardBySlug(sceneSn)) {
+                request.getRequestDispatcher("/dashboard/db/" + sceneSn + "?orgId=1").forward(request, response);
+            }else {
+                // 如果没有名为sceneSn的dashboard，则跳转至创建页面
+                response.sendRedirect("/html/dashboard/dashboard_init.html" + "?sceneSn="+sceneSn);
+            }
         } catch (ServletException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -47,35 +47,16 @@ public class GrafanaController {
         }
     }
 
-    /**
-     * 根据基本数据信息生成dashboard
-     * @param dataInfos 基本数据信息，三个字段：sceneSn， nodeSn， attrKey
-     * @param usePrettyStyle 是否使用好看些的样式
-     */
-    public void initDashboard(List<Map<String, String>> dataInfos, boolean usePrettyStyle){
-        if(CollectionUtils.isEmpty(dataInfos) || !dataInfos.get(0).containsKey("sceneSn")) return;
-        List<GrafanaFormatUtil.Panel> panels = new ArrayList<>();
-        String sceneSn = dataInfos.get(0).get("sceneSn");
-        for (Map<String, String> dataInfo : dataInfos){
-            GrafanaFormatUtil.Panel panel = new GrafanaFormatUtil.Panel(null, 0
-                    , "", "", "", "", "", ""
-                    ,0,0,0,0);
-            //只需先设置好以下三个属性
-            panel.setMeasurement(sceneSn);
-            panel.setTag(dataInfo.get("nodeSn"));
-            panel.setColumn(dataInfo.get("attrKey"));
-            panels.add(panel);
-        }
-        if(usePrettyStyle){
-            panels = GrafanaFormatUtil.prettyDashboardPanels(panels);
+    @ApiOperation(value = "/dashboardName", notes = "根据基本信息生成可视化页面，基本信息是由map组成的list，map包含三个属性：sceneSn、nodeSn、attrKey")
+    @PostMapping("/{dashboardName}")
+    public HttpResult grafanaInit(@ApiParam(name = "dashboardName", value = "可视化页面的名称，务必设置为sceneSn") @PathVariable String dashboardName
+            , @ApiParam(name = "baseInfos", value = "基本信息是由map组成的list，map包含三个属性：sceneSn、nodeSn、attrKey") @RequestBody List<Map<String, String>> baseInfos){
+        JSONObject result = GrafanaApiUtil.initDashboardFromBaseInfo(baseInfos, dashboardName, true);
+        if(result!=null){
+            return HttpResult.responseOK(result).message("操作完成");
         }else {
-            panels = GrafanaFormatUtil.defaultDashboardPanels(panels, 0, 1);
+            return HttpResult.generateErrorResult(-1, "操作失败");
         }
-        GrafanaApiUtil.deleteDashboardsBySlug(sceneSn);
-        JSONObject dashboard = GrafanaApiUtil.getOrCreateDashboard(sceneSn);
-        GrafanaFormatUtil.addPanel(dashboard, panels.toArray(new GrafanaFormatUtil.Panel[]{}));
-        JSONObject result = GrafanaApiUtil.updateDashboard(dashboard);
-        System.out.println(result);
     }
 
 }

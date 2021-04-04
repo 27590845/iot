@@ -12,7 +12,7 @@ dataapi-boot:
 # 开发环境配置
 server:
   # 服务器的HTTP端口，默认为8080
-  port: 8080
+  port: 8081
   servlet:
     # 应用的访问路径
     context-path: /
@@ -47,7 +47,8 @@ spring:
       enabled: true
       force: true
 
-grafana-server: http://grafana-iot-service:3000
+#grafana-server: http://grafana-iot-service:3000
+grafana-server: http://iot.xidian.edu.cn:50080
 
 zuul:
   routes:

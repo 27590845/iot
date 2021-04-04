@@ -1,11 +1,14 @@
 package com.xidian.iot.dataapi.util;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.xidian.iot.common.util.GetProps;
+import com.xidian.iot.common.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -94,6 +97,37 @@ public class GrafanaApiUtil {
         header.put("Content-Length", String.valueOf(reqBody.toJSONString().length()));
         String result = HttpUtil.sendPost(GRAFANA_SERVER+GRAFANA_API_WRITE, reqBody.toJSONString(), header);
         return JSONObject.parseObject(result);
+    }
+
+    /**
+     * 根据基本数据信息生成dashboard
+     * @param dataInfos 基本数据信息，三个字段：sceneSn， nodeSn， attrKey
+     * @param usePrettyStyle 是否使用好看些的样式
+     */
+    public static JSONObject initDashboardFromBaseInfo(List<Map<String, String>> dataInfos, String dashboardName, boolean usePrettyStyle){
+        if(CollectionUtils.isEmpty(dataInfos)) return null;
+        List<GrafanaFormatUtil.Panel> panels = new ArrayList<>();
+        // 如果没有指定dashboardName，就设置name为sceneSn
+        if(StringUtil.isBlank(dashboardName)) dashboardName = dataInfos.get(0).get("sceneSn");
+        for (Map<String, String> dataInfo : dataInfos){
+            GrafanaFormatUtil.Panel panel = new GrafanaFormatUtil.Panel(null, 0
+                    , "", "", "", "", "", ""
+                    ,0,0,0,0);
+            //只需先设置好以下三个属性
+            panel.setMeasurement(dataInfo.get("sceneSn"));
+            panel.setTag(dataInfo.get("nodeSn"));
+            panel.setColumn(dataInfo.get("attrKey"));
+            panels.add(panel);
+        }
+        if(usePrettyStyle){
+            panels = GrafanaFormatUtil.prettyDashboardPanels(panels);
+        }else {
+            panels = GrafanaFormatUtil.defaultDashboardPanels(panels, 0, 1);
+        }
+        GrafanaApiUtil.deleteDashboardsBySlug(dashboardName);
+        JSONObject dashboard = GrafanaApiUtil.getOrCreateDashboard(dashboardName);
+        GrafanaFormatUtil.addPanel(dashboard, panels.toArray(new GrafanaFormatUtil.Panel[]{}));
+        return GrafanaApiUtil.updateDashboard(dashboard);
     }
 
     private static Map<String, String> defaultHeader(){
