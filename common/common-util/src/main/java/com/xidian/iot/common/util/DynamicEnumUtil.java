@@ -38,6 +38,7 @@ public class DynamicEnumUtil {
         modifiers &= ~Modifier.FINAL;
         modifiersField.setInt(field, modifiers);
 
+
         FieldAccessor fa = reflectionFactory.newFieldAccessor(field, false);
         fa.set(target, value);
     }
