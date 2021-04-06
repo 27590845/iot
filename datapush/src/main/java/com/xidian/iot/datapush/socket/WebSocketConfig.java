@@ -33,15 +33,15 @@ public class WebSocketConfig extends WebMvcConfigurerAdapter implements WebSocke
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        //注册处理拦截器,拦截url为socketServer的请求
+        //注册处理拦截器,拦截url为data/sceneSn的请求
         registry.addHandler(sceneSocketHandler, "data/sceneSn").addInterceptors(new SceneSocketInterceptor()).setAllowedOrigins("*");
 
-        //注册SockJs的处理拦截器,拦截url为/sockjs/socketServer的请求  对应浏览器不支持websocket协议时降级为轮训的请求
+        //注册SockJs的处理拦截器,拦截url为data/sceneSn的请求  对应浏览器不支持websocket协议时降级为轮训的请求
         registry.addHandler(sceneSocketHandler, "data/sceneSn").addInterceptors(new SceneSocketInterceptor()).withSockJS();
-        //注册处理拦截器,拦截url为socketServer的请求
+        //注册处理拦截器,拦截url为data/node的请求
         registry.addHandler(NodeSocketHandler, "data/node").addInterceptors(new NodeSocketInterceptor()).setAllowedOrigins("*");
 
-        //注册SockJs的处理拦截器,拦截url为/sockjs/socketServer的请求  对应浏览器不支持websocket协议时降级为轮训的请求
+        //注册SockJs的处理拦截器,拦截url为data/node的请求  对应浏览器不支持websocket协议时降级为轮训的请求
         registry.addHandler(NodeSocketHandler, "data/node").addInterceptors(new NodeSocketInterceptor()).withSockJS();
 
 //        //定时发送广播，在这里写推送服务代码

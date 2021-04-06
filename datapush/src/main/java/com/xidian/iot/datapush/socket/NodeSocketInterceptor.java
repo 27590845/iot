@@ -34,7 +34,6 @@ public class NodeSocketInterceptor implements HandshakeInterceptor {
         if(request instanceof ServerHttpRequest){
             HttpServletRequest servletRequest = ((ServletServerHttpRequest) request).getServletRequest();
             String id = servletRequest.getSession().getId();
-            System.out.println("beforeHandshake: \n"+id);
             String sceneSn = servletRequest.getParameter(Constant.SCENE_SN);
             String node = servletRequest.getParameter(Constant.Node);
             map.put(Constant.SCENE_SN,sceneSn);
