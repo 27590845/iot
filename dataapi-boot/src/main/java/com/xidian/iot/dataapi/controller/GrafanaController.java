@@ -59,4 +59,15 @@ public class GrafanaController {
         }
     }
 
+    @ApiOperation(value = "/dashboardName", notes = "根据基本信息生成可视化页面，基本信息是由map组成的list，map包含三个属性：sceneSn、nodeSn、attrKey")
+    @DeleteMapping("/{dashboardName}")
+    public HttpResult grafanaDelete(@ApiParam(name = "dashboardName", value = "可视化页面的名称") @PathVariable String dashboardName){
+        JSONObject result = GrafanaApiUtil.deleteDashboardsBySlug(dashboardName);
+        if(result!=null){
+            return HttpResult.responseOK(result).message("操作完成");
+        }else {
+            return HttpResult.generateErrorResult(-1, "操作失败");
+        }
+    }
+
 }
