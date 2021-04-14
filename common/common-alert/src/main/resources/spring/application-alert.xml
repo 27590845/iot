@@ -13,17 +13,17 @@
     <aop:aspectj-autoproxy />
 
     <!-- 这些配置文件只在测试时生效。正式部署时可以删掉，因为配置文件只会被扫描一次，扫描工作由模块调用者负责 -->
-    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property
-                name="locations"> <!-- PropertyPlaceholderConfigurer类中有个locations属性，接收的是一个数组，即我们可以在下面配好多个properties文件 -->
-            <array>
-                <value>classpath:conf/email.properties</value>
-                <value>classpath:conf/sms.properties</value>
-<!--                <value>classpath:conf/activemq-prod.properties</value>-->
-<!--                <value>classpath:conf/activemq-dev.properties</value>-->
-            </array>
-        </property>
-    </bean>
+<!--    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">-->
+<!--        <property-->
+<!--                name="locations"> &lt;!&ndash; PropertyPlaceholderConfigurer类中有个locations属性，接收的是一个数组，即我们可以在下面配好多个properties文件 &ndash;&gt;-->
+<!--            <array>-->
+<!--                <value>classpath:conf/email.properties</value>-->
+<!--                <value>classpath:conf/sms.properties</value>-->
+<!--&lt;!&ndash;                <value>classpath:conf/activemq-prod.properties</value>&ndash;&gt;-->
+<!--&lt;!&ndash;                <value>classpath:conf/activemq-dev.properties</value>&ndash;&gt;-->
+<!--            </array>-->
+<!--        </property>-->
+<!--    </bean>-->
     <!--context:property-placeholder location="classpath*:/conf/*.properties" />-->
     <import resource="application-activemq-def.xml"/>
     <import resource="spring-email.xml"/>

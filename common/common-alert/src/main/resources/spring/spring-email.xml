@@ -10,9 +10,6 @@
 		http://www.springframework.org/schema/context 
 		http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
-
-	<!-- .properties文件读取 -->
-	<context:property-placeholder location="classpath*:/conf/email.properties" />
 		
 	<!-- JavaMailSender配置 -->
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
@@ -34,5 +31,14 @@
 		<property name="mailEncoding"><value>${mail.content.encoding}</value></property>
 		<property name="mailSenderDisplay"><value>${mail.sender.display}</value></property>
 	</bean>
+
+	<!-- 开发环境配置文件 -->
+	<beans profile="development">
+		<context:property-placeholder location="classpath:conf/email.properties" ignore-unresolvable="true"/>
+	</beans>
+	<!-- 生产环境配置文件 -->
+	<beans profile="production">
+		<context:property-placeholder location="classpath:conf/email.properties" ignore-unresolvable="true"/>
+	</beans>
 
 </beans>
