@@ -66,10 +66,22 @@ body {
 			}
 			#node-attr-info {
 				.row {
-					margin: 0 0 10px 0;
-					.control-label-div {
-						margin: 0 0 5px 0;
+					border-bottom: 1px solid;
+					padding: 0 0 5px 0;
+					margin: 0 0 5px 0;
+					overflow: hidden;
+					div {
+						.control-label-div {
+							margin: 0 10px 0 5px;
+						}
 					}
+					.row_right {
+						select {
+							outline: none;
+							float: right;
+						}
+					}
+					
 				}
 				#line-chart {
 					height: 300px;

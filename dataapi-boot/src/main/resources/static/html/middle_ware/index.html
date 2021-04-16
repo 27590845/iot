@@ -19,16 +19,24 @@
 				</div>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div id="program-nav" class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav" role="tablist">
-						<li role="presentation"><a href="/html/data_center/index.html">数据中心</a></li>
+					<ul class="nav navbar-nav navbar-left" role="tablist">
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+								aria-haspopup="true" aria-expanded="false">数据中心<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="/html/data_center/index.html">数据中心</a></li>
+								<li><a href="/html/data_center/scenelist.html?trajectory=index">场景列表</a>
+								</li>
+							</ul>
+						</li>
 						<li role="presentation" class="active"><a href="#">设备适配</a></li>
 						<li role="presentation"><a href="/html/occupy/index.html">占位符1</a></li>
 					</ul>
-		
+
 					<ul class="nav navbar-nav navbar-right">
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">个人中心<span
-								 class="caret"></span></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+								aria-haspopup="true" aria-expanded="false">个人中心<span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li><a href="#">选项一</a></li>
 								<li role="separator" class="divider"></li>
@@ -39,12 +47,12 @@
 				</div><!-- /.navbar-collapse -->
 			</div><!-- /.container-fluid -->
 		</nav>
-		
+
 		<!-- 主要内容 -->
 		<main>
 			中间件html
 		</main>
-		
+
 	</body>
 	<script type="text/javascript" src="../../js/nav.js"></script>
 	<script type="text/javascript" src="../../js/base.js"></script>
