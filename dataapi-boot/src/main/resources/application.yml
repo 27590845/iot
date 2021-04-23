@@ -31,7 +31,7 @@ spring:
   application:
     name: dataapi-boot
   profiles:
-    active: production
+    active: development
   #支持名称相同的bean的覆盖
   main:
     allow-bean-definition-overriding: true

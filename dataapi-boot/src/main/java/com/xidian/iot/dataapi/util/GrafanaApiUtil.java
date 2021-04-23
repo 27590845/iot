@@ -139,4 +139,25 @@ public class GrafanaApiUtil {
         headers.put("Authorization", "Bearer " + GRAFANA_API_KEY);
         return headers;
     }
+
+    /**
+     * 根据基本数据信息生成dashboard
+     * @param dataInfos 基本数据信息，三个字段：sceneSn， nodeSn， attrKey
+     * @param dashboardName 面板名称，默认为sceneSn
+     * @return  发送更新dashborad请求后的操作结果（类型为JSONObject）
+     */
+    public static JSONObject initDashboardFromBaseInfo2(List<Map<String, String>> dataInfos, String dashboardName) {
+        if (CollectionUtils.isEmpty(dataInfos)) return null;
+        List<GrafanaFormatUtil.Panel> panels = new ArrayList<>();
+        if (StringUtil.isBlank(dashboardName)) dashboardName = dataInfos.get(0).get("sceneSn");
+        for (Map<String, String> dataInfo : dataInfos) {
+            List<GrafanaFormatUtil.Panel> panelList = SetPanelAtrribute.setPanle(dataInfo);
+            panels.addAll(panelList);
+        }
+        GrafanaApiUtil.deleteDashboardsBySlug(dashboardName);
+        JSONObject dashboard = GrafanaApiUtil.getOrCreateDashboard(dashboardName);
+        GrafanaFormatUtil.addPanel(dashboard, panels.toArray(new GrafanaFormatUtil.Panel[]{}));
+        return GrafanaApiUtil.updateDashboard(dashboard);
+    }
+
 }
