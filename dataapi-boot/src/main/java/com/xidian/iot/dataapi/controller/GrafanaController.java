@@ -51,7 +51,7 @@ public class GrafanaController {
     @PostMapping("/{dashboardName}")
     public HttpResult grafanaInit(@ApiParam(name = "dashboardName", value = "可视化页面的名称，务必设置为sceneSn") @PathVariable String dashboardName
             , @ApiParam(name = "baseInfos", value = "基本信息是由map组成的list，map包含三个属性：sceneSn、nodeSn、attrKey") @RequestBody List<Map<String, String>> baseInfos){
-        JSONObject result = GrafanaApiUtil.initDashboardFromBaseInfo(baseInfos, dashboardName, true);
+        JSONObject result = GrafanaApiUtil.initDashboardFromBaseInfo2(baseInfos, dashboardName);
         if(result!=null){
             return HttpResult.responseOK(result).message("操作完成");
         }else {

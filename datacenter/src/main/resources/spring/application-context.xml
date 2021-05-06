@@ -7,7 +7,6 @@
 
     <context:component-scan base-package="com.xidian.iot"/>
     <context:annotation-config/>
-    <context:property-placeholder location="classpath:conf/application.properties" ignore-unresolvable="true"/>
 
     <import resource="application-databiz.xml"/>
     <!-- mongo、redis已经包含在application-databiz.xml内 -->
@@ -86,4 +85,14 @@
         <constructor-arg index="3" value="${influx.database}"/>
         <constructor-arg index="4" value=""/>
     </bean>
+
+    <!-- 开发环境配置文件 -->
+    <beans profile="development">
+        <context:property-placeholder location="classpath:conf/application.properties" ignore-unresolvable="true"/>
+    </beans>
+    <!-- 生产环境配置文件 -->
+    <beans profile="production">
+        <context:property-placeholder location="classpath:conf/application.properties" ignore-unresolvable="true"/>
+    </beans>
+
 </beans>
