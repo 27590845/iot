@@ -31,6 +31,9 @@ body nav.navbar {
   box-shadow: 0 0 10px #000000;
   border-radius: 5px;
 }
+body nav.navbar .container-fluid #program-nav ul.navbar-left li.dropdown ul.dropdown-menu {
+  min-width: 0px;
+}
 body #page-nav {
   min-width: 180px;
   position: fixed;
@@ -78,5 +81,11 @@ body .modal-content .modal-body {
 @media (max-width: 1700px) {
   body #page-nav {
     display: none;
+  }
+}
+@media (max-width: 800px) {
+  body {
+    min-width: 800px;
+    width: 800px;
   }
 }

@@ -22,9 +22,16 @@
 				</div>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div id="program-nav" class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav" role="tablist">
-						<li role="presentation" class="active"><a
-								href="/html/data_center/index.html">数据中心</a></li>
+					<ul class="nav navbar-nav navbar-left" role="tablist">
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+								aria-haspopup="true" aria-expanded="false">数据中心<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="/html/data_center/index.html">数据中心</a></li>
+								<li><a href="/html/data_center/scenelist.html?trajectory=index">场景列表</a>
+								</li>
+							</ul>
+						</li>
 						<li role="presentation"><a href="/html/middle_ware/index.html">设备适配</a></li>
 						<li role="presentation"><a href="/html/occupy/index.html">占位符1</a></li>
 					</ul>
@@ -158,17 +165,29 @@
 					<!-- 文字说明 -->
 					<div class="section-body">
 						<article class="row">
-							<label class="col-lg-1">属性名称</label>
-							<div class="control-label-div" name="selectednodename">
-								属性名称属性名称属性名称属性名称
+							<div class="row_left col-lg-4">
+								<label>属性名称</label>
+								<span class="control-label-div" name="selectednodename">
+									属性名称属性名称属性名称属性名称
+								</span>
+								<label>属性标识</label>
+								<span class="control-label-div" name="selectednodesn">
+									属性标识属性标识属性标识属性标识
+								</span>
 							</div>
-							<label class="col-lg-1">属性标识</label>
-							<div class="control-label-div" name="selectednodesn">
-								属性标识属性标识属性标识属性标识
+							<div class="row_right col-lg-8">
+								<select id="node-time-select">
+									<option selected="selected">请选择时间</option>
+									<!-- <option value ="">5分钟</option>
+									<option value ="">15分钟</option>
+									<option value ="">3小时</option>
+									<option value ="">1天</option> -->
+								</select>
 							</div>
 						</article>
 						<!-- 绘制折线图 style="height: 300px; border: 1px solid #000000;"-->
 						<article id="line-chart">
+							
 						</article>
 					</div>
 				</section>

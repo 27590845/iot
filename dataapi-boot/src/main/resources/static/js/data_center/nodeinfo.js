@@ -53,7 +53,83 @@ function showNodeInfo() {
 	})
 }
 /**
- * 查看节点属性的详细信息
+ * 生成节点属性列表【从后台中获取到相关的nodesn的所有属性的时候，用html进行展示】
+ */
+function createNodeAttrList() {
+	if (nodeAttrInfo.length <= 0) {
+		$("#node-attr-list").hide()
+		$("#node-attr-info").hide()
+		$("#node-attr-list-prompt").show()
+		return;
+	}
+
+	$("#node-attr-list").html("")
+	$("#node-attr-list").show()
+	$("#node-attr-info").show()
+	$("#node-attr-list-prompt").hide()
+	let table = `
+		<div class="node-attr-list-body">
+		</div>`
+	if (nodeAttrInfo.length != 0) {
+		table =
+			`
+			<div class="node-attr-list-body">
+				<table class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>属性名称</th>
+							<th>属性标识</th>
+							<th>属性映射</th>
+							<th>属性符号</th>
+							<th>属性单位</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>`
+		nodeAttrInfo.forEach(function(item, index) {
+			if (0 === index) {
+				showNodeAttrInfo({
+					naId: item.naId,
+					naName: item.naName,
+					naKey: item.naKey
+				})
+			}
+			table +=
+				`
+					<tr>
+						<td>${item.naName}</td>
+						<td>${item.naKey}</td>
+						<td>${item.naMap || "暂无"}</td>
+						<td>${item.naSym}</td>
+						<td>${item.naUnit}</td>
+						<td>
+							<button type="button" class="btn btn-xs btn-primary info-node-attr" data-naid="${item.naId}" data-naname="${item.naName}" data-nakey="${item.naKey}">查看</button>
+							<button type="button" class="btn btn-xs btn-warning update-node-attr"  data-naid="${item.naId}" data-naname="${item.naName}" data-nakey="${item.naKey}">编辑</button>
+							<button type="button" class="btn btn-xs btn-danger delete-node-attr"  data-naid="${item.naId}" data-naname="${item.naName}" data-nakey="${item.naKey}">删除</button>
+						</td>
+					</tr>
+				`
+		})
+		table += `
+					</tbody>
+				</table>
+			</div>
+		</div>`
+	}
+
+	$("#node-attr-list").append(table)
+
+	// 节点属性的操作
+	// 更新
+	$('.update-node-attr').on('click', nodeBtn)
+	// 查看
+	$('.info-node-attr').on('click', nodeBtn)
+	// 删除
+	$('.delete-node-attr').on('click', nodeBtn)
+
+}
+/**
+ * 查看节点属性的详细信息【点击事件】
  * @param {Object} data 节点的属性信息 
  */
 function showNodeAttrInfo(data) {
@@ -129,7 +205,6 @@ function showNodeAttrInfo(data) {
 		}]
 	};
 	nodeAttrEcharts = new Echarts("line-chart", option, data.naKey);
-
 }
 /**
  * 删除节点
@@ -242,80 +317,33 @@ function nodeBtn() {
 	}
 }
 /**
- * 生成节点属性列表【从后台中获取到相关的nodesn的所有属性的时候，用html进行展示】
+ * 为节点属性中，时间下拉选择框的构建和点击事件的绑定
  */
-function createNodeAttrList() {
-	if (nodeAttrInfo.length <= 0) {
-		$("#node-attr-list").hide()
-		$("#node-attr-info").hide()
-		$("#node-attr-list-prompt").show()
-		return;
-	}
-
-	$("#node-attr-list").html("")
-	$("#node-attr-list").show()
-	$("#node-attr-info").show()
-	$("#node-attr-list-prompt").hide()
-	let table = `
-		<div class="node-attr-list-body">
-		</div>`
-	if (nodeAttrInfo.length != 0) {
-		table =
-			`
-			<div class="node-attr-list-body">
-				<table class="table table-bordered table-hover">
-					<thead>
-						<tr>
-							<th>属性名称</th>
-							<th>属性标识</th>
-							<th>属性映射</th>
-							<th>属性符号</th>
-							<th>属性单位</th>
-							<th>操作</th>
-						</tr>
-					</thead>
-					<tbody>`
-		nodeAttrInfo.forEach(function(item, index) {
-			if (0 === index) {
-				showNodeAttrInfo({
-					naId: item.naId,
-					naName: item.naName,
-					naKey: item.naKey
-				})
-			}
-			table +=
-				`
-					<tr>
-						<td>${item.naName}</td>
-						<td>${item.naKey}</td>
-						<td>${item.naMap || "暂无"}</td>
-						<td>${item.naSym}</td>
-						<td>${item.naUnit}</td>
-						<td>
-							<button type="button" class="btn btn-xs btn-primary info-node-attr" data-naid="${item.naId}" data-naname="${item.naName}" data-nakey="${item.naKey}">查看</button>
-							<button type="button" class="btn btn-xs btn-warning update-node-attr"  data-naid="${item.naId}" data-naname="${item.naName}" data-nakey="${item.naKey}">编辑</button>
-							<button type="button" class="btn btn-xs btn-danger delete-node-attr"  data-naid="${item.naId}" data-naname="${item.naName}" data-nakey="${item.naKey}">删除</button>
-						</td>
-					</tr>
-				`
-		})
-		table += `
-					</tbody>
-				</table>
-			</div>
-		</div>`
-	}
-
-	$("#node-attr-list").append(table)
-
-	// 节点属性的操作
-	// 更新
-	$('.update-node-attr').on('click', nodeBtn)
-	// 查看
-	$('.info-node-attr').on('click', nodeBtn)
-	// 删除
-	$('.delete-node-attr').on('click', nodeBtn)
-
+function selectEvent() {
+	let select = document.getElementById("node-time-select");
+	let mintues = [5, 15, 60, 24*60, 3*24*60, 30*24*60, 3*30*24*60];
+	mintues.forEach(function(item) {
+		let option = document.createElement("option");
+		let innerHtml = "";
+		if (item < 60) {
+			innerHtml = item + "分钟"
+		} else if (item < 24*60) {
+			innerHtml = (item/60) + "小时"
+		} else if (item < 30*24*60) {
+			innerHtml = (item/24/60) + "天"
+		} else if (item < 12*30*24*60) {
+			innerHtml = (item/30/24/60) + "月"
+		} else {
+			innerHtml = (item/12/30/24/60) + "年";
+		}
+		option.innerHTML = innerHtml;
+		option.setAttribute("value", item);
+		select.appendChild(option);
+	})
+	select.addEventListener("change", function() {
+		console.dir(select)
+		getHistValue(Date.now() - select.value)
+	})
 }
 /**
  * 更新节点属性的echarts
@@ -324,11 +352,18 @@ function updataNodeAttrValue() {
 
 }
 /**
- * 获取到历史数据
+ * 通过API接口获取到历史数据
+ * @param {number} 开始时间的时间戳
  */
-function getHistValue(date) {
+function getHistValue(startTime) {
+	let url = `/scene/${sceneSn}/node/${nodeSn}`;
+	if (typeof startTime === "undefined" || startTime === null) {
+		return;
+	}
+	startTime = dateTimeFormat(startTime);
+	let endTime = dateTimeFormat(Date.now());
 	getHttp({
-		url: `/scene/${sceneSn}/node/${nodeSn}?st=2020-11-22 00:00:00&et=2020-11-23 06:00:00`
+		url: `/scene/${sceneSn}/node/${nodeSn}?st=${startTime}&et=${endTime}`
 	}).then(res => {
 		let time = [];
 		let sensors = {};
@@ -348,12 +383,6 @@ function getHistValue(date) {
 				sensors[index][sensors[index].length - 1] = value;
 			}
 		}
-		// res.forEach(function(item) {
-		// 	time.push(dateTimeFormat(item.at));
-		// 	for (let [index, value] of Object.entries(item.data)) {
-		// 		sensors[index].push(value)
-		// 	}
-		// })
 		if (nodeAttrEcharts) {
 			console.dir(nodeAttrEcharts)
 			nodeAttrEcharts.historyData(time, sensors);
@@ -384,7 +413,16 @@ $(function() {
 
 	// 获取数据进行展示
 	showNodeInfo()
-
+	
+	// 下拉菜单生成
+	selectEvent()
+	// 解决echarts动态变换
+	window.onresize = function() {
+		if (nodeAttrEcharts != null) {
+			nodeAttrEcharts.container.resize()
+		}
+	}
+	
 	$("#add-node").on('click', nodeBtn)
 	$("#update-node").on('click', nodeBtn)
 	$("#delete-node").on('click', nodeBtn)
