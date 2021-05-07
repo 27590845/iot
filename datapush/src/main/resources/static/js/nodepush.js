@@ -16,17 +16,17 @@ function showNodeInfo() {
 		// 获取指定的node
 		res.nodeVos.some(function(item) {
 			if (nodeSn === item.nodeSn) {
-				nodeInfo = item;
+				nodepush = item;
 				return true;
 			}
 			return false;
 		})
 		// 基本信息展示
 		for (let item of Object.entries(nodeInfoShow)) {
-			$("[name=" + item[0] + "Info]").html(nodeInfo[item[0]] || item[1])
+			$("[name=" + item[0] + "Info]").html(nodepush[item[0]] || item[1])
 		}
 
-		nodeAttrInfo = nodeInfo.nodeAttrList;
+		nodeAttrInfo = nodepush.nodeAttrList;
 		// 属性列表展示
 		createNodeAttrList();
 		// 侧边导航栏中样式的选择和点击效果【通用组件的功能，在base.js中进行定义，方便维护】
@@ -53,83 +53,7 @@ function showNodeInfo() {
 	})
 }
 /**
- * 生成节点属性列表【从后台中获取到相关的nodesn的所有属性的时候，用html进行展示】
- */
-function createNodeAttrList() {
-	if (nodeAttrInfo.length <= 0) {
-		$("#node-attr-list").hide()
-		$("#node-attr-info").hide()
-		$("#node-attr-list-prompt").show()
-		return;
-	}
-
-	$("#node-attr-list").html("")
-	$("#node-attr-list").show()
-	$("#node-attr-info").show()
-	$("#node-attr-list-prompt").hide()
-	let table = `
-		<div class="node-attr-list-body">
-		</div>`
-	if (nodeAttrInfo.length != 0) {
-		table =
-			`
-			<div class="node-attr-list-body">
-				<table class="table table-bordered table-hover">
-					<thead>
-						<tr>
-							<th>属性名称</th>
-							<th>属性标识</th>
-							<th>属性映射</th>
-							<th>属性符号</th>
-							<th>属性单位</th>
-							<th>操作</th>
-						</tr>
-					</thead>
-					<tbody>`
-		nodeAttrInfo.forEach(function(item, index) {
-			if (0 === index) {
-				showNodeAttrInfo({
-					naId: item.naId,
-					naName: item.naName,
-					naKey: item.naKey
-				})
-			}
-			table +=
-				`
-					<tr>
-						<td>${item.naName}</td>
-						<td>${item.naKey}</td>
-						<td>${item.naMap || "暂无"}</td>
-						<td>${item.naSym}</td>
-						<td>${item.naUnit}</td>
-						<td>
-							<button type="button" class="btn btn-xs btn-primary info-node-attr" data-naid="${item.naId}" data-naname="${item.naName}" data-nakey="${item.naKey}">查看</button>
-							<button type="button" class="btn btn-xs btn-warning update-node-attr"  data-naid="${item.naId}" data-naname="${item.naName}" data-nakey="${item.naKey}">编辑</button>
-							<button type="button" class="btn btn-xs btn-danger delete-node-attr"  data-naid="${item.naId}" data-naname="${item.naName}" data-nakey="${item.naKey}">删除</button>
-						</td>
-					</tr>
-				`
-		})
-		table += `
-					</tbody>
-				</table>
-			</div>
-		</div>`
-	}
-
-	$("#node-attr-list").append(table)
-
-	// 节点属性的操作
-	// 更新
-	$('.update-node-attr').on('click', nodeBtn)
-	// 查看
-	$('.info-node-attr').on('click', nodeBtn)
-	// 删除
-	$('.delete-node-attr').on('click', nodeBtn)
-
-}
-/**
- * 查看节点属性的详细信息【点击事件】
+ * 查看节点属性的详细信息
  * @param {Object} data 节点的属性信息 
  */
 function showNodeAttrInfo(data) {
@@ -205,6 +129,7 @@ function showNodeAttrInfo(data) {
 		}]
 	};
 	nodeAttrEcharts = new Echarts("line-chart", option, data.naKey);
+
 }
 /**
  * 删除节点
@@ -317,33 +242,80 @@ function nodeBtn() {
 	}
 }
 /**
- * 为节点属性中，时间下拉选择框的构建和点击事件的绑定
+ * 生成节点属性列表【从后台中获取到相关的nodesn的所有属性的时候，用html进行展示】
  */
-function selectEvent() {
-	let select = document.getElementById("node-time-select");
-	let mintues = [5, 15, 60, 24*60, 3*24*60, 30*24*60, 3*30*24*60];
-	mintues.forEach(function(item) {
-		let option = document.createElement("option");
-		let innerHtml = "";
-		if (item < 60) {
-			innerHtml = item + "分钟"
-		} else if (item < 24*60) {
-			innerHtml = (item/60) + "小时"
-		} else if (item < 30*24*60) {
-			innerHtml = (item/24/60) + "天"
-		} else if (item < 12*30*24*60) {
-			innerHtml = (item/30/24/60) + "月"
-		} else {
-			innerHtml = (item/12/30/24/60) + "年";
-		}
-		option.innerHTML = innerHtml;
-		option.setAttribute("value", item);
-		select.appendChild(option);
-	})
-	select.addEventListener("change", function() {
-		console.dir(select)
-		getHistValue(Date.now() - select.value)
-	})
+function createNodeAttrList() {
+	if (nodeAttrInfo.length <= 0) {
+		$("#node-attr-list").hide()
+		$("#node-attr-info").hide()
+		$("#node-attr-list-prompt").show()
+		return;
+	}
+
+	$("#node-attr-list").html("")
+	$("#node-attr-list").show()
+	$("#node-attr-info").show()
+	$("#node-attr-list-prompt").hide()
+	let table = `
+		<div class="node-attr-list-body">
+		</div>`
+	if (nodeAttrInfo.length != 0) {
+		table =
+			`
+			<div class="node-attr-list-body">
+				<table class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>属性名称</th>
+							<th>属性标识</th>
+							<th>属性映射</th>
+							<th>属性符号</th>
+							<th>属性单位</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>`
+		nodeAttrInfo.forEach(function(item, index) {
+			if (0 === index) {
+				showNodeAttrInfo({
+					naId: item.naId,
+					naName: item.naName,
+					naKey: item.naKey
+				})
+			}
+			table +=
+				`
+					<tr>
+						<td>${item.naName}</td>
+						<td>${item.naKey}</td>
+						<td>${item.naMap || "暂无"}</td>
+						<td>${item.naSym}</td>
+						<td>${item.naUnit}</td>
+						<td>
+							<button type="button" class="btn btn-xs btn-primary info-node-attr" data-naid="${item.naId}" data-naname="${item.naName}" data-nakey="${item.naKey}">查看</button>
+							<button type="button" class="btn btn-xs btn-warning update-node-attr"  data-naid="${item.naId}" data-naname="${item.naName}" data-nakey="${item.naKey}">编辑</button>
+							<button type="button" class="btn btn-xs btn-danger delete-node-attr"  data-naid="${item.naId}" data-naname="${item.naName}" data-nakey="${item.naKey}">删除</button>
+						</td>
+					</tr>
+				`
+		})
+		table += `
+					</tbody>
+				</table>
+			</div>
+		</div>`
+	}
+
+	$("#node-attr-list").append(table)
+
+	// 节点属性的操作
+	// 更新
+	$('.update-node-attr').on('click', nodeBtn)
+	// 查看
+	$('.info-node-attr').on('click', nodeBtn)
+	// 删除
+	$('.delete-node-attr').on('click', nodeBtn)
+
 }
 /**
  * 更新节点属性的echarts
@@ -352,18 +324,11 @@ function updataNodeAttrValue() {
 
 }
 /**
- * 通过API接口获取到历史数据
- * @param {number} 开始时间的时间戳
+ * 获取到历史数据
  */
-function getHistValue(startTime) {
-	let url = `/scene/${sceneSn}/node/${nodeSn}`;
-	if (typeof startTime === "undefined" || startTime === null) {
-		return;
-	}
-	startTime = dateTimeFormat(startTime);
-	let endTime = dateTimeFormat(Date.now());
+function getHistValue(date) {
 	getHttp({
-		url: `/scene/${sceneSn}/node/${nodeSn}?st=${startTime}&et=${endTime}`
+		url: `/scene/${sceneSn}/node/${nodeSn}?st=2020-11-22 00:00:00&et=2020-11-23 06:00:00`
 	}).then(res => {
 		let time = [];
 		let sensors = {};
@@ -383,6 +348,12 @@ function getHistValue(startTime) {
 				sensors[index][sensors[index].length - 1] = value;
 			}
 		}
+		// res.forEach(function(item) {
+		// 	time.push(dateTimeFormat(item.at));
+		// 	for (let [index, value] of Object.entries(item.data)) {
+		// 		sensors[index].push(value)
+		// 	}
+		// })
 		if (nodeAttrEcharts) {
 			console.dir(nodeAttrEcharts)
 			nodeAttrEcharts.historyData(time, sensors);
@@ -402,7 +373,7 @@ let sceneSn = location.search.match(sceneObj)[1].split("&")[0]
 let nodeObj = new RegExp(getSearchKey("nodesn").self + "=(.*)");
 let nodeSn = location.search.match(nodeObj)[1].split("&")[0]
 // nodeInfo的声明
-let nodeInfo = null;
+let nodepush = null;
 // nodeAttrInfo的声明
 let nodeAttrInfo = [];
 // 绘制的折线图
@@ -413,16 +384,7 @@ $(function() {
 
 	// 获取数据进行展示
 	showNodeInfo()
-	
-	// 下拉菜单生成
-	selectEvent()
-	// 解决echarts动态变换
-	window.onresize = function() {
-		if (nodeAttrEcharts != null) {
-			nodeAttrEcharts.container.resize()
-		}
-	}
-	
+
 	$("#add-node").on('click', nodeBtn)
 	$("#update-node").on('click', nodeBtn)
 	$("#delete-node").on('click', nodeBtn)
@@ -430,36 +392,17 @@ $(function() {
 
 //websocket
 
-//nodepush test
-{
-	let nodeshow = document.getElementById("nodeshow");
-	let url = "ws://localhost:8081/data/node?" + "sceneSn=" + sceneSn + "&node=" + nodeSn;
-	let ws = new WebSocket(url);
-
-	ws.onmessage = function (evt) {
-		let node = document.createElement("div");
-		node.innerHTML = "<h5>" + evt.data + "</h5>";
-		nodeshow.appendChild(node);
-	};
-
-// 关闭页面时候关闭ws
-	window.addEventListener("beforeunload", function (event) {
-		ws.close();
-	});
-}
-//scenepush test
-{let sceneshow = document.getElementById("sceneshow");
-let url="ws://localhost:8081/data/sceneSn?"+"sceneSn="+sceneSn;
+let show = document.getElementById("show");
+let url="ws://localhost:8081/data/node?"+"sceneSn="+sceneSn+"&node="+nodeSn;
 let ws = new WebSocket(url);
 
 ws.onmessage = function (evt) {
 	let node = document.createElement("div");
 	node.innerHTML = "<h5>" + evt.data + "</h5>";
-	sceneshow.appendChild(node);
+	show.appendChild(node);
 };
 
 // 关闭页面时候关闭ws
 window.addEventListener("beforeunload", function(event) {
 	ws.close();
 });
-}
