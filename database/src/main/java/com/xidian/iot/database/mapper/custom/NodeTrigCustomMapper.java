@@ -1,5 +1,6 @@
 package com.xidian.iot.database.mapper.custom;
 
+import com.xidian.iot.database.param.NodeCondParam;
 import com.xidian.iot.database.param.NodeTrigParam;
 import org.apache.ibatis.annotations.Param;
 
@@ -27,4 +28,10 @@ public interface NodeTrigCustomMapper {
      * @return com.xidian.iot.database.param.NodeTrigParam
      * */
     NodeTrigParam getNodeTrigParamByNtId(@Param("ntId")Long ntId);
+
+    /**
+     * 获取所有的规则引擎NodeTrigParam
+     * @return List<NodeTrigParam>
+     */
+    List<NodeTrigParam> getNodeTrigParam();
 }

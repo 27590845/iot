@@ -2,6 +2,7 @@ package com.xidian.iot.databiz.service.impl;
 
 import com.xidian.iot.common.util.exception.BusinessException;
 import com.xidian.iot.database.entity.NodeTrig;
+import com.xidian.iot.database.entity.NodeTrigExample;
 import com.xidian.iot.database.entity.custom.NodeTrigExt;
 import com.xidian.iot.database.mapper.NodeTrigMapper;
 import com.xidian.iot.database.mapper.custom.NodeTrigCustomMapper;
@@ -79,5 +80,10 @@ public class NodeTrigServiceImpl implements NodeTrigService {
         NodeTrigServiceImpl currentProxy = (NodeTrigServiceImpl) AopContext.currentProxy();
         currentProxy.updateNodeTrigExtById(new NodeTrigExt(nodeTrig));
         return res;
+    }
+
+    @Override
+    public int countNodeTrig() {
+        return (int) nodeTrigMapper.countByExample(new NodeTrigExample());
     }
 }

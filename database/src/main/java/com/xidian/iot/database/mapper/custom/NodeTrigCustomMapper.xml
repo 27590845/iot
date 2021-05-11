@@ -51,4 +51,8 @@
         from node_trig
         where nt_id = #{ntId,jdbcType=BIGINT}
     </select>
+    <select id="getNodeTrigParam" resultMap="NodeTrigParamMap">
+        select *
+        from node_trig
+    </select>
 </mapper>

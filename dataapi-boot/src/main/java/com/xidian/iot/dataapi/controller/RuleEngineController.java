@@ -2,6 +2,7 @@ package com.xidian.iot.dataapi.controller;
 
 import com.xidian.iot.common.util.exception.BusinessException;
 import com.xidian.iot.dataapi.controller.res.HttpResult;
+import com.xidian.iot.dataapi.controller.res.Page;
 import com.xidian.iot.database.entity.NodeTrig;
 import com.xidian.iot.database.param.NodeCondParam;
 import com.xidian.iot.database.param.NodeTrigParam;
@@ -32,7 +33,6 @@ public class RuleEngineController {
 
     @Resource
     private RuleEngineService ruleEngineService;
-
 
     @ApiOperation("添加一条规则")
     @PostMapping
@@ -105,5 +105,16 @@ public class RuleEngineController {
     @GetMapping("/{ntId}")
     public HttpResult get(@ApiParam(name = "ntId", value = "") @PathVariable("ntId") Long ntId) {
         return HttpResult.responseOK(ruleEngineService.getRuleEngine(ntId));
+    }
+
+    @ApiOperation(value = "获取规则列表")
+    @GetMapping("/getRuleList")
+    public HttpResult getRuleList(@ApiParam(name = "page", value = "页号") @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                                @ApiParam(name = "limit", value = "页数") @RequestParam(value = "limit", required = false, defaultValue = "10") int limit) {
+        //分页一方面获取总条数、一方面获取数据、如果可以把page和limit也可以带着
+        int total = ruleEngineService.countRuleEngine();
+        Page<NodeTrigParam> ruleEnginePage = new Page<>(total, page, limit);
+        ruleEnginePage.setData(ruleEngineService.getNodeTrigParam(page,limit));
+        return HttpResult.responseOK(ruleEnginePage);
     }
 }
