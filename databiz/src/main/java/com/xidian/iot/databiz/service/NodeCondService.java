@@ -32,6 +32,13 @@ public interface NodeCondService {
     List<Long> getNcIdsByNtId(Long ntId);
 
     /**
+     *  根据ncId删除缓存中的nodeCond
+     * @param ntId
+     * @return void
+     * */
+    void cleanNcIdsByNtId(Long ntId);
+
+    /**
      * 通过nodeCond.ncId获取NodeCondExt
      *
      * @param ncId

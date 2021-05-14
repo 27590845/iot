@@ -1,0 +1,11 @@
+{
+  "request": "com.xidian.iot.dataapi.util.GrafanaFormatUtil.DASHBOARD_INIT",
+  "res": {
+    "id": 11,
+    "slug": "20210403121001",
+    "status": "success",
+    "uid": "yQlkst_Gz",
+    "url": "/d/yQlkst_Gz/20210403121001",
+    "version": 1
+  }
+}

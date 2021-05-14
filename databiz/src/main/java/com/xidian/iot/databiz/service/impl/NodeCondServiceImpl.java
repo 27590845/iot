@@ -51,6 +51,11 @@ public class NodeCondServiceImpl implements NodeCondService {
         return nodeCondCustomMapper.getNcIdsByNtId(ntId);
     }
 
+    @CacheEvict(value = "NodeCondIds", key = "'getNcIdsByNtId:'+#ntId")
+    @Override
+    public void cleanNcIdsByNtId(Long ntId) {
+    }
+
     @Cacheable(value = "NodeCondExt", key = "'getNodeCondExtById:'+#ncId")
     @Override
     public NodeCondExt getNodeCondExtById(Long ncId) {

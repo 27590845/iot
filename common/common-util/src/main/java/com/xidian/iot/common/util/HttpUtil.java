@@ -37,6 +37,9 @@ public class HttpUtil {
      */
     private static final CloseableHttpClient httpclient = HttpClients.createDefault();
 
+    public static final String BODY_KEY = "body";
+    public static final String HEADERS_KEY = "headers";
+
     /**
      * Ua常量
      */
@@ -231,13 +234,13 @@ public class HttpUtil {
     }
 
     /**
-     * 向指定URL发送GET方式的请求,无参数
+     * 向指定URL发送GET方式的请求,无参数, 返回body和heads
      *
      * @param url 发送请求的URL
      * @return URL 代表远程资源的响应
      */
-    public static String sendGet(String url) {
-        String result = null;
+    public static Map<String, Object> sendGetResponse(String url) {
+        Map<String, Object> result = new HashMap<>();
         //2.生成一个get请求
         HttpGet httpget = new HttpGet(url);
         // 浏览器表示,随机产生一个ua头
@@ -261,7 +264,11 @@ public class HttpUtil {
             //4.处理结果，这里将结果返回为字符串
             HttpEntity entity = response.getEntity();
             if (entity != null) {
-                result = EntityUtils.toString(entity);
+                result.put(BODY_KEY, EntityUtils.toString(entity));
+            }
+            Header[] headers = response.getAllHeaders();
+            if(null!=headers && headers.length>0){
+                result.put(HEADERS_KEY, headers);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -275,6 +282,21 @@ public class HttpUtil {
         }
 
         return result;
+    }
+
+    /**
+     * 向指定URL发送GET方式的请求,无参数，只返回body
+     *
+     * @param url 发送请求的URL
+     * @return URL 代表远程资源的响应
+     */
+    public static String sendGet(String url) {
+        String body = null;
+        Map result = sendGetResponse(url);
+        if(null!=result && result.containsKey(BODY_KEY)){
+            body = (String) result.get(BODY_KEY);
+        }
+        return body;
     }
 
     /**
