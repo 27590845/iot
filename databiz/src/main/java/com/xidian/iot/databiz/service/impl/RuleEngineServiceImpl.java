@@ -1,5 +1,6 @@
 package com.xidian.iot.databiz.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.xidian.iot.common.util.exception.BusinessException;
 import com.xidian.iot.database.entity.NodeActCmd;
 import com.xidian.iot.database.entity.NodeCond;
@@ -168,6 +169,18 @@ public class RuleEngineServiceImpl implements RuleEngineService {
         return nodeTrigService.updateNodeTrigById(nodeTrig);
     }
 
+    @Override
+    public int countRuleEngine() {
+        return nodeTrigService.countNodeTrig();
+    }
+
+    @Override
+    public List<NodeTrigParam> getNodeTrigParam(int page, int limit) {
+        if (page >= 0 && limit > 0) {
+            PageHelper.startPage(page, limit);
+        }
+        return nodeTrigCustomMapper.getNodeTrigParam();
+    }
 
     public void updateRuleEngine1(Long ntId, NodeTrigParam nodeTrigParam) {
         if (Objects.isNull(nodeTrigService.getNodeTrigExtById(ntId))) {

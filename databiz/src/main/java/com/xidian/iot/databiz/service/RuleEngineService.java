@@ -4,6 +4,7 @@ import com.xidian.iot.database.entity.NodeCond;
 import com.xidian.iot.database.entity.NodeTrig;
 import com.xidian.iot.database.param.NodeCondParam;
 import com.xidian.iot.database.param.NodeTrigParam;
+import com.xidian.iot.database.vo.SceneVo;
 
 import java.util.List;
 
@@ -82,4 +83,18 @@ public interface RuleEngineService {
      * @return void
      * */
     void updateRuleEngine1(Long ntId, NodeTrigParam nodeTrigParam);
+
+    /**
+     * 获取规则引擎数量
+     * @return int
+     */
+    int countRuleEngine();
+
+    /**
+     * 分页获取规则列表
+     * @param page
+     * @param limit
+     * @return List
+     */
+    List<NodeTrigParam> getNodeTrigParam(int page, int limit);
 }
