@@ -22,7 +22,7 @@ import java.util.Map;
  * @author: mrl
  * @date: 2021/4/2 上午11:00
  */
-@Api(tags = "master 节点特有的接口")
+@Api(tags = "grafana接口")
 @RestController
 @RequestMapping("/grafana")
 public class GrafanaController {

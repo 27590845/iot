@@ -2,6 +2,7 @@
 out
 target
 log
+.mvn
 # Compiled class file
 *.class
 

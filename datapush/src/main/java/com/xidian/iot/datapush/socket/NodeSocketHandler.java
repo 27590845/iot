@@ -42,9 +42,6 @@ public class NodeSocketHandler implements WebSocketHandler {
         logger = LoggerFactory.getLogger(SceneSocketHandler.class);
     }
 
-
-
-
     @Override
     public void afterConnectionEstablished(WebSocketSession session)
             throws Exception {
@@ -65,7 +62,6 @@ public class NodeSocketHandler implements WebSocketHandler {
     @Override
     public void handleMessage(WebSocketSession arg0, WebSocketMessage<?> arg1)
             throws Exception {
-
     }
 
     @Override
