@@ -111,4 +111,20 @@ public interface NodeAttrService {
      * @return int
      * */
     int delBySceneSn(String sceneSn);
+
+    /**
+     * 判断是否存在此NaId
+     * @param naId
+     * @return java.lang.Boolean
+     * */
+    Boolean checkExistNodeAttr(Long naId);
+
+    /**
+     * 根据sceneSn、nodeSn判断是否存在此NaId、如不存在直接抛出异常
+     * @param sceneSn
+     * @param nodeSn
+     * @param naId
+     * @return java.lang.Boolean
+     * */
+    Boolean checkExistNodeAttr(String sceneSn, String nodeSn, Long naId);
 }

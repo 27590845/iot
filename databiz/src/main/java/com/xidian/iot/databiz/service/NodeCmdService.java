@@ -99,4 +99,11 @@ public interface NodeCmdService {
      * @return java.util.List<java.lang.Long>
      * */
     List<Long> getNcIdsByNodeId(Long nodeId);
+
+    /**
+     * 由ncIds列表找出对应的NodeCmd
+     * @param ncIds
+     * @return java.util.List<com.xidian.iot.database.entity.NodeCmd>
+     * */
+    List<NodeCmd> getNodeCmdsByNCIds(List<Long> ncIds);
 }

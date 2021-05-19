@@ -189,4 +189,20 @@ public class NodeAttrServiceImpl implements NodeAttrService {
         nodeAttrExample.createCriteria().andSceneSnEqualTo(sceneSn);
         return nodeAttrMapper.deleteByExample(nodeAttrExample);
     }
+
+    @Override
+    public Boolean checkExistNodeAttr(Long naId) {
+        return checkExistNodeAttr(null,null,naId);
+    }
+
+    @Override
+    public Boolean checkExistNodeAttr(String sceneSn, String nodeSn, Long naId) {
+        NodeAttrExample example = new NodeAttrExample();
+        NodeAttrExample.Criteria criteria = example.createCriteria();
+        criteria.andNaIdEqualTo(naId);
+        if(StringUtil.isNotEmpty(sceneSn)&&StringUtil.isNotEmpty(nodeSn)){
+            criteria.andSceneSnEqualTo(sceneSn).andNodeSnEqualTo(nodeSn);
+        }
+        return nodeAttrMapper.countByExample(example)>0;
+    }
 }

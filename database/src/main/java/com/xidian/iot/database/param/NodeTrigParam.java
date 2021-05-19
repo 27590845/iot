@@ -1,6 +1,8 @@
 package com.xidian.iot.database.param;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.xidian.iot.database.valid.EnumValidation;
 import com.xidian.iot.database.valid.ReptValidation;
 import com.xidian.iot.database.valid.ValidGroup;
@@ -28,6 +30,12 @@ import java.util.List;
 @ApiModel("触发器(规则)传输封装类")
 @JsonIgnoreProperties(value = "handler")
 public class NodeTrigParam extends NodeTrig implements Serializable {
+
+    @JsonSerialize(using = ToStringSerializer.class)
+    @Override
+    public Long getNtId() {
+        return super.getNtId();
+    }
 
     @ApiModelProperty("触发器名称")
     @NotBlank(groups = {ValidGroup.INSERT.class,ValidGroup.UPDATE.class}, message = "触发器名称不能为空")

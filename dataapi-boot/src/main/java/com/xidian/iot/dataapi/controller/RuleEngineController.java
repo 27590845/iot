@@ -63,6 +63,15 @@ public class RuleEngineController {
         return HttpResult.responseOK(ruleEngineService.delNodeCondByNcId(ncId));
     }
 
+    @ApiOperation("更新单个节点触发条件")
+    @PatchMapping("/nc/{ncId}")
+    public HttpResult updateNodeCond(@ApiParam(name = "ncId", value = "") @PathVariable("ncId") Long ncId,
+                                     @ApiParam(name = "NodeCondParam", value = "节点触发条件") @Validated(ValidGroup.UPDATE.class) @RequestBody NodeCondParam nodeCondParam) {
+        nodeCondParam.setNcId(ncId);
+        ruleEngineService.updateNodeCond(nodeCondParam);
+        return HttpResult.oK().message("更新成功");
+    }
+
     @ApiOperation("删除多个节点触发条件")
     @DeleteMapping("/ncs/{ncIds}")
     public HttpResult delNodeConds(@ApiParam(name = "ncIds", value = "") @PathVariable("ncIds") String ncIds) {
@@ -77,18 +86,10 @@ public class RuleEngineController {
         return HttpResult.responseOK(ruleEngineService.delNodeCondByNcIds(ncIdss));
     }
 
-    @ApiOperation(value = "更新触发器")
+    @ApiOperation(value = "更新触发器、支持触发条件node_cond新增、删除")
     @PutMapping("/{ntId}")
     public HttpResult updateRuleEngine(@ApiParam(name = "ntId", value = "") @PathVariable("ntId") Long ntId,
                                   @ApiParam(name = "NodeTrigParam", value = "触发器更新信息") @Validated(ValidGroup.UPDATE.class) @RequestBody NodeTrigParam nodeTrigParam) {
-        ruleEngineService.updateRuleEngine(ntId, nodeTrigParam);
-        return HttpResult.oK().message("更新成功");
-    }
-
-    @ApiOperation(value = "更新触发器,支持新增")
-    @PutMapping("/update/{ntId}")
-    public HttpResult updateRuleEngineAll(@ApiParam(name = "ntId", value = "") @PathVariable("ntId") Long ntId,
-                                          @ApiParam(name = "NodeTrigParam", value = "触发器更新信息") @Validated(ValidGroup.UPDATE.class) @RequestBody NodeTrigParam nodeTrigParam) {
         ruleEngineService.updateRuleEngine1(ntId, nodeTrigParam);
         return HttpResult.oK().message("更新成功");
     }
@@ -107,8 +108,8 @@ public class RuleEngineController {
         return HttpResult.responseOK(ruleEngineService.getRuleEngine(ntId));
     }
 
-    @ApiOperation(value = "获取规则列表")
-    @GetMapping("/getRuleList")
+    @ApiOperation(value = "分页获取规则列表")
+    @GetMapping("/list")
     public HttpResult getRuleList(@ApiParam(name = "page", value = "页号") @RequestParam(value = "page", required = false, defaultValue = "1") int page,
                                 @ApiParam(name = "limit", value = "页数") @RequestParam(value = "limit", required = false, defaultValue = "10") int limit) {
         //分页一方面获取总条数、一方面获取数据、如果可以把page和limit也可以带着

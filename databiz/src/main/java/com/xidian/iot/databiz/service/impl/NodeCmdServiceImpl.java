@@ -165,4 +165,11 @@ public class NodeCmdServiceImpl implements NodeCmdService {
     public List<Long> getNcIdsByNodeId(Long nodeId) {
         return nodeCmdCustomMapper.getNcIdsByNodeId(nodeId);
     }
+
+    @Override
+    public List<NodeCmd> getNodeCmdsByNCIds(List<Long> ncIds) {
+        NodeCmdExample example = new NodeCmdExample();
+        example.createCriteria().andNcIdIn(ncIds);
+        return nodeCmdMapper.selectByExample(example);
+    }
 }

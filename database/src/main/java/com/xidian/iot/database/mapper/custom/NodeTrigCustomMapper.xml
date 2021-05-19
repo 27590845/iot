@@ -21,6 +21,9 @@
     <resultMap id="NodeActAlertMap" type="com.xidian.iot.database.param.NodeActAlertParam" extends="com.xidian.iot.database.mapper.NodeActAlertMapper.BaseResultMap">
     </resultMap>
     <resultMap id="NodeCondParamMap" type="com.xidian.iot.database.param.NodeCondParam" extends="com.xidian.iot.database.mapper.NodeActCmdMapper.BaseResultMap">
+        <result column="scene_name" jdbcType="VARCHAR" property="sceneName" />
+        <result column="node_name" jdbcType="VARCHAR" property="nodeName" />
+        <result column="na_name" jdbcType="VARCHAR" property="naName" />
     </resultMap>
     <resultMap id="NodeActCmdParamMap" type="com.xidian.iot.database.param.NodeActCmdParam" extends="com.xidian.iot.database.mapper.NodeActCmdMapper.BaseResultMap">
     </resultMap>
@@ -37,8 +40,8 @@
         where nt_id = #{ntId,jdbcType=BIGINT}
     </select>
     <select id="selectNodeCondsByNtId" parameterType="java.lang.Long" resultMap="NodeCondParamMap">
-        select *
-        from node_cond
+        select nc.*,s.scene_name,n.node_name,na.na_name
+        from node_cond nc left join scene s on nc.scene_sn=s.scene_sn left join node n on s.scene_sn=n.scene_sn and nc.node_sn=n.node_sn left join node_attr na on nc.na_id=na.na_id
         where nt_id=#{ntId,jdbcType=BIGINT}
     </select>
     <select id="selectNACByDtId" parameterType="java.lang.Long" resultMap="NodeActCmdParamMap">

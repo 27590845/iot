@@ -1,11 +1,13 @@
 package com.xidian.iot.databiz.service.impl;
 
+import com.xidian.iot.common.util.exception.BusinessException;
 import com.xidian.iot.database.entity.NodeCond;
 import com.xidian.iot.database.entity.NodeCondExample;
 import com.xidian.iot.database.entity.custom.NodeCondExt;
 import com.xidian.iot.database.mapper.NodeCondMapper;
 import com.xidian.iot.database.mapper.custom.NodeCondCustomMapper;
 import com.xidian.iot.database.param.NodeCondParam;
+import com.xidian.iot.databiz.service.NodeAttrService;
 import com.xidian.iot.databiz.service.NodeCondService;
 import com.xidian.iot.databiz.service.UidGenerator;
 import org.springframework.aop.framework.AopContext;
@@ -33,6 +35,8 @@ public class NodeCondServiceImpl implements NodeCondService {
 
     @Resource
     private UidGenerator uidGenerator;
+    @Resource
+    private NodeAttrService nodeAttrService;
     @Resource
     private NodeCondMapper nodeCondMapper;
     @Resource
@@ -83,6 +87,10 @@ public class NodeCondServiceImpl implements NodeCondService {
 
     @Override
     public int addNodeConds(List<NodeCond> nodeConds) {
+        // 判断是否其scene_sn、node_sn、na_id是否真实存在、只要有一个不存在就抛出异常
+        for (NodeCond nodeCond : nodeConds) {
+            checkExistNodeAttr(nodeCond);
+        }
         nodeConds.stream().forEach(nc -> nc.setNcId(uidGenerator.getUID()));
         return nodeCondCustomMapper.addBatch(nodeConds);
     }
@@ -141,7 +149,7 @@ public class NodeCondServiceImpl implements NodeCondService {
 
     @Override
     public int updateNodeConds(List<NodeCond> nodeConds) {
-        if(Objects.isNull(nodeConds)||nodeConds.size()==0)return 0;
+        if (Objects.isNull(nodeConds) || nodeConds.size() == 0) return 0;
         // 内部调用不走代理
         NodeCondServiceImpl currentProxy = (NodeCondServiceImpl) AopContext.currentProxy();
         int res = nodeCondCustomMapper.updateBatch(nodeConds);
@@ -154,14 +162,40 @@ public class NodeCondServiceImpl implements NodeCondService {
 
     @Override
     public int updateNodeCond(NodeCond nodeCond) {
-        return nodeCondMapper.updateByPrimaryKeySelective(nodeCond);
+        // 检查是否合法
+        // 是否存在此NaId
+        if (!nodeAttrService.checkExistNodeAttr(nodeCond.getNaId())) {
+            throw new BusinessException(-1, "不存在此节点");
+        }
+        // 是否存在此nc_id、nt_id
+        if (!checkExistNodeCond(nodeCond.getNcId())) {
+            throw new BusinessException(-1, "不存在此节点命令");
+        }
+        nodeCond.setNodeSn(null);
+        nodeCond.setSceneSn(null);
+        nodeCond.setNaId(null);
+        nodeCond.setNtId(null);
+        int res = nodeCondMapper.updateByPrimaryKeySelective(nodeCond);
+        NodeCondServiceImpl currentProxy = (NodeCondServiceImpl) AopContext.currentProxy();
+        currentProxy.changeNodeCondExt(new NodeCondExt(nodeCond));
+        return res;
+    }
+
+    private Boolean checkExistNodeCond(Long ncId) {
+        return Objects.isNull(nodeCondMapper.selectByPrimaryKey(ncId));
     }
 
     @Override
     public int addNodeCond(NodeCond nodeCondParam) {
+        checkExistNodeAttr(nodeCondParam);
         nodeCondParam.setNcId(uidGenerator.getUID());
         return nodeCondMapper.insert(nodeCondParam);
     }
 
+    private void checkExistNodeAttr(NodeCond nodeCond){
+        if(!nodeAttrService.checkExistNodeAttr(nodeCond.getSceneSn(),nodeCond.getNodeSn(),nodeCond.getNaId())){
+            throw new BusinessException(-1, "该sceneSn:"+nodeCond.getSceneSn()+"，nodeSn:"+nodeCond.getNodeSn()+"，naId:"+nodeCond.getNaId().toString()+"不存在，请检查后重新添加");
+        }
+    }
 
 }

@@ -54,6 +54,14 @@ public interface RuleEngineService {
     void updateRuleEngine(Long ntId, NodeTrigParam nodeTrigParam);
 
     /**
+     * 更新节点触发规则,支持新增、删除
+     * @param ntId
+     * @param nodeTrigParam
+     * @return void
+     * */
+    void updateRuleEngine1(Long ntId, NodeTrigParam nodeTrigParam);
+
+    /**
      * 添加单个节点触发规则、首先先判断该触发器是否已经有此节点触发规则
      * @param ntId
      * @param nodeCond
@@ -77,14 +85,6 @@ public interface RuleEngineService {
     int updateNodeTrig(Long ntId, NodeTrig nodeTrig);
 
     /**
-     * 更新节点触发规则,支持新增
-     * @param ntId
-     * @param nodeTrigParam
-     * @return void
-     * */
-    void updateRuleEngine1(Long ntId, NodeTrigParam nodeTrigParam);
-
-    /**
      * 获取规则引擎数量
      * @return int
      */
@@ -97,4 +97,11 @@ public interface RuleEngineService {
      * @return List
      */
     List<NodeTrigParam> getNodeTrigParam(int page, int limit);
+
+    /**
+     *  仅更新NodeCond
+     * @param nodeCondParam
+     * @return int
+     * */
+    int updateNodeCond(NodeCondParam nodeCondParam);
 }

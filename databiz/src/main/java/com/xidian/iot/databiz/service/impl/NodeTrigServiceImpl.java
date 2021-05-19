@@ -39,6 +39,7 @@ public class NodeTrigServiceImpl implements NodeTrigService {
 
     @Override
     public List<Long> getNtIdsByNcIds(List<Long> ncIds) {
+        if(ncIds.size()==0)return null;
         return nodeTrigCustomMapper.getNtIdsByNcIds(ncIds);
     }
 
