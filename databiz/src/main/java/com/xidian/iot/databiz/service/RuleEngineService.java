@@ -2,6 +2,7 @@ package com.xidian.iot.databiz.service;
 
 import com.xidian.iot.database.entity.NodeCond;
 import com.xidian.iot.database.entity.NodeTrig;
+import com.xidian.iot.database.param.NodeActAlertParam;
 import com.xidian.iot.database.param.NodeCondParam;
 import com.xidian.iot.database.param.NodeTrigParam;
 import com.xidian.iot.database.vo.SceneVo;
@@ -104,4 +105,11 @@ public interface RuleEngineService {
      * @return int
      * */
     int updateNodeCond(NodeCondParam nodeCondParam);
+
+    /**
+     * 仅更新触发报警信息
+     * @param nodeActAlertParam
+     * @return int
+     * */
+    int updateNodeActAlert(NodeActAlertParam nodeActAlertParam);
 }

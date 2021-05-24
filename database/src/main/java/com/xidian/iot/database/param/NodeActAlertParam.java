@@ -27,7 +27,7 @@ public class NodeActAlertParam extends NodeActAlert {
     }
 
     @ApiModelProperty(value = "触发器ID")
-    @NotNull(message = "触发器ID不能为空",groups = {ValidGroup.UPDATE.class})
+//    @NotNull(message = "触发器ID不能为空",groups = {ValidGroup.UPDATE.class})
     @JsonSerialize(using = ToStringSerializer.class)
     @Override
     public Long getNtId() {

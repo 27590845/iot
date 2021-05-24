@@ -1,5 +1,6 @@
 package com.xidian.iot.database.mapper.custom;
 
+import com.xidian.iot.database.entity.NodeTrig;
 import com.xidian.iot.database.param.NodeCondParam;
 import com.xidian.iot.database.param.NodeTrigParam;
 import org.apache.ibatis.annotations.Param;
@@ -34,4 +35,11 @@ public interface NodeTrigCustomMapper {
      * @return List<NodeTrigParam>
      */
     List<NodeTrigParam> getNodeTrigParam();
+
+    /**
+     *  由ntId更新nodeTrig、除了截止时间以外、为空则不更新。
+     * @param nodeTrig
+     * @return int
+     * */
+    int updateByNTIdSelective(NodeTrig nodeTrig);
 }

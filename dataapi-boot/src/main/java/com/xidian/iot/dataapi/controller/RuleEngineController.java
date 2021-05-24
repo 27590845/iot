@@ -4,6 +4,7 @@ import com.xidian.iot.common.util.exception.BusinessException;
 import com.xidian.iot.dataapi.controller.res.HttpResult;
 import com.xidian.iot.dataapi.controller.res.Page;
 import com.xidian.iot.database.entity.NodeTrig;
+import com.xidian.iot.database.param.NodeActAlertParam;
 import com.xidian.iot.database.param.NodeCondParam;
 import com.xidian.iot.database.param.NodeTrigParam;
 import com.xidian.iot.database.valid.ValidGroup;
@@ -117,5 +118,14 @@ public class RuleEngineController {
         Page<NodeTrigParam> ruleEnginePage = new Page<>(total, page, limit);
         ruleEnginePage.setData(ruleEngineService.getNodeTrigParam(page,limit));
         return HttpResult.responseOK(ruleEnginePage);
+    }
+
+    @ApiOperation("更新触发报警信息")
+    @PatchMapping("/naa/{naaId}")
+    public HttpResult updateNodeActAlert(@ApiParam(name = "naaId", value = "触发报警信息Id") @PathVariable("naaId") Long naaId,
+                                     @ApiParam(name = "NodeActAlertParam", value = "触发报警信息") @Validated(ValidGroup.UPDATE.class) @RequestBody NodeActAlertParam nodeActAlertParam) {
+        nodeActAlertParam.setNaaId(naaId);
+        ruleEngineService.updateNodeActAlert(nodeActAlertParam);
+        return HttpResult.oK().message("更新成功");
     }
 }

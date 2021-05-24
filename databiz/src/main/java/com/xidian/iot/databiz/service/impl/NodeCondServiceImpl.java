@@ -168,8 +168,8 @@ public class NodeCondServiceImpl implements NodeCondService {
             throw new BusinessException(-1, "不存在此节点");
         }
         // 是否存在此nc_id、nt_id
-        if (!checkExistNodeCond(nodeCond.getNcId())) {
-            throw new BusinessException(-1, "不存在此节点命令");
+        if (checkExistNodeCond(nodeCond.getNcId())) {
+            throw new BusinessException(-1, "不存在此节点触发条件");
         }
         nodeCond.setNodeSn(null);
         nodeCond.setSceneSn(null);

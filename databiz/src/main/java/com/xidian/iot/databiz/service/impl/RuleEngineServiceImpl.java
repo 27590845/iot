@@ -242,4 +242,10 @@ public class RuleEngineServiceImpl implements RuleEngineService {
     public int updateNodeCond(NodeCondParam nodeCondParam) {
         return nodeCondService.updateNodeCond(nodeCondParam);
     }
+
+    @Override
+    public int updateNodeActAlert(NodeActAlertParam nodeActAlertParam) {
+        nodeActAlertParam.setNtId(null);//ntId不可更新
+        return nodeActAlertService.updateNodeActAlert(nodeActAlertParam);
+    }
 }

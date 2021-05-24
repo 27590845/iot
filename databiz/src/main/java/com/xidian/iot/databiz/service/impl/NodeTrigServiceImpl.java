@@ -77,7 +77,8 @@ public class NodeTrigServiceImpl implements NodeTrigService {
 
     @Override
     public int updateNodeTrigById(NodeTrig nodeTrig) {
-        int res =nodeTrigMapper.updateByPrimaryKeySelective(nodeTrig);
+        // 如果触发条件的触发时间为null那么就直接更新为null、其余如果为空就不更新
+        int res =nodeTrigCustomMapper.updateByNTIdSelective(nodeTrig);
         NodeTrigServiceImpl currentProxy = (NodeTrigServiceImpl) AopContext.currentProxy();
         currentProxy.updateNodeTrigExtById(new NodeTrigExt(nodeTrig));
         return res;
