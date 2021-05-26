@@ -1,5 +1,6 @@
 package com.xidian.iot.databiz.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.xidian.iot.common.util.exception.BusinessException;
 import com.xidian.iot.database.entity.NodeActCmd;
 import com.xidian.iot.database.entity.NodeCond;
@@ -48,7 +49,7 @@ public class RuleEngineServiceImpl implements RuleEngineService {
         int success = 0;
         nodeTrigService.addNodeTrig(nodeTrigParam);
         // 先判断是否有节点命令 如果有则直接事务回滚
-        if (!Objects.isNull(nodeTrigParam.getNodeActCmdParams())) {
+        if (!Objects.isNull(nodeTrigParam.getNodeActCmdParams())&&nodeTrigParam.getNodeActCmdParams().size()>0) {
             checkReptCondition(nodeTrigParam);
             nodeTrigParam.getNodeActCmdParams().forEach(nac -> nac.setNtId(nodeTrigParam.getNtId()));
             //插入nodeActCmd列表
@@ -134,40 +135,9 @@ public class RuleEngineServiceImpl implements RuleEngineService {
         // 更新nodeCond列表 List<Child>不能直接转为List<Parent>
         nodeCondService.updateNodeConds(nodeTrigParam.getNodeCondParams()
                 .stream().map(param -> (NodeCond) param).collect(Collectors.toList()));
+        // 删除之前存放的缓存
+        nodeCondService.cleanNcIdsByNtId(ntId);
     }
-
-    @Override
-    public NodeCond addNodeCond(Long ntId, NodeCond nodeCondParam) {
-        List<NodeCond> nodeConds = nodeCondService.getNodeCondsByNtId(ntId);
-        // 判断新增触发条件所属的触发器中是否存在此触发条件（或者是同一个传感器而且操作符也相同）
-        List<NodeCond> repeatNodeConds = nodeConds.stream().filter(nodeCond ->
-                nodeCond.getNaId().equals(nodeCondParam.getNaId())
-                        && nodeCond.getNcOp().equals(nodeCondParam.getNcOp())).collect(Collectors.toList());
-        if (repeatNodeConds.size() > 0) {
-            throw new BusinessException(-1, "该触发器已有传感器的触发符号存在，请检查后再添加");
-        }
-        nodeCondParam.setNtId(ntId);
-        nodeCondService.addNodeCond(nodeCondParam);
-        return nodeCondParam;
-    }
-
-    @Override
-    public NodeTrigParam getRuleEngine(Long ntId) {
-        // 先判断此ntId是否存在
-        NodeTrig nodeTrig = nodeTrigService.getNodeTrigExtById(ntId);
-        if (Objects.isNull(nodeTrig)) throw new BusinessException(-1, "该触发器不存在");
-        NodeTrigParam nodeTrigParam = nodeTrigCustomMapper.getNodeTrigParamByNtId(ntId);
-        return nodeTrigParam;
-    }
-
-    @Override
-    public int updateNodeTrig(Long ntId, NodeTrig nodeTrig) {
-        if (Objects.isNull(nodeTrigService.getNodeTrigExtById(ntId))) {
-            throw new BusinessException(-1, "该触发器不存在");
-        }
-        return nodeTrigService.updateNodeTrigById(nodeTrig);
-    }
-
 
     public void updateRuleEngine1(Long ntId, NodeTrigParam nodeTrigParam) {
         if (Objects.isNull(nodeTrigService.getNodeTrigExtById(ntId))) {
@@ -219,5 +189,63 @@ public class RuleEngineServiceImpl implements RuleEngineService {
         }
         //删除缓存
         nodeCondService.cleanNcIdsByNtId(ntId);
+    }
+
+    @Override
+    public NodeCond addNodeCond(Long ntId, NodeCond nodeCondParam) {
+        List<NodeCond> nodeConds = nodeCondService.getNodeCondsByNtId(ntId);
+        // 判断新增触发条件所属的触发器中是否存在此触发条件（或者是同一个传感器而且操作符也相同）
+        List<NodeCond> repeatNodeConds = nodeConds.stream().filter(nodeCond ->
+                nodeCond.getNaId().equals(nodeCondParam.getNaId())
+                        && nodeCond.getNcOp().equals(nodeCondParam.getNcOp())).collect(Collectors.toList());
+        if (repeatNodeConds.size() > 0) {
+            throw new BusinessException(-1, "该触发器已有传感器的触发符号存在，请检查后再添加");
+        }
+        nodeCondParam.setNtId(ntId);
+        nodeCondService.addNodeCond(nodeCondParam);
+        //删除缓存
+        nodeCondService.cleanNcIdsByNtId(ntId);
+        return nodeCondParam;
+    }
+
+    @Override
+    public NodeTrigParam getRuleEngine(Long ntId) {
+        // 先判断此ntId是否存在
+        NodeTrig nodeTrig = nodeTrigService.getNodeTrigExtById(ntId);
+        if (Objects.isNull(nodeTrig)) throw new BusinessException(-1, "该触发器不存在");
+        NodeTrigParam nodeTrigParam = nodeTrigCustomMapper.getNodeTrigParamByNtId(ntId);
+        return nodeTrigParam;
+    }
+
+    @Override
+    public int updateNodeTrig(Long ntId, NodeTrig nodeTrig) {
+        if (Objects.isNull(nodeTrigService.getNodeTrigExtById(ntId))) {
+            throw new BusinessException(-1, "该触发器不存在");
+        }
+        return nodeTrigService.updateNodeTrigById(nodeTrig);
+    }
+
+    @Override
+    public int countRuleEngine() {
+        return nodeTrigService.countNodeTrig();
+    }
+
+    @Override
+    public List<NodeTrigParam> getNodeTrigParam(int page, int limit) {
+        if (page >= 0 && limit > 0) {
+            PageHelper.startPage(page, limit);
+        }
+        return nodeTrigCustomMapper.getNodeTrigParam();
+    }
+
+    @Override
+    public int updateNodeCond(NodeCondParam nodeCondParam) {
+        return nodeCondService.updateNodeCond(nodeCondParam);
+    }
+
+    @Override
+    public int updateNodeActAlert(NodeActAlertParam nodeActAlertParam) {
+        nodeActAlertParam.setNtId(null);//ntId不可更新
+        return nodeActAlertService.updateNodeActAlert(nodeActAlertParam);
     }
 }

@@ -1,5 +1,7 @@
 package com.xidian.iot.database.param;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.xidian.iot.database.entity.NodeActAlert;
 import com.xidian.iot.database.valid.EnumValidation;
 import com.xidian.iot.database.valid.NumLenValidation;
@@ -18,13 +20,15 @@ public class NodeActAlertParam extends NodeActAlert {
 
     @ApiModelProperty(value = "触发报警消息表ID")
     @NotNull(message = "触发器ID不能为空",groups = {ValidGroup.UPDATE.class})
+    @JsonSerialize(using = ToStringSerializer.class)
     @Override
     public Long getNaaId() {
         return super.getNaaId();
     }
 
     @ApiModelProperty(value = "触发器ID")
-    @NotNull(message = "触发器ID不能为空",groups = {ValidGroup.UPDATE.class})
+//    @NotNull(message = "触发器ID不能为空",groups = {ValidGroup.UPDATE.class})
+    @JsonSerialize(using = ToStringSerializer.class)
     @Override
     public Long getNtId() {
         return super.getNtId();

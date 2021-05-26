@@ -56,4 +56,10 @@ public interface NodeTrigService {
      * @return com.xidian.iot.database.entity.NodeTrig
      * */
     int updateNodeTrigById(NodeTrig nodeTrig);
+
+    /**
+     * 获取NodeTrig数量
+     * @return
+     */
+    int countNodeTrig();
 }

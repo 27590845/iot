@@ -427,3 +427,39 @@ $(function() {
 	$("#update-node").on('click', nodeBtn)
 	$("#delete-node").on('click', nodeBtn)
 })
+
+//websocket
+
+//nodepush test
+{
+	let nodeshow = document.getElementById("nodeshow");
+	let url = "ws://localhost:8081/data/node?" + "sceneSn=" + sceneSn + "&node=" + nodeSn;
+	let ws = new WebSocket(url);
+
+	ws.onmessage = function (evt) {
+		let node = document.createElement("div");
+		node.innerHTML = "<h5>" + evt.data + "</h5>";
+		nodeshow.appendChild(node);
+	};
+
+// 关闭页面时候关闭ws
+	window.addEventListener("beforeunload", function (event) {
+		ws.close();
+	});
+}
+//scenepush test
+{let sceneshow = document.getElementById("sceneshow");
+let url="ws://localhost:8081/data/sceneSn?"+"sceneSn="+sceneSn;
+let ws = new WebSocket(url);
+
+ws.onmessage = function (evt) {
+	let node = document.createElement("div");
+	node.innerHTML = "<h5>" + evt.data + "</h5>";
+	sceneshow.appendChild(node);
+};
+
+// 关闭页面时候关闭ws
+window.addEventListener("beforeunload", function(event) {
+	ws.close();
+});
+}

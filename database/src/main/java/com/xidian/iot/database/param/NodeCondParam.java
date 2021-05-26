@@ -1,5 +1,7 @@
 package com.xidian.iot.database.param;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.xidian.iot.database.entity.NodeCond;
 import com.xidian.iot.database.valid.EnumValidation;
 import com.xidian.iot.database.valid.NumLenValidation;
@@ -21,6 +23,38 @@ import javax.validation.constraints.Pattern;
 @ApiModel("触发器(规则)条件传输参数封装类")
 public class NodeCondParam extends NodeCond {
 
+    /**
+     * 场景名称
+     */
+    @ApiModelProperty(hidden = true)
+    private String sceneName;
+
+    /**
+     * 节点名称
+     */
+    @ApiModelProperty(hidden = true)
+    private String nodeName;
+
+    /**
+     * 属性名称
+     */
+    @ApiModelProperty(hidden = true)
+    private String naName;
+
+    @JsonSerialize(using = ToStringSerializer.class)
+    @ApiModelProperty(hidden = true)
+    @Override
+    public Long getNcId() {
+        return super.getNcId();
+    }
+
+    @JsonSerialize(using = ToStringSerializer.class)
+    @ApiModelProperty(hidden = true)
+    @Override
+    public Long getNtId() {
+        return super.getNtId();
+    }
+
     @ApiModelProperty("节点标识")
     @NotNull(groups = {ValidGroup.INSERT.class,ValidGroup.UPDATE.class}, message = "节点标识不能为空")
     @Pattern(groups = {ValidGroup.INSERT.class,ValidGroup.UPDATE.class}, regexp = "[0-9a-zA-Z]{1,6}", message = "非法的节点标识")
@@ -40,6 +74,7 @@ public class NodeCondParam extends NodeCond {
     @ApiModelProperty("关联节点属性的ID")
     @NotNull(groups = {ValidGroup.INSERT.class,ValidGroup.UPDATE.class}, message = "节点属性ID不能为空")
     @NumLenValidation(lens = {18,19}, binary = false, message = "非法的节点属性ID")
+    @JsonSerialize(using = ToStringSerializer.class)
     @Override
     public Long getNaId() {
         return super.getNaId();
@@ -67,5 +102,29 @@ public class NodeCondParam extends NodeCond {
     @Override
     public Integer getNcFitTime() {
         return super.getNcFitTime();
+    }
+
+    public String getSceneName() {
+        return sceneName;
+    }
+
+    public void setSceneName(String sceneName) {
+        this.sceneName = sceneName;
+    }
+
+    public String getNodeName() {
+        return nodeName;
+    }
+
+    public void setNodeName(String nodeName) {
+        this.nodeName = nodeName;
+    }
+
+    public String getNaName() {
+        return naName;
+    }
+
+    public void setNaName(String naName) {
+        this.naName = naName;
     }
 }

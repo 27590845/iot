@@ -48,6 +48,11 @@
       <artifactId>databiz</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
+<!--    <dependency>
+      <groupId>com.xidian.iot</groupId>
+      <artifactId>datapush</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>-->
     <dependency>
       <groupId>com.xidian.iot</groupId>
       <artifactId>common-acl</artifactId>
@@ -62,11 +67,11 @@
     <!-- local end -->
 
     <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
-<!--    <dependency>-->
-<!--      <groupId>javax.servlet</groupId>-->
-<!--      <artifactId>javax.servlet-api</artifactId>-->
-<!--      <version>4.0.1</version>-->
-<!--    </dependency>-->
+    <!--    <dependency>-->
+    <!--      <groupId>javax.servlet</groupId>-->
+    <!--      <artifactId>javax.servlet-api</artifactId>-->
+    <!--      <version>4.0.1</version>-->
+    <!--    </dependency>-->
 
     <!-- util start -->
     <dependency>
@@ -95,7 +100,7 @@
       <version>2.0.8</version>
     </dependency>
 
-<!--    mongo版本一直冲突、原因未知-->
+    <!--    mongo版本一直冲突、原因未知-->
     <dependency>
       <groupId>org.springframework.data</groupId>
       <artifactId>spring-data-mongodb</artifactId>

@@ -2,6 +2,7 @@ package com.xidian.iot.databiz.service.impl;
 
 import com.xidian.iot.common.util.exception.BusinessException;
 import com.xidian.iot.database.entity.NodeTrig;
+import com.xidian.iot.database.entity.NodeTrigExample;
 import com.xidian.iot.database.entity.custom.NodeTrigExt;
 import com.xidian.iot.database.mapper.NodeTrigMapper;
 import com.xidian.iot.database.mapper.custom.NodeTrigCustomMapper;
@@ -38,6 +39,7 @@ public class NodeTrigServiceImpl implements NodeTrigService {
 
     @Override
     public List<Long> getNtIdsByNcIds(List<Long> ncIds) {
+        if(ncIds.size()==0)return null;
         return nodeTrigCustomMapper.getNtIdsByNcIds(ncIds);
     }
 
@@ -75,9 +77,15 @@ public class NodeTrigServiceImpl implements NodeTrigService {
 
     @Override
     public int updateNodeTrigById(NodeTrig nodeTrig) {
-        int res =nodeTrigMapper.updateByPrimaryKeySelective(nodeTrig);
+        // 如果触发条件的触发时间为null那么就直接更新为null、其余如果为空就不更新
+        int res =nodeTrigCustomMapper.updateByNTIdSelective(nodeTrig);
         NodeTrigServiceImpl currentProxy = (NodeTrigServiceImpl) AopContext.currentProxy();
         currentProxy.updateNodeTrigExtById(new NodeTrigExt(nodeTrig));
         return res;
+    }
+
+    @Override
+    public int countNodeTrig() {
+        return (int) nodeTrigMapper.countByExample(new NodeTrigExample());
     }
 }
