@@ -20,18 +20,17 @@
 					<a class="navbar-brand" href="/html/index/index.html">工业互联网平台</a>
 				</div>
 				<!-- Collect the nav links, forms, and other content for toggling -->
-				<div id="program-nav" class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<div id="program-nav" class="collapse navbar-collapse">
 					<ul class="nav navbar-nav navbar-left" role="tablist">
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
 								aria-haspopup="true" aria-expanded="false">数据中心<span class="caret"></span></a>
 							<ul class="dropdown-menu">
-								<li><a href="/html/data_center/index.html">数据中心</a></li>
-								<li><a href="/html/data_center/scenelist.html?trajectory=index">场景列表</a></li>
+								<li><a href="/html/data_center/index.html">场景列表</a></li>
+								<li><a href="/html/overview/index.html" target="_blank">可视化平台</a></li>
 							</ul>
 						</li>
-						<li role="presentation"><a href="/html/middle_ware/index.html">设备适配</a></li>
-						<li role="presentation"><a href="/html/occupy/index.html">占位符1</a></li>
+						<li role="presentation"><a href="/html/rule_engine/index.html">规则引擎</a></li>
 					</ul>
 
 					<ul class="nav navbar-nav navbar-right">
@@ -51,14 +50,14 @@
 
 		<!-- 侧边导航栏 -->
 		<aside id="page-nav" class="panel panel-primary">
-			<!-- <header class="panel-heading">
+			<header class="panel-heading">
 				<span class="glyphicon glyphicon-tags"></span>
 				页面导航
 			</header>
 			<section class="panel-body list-group">
 				<button type="button" class="list-group-item" data-url="index.html">数据中心</button>
 				<button type="button" class="list-group-item" data-url="scenelist.html">场景列表</button>
-			</section> -->
+			</section>
 		</aside>
 
 		<!-- 主要内容 -->
@@ -67,15 +66,51 @@
 			<div class="row">
 				<ol id="nav-path" class="breadcrumb">
 					<!-- <li>当前位置：</li>
-					<li class="active">数据中心</li> -->
+					<li><a href="/html/data_center/index.html">数据中心</a></li>
+					<li class="active">场景列表</a></li> -->
 				</ol>
 			</div>
 
+			<!-- 搜索、添加场景 -->
+			<div class="row">
+				<div class="form-inline col-lg-11 ">
+					<div class="form-group">
+						<input type="text" class="form-control" id="scene-search-text" name="search"
+							placeholder="请输入场景网关号">
+					</div>
+					<button type="submit" class="btn btn-primary" id="scene-search-btn">搜索
+						<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+					</button>
+				</div>
+				<button type="submit" id="add-scene" class="btn btn-success col-lg-1" role="button">添加
+					<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+				</button>
+			</div>
+
+			<!-- 场景列表 -->
+			<section class="scene-container">
+				<!-- 标题 -->
+				<header>
+					<h4>场景列表</h4>
+				</header>
+				<!-- 主题 -->
+				<article id="scene-list">
+
+				</article>
+				<div class="page-div-occupy">
+				</div>
+				<!-- 分页按钮 -->
+				<div class="page-div">
+					<ul class="pagination" id="pageButton">
+					</ul>
+				</div>
+			</section>
 		</main>
 
 		<footer>
-			@ 西安电子科技大学——底部标注
+
 		</footer>
+
 		<!-- 模态框，用来进行提示 -->
 		<div class="modal fade" id="promptModal" tabindex="-1" role="dialog" aria-labelledby="promptLabel">
 			<div class="modal-dialog modal-lg" role="document">
@@ -89,5 +124,4 @@
 	<script type="text/javascript" src="../../js/base.js"></script>
 	<script type="text/javascript" src="../../js/http.js"></script>
 	<script type="text/javascript" src="../../js/data_center/index.js"></script>
-
 </html>

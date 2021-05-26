@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Macro-大数据平台</title>
+		<link rel="stylesheet" type="text/css" href="../../css/overview/index.css" />
+
+		<script type="text/javascript" src="../../js/quote/jquery.min.js"></script>
+		<script type="text/javascript" src="../../js/quote/echarts.min.js"></script>
+		<script type="text/javascript" src="../../js/quote/moment.js"></script>
+		<script src="https://webapi.amap.com/maps?v=2.0&key=c06045f7e85e5d094cabbe23afdcb87f&plugin=Map3D,AMap.DistrictSearch"></script>
+		<script src="https://webapi.amap.com/loca?v=2.0.0&key=c06045f7e85e5d094cabbe23afdcb87f"></script>
+	</head>
+	<body>
+		<article class="left-part">
+			<section class="l-first">
+				<p>// 用户历史数据 //</p>
+				<p>49,816,549</p>
+			</section>
+			<section class="l-second">
+				<header>
+					<h2>设备在线情况</h2>
+				</header>
+				<div id="device_status">
+
+				</div>
+			</section>
+			<section class="l-third">
+				<header>
+					<h2>一周上传数据量</h2>
+				</header>
+				<div id="device_upload">
+
+				</div>
+			</section>
+		</article>
+		<div class="separate-line c-left"></div>
+		<article class="center-part">
+			<header>
+				<h1>大数据展示平台</h1>
+			</header>
+			<article class="center-part-main">
+				<div class="center-part-top">
+					<div class="time-weather">
+						<section>
+							<p id="time"></p>
+							<p id="date"></p>
+						</section>
+						<section id="weather">
+							<span id="weather-icon" class="iconfont">&#xe60a;</span>
+							<div id="weather-info">
+								<p>晴</p>
+								<p>20℃</p>
+							</div>
+						</section>
+					</div>
+					<div>
+
+					</div>
+				</div>
+				<div class="center-part-bottom" id="map">
+
+				</div>
+			</article>
+		</article>
+		<div class="separate-line  c-right"></div>
+		<article class="right-part">
+			<section class="r-first">
+				<header>
+					<h2>设备故障率统计</h2>
+				</header>
+				<div id="device_fault">
+
+				</div>
+			</section>
+			<section class="r-second">
+				<header>
+					<h2>设备分布情况</h2>
+				</header>
+				<div id="device_spread">
+
+				</div>
+			</section>
+			<section class="r-third">
+				<header>
+					<h2>设备类型汇总</h2>
+				</header>
+				<div id="device_type">
+
+				</div>
+			</section>
+		</article>
+	</body>
+	<script type="text/javascript" src="../../js/overview/index_left.js"></script>
+	<script type="text/javascript" src="../../js/overview/index_center.js"></script>
+	<script type="text/javascript" src="../../js/overview/index_right.js"></script>
+</html>

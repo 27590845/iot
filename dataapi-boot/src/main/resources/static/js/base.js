@@ -48,6 +48,7 @@ function trajectoryEnCode(pathname, search, side = false) {
  * @param {String} search location.search字段的值
  */
 function trajectoryUnCode(pathname, search) {
+	console.log("路径")
 	// 获取该导航下的所有页面信息
 	let classification = getClassification(pathname.match(/.*\/(.*)\/.*html/)[1]);
 	// 当前位置的粗略定位
@@ -73,8 +74,9 @@ function trajectoryUnCode(pathname, search) {
 	let innerHTML = "<li>当前位置：</li>"
 	trajectory.forEach(function(item) {
 		let search =
-			innerHTML += "<li>" + "<a href='" + classification[item].url + (localStorage.getItem(item) ? localStorage.getItem(
-				item) : "") + "'>" + classification[item].name + "</a>";
+			innerHTML += "<li>" + "<a href='" + classification[item].url + (localStorage.getItem(item) ?
+				localStorage.getItem(
+					item) : "") + "'>" + classification[item].name + "</a>";
 	})
 	innerHTML += "<li class='active'>" + classification[present].name + "</li>"
 	$("#nav-path").html(innerHTML);
@@ -103,14 +105,16 @@ function broadside(navinfo, loca) {
 			let nodeObj = new RegExp(getSearchKey("nodesn").self + "=(.*)&?")
 			present = loca.search.match(nodeObj)[1]; // 当前的位置
 			break;
-		default :
+		default:
 			present = loca.pathname.match(/.*\/(.*)$/)[1]; // 当前的位置
 	}
 	// 侧边栏的构建
 	let nav = $("#" + navinfo.id)
 	let content = ""
-	for(let item of Object.entries(navinfo.content)) {
-		content += `<button type="button" class="list-group-item ${ present == item[0] ? "disabled" : "" }" data-item="${item[0]}">${item[1]}</button>`
+	console.dir(navinfo.content)
+	for (let item of navinfo.content) {
+		content +=
+			`<button type="button" class="list-group-item ${ present == item.url ? "disabled" : "" }" data-item="${item.url}"  data-type="${item.type}">${item.title}</button>`
 	}
 	nav.html(`
 	<header class="panel-heading">
@@ -120,7 +124,7 @@ function broadside(navinfo, loca) {
 	<section class="panel-body list-group">
 		${content}
 	</section>`)
-	
+
 	let search = trajectoryEnCode(loca.pathname, loca.search)
 	$(".list-group button").on("click", function() {
 		if (this.classList.contains("disabled")) {
@@ -128,18 +132,22 @@ function broadside(navinfo, loca) {
 		}
 		switch (navinfo.type) {
 			// 节点
-			case "node" : 
-				let url = location.href.replace(new RegExp(getSearchKey("nodesn").self + "=.*&?"), getSearchKey("nodesn").self + "=" + this.dataset.item)
-				window.open(url, "_self")
-				break;
-			default :
-				// 进行判断，如果是index.html，不添加参数
-				if (/index/.test(this.dataset.item)) {
-					window.open(this.dataset.item, "_self");
-					return;
+			case "node":
+				let url = location.href.replace(new RegExp(getSearchKey("nodesn").self + "=.*&?"), getSearchKey(
+					"nodesn").self + "=" + this.dataset.item)
+				if (this.dataset.type == "_blank") {
+					window.open(url, "_blank")
+				} else {
+					window.open(url, "_self")
 				}
-				window.open(this.dataset.item + "?" + search, "_self");
-				
+				break;
+			case "scene":
+				// 进行判断，如果是index.html，不添加参数
+				window.open(this.dataset.item, this.dataset.type);
+				break;
+			default:
+			
+
 		}
 	})
 }
@@ -170,6 +178,10 @@ function getSearchKey(content) {
 		"nodesn": {
 			"self": "nodesn",
 			"search": "nodesn"
+		},
+		"ntid": {
+			"self": "ntid",
+			"search": "ntid"
 		}
 	}
 	return search_key.hasOwnProperty(content) ? search_key[content] : null;
@@ -226,6 +238,20 @@ function getClassification(tag) {
 				"name": "更新节点",
 				"url": "/html/data_center/nodeupdate.html"
 			}
+		},
+		"rule_engine": {
+			"index": {
+				"name": "规则引擎",
+				"url": "/html/rule_engine/index.html"
+			},
+			"add_alert": {
+				"name": "添加报警设置",
+				"url": "/html/rule_engine/add_alert.html"
+			},
+			"edit_alert": {
+				"name": "编辑报警信息",
+				"url": "/html/rule_engine/edit_alert.html"
+			}
 		}
 	}
 	return website_path[tag]
@@ -235,10 +261,10 @@ function getClassification(tag) {
  * @param {String/Number} timstamp 表示时间戳（13位)
  * @param {String} format 时间格式  
  */
-function dateTimeFormat(timestamp, format="yyyy-MM-dd hh:mm:ss") {
+function dateTimeFormat(timestamp, format = "yyyy-MM-dd hh:mm:ss") {
 	let date = new Date(timestamp - 0);
 	let dateObj = {
-		yyyy : date.getFullYear() + "",
+		yyyy: date.getFullYear() + "",
 		MM: ("0" + (date.getMonth() + 1)).slice(-2),
 		dd: ("0" + date.getDate()).slice(-2),
 		hh: ("0" + date.getHours()).slice(-2),
@@ -262,7 +288,7 @@ function promptModel(data) {
 	//  footer: ""
 	// }
 	$('#promptModal').find(".modal-content").html(
-	`
+		`
 	<div class="modal-header ${data.type}">
 		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		<h4 class="modal-title">
@@ -275,7 +301,7 @@ function promptModel(data) {
 	${data.hasOwnProperty('footer') ? '<div class="modal-footer">' + data.footer + '</div>' : ''}
 	`
 	)
-	
+
 	$('#promptModal').modal('show')
 }
 /**
@@ -286,6 +312,9 @@ var nav = null; // 导航内容
 // 页面加载时的前提条件
 window.onload = function() {
 	// let route = null; // 导航目录【加载页面的时候就获得】
+	if ($("footer").length != 0) {
+		$("footer").html("版权所有©西安电子科技大学工业互联网应用服务平台")
+	}
 
 	// 第一步：判断用户是否是登录状态
 	if (!isLogin()) {

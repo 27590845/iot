@@ -10,12 +10,8 @@ body {
 	// 主体内容
 	main {
 		.scene-container {
-			margin: 20px 0 0 0;
-			border-radius: 5px;
-			border: 1px dotted;
-			padding: 0 20px 10px;
 			header {
-				margin: 0 0 20px 0;
+				margin: 20px 0;
 			}
 			// 场景列表
 			#scene-list {
@@ -28,10 +24,41 @@ body {
 					box-shadow: 0 0 10px var(--color); // 根据在线状态进行调控
 					.scene-header {
 						margin: 0 0 10px 0;
+						padding: 0 10px;
+						display: flex;
+						flex-direction: row;
+						justify-content: space-between;
+						.row-info {
+							display: flex;
+							.col-title {
+								padding: 0 10px;
+							}
+						}
+						.row-btn {
+							display: flex;
+							button {
+								margin: 0 5px;
+							}
+						}
 					}
 					.scene-body {
 						max-height: 200px;
+						height: 200px;
+						min-height: 200px;
 						overflow: auto;
+						div {
+							width: 100%;
+							height: 100%;
+							border: 1px solid #ddd;
+							border-radius: 5px;
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							font-size: 18px;
+							letter-spacing: 5px;
+							white-space: nowrap;
+							color: red;
+						}						
 						table {
 							margin: 0;
 						}
@@ -39,6 +66,9 @@ body {
 							thead {
 								tr {
 									th {
+										white-space: nowrap;
+										overflow: hidden;
+										text-overflow: ellipsis;
 										text-align: center;
 									}
 									th:last-child {
@@ -68,7 +98,7 @@ body {
 						user-select: all;
 					}
 					// 设置每列中的内容不能进行换行等
-					[class^="col-"] {
+					[class~="col-title"] {
 						white-space: nowrap;
 						overflow: hidden;
 						text-overflow: ellipsis;
@@ -90,7 +120,14 @@ body {
 				}
 			}
 			// 场景分页
+			.page-div-occupy {
+				width: 100%;
+				height: 80px;
+			}
 			.page-div {
+				position: absolute;
+				bottom: 0;
+				width: 100%;
 				text-align: center;
 				ul {
 					li {

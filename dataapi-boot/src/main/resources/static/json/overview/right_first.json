@@ -1,0 +1,31 @@
+{
+	"data": [{
+			"value": 50,
+			"name": "设备断电",
+			"itemStyle": {
+				"color": "#c44569"
+			}
+		},
+		{
+			"value": 735,
+			"name": "设备断网",
+			"itemStyle": {
+				"color": "#f0932b"
+			}
+		},
+		{
+			"value": 580,
+			"name": "设备损坏",
+			"itemStyle": {
+				"color": "#eb4d4b"
+			}
+		},
+		{
+			"value": 60,
+			"name": "未分类",
+			"itemStyle": {
+				"color": "#f9ca24"
+			}
+		}
+	]
+}

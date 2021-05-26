@@ -1,0 +1,24 @@
+{
+	"data": [{
+			"value": 1048,
+			"name": "当前在线设备",
+			"itemStyle": {
+				"color": "red"
+			}
+		},
+		{
+			"value": 735,
+			"name": "故障设备",
+			"itemStyle": {
+				"color": "yellow"
+			}
+		},
+		{
+			"value": 580,
+			"name": "离线设备",
+			"itemStyle": {
+				"color": "blue"
+			}
+		}
+	]
+}

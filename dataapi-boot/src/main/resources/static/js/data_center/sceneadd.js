@@ -36,6 +36,7 @@ function initPage() {
 			url: "/scene",
 			data: JSON.stringify(data)
 		})
+		
 	})
 
 }

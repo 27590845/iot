@@ -64,30 +64,26 @@ var whetherToFetch = true;
 
 		$.ajax({
 			async: false,
-			　
-			url: "json/login-data.json",
-			type: "GET",
+			data:{
+				"username":username,
+				"email":email,
+				"password":password				
+			}　
+			url: " ",
+			type: "post",
 			dataType: "json",
 			success: function(data) {
-				var flag = 0;
-				$.each(data, function(i, item) {
-					if(username == item["username"] && flag == 0) {
-						alert("该用户名已经注册！");
-						window.open("./register.html", "_self");
-						flag = 1;
-						whetherToFetch = false;
-					}
-					if(email == item["email"] && flag == 0){
-						alert("该邮箱已经注册！");
-						window.open("./register.html", "_self");
-						flag = 1;
-						whetherToFetch = false;
-					}
-				})
-				if(flag == 0 && whetherToFetch) {
+				if(data.flag == false)
+				{
+					alert("该用户名或者邮箱已经注册！");
+					window.open("./register.html", "_self");
+					whetherToFetch = false;
+				}
+				if(data.flag == true && whetherToFetch){
 					alert("注册成功!请登录!");
 					window.open("./login.html", "_self");
-				} else {
+				}
+				else {
 					//alert("注册失败!");
 					return
 				}

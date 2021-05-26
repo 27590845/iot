@@ -416,7 +416,7 @@ let nodeAttrStd = null;
 $(function() {
 	// 路径导航初始化
 	trajectoryUnCode(location.pathname, location.search)
-
+	
 	// 使用表单校验器
 	bindValidate()
 	// 添加失去焦点事件
@@ -442,7 +442,7 @@ $(function() {
 			nodeInfo = res;
 			// 展示节点的基本信息
 			showNodeInfo();
-
+			console.log(sceneSn);
 			// 展示节点属性信息
 			showNodeAttr();
 		})

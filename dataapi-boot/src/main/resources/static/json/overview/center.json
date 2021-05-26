@@ -1,0 +1,243 @@
+{
+	"data": [
+		{
+			"coordinates": [116.269725,39.93421],
+			"properties": {
+				"place": "北京",
+				"flagName": "beijing"
+			}
+		},
+		{
+			"coordinates": [117.30244,39.15481],
+			"properties": {
+				"place": "天津",
+				"flagName": "tianjin"
+			}
+		},
+		{
+			"coordinates": [123.476756,41.795107],
+			"properties": {
+				"place": "沈阳",
+				"flagName": "shenyang"
+			}
+		},
+		{
+			"coordinates": [125.344432,43.952528],
+			"properties": {
+				"place": "长春",
+				"flagName": "changchun"
+			}
+		},
+		{
+			"coordinates": [126.465038,46.034382],
+			"properties": {
+				"place": "哈尔滨",
+				"flagName": "haerbin"
+			}
+		},
+		{
+			"coordinates": [111.765331,41.07028],
+			"properties": {
+				"place": "呼和浩特",
+				"flagName": "huhehaote"
+			}
+		},
+		{
+			"coordinates": [106.162303,38.469974],
+			"properties": {
+				"place": "银川",
+				"flagName": "yinchuan"
+			}
+		},
+		{
+			"coordinates": [101.855663,36.764453],
+			"properties": {
+				"place": "西宁",
+				"flagName": "xining"
+			}
+		},
+		{
+			"coordinates": [91.00117,29.63941],
+			"properties": {
+				"place": "拉萨",
+				"flagName": "lasa"
+			}
+		},
+		{
+			"coordinates": [87.617381,43.825846],
+			"properties": {
+				"place": "乌鲁木齐",
+				"flagName": "wulumuqi"
+			}
+		},
+		{
+			"coordinates": [103.811229,36.092653],
+			"properties": {
+				"place": "兰州",
+				"flagName": "lanzhou"
+			}
+		},
+		{
+			"coordinates": [114.365149,30.603859],
+			"properties": {
+				"place": "武汉",
+				"flagName": "wuhan"
+			}
+		},
+		
+		{
+			"coordinates": [108.86494,34.369781],
+			"properties": {
+				"place": "西安",
+				"flagName": "xian"
+			}
+		},
+		{
+			"coordinates": [104.052928,30.85418],
+			"properties": {
+				"place": "成都",
+				"flagName": "chengdu"
+			}
+		},
+		{
+			"coordinates": [106.491893,29.601208],
+			"properties": {
+				"place": "重庆",
+				"flagName": "chongqing"
+			}
+		},
+		{
+			"coordinates": [106.579784,26.734864],
+			"properties": {
+				"place": "贵阳",
+				"flagName": "guiyang"
+			}
+		},
+		{
+			"coordinates": [112.863963,28.313131],
+			"properties": {
+				"place": "长沙",
+				"flagName": "changsha"
+			}
+		},
+		{
+			"coordinates": [102.690623,24.915382],
+			"properties": {
+				"place": "昆明",
+				"flagName": "kunming"
+			}
+		},
+		{
+			"coordinates": [108.271678,22.825855],
+			"properties": {
+				"place": "南宁",
+				"flagName": "nanning"
+			}
+		},
+		{
+			"coordinates": [110.337108,20.044627],
+			"properties": {
+				"place": "海口",
+				"flagName": "haikou"
+			}
+		},
+		{
+			"coordinates": [113.266516,23.204981],
+			"properties": {
+				"place": "广州",
+				"flagName": "guangzhou"
+			}
+		},
+		{
+			"coordinates": [114.226268,22.176262],
+			"properties": {
+				"place": "香港",
+				"flagName": "xianggang"
+			}
+		},
+		{
+			"coordinates": [113.523143,22.176262],
+			"properties": {
+				"place": "澳门",
+				"flagName": "aomen"
+			}
+		},
+		{
+			"coordinates": [115.852245,28.680031],
+			"properties": {
+				"place": "南昌",
+				"flagName": "nanchang"
+			}
+		},
+		{
+			"coordinates": [119.236034,26.10518],
+			"properties": {
+				"place": "福州",
+				"flagName": "fuzhou"
+			}
+		},
+		{
+			"coordinates": [121.510204,25.044843],
+			"properties": {
+				"place": "台北",
+				"flagName": "taibei"
+			}
+		},
+		{
+			"coordinates": [120.158885,30.258163],
+			"properties": {
+				"place": "杭州",
+				"flagName": "hangzhou"
+			}
+		},
+		{
+			"coordinates": [118.796581,32.100303],
+			"properties": {
+				"place": "南京",
+				"flagName": "nanjing"
+			}
+		},
+		{
+			"coordinates": [121.433299,31.277656],
+			"properties": {
+				"place": "上海",
+				"flagName": "shanghai"
+			}
+		},
+		{
+			"coordinates": [117.258495,31.876668],
+			"properties": {
+				"place": "合肥",
+				"flagName": "hefei"
+			}
+		},
+		{
+			"coordinates": [113.74287,34.885072],
+			"properties": {
+				"place": "郑州",
+				"flagName": "zhengzhou"
+			}
+		},
+		{
+			"coordinates": [117.038768,36.667579],
+			"properties": {
+				"place": "济南",
+				"flagName": "jinan"
+			}
+		},
+		{
+			"coordinates": [114.48994,38.029961],
+			"properties": {
+				"place": "石家庄",
+				"flagName": "shijiazhuang"
+			}
+		},
+		{
+			"coordinates": [112.512401,37.874027],
+			"properties": {
+				"place": "太原",
+				"flagName": "taiyuan"
+			}
+		}
+	]
+}

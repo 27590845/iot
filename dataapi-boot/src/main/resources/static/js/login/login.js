@@ -1,6 +1,6 @@
 $('.main-form-button').click(function() {
 	var name = $("#username").val();
-	var pass = $("#password").val();
+	var pwd = $("#password").val();
 	// window.open("./html/index/index.html", "_self");
 	
 	// 对接登录接口
@@ -13,25 +13,25 @@ $('.main-form-button').click(function() {
 	// 	alert("登录失败！");
 	// })
  	
-	
-		var flag = 0;
 		$.ajax({
 			async: false,
-			
-			url: "json/login-data.json",
-			type: "GET",
+			data:{
+				"username":name,
+				"password":pwd
+			}
+			url: " ",
+			type: "post",
 			dataType: "json",
 			success: function(data) {
-	
-				$.each(data, function(i, item) {
-					if(name == item["username"] && pass == item["password"]) {
-						flag = 1;
+				if(data.flag == true) {	
 						window.open("./html/index/index.html", "_self");
-					}
-				})
-				if(flag == 0) {
+				}
+				else {
 					alert("登录失败！您输入的用户名或者密码错误！");
 				}
+			},
+			error:function(data){
+				console.log(data);
 			}
 		})
 		

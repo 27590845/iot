@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Macro-规则引擎</title>
+
+		<link rel="stylesheet" type="text/css" href="../../css/quote/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/quote/bootstrapValidator.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/base.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/rule_engine/add_alert.css" />
+
+		<script type="text/javascript" src="../../js/quote/jquery.min.js"></script>
+		<script type="text/javascript" src="../../js/quote/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../../js/quote/bootstrapValidator.min.js"></script>
+
+	</head>  
+	<body>  
+		<!-- 导航条 -->
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container-fluid">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header nav_index">
+					<a class="navbar-brand" href="/html/index/index.html">工业互联网平台</a>
+				</div>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div id="program-nav" class="collapse navbar-collapse">
+					<ul class="nav navbar-nav navbar-left" role="tablist">
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+							   aria-haspopup="true" aria-expanded="false">数据中心<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="/html/data_center/index.html">场景列表</a></li>
+								<li><a href="/html/overview/index.html" target="_blank">可视化平台</a></li>
+							</ul>
+						</li>
+						<li role="presentation"><a href="/html/rule_engine/index.html">规则引擎</a></li>
+					</ul>
+
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+								aria-haspopup="true" aria-expanded="false">个人中心<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="#">选项一</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a href="/login.html">退出登录</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div><!-- /.navbar-collapse -->
+			</div><!-- /.container-fluid -->
+		</nav>
+
+		<main class="container bs-docs-container">
+
+			<!-- 导航路径 -->
+			<div class="row">
+				<ol id="nav-path" class="breadcrumb">
+				</ol>
+			</div>
+
+			<!-- 内容 开始 -->
+			<section class="scene-container">
+				<div class="node-container add-content">
+					<div class="title">添加规则引擎</div>
+					<div class="add-condition-title">添加条件</div>
+					<div class="add-style1">
+						<table class="condition-table" id="conditions">
+							<tr class="tr-info">
+								<td class="big">场景ID</td>
+								<td class="big">节点名称</td>
+								<td class="big">节点属性</td>
+								<td>选择条件</td>
+								<td>请输入数值</td>
+								<!-- <td class="little">单位</td> -->
+								<td>探测次数</td>
+								<td>
+									<div class="rel">
+										<div><a class="button2" href="javascript:addCondition();"><span>添加</span></a>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+
+
+					<div class="t alert-info-title">报警通知</div>
+					<div class="add-style2" id="alerts">
+						<div class="condition-type">
+							<div class="edit-title">编辑内容信息</div>
+							<textarea class="edit-info" id="alertInfo" maxlength="100" cols="35px" rows="6"
+								name="content" validate="validate[optional,length[0,100]"
+								placeholder="内容不超过100个字"></textarea>
+						</div>  
+						<div class="condition-type">
+							<input type="radio" name="actionType" value="2" checked="checked" />
+							邮件通知
+							<input type="email" name="value" class="input-number" id="email"
+								validate="validate[optional,custom[email]]" placeholder="输入需要报警的接收邮箱号码" />
+						</div>
+						<div class="condition-type">
+							<input type="radio" name="actionType" value="1" />
+							手机短信
+							<input type="tel" name="value" class="input-number" id="phonenum"
+								validate="validate[optional,custom[mobilephone]]" placeholder="输入需要报警的接收手机号码" />
+						</div>
+
+						<div class="condition-type">
+							<input type="radio" name="actionType" value="3" />
+							站内短信
+						</div>
+
+					</div>
+
+					<div class="t alert-set-title">报警设置</div>
+					<div class="add-style3">
+						<div class="condition-action">
+							<p>是否重复</p>
+							<div class="alert-set">
+								<input type="radio" name="repeated" checked="checked" value="0"> 是</input>
+								<input type="radio" name="repeated" value="1"> 否</input>
+							</div>
+
+						</div>  
+						<div class="condition-action">
+							<p>是否执行</p>
+							<div class="alert-set">
+								<input type="radio" name="executed" checked="checked" value="0"> 是</input>
+								<input type="radio" name="executed" value="1"> 否</input>
+							</div>
+						</div>
+						<div class="condition-question">
+							<p>触发器名称</p>
+							<div class="alert-set">
+								<input type="text" id="ntName">
+							</div>
+						</div>
+						<div class="condition-question">
+							<p>间隔时间/秒</p>
+							<div class="alert-set">
+								<input type="text" id="ntInvl">
+							</div>
+						</div>
+						<div class="condition-question">
+							<p>失效时间</p>
+							<div class="alert-set">
+								<input class="Wdate" id="deadTime" type="text" name="expire" value
+									onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
+							</div>
+						</div>
+
+
+					</div>
+					<div type="button" class="button-save button " onclick="buttonsave()">保 存</div>
+					<div type="button" class="button-reset button" onclick="reset()">重 置</div>
+			</section>
+
+
+			</div>
+			<!-- 内容 结束 -->
+		</main>
+
+		<div id="template" class="add-style1">
+			<table>
+				<tr class="condition tr-edit" style="display:none;">
+					<td>
+						<div class="condition-input">
+							<input type="text" class="text_inp c999 value sceneID"  placeholder="请输入">
+						</div>
+					<td>
+						<div class="condition-input">
+							 <select class="nodes select nodeName" name="nodeNames">
+								<option value="" class="node"selected="selected">------请选择------</option>
+								<option></option>
+								<option></option>
+								<option></option>
+								<option></option>
+							</select>
+						</div>
+					</td>
+					<td>
+						<div class="condition-input">
+						 	<select class="attrs select nodeProperty">
+								<option value=""  class="property" selected="selected">----请选择----</option> 　　
+								<option></option>
+								<option></option>
+								<option></option>
+								<option></option>　
+							</select> 
+						</div>
+					</td>
+					<td>
+						<div class="condition-input">
+							<select class="operators select choseCondition">
+								<option value="" selected="selected">----请选择----</option>
+								<option value="1" onclick="javascript:unCrozen(this)">&gt;</option>
+								<option value="2" onclick="javascript:unCrozen(this)">&gt;=</option>
+								<option value="3" onclick="javascript:unCrozen(this)">&lt;</option>
+								<option value="4" onclick="javascript:unCrozen(this)">&lt;=</option>
+								<option value="5" onclick="javascript:unCrozen(this)">==</option>
+								<option value="6" onclick="javascript:unCrozen(this)">新值</option>
+								<option value="7" onclick="javascript:crozen(this)">冻结</option>
+								<option value="8" onclick="javascript:crozen(this)">复活</option>
+							</select>
+						</div>
+					</td>
+					<td>
+						<div class="condition-input">
+							<input type="text" class="text_inp c999 value boundaryValue" placeholder="请输入">
+						</div>
+					</td>
+					<!-- <td>
+						<div class="condition-input">
+							<span id="nodeUnit" class="nodeUnit"></span>
+						</div>
+					</td> -->
+					<td>
+						<div class="condition-input">
+							<input type="text" class="text_inp c999 value detectionNumber" placeholder="请输入">
+						</div>
+					</td>
+					<td>
+						<div class="condition-input condition-input-little">
+
+							<button class="jiajian remove btn btn-xs btn-danger">删除此条件</button>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+
+		<footer>
+			@ 西安电子科技大学——底部标注
+		</footer>
+
+		<!-- 模态框，用来进行提示 -->
+		<div class="modal fade" id="promptModal" tabindex="-1" role="dialog" aria-labelledby="promptLabel">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="../../js/nav.js"></script>
+		<script type="text/javascript" src="../../js/base.js"></script>
+		<script type="text/javascript" src="../../js/http.js"></script>
+		<script type="text/javascript" src="../../js/rule_engine/add_alert.js"></script>
+		<script type="text/javascript" src="../../js/rule_engine/my97/WdatePicker.js"></script>
+	</body>
+</html>

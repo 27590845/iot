@@ -33,12 +33,16 @@ function showNodeInfo() {
 		let navinfo = {
 			id: "page-nav",
 			title: "节点列表",
-			content: {},
+			content: [],
 			type: 'node',
 			tag: "glyphicon glyphicon-menu-hamburger"
 		}
 		res.nodeVos.forEach(function(item) {
-			navinfo.content[item.nodeSn] = item.nodeName
+			navinfo.content.push({
+				url: item.nodeSn,
+				title: item.nodeName,
+				type: "_self"
+			})
 		})
 		broadside(navinfo, location)
 
@@ -427,39 +431,3 @@ $(function() {
 	$("#update-node").on('click', nodeBtn)
 	$("#delete-node").on('click', nodeBtn)
 })
-
-//websocket
-
-//nodepush test
-{
-	let nodeshow = document.getElementById("nodeshow");
-	let url = "ws://localhost:8081/data/node?" + "sceneSn=" + sceneSn + "&node=" + nodeSn;
-	let ws = new WebSocket(url);
-
-	ws.onmessage = function (evt) {
-		let node = document.createElement("div");
-		node.innerHTML = "<h5>" + evt.data + "</h5>";
-		nodeshow.appendChild(node);
-	};
-
-// 关闭页面时候关闭ws
-	window.addEventListener("beforeunload", function (event) {
-		ws.close();
-	});
-}
-//scenepush test
-{let sceneshow = document.getElementById("sceneshow");
-let url="ws://localhost:8081/data/sceneSn?"+"sceneSn="+sceneSn;
-let ws = new WebSocket(url);
-
-ws.onmessage = function (evt) {
-	let node = document.createElement("div");
-	node.innerHTML = "<h5>" + evt.data + "</h5>";
-	sceneshow.appendChild(node);
-};
-
-// 关闭页面时候关闭ws
-window.addEventListener("beforeunload", function(event) {
-	ws.close();
-});
-}

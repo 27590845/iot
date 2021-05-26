@@ -4,14 +4,8 @@ body .alert {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-body main .scene-container {
-  margin: 20px 0 0 0;
-  border-radius: 5px;
-  border: 1px dotted;
-  padding: 0 20px 10px;
-}
 body main .scene-container header {
-  margin: 0 0 20px 0;
+  margin: 20px 0;
 }
 body main .scene-container #scene-list .scene-item {
   position: relative;
@@ -22,15 +16,49 @@ body main .scene-container #scene-list .scene-item {
 }
 body main .scene-container #scene-list .scene-item .scene-header {
   margin: 0 0 10px 0;
+  padding: 0 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+body main .scene-container #scene-list .scene-item .scene-header .row-info {
+  display: flex;
+}
+body main .scene-container #scene-list .scene-item .scene-header .row-info .col-title {
+  padding: 0 10px;
+}
+body main .scene-container #scene-list .scene-item .scene-header .row-btn {
+  display: flex;
+}
+body main .scene-container #scene-list .scene-item .scene-header .row-btn button {
+  margin: 0 5px;
 }
 body main .scene-container #scene-list .scene-item .scene-body {
   max-height: 200px;
+  height: 200px;
+  min-height: 200px;
   overflow: auto;
+}
+body main .scene-container #scene-list .scene-item .scene-body div {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  letter-spacing: 5px;
+  white-space: nowrap;
+  color: red;
 }
 body main .scene-container #scene-list .scene-item .scene-body table {
   margin: 0;
 }
 body main .scene-container #scene-list .scene-item .scene-body table thead tr th {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   text-align: center;
 }
 body main .scene-container #scene-list .scene-item .scene-body table thead tr th:last-child {
@@ -49,12 +77,12 @@ body main .scene-container #scene-list .scene-item .scene-body table tbody tr td
 body main .scene-container #scene-list .scene-item [class~="scene-sn"] {
   user-select: all;
 }
-body main .scene-container #scene-list .scene-item [class^="col-"] {
+body main .scene-container #scene-list .scene-item [class~="col-title"] {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-body main .scene-container #scene-list .scene-item [class^="col-"] span {
+body main .scene-container #scene-list .scene-item [class~="col-title"] span {
   margin: 0 0 0 5px;
   font-weight: 600;
 }
@@ -67,7 +95,14 @@ body main .scene-container #scene-list .scene-item::before {
   position: absolute;
   transform: translate(-50%, -50%) rotate(-30deg);
 }
+body main .scene-container .page-div-occupy {
+  width: 100%;
+  height: 80px;
+}
 body main .scene-container .page-div {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
   text-align: center;
 }
 body main .scene-container .page-div ul li {

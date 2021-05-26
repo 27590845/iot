@@ -1,0 +1,222 @@
+body .alert {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+body main .rule-container {
+  position: relative;
+}
+body main .rule-container header {
+  margin: 20px 0;
+}
+body main .rule-container #trigger-list .trigger-item {
+  position: relative;
+  border-radius: 5px;
+  padding: 10px 5px;
+  margin: 0 0 20px 0;
+  box-shadow: 0 0 10px var(--color);
+}
+body main .rule-container #trigger-list .trigger-item .trigger-header {
+  margin: 0 0 10px 0;
+  padding: 0 10px 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 1px solid #747474;
+}
+body main .rule-container #trigger-list .trigger-item .trigger-header .row-info {
+  display: flex;
+  align-items: center;
+}
+body main .rule-container #trigger-list .trigger-item .trigger-header .row-info .col-title {
+  padding: 0 10px;
+}
+body main .rule-container #trigger-list .trigger-item .trigger-header .row-btn {
+  display: flex;
+}
+body main .rule-container #trigger-list .trigger-item .trigger-header .row-btn button {
+  margin: 0 5px;
+}
+body main .rule-container #trigger-list .trigger-item .trigger-body {
+  max-height: 150px;
+  height: 150px;
+  min-height: 150px;
+  padding: 5px 10px;
+  overflow: auto;
+}
+body main .rule-container #trigger-list .trigger-item .trigger-body .trigger-conditions {
+  width: 60%;
+  height: 100%;
+  float: left;
+  border: 1px solid;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  overflow-x: auto;
+}
+body main .rule-container #trigger-list .trigger-item .trigger-body .trigger-conditions .condition-item {
+  position: relative;
+  width: 180px;
+  min-width: 180px;
+  margin: 0 10px 0 0;
+  padding: 3px;
+  height: 90%;
+  border: 1px solid #CCCCCC;
+  border-radius: 5px;
+  text-align: center;
+}
+body main .rule-container #trigger-list .trigger-item .trigger-body .trigger-conditions .condition-item p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+body main .rule-container #trigger-list .trigger-item .trigger-body .trigger-conditions .condition-item p.condtion-content {
+  font-size: 18px;
+  font-weight: 600;
+}
+body main .rule-container #trigger-list .trigger-item .trigger-body .trigger-conditions .condition-item::after {
+  content: "\e640";
+  font-family: "iconfont";
+  position: absolute;
+  top: calc(50% - 14px);
+  font-size: 15px;
+  color: gray;
+  right: -24px;
+}
+body main .rule-container #trigger-list .trigger-item .trigger-body .trigger-conditions .condition-item:last-child::after {
+  content: "";
+  display: block;
+  position: static;
+  width: 10px;
+}
+body main .rule-container #trigger-list .trigger-item .trigger-body .trigger-conditions .condition-item:hover {
+  transform: scale(1.05);
+}
+body main .rule-container #trigger-list .trigger-item .trigger-body .trigger-exec {
+  width: 10%;
+  height: 100%;
+  float: left;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+body main .rule-container #trigger-list .trigger-item .trigger-body .trigger-exec p {
+  position: relative;
+  width: 48px;
+  height: 24px;
+  margin: 0;
+  border: 1px solid white;
+  border-radius: 20px;
+  padding: 2px;
+}
+body main .rule-container #trigger-list .trigger-item .trigger-body .trigger-exec p i {
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  position: absolute;
+  clip-path: circle(9px);
+  background: white;
+}
+body main .rule-container #trigger-list .trigger-item .trigger-body .trigger-exec p:hover {
+  cursor: pointer;
+}
+body main .rule-container #trigger-list .trigger-item .trigger-body .trigger-exec p[data-ntexec="0"] {
+  background: #45DB5E;
+}
+body main .rule-container #trigger-list .trigger-item .trigger-body .trigger-exec p[data-ntexec="0"] i {
+  right: 2px;
+}
+body main .rule-container #trigger-list .trigger-item .trigger-body .trigger-exec p[data-ntexec="1"] {
+  background: #333333;
+}
+body main .rule-container #trigger-list .trigger-item .trigger-body .trigger-exec p[data-ntexec="1"] i {
+  left: 2px;
+}
+body main .rule-container #trigger-list .trigger-item .trigger-body .trigger-exec span {
+  position: relative;
+  display: inline-block;
+  flex: 1;
+  height: 1px;
+  background-color: black;
+}
+body main .rule-container #trigger-list .trigger-item .trigger-body .trigger-exec span:first-child::before {
+  content: "\e681";
+  position: absolute;
+  left: -10px;
+  top: calc(50% - 14px);
+  font-family: "iconfont";
+  font-size: 20px;
+}
+body main .rule-container #trigger-list .trigger-item .trigger-body .trigger-exec span:last-child::after {
+  content: "\e681";
+  position: absolute;
+  right: -10px;
+  top: calc(50% - 14px);
+  font-family: "iconfont";
+  font-size: 20px;
+}
+body main .rule-container #trigger-list .trigger-item .trigger-body .trigger-alert {
+  position: relative;
+  width: 30%;
+  height: 100%;
+  float: right;
+  padding: 0 0 0 15px;
+  border: 1px solid;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+body main .rule-container #trigger-list .trigger-item .trigger-body .trigger-alert div span {
+  font-weight: bold;
+}
+body main .rule-container #trigger-list .trigger-item .trigger-body .trigger-alert div p {
+  text-indent: 2em;
+}
+body main .rule-container #trigger-list .trigger-item .trigger-body .trigger-alert div:nth-child(1) p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+body main .rule-container #trigger-list .trigger-item .trigger-body .trigger-alert div:nth-child(2) p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+body main .rule-container #trigger-list .trigger-item [class~="col-title"] {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+body main .rule-container #trigger-list .trigger-item [class~="col-title"] span {
+  margin: 0 0 0 5px;
+  font-weight: 600;
+}
+body main .rule-container #trigger-list .trigger-item::before {
+  content: var(--content);
+  color: var(--color);
+  letter-spacing: 4px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  position: absolute;
+  transform: translate(-50%, -50%) rotate(-30deg);
+}
+body main .rule-container .page-div-occupy {
+  width: 100%;
+  height: 80px;
+}
+body main .rule-container .page-div {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+body main .rule-container .page-div ul li {
+  cursor: pointer;
+  user-select: none;
+}

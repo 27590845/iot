@@ -1,0 +1,248 @@
+body {
+	// 提示信息
+	.alert {
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+	// 侧边导航栏的在base.css
+	// 主体内容
+	main {
+		.rule-container {
+			position: relative;
+			header {
+				margin: 20px 0;
+			}
+			// 规则列表
+			#trigger-list {
+				// 场景内容
+				.trigger-item {
+					position: relative;
+					border-radius: 5px;
+					padding: 10px 5px;
+					margin: 0 0 20px 0;
+					box-shadow: 0 0 10px var(--color); // 根据过期状态进行调控
+					.trigger-header {
+						margin: 0 0 10px 0;
+						padding: 0 10px 10px;
+						display: flex;
+						flex-direction: row;
+						justify-content: space-between;
+						border-bottom: 1px solid #747474;
+						.row-info {
+							display: flex;
+							align-items: center;
+							.col-title {
+								padding: 0 10px;
+							}
+						}
+						.row-btn {
+							display: flex;
+							button {
+								margin: 0 5px;
+							}
+						}
+					}
+					.trigger-body {
+						max-height: 150px;
+						height: 150px;
+						min-height: 150px;
+						padding: 5px 10px;
+						overflow: auto;
+						.trigger-conditions {
+							width: 60%;
+							height: 100%;
+							float: left;
+							border: 1px solid;
+							border-radius: 5px;
+							display: flex;
+							align-items: center;
+							padding: 5px;
+							overflow-x: auto;
+							.condition-item {
+								position: relative;
+								width: 180px;
+								min-width: 180px;
+								margin: 0 10px 0 0;
+								padding: 3px;
+								height: 90%;
+								border: 1px solid #CCCCCC;
+								border-radius: 5px;
+								text-align: center;
+								p {
+									white-space: nowrap;
+									overflow: hidden;
+									text-overflow: ellipsis;
+								}
+								p.condtion-content {
+									font-size: 18px;
+									font-weight: 600;
+								}
+								&::after {
+									content: "\e640";
+									font-family: "iconfont";
+									position: absolute;
+									top: calc(50% - 14px);
+									font-size: 15px;
+									color: gray;
+									right: -24px;
+								}
+								&:last-child::after{
+									content: "";
+									display: block;
+									position: static;
+									width: 10px;
+								}
+								&:hover {
+									transform: scale(1.05);
+								}
+							}
+						}
+						.trigger-exec {
+							width: 10%;
+							height: 100%;
+							float: left;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							display: flex;
+							align-items: center;
+							p {
+								position: relative;
+								width: 48px;
+								height: 24px;
+								margin: 0;
+								border: 1px solid white;
+								border-radius: 20px;
+								padding: 2px;
+								i {
+									width: 18px;
+									height: 18px;
+									display: inline-block;
+									position: absolute;
+									clip-path: circle(9px);
+									background: white;
+								}
+								&:hover {
+									cursor: pointer;
+								}
+								&[data-ntexec="0"] {
+									background: #45DB5E;
+									i {
+										right: 2px;
+									}
+								}
+								&[data-ntexec="1"] {
+									background: #333333;
+									i {
+										left: 2px;
+									}
+								}
+							}
+							
+							span {
+								position: relative;
+								display: inline-block;
+								flex: 1;
+								height: 1px;
+								background-color: black;
+								&:first-child::before {
+									content: "\e681";
+									position: absolute;
+									left: -10px;
+									top: calc(50% - 14px);
+									font-family: "iconfont";
+									font-size: 20px;
+								}
+								&:last-child::after {
+									content: "\e681";
+									position: absolute;
+									right: -10px;
+									top: calc(50% - 14px);
+									font-family: "iconfont";
+									font-size: 20px;
+								}
+							}
+						}
+						.trigger-alert {
+							position: relative;
+							width: 30%;
+							height: 100%;
+							float: right;
+							padding: 0 0 0 15px;
+							border: 1px solid;
+							border-radius: 5px;
+							display: flex;
+							flex-direction: column;
+							justify-content: center;
+							div{
+								span {
+									font-weight: bold;
+								}
+								p {
+									text-indent: 2em;
+								}
+								&:nth-child(1) {
+									p {
+										overflow: hidden;
+										text-overflow: ellipsis;
+										white-space: nowrap;
+									}
+								}
+								&:nth-child(2) {
+									p {
+										overflow: hidden;
+										text-overflow: ellipsis;
+										display: -webkit-box;
+										-webkit-line-clamp: 2;
+										-webkit-box-orient: vertical;
+									}
+								}
+							}
+						}
+					}
+					// 设置每列中的内容不能进行换行等
+					[class~="col-title"] {
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						span {
+							margin: 0 0 0 5px;
+							font-weight: 600;
+						}
+					}
+				}
+				// 场景状态
+				.trigger-item::before {
+					content: var(--content);
+					color: var(--color);
+					letter-spacing: 4px;
+					font-size: 1.5rem;
+					font-weight: 600;
+					position: absolute;
+					transform: translate(-50%,-50%) rotate(-30deg);
+				}
+			}
+			// 场景分页
+			.page-div-occupy {
+				width: 100%;
+				height: 80px;
+			}
+			.page-div {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				width: 100%;
+				text-align: center;
+				ul {
+					li {
+						cursor: pointer;
+						user-select: none;
+					}
+				}
+			}
+			
+		}
+	}
+}

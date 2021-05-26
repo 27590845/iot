@@ -3,6 +3,11 @@
   padding: 0;
   box-sizing: border-box;
 }
+@font-face {
+  font-family: 'iconfont';
+  /* Project id 2552883 */
+  src: url('https://at.alicdn.com/t/font_2552883_u01tyqqluh.woff2?t=1621240661037') format('woff2'), url('https://at.alicdn.com/t/font_2552883_u01tyqqluh.woff?t=1621240661037') format('woff'), url('https://at.alicdn.com/t/font_2552883_u01tyqqluh.ttf?t=1621240661037') format('truetype');
+}
 .row {
   margin: 0;
   display: flex;
@@ -52,7 +57,8 @@ body main {
 }
 body main > .node-container,
 body main > .scene-container,
-body main > .node-container {
+body main > .node-container,
+body main > .rule-container {
   position: relative;
   min-height: calc(100vh - 260px);
   margin: 20px 0 0 0;

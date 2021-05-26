@@ -1,0 +1,239 @@
+body {
+  width: 100%;
+}
+body main .node-container {
+  margin-top: 2px !important;
+  height: 900px;
+}
+body main .node-container .title {
+  height: 40px;
+  padding-top: 15px;
+  font-size: 16px;
+  color: #025b37;
+}
+body main .node-container .add-condition-title {
+  width: 97%;
+  height: 35px;
+  line-height: 16px;
+  color: black;
+  padding: 8px 0 0 20px;
+  margin-left: 2%;
+}
+body main .node-container .add-condition-title .alertCondition {
+  position: relative;
+  top: -13px;
+  left: 10%;
+  color: red;
+}
+body main .node-container .add-style1 {
+  width: 97%;
+  border: 1px solid #bfb8bb;
+  border-radius: 6px;
+  margin: 0 0 1% 2%;
+}
+body main .node-container .add-style1 .condition-table {
+  width: 100%;
+}
+body main .node-container .add-style1 .condition-table .tr-info td {
+  text-align: center;
+  width: 9%;
+  border: 1px solid #bfb8bb;
+  border-right: none;
+  padding: 3px 0;
+}
+body main .node-container .add-style1 .condition-table .tr-info .big {
+  width: 15%;
+}
+body main .node-container .add-style1 .condition-table .tr-info .little {
+  width: 5%;
+}
+body main .node-container .add-style1 .condition-table .tr-edit td {
+  border: 1px solid #bfb8bb;
+  border-bottom: none;
+  padding: 3px 0;
+}
+body main .node-container .add-style1 .condition-table .tr-edit td .condition-input {
+  width: 90%;
+  margin: 0 5%;
+}
+body main .node-container .add-style1 .condition-table .tr-edit td .condition-input input {
+  text-align: center;
+  width: 100%;
+  border: 1px solid #7e7e7e9e;
+  outline: none;
+}
+body main .node-container .add-style1 .condition-table .tr-edit td .condition-input select {
+  text-align: center;
+  width: 100%;
+  border: 1px solid #7e7e7e9e;
+  outline: none;
+}
+body main .node-container .add-style1 .condition-table .tr-edit td .condition-input .select {
+  width: 100%;
+}
+body main .node-container .add-style1 .condition-table .tr-edit td .condition-input #unit {
+  width: 100%;
+  text-align: center;
+}
+body main .node-container .add-style1 .condition-table .tr-edit td .condition-input input:focus {
+  border: 1px solid #3c763de6;
+}
+body main .node-container .add-style1 .condition-table .tr-edit td .condition-input button:focus {
+  border: 1px solid #3c763de6;
+}
+body main .node-container .add-style1 .condition-table .tr-edit td .condition-input select:focus {
+  border: 1px solid #3c763de6;
+}
+body main .node-container .add-style1 .condition-table .tr-edit td .condition-input-little button {
+  text-align: center;
+  width: 38%;
+  border: 1px solid #7e7e7e9e;
+  outline: none;
+}
+body main .node-container .add-style1 .condition-table .tr-edit td .condition-input-little .remove {
+  margin-left: 20%;
+}
+body main .node-container .add-style1 .condition-table .tr-edit td .condition-input-little .buttonremove {
+  margin-left: 20%;
+}
+body main .node-container .alert-info-title {
+  width: 97%;
+  height: 35px;
+  line-height: 16px;
+  color: black;
+  padding: 8px 0 0 20px;
+  margin-left: 2%;
+}
+body main .node-container .alert-info-title .alertEmail {
+  position: relative;
+  top: -13px;
+  left: 10%;
+  color: red;
+}
+body main .node-container .alert-info-title .alertPhonenum {
+  position: relative;
+  top: -13px;
+  left: 10%;
+  color: red;
+}
+body main .node-container .alert-info-title .alertInformation {
+  position: relative;
+  top: -13px;
+  left: 10%;
+  color: red;
+}
+body main .node-container .add-style2 {
+  clear: both;
+  width: 97%;
+  border: 1px solid #bfb8bb;
+  border-radius: 6px;
+  margin: 0 0 1% 2%;
+  padding: 1.5% 0 5% 50px;
+}
+body main .node-container .add-style2 .condition-type {
+  width: 100%;
+  margin-bottom: 5px;
+}
+body main .node-container .add-style2 .condition-type .input-number {
+  width: 200px;
+  height: 40px;
+  padding-left: 5px;
+  margin-left: 20px;
+}
+body main .node-container .add-style2 .condition-type .input-number:focus {
+  outline: #797d7d solid 1px;
+}
+body main .node-container .add-style2 .condition-type .edit-title {
+  text-align: center;
+  float: right;
+  position: relative;
+  left: -37.5%;
+  top: 15px;
+}
+body main .node-container .add-style2 .condition-type .edit-info {
+  clear: both;
+  float: right;
+  position: relative;
+  left: -8%;
+  top: -15px;
+  resize: none;
+}
+body main .node-container .add-style2 .button-update {
+  float: right;
+  margin-right: -21%;
+  margin-top: 20px;
+  width: 100px;
+}
+body main .node-container .alert-set-title {
+  width: 97%;
+  height: 35px;
+  line-height: 16px;
+  color: black;
+  padding: 8px 0 0 20px;
+  margin-left: 2%;
+}
+body main .node-container .alert-set-title .alertTrigger {
+  position: relative;
+  top: -13px;
+  left: 10%;
+  color: red;
+}
+body main .node-container .add-style3 {
+  clear: both;
+  width: 97%;
+  border: 1px solid #bfb8bb;
+  border-radius: 6px;
+  margin: 0 0 1% 2%;
+  padding: 1.5% 0 1% 50px;
+}
+body main .node-container .add-style3 .condition-action {
+  clear: both;
+  float: right;
+  position: relative;
+  left: -28.5%;
+  top: -15px;
+  z-index: 50;
+}
+body main .node-container .add-style3 .condition-action p {
+  clear: both;
+  float: right;
+  position: relative;
+  left: -205%;
+  top: 30px;
+}
+body main .node-container .add-style3 .condition-question {
+  width: 100%;
+}
+body main .node-container .add-style3 .condition-question p {
+  position: relative;
+  top: 10px;
+}
+body main .node-container .add-style3 .condition-question .alert-set {
+  position: relative;
+  left: 100px;
+  top: -20px;
+}
+body main .node-container .add-style3 .button-update {
+  float: right;
+  margin-right: 50px;
+  margin-top: -20px;
+  width: 100px;
+}
+body main .node-container .button {
+  width: 115px;
+  height: 30px;
+  font-size: 15px;
+  line-height: 28px;
+  text-align: center;
+  color: white;
+  display: inline-block;
+  border-radius: 8px;
+  background-image: linear-gradient(to top, #48c6ef 0%, #6f86d6 100%);
+  position: relative;
+  left: 18%;
+  margin-top: 3%;
+  margin-right: 15%;
+}
+body main .node-container .button:hover {
+  background-image: linear-gradient(to top, #389dbc 0%, #465587 100%);
+}
