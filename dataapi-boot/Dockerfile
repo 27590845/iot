@@ -13,7 +13,8 @@ ADD target/dataapi-boot-1.0-SNAPSHOT.jar ./
 EXPOSE 8081
 
 VOLUME ["/var/log/xidianiot"]
-ENTRYPOINT java -jar dataapi-boot-1.0-SNAPSHOT.jar --spring.profiles.active=development
+ENTRYPOINT java -jar dataapi-boot-1.0-SNAPSHOT.jar
+#ENTRYPOINT java -jar dataapi-boot-1.0-SNAPSHOT.jar --spring.profiles.active=development
 
 #进入到此dockerfile目录然后生成镜像
 #docker build -t hansey97/dataapi .
