@@ -8,6 +8,7 @@ import com.xidian.iot.database.entity.Scene;
 import com.xidian.iot.database.param.SceneAddParam;
 import com.xidian.iot.database.param.SceneUpdateParam;
 import com.xidian.iot.database.vo.SceneVo;
+import com.xidian.iot.databiz.service.FakeDataService;
 import com.xidian.iot.databiz.service.NodeService;
 import com.xidian.iot.databiz.service.SceneService;
 import io.swagger.annotations.Api;
@@ -34,6 +35,8 @@ public class SceneController {
     private SceneService sceneService;
     @Autowired
     private NodeService nodeService;
+    @Autowired
+    private FakeDataService fakeDataService;
 
     @ApiOperation(value = "分页获取当前用户下所有的网关号、不输入page和limit默认就是获取前十条数据")
     @GetMapping()
@@ -145,5 +148,17 @@ public class SceneController {
         if (StringUtils.isBlank(identifier) )
             return HttpResult.generateErrorResult(-1, "网关身份标示不能为空");
         return HttpResult.responseOK(sceneService.getSceneByIdentif(identifier));
+    }
+
+    @ApiOperation(value = "制造假数据")
+    @PostMapping("/fakeData/{sceneSn}")
+    public HttpResult fakeData(@ApiParam(name = "sceneSn", value = "网关") @PathVariable("sceneSn") String sceneSn,
+                               @ApiParam(name = "avg", value = "平均值") @RequestParam(value = "avg", required = false, defaultValue = "10") int avg,
+                               @ApiParam(name = "var", value = "方差") @RequestParam(value = "var", required = false, defaultValue = "50") int var,
+                               @ApiParam(name = "period", value = "周期秒") @RequestParam(name = "period", required = false,defaultValue = "60") int period) {
+        if (StringUtils.isBlank(sceneSn))
+            return HttpResult.generateErrorResult(-1, "网关不能为空");
+        fakeDataService.makeFakeDate(sceneSn, avg, var, period);
+        return HttpResult.responseOK(null);
     }
 }
