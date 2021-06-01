@@ -90,8 +90,16 @@ public class RuleEngineController {
     @ApiOperation(value = "更新触发器、支持触发条件node_cond新增、删除")
     @PutMapping("/{ntId}")
     public HttpResult updateRuleEngine(@ApiParam(name = "ntId", value = "") @PathVariable("ntId") Long ntId,
-                                  @ApiParam(name = "NodeTrigParam", value = "触发器更新信息") @Validated(ValidGroup.UPDATE.class) @RequestBody NodeTrigParam nodeTrigParam) {
+                                       @ApiParam(name = "NodeTrigParam", value = "触发器更新信息") @Validated(ValidGroup.UPDATE.class) @RequestBody NodeTrigParam nodeTrigParam) {
         ruleEngineService.updateRuleEngine1(ntId, nodeTrigParam);
+        return HttpResult.oK().message("更新成功");
+    }
+
+    @ApiOperation(value = "仅更新触发器、不支持触发条件新增删除、金路使用")
+    @PutMapping("/jinlu/{ntId}")
+    public HttpResult updateRuleEngine1(@ApiParam(name = "ntId", value = "") @PathVariable("ntId") Long ntId,
+                                       @ApiParam(name = "NodeTrigParam", value = "触发器更新信息") @Validated(ValidGroup.UPDATE.class) @RequestBody NodeTrigParam nodeTrigParam) {
+        ruleEngineService.updateRuleEngine(ntId, nodeTrigParam);
         return HttpResult.oK().message("更新成功");
     }
 
