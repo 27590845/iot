@@ -31,8 +31,8 @@ spring:
   application:
     name: dataapi-boot
   profiles:
-    active: development
-#    active: production
+#    active: development
+    active: production
   #支持名称相同的bean的覆盖
   main:
     allow-bean-definition-overriding: true
@@ -48,8 +48,8 @@ spring:
       enabled: true
       force: true
 
-#grafana-server: http://grafana-iot-service:3000
-grafana-server: http://iot.xidian.edu.cn:50080
+grafana-server: http://grafana-iot-service:3000
+#grafana-server: http://iot.xidian.edu.cn:50080
 #grafana-server: http://127.0.0.1:3000
 
 zuul:
