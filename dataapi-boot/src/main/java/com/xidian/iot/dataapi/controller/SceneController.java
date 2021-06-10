@@ -150,7 +150,7 @@ public class SceneController {
         return HttpResult.responseOK(sceneService.getSceneByIdentif(identifier));
     }
 
-    @ApiOperation(value = "制造假数据")
+    @ApiOperation(value = "仿真数据")
     @PostMapping("/fakeData/{sceneSn}")
     public HttpResult fakeData(@ApiParam(name = "sceneSn", value = "网关") @PathVariable("sceneSn") String sceneSn,
                                @ApiParam(name = "avg", value = "平均值") @RequestParam(value = "avg", required = false, defaultValue = "10") int avg,
