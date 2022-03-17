@@ -64,12 +64,14 @@ public class SaveNodeDataCommand implements Command, ApplicationContextAware {
         // 保存节点数据
         log.debug("================================Start Saving nodeDataList.[{}]", nodeDataList);
         nodeDataService.addNodeData(nodeDataList);
-        if(systemParamShared.isInfluxEnable()) {
+        //if(systemParamShared.isInfluxEnable()) {
+            if(true) {
             tmp_nodedata2influx(nodeDataList);
         }
         log.debug("================================Complete Saved Node Data.");
 
-        if(systemParamShared.isTriggerEnable()){
+//        if(systemParamShared.isTriggerEnable()){
+            if(true){
             // 执行触发器
             doProcessNodeDataTask(upContext.getSceneSn(), nodeDataList);
         }

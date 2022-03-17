@@ -10,6 +10,7 @@ import org.apache.commons.chain.Context;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,7 @@ public class CheckJsonDataCommand implements Command {
      */
     @Override
     public boolean execute(Context context) throws Exception {
+
         log.debug("================================Start check JSON data.================================");
         JsonDataContext upContext = (JsonDataContext) context;
         // 获取datastreams字段

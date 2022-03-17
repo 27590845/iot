@@ -27,6 +27,7 @@ public class SiteLetterServiceImpl implements SiteLetterService {
     @Autowired
     private UidGenerator uidGenerator;
 
+
     @Override
     public List<SiteLetter> getSiteLetters(int page,int limit){
         if (page >= 0 && limit > 0) {

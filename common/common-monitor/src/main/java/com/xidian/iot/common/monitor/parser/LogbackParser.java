@@ -122,6 +122,7 @@ public class LogbackParser implements Parser {
     }
 
     private int getType(String level){
+
         if(StringUtils.isBlank(level)) return Frame.TYPE_WARN;
         level = level.toLowerCase().trim();
         int type = 0;

@@ -115,7 +115,11 @@ public class CompareNodeCondTask extends BaseTask implements Runnable {
         boolean fit = isFitCondition(nodeCondExt);
         log.info("compareCondition() ntId={}, ncId={} fit={}", nodeCondExt.getNtId(), nodeCondExt.getNcId(), fit);
         // 判断如果发生了变化，才执行更新、检查触发器操作z
+        //如果没变化的话，就不会重复触发了
+
         if (fit != nodeCondExt.isFit()) {
+            System.out.println("****");
+            System.out.println(fit);
             // 更新变化后的fit值，并更新到缓存
             nodeCondExt.setFit(fit);
             commonService.changeNodeCondExt(nodeCondExt);

@@ -47,24 +47,59 @@ public class ActivemqTest {
 
     final static String topic = "hello_topic";
 
-    final static String sceneSn = "186610102211000001";
+    final static String sceneSn = "186610102211100358";
     final static String nodeSn = "000001";
     final static String topicIot = "node.updata."+sceneSn;
 
     @Test
     public void appTest() throws JsonProcessingException, InterruptedException {
 //        String msg = "{\"datastreams\":[{\"TVOC\":69,\"hum\":54.0,\"at\":1597737850021,\"pm2p5\":33,\"co2\":509,\"pm10\":59,\"sn\":\""+nodeSn+"\",\"ch20\":19,\"tem\":32.0}]}";
-        for(int i=0; i< 1000; i++){
+        for(int i=0; i< 1000000; i++){
             String msg = "{\"datastreams\":[{"
                     + "\"tem1\":"+ RandomUtil.nextInt(10, 19)
                     +",\"tem2\":"+RandomUtil.nextInt(20, 29)
                     +",\"tem3\":"+RandomUtil.nextInt(30, 39)
-                    +",\"tem4\":"+ RandomUtil.nextInt(40, 49)
+                    +",\"氧气传感器\":"+ RandomUtil.nextInt(40, 49)
                     +",\"hum\":"+ RandomUtil.nextInt(0, 9)
                     +",\"at\":"+ TimeUtil.getTimeStamp(null)
                     +",\"sn\":\""+nodeSn+"\"}]}";
             mqSender.sendQueue(topicIot, msg);
-            Thread.sleep(1000);
+            Thread.sleep(5000);
+        }
+    }
+
+    @Test
+    public void appTestPresentation186610102211100356() throws JsonProcessingException, InterruptedException {
+//        String msg = "{\"datastreams\":[{\"TVOC\":69,\"hum\":54.0,\"at\":1597737850021,\"pm2p5\":33,\"co2\":509,\"pm10\":59,\"sn\":\""+nodeSn+"\",\"ch20\":19,\"tem\":32.0}]}";
+       String sceneSn="186610102211100356";
+       String nodeSn="RD001";
+       String topicIot = "node.updata."+sceneSn;
+        for(int i=0; i< 1000000; i++){
+            if(i%20<10){
+
+            String msg = "{\"datastreams\":[{"
+                    + "\"tem1\":"+ RandomUtil.nextInt(10, 19)
+                    +",\"tem2\":"+RandomUtil.nextInt(20, 29)
+                    +",\"tem3\":"+RandomUtil.nextInt(30, 39)
+                    +",\"氧气传感器\":"+ RandomUtil.nextInt(40, 49)
+                    +",\"hum\":"+ RandomUtil.nextInt(0, 9)
+                    +",\"at\":"+ TimeUtil.getTimeStamp(null)
+                    +",\"sn\":\""+nodeSn+"\"}]}";
+            mqSender.sendQueue(topicIot, msg);
+            Thread.sleep(10000);
+            }
+            else {
+                String msg = "{\"datastreams\":[{"
+                        + "\"tem1\":"+ RandomUtil.nextInt(-20, -10)
+                        +",\"tem2\":"+RandomUtil.nextInt(20, 29)
+                        +",\"tem3\":"+RandomUtil.nextInt(30, 39)
+                        +",\"氧气传感器\":"+ RandomUtil.nextInt(40, 49)
+                        +",\"hum\":"+ RandomUtil.nextInt(0, 9)
+                        +",\"at\":"+ TimeUtil.getTimeStamp(null)
+                        +",\"sn\":\""+nodeSn+"\"}]}";
+                mqSender.sendQueue(topicIot, msg);
+                Thread.sleep(10000);
+            }
         }
     }
 
