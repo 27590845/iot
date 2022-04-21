@@ -72,6 +72,7 @@ public class JsonUtil {
             log.error("readValue() return is null.jsonStr={}", jsonStr);
             return null;
         }
+
         JsonNode path = rootNode.path(fieldName);
         if (!path.isMissingNode()) {
             return path.toString();

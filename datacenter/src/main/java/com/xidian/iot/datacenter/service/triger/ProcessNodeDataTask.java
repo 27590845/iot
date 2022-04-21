@@ -49,7 +49,7 @@ public class ProcessNodeDataTask extends BaseTask implements Runnable {
      * modify by mrl
      */
     private void processNodeData() {
-        // 逐个处理上行数据
+        // 逐个处理上行数据，也就是每个场景下每个节点下的集合
         for (NodeData nodeData : nodeDataList) {
             log.info("nodeData({})", nodeData);
             //只获取条件所关联的触发器未失效的节点条件
@@ -66,7 +66,7 @@ public class ProcessNodeDataTask extends BaseTask implements Runnable {
      */
     private void doCompareNodeCondTask(NodeData nodeData, List<NodeCondExt> nodeCondExtList) {
         CompareNodeCondTask compareNodeCondTask = (CompareNodeCondTask) applicationContext.getBean("compareNodeCondTask");
-        // 设置节点数据
+        // 设置上传的attribute数据
         compareNodeCondTask.setData(nodeData.getData());
         // 设置条件列表
         compareNodeCondTask.setNodeCondExtList(nodeCondExtList);

@@ -46,8 +46,9 @@ public class CommonService {
      * @return
      */
     public List<NodeCondExt> getNodeCondExts(String sceneSn, String nodeSn){
+        //先获取ncId
         List<Long> ncIds = nodeCondService.getNcIdsBySn(sceneSn, nodeSn);
-        //根据ncId获取NodeExt列表
+        //根据ncId获取NodeExt列表为啥不一步到位
         List<NodeCondExt> nodeCondExts = ncIds.stream().map(ncId -> nodeCondService.getNodeCondExtById(ncId)).collect(Collectors.toList());
         //只获取条件所关联的触发器未失效、且不在时间间隔内的条件
         nodeCondExts = nodeCondExts.stream().filter(nodeCondExt -> {

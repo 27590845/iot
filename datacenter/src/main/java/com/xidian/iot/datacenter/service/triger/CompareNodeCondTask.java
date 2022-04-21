@@ -131,7 +131,12 @@ public class CompareNodeCondTask extends BaseTask implements Runnable {
                 doCheckingTrigTask(nodeCondExt.getNtId());
             }
         } else {
-            // 更新满足次数
+            // 更新满足次数到缓存
+            //    @CachePut(value = "NodeCondExt", key = "'getNodeCondExtById:'+#nodeCondExt.ncId")
+            //    @Override
+            //    public NodeCondExt changeNodeCondExt(NodeCondExt nodeCondExt) {
+            //        return nodeCondExt;
+            //    }
             commonService.changeNodeCondExt(nodeCondExt);
         }
     }

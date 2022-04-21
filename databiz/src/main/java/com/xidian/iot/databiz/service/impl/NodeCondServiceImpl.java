@@ -43,7 +43,7 @@ public class NodeCondServiceImpl implements NodeCondService {
     private NodeCondCustomMapper nodeCondCustomMapper;
 
     //如果有该缓存对应的持久化数据有变动，比如该节点关联的nodeCond有增删，而该缓存不可能得到同步，从而影响效率
-//    @Cacheable(value = "NodeCondIds", key = "'getNcIdsBySn:'+#sceneSn+':'+#nodeSn")
+    @Cacheable(value = "NodeCondIds", key = "'getNcIdsBySn:'+#sceneSn+':'+#nodeSn")
     @Override
     public List<Long> getNcIdsBySn(String sceneSn, String nodeSn) {
         return nodeCondCustomMapper.getNcIdsBySn(sceneSn, nodeSn);
