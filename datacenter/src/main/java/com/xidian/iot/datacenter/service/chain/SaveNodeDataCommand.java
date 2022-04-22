@@ -66,9 +66,11 @@ public class SaveNodeDataCommand implements Command, ApplicationContextAware {
         nodeDataService.addNodeData(nodeDataList);
         //if(systemParamShared.isInfluxEnable()) {
             if(true) {
-            tmp_nodedata2influx(nodeDataList);
+                log.info("hh");
+                System.out.println("+++++++++++++++++++++");
+                tmp_nodedata2influx(nodeDataList);
         }
-        log.debug("================================Complete Saved Node Data.");
+        log.debug("================================Complete Sav ed Node Data.");
 
 //        if(systemParamShared.isTriggerEnable()){
             if(true){
@@ -108,6 +110,7 @@ public class SaveNodeDataCommand implements Command, ApplicationContextAware {
 //            tags.put("sceneSn", nodeData.getSceneSn());
             tags.put("nodeSn", nodeData.getNodeSn());
             Point point = influxDBConnection.pointBuilder(nodeData.getSceneSn(), System.currentTimeMillis(), tags, fields);
+            System.out.println(System.currentTimeMillis());
             records.add(point.lineProtocol());
         }
         influxDBConnection.batchInsert("iotdata", null, InfluxDB.ConsistencyLevel.ALL, records);

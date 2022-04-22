@@ -48,7 +48,7 @@ spring:
       enabled: true
       force: true
 
-grafana-server: http://120.55.75.73:3000
+grafana-server: http://128.192.3.132:3000
 #grafana-server: http://iot.xidian.edu.cn:50080
 #grafana-server: http://127.0.0.1:3000
 
